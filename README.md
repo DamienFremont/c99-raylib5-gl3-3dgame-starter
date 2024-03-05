@@ -9,16 +9,12 @@
 
 ## Content
 
-- [:warning: WORK IN PROGRESS](#warning-work-in-progress)
-- [C++ 2020 - RayLib - Starter](#c-2020---raylib---starter)
   - [Content](#content)
   - [Features](#features)
   - [Dependencies](#dependencies)
   - [Screenshots](#screenshots)
   - [Install](#install)
-    - [Windows](#windows)
   - [Usage](#usage)
-    - [Build everything at once](#build-everything-at-once)
   - [Resources](#resources)
 
 ---------------------------------------
