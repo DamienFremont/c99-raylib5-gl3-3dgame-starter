@@ -25,8 +25,59 @@
   - :heavy_check_mark: C++20
   - :heavy_check_mark: Standard libraries
   - :heavy_check_mark: Raylib
+- Graphics
+  - :hourglass: Render: 
+      :heavy_check_mark: PostProcessing
+  - :hourglass: Camera: 
+      :x: ThirdPerson Camera
+      :x: FOV (Field Of View)
+      :x: Cinematic camera
+      :x: Dynamic resolution
+  - :x: Lighting:
+      :x: Real Time
+      :x: Backed
+  - :hourglass: Meshes: 
+      :heavy_check_mark: Meshes
+      :heavy_check_mark: Textures
+      :heavy_check_mark: Shaders
+      :x: LOD (Level Of Details)
+  - :x: Visual Effects:
+      :x: Particles
+  - :x: Sky:
+      :x: Color
+      :x: Cubemap
+      :x: Procedural
+- :x: World
+  - :x: Physics
+  - :x: Terrain
+  - :x: SpeedTree
+  - :x: Water
+  - :x: LevelTick
+  - :x: Cloth
+  - :x: Voxel / Octree
+  - :x: GeoMod
+- Scripting
+  - :x: Properties
+  - :x: Bot
+  - :x: LUA scripts
+- Animation
+  - :x: Character Animation
+  - :x: IK (Inverse kinematic)
+- :x: Audio: 
+    :x: Sound
+    :x: Music
+    :x: Spatial Sound
+- :x: UI (User Interface):
+    :x: Keyboard
+    :x: Gamepad
+    :x: start menu
+    :x: quit menu
+    :x: config menu
+    :x: i18n
+
 - Targets:
-  - :x: Win64
+  - :heavy_check_mark: Win64 (Windows)
+  - :x: WASM (WebAssembly)
 
 ## Dependencies
 
@@ -45,6 +96,7 @@ Repository layout:
 ├── assets
 │   ├── i18n
 │   └── images
+│   └── ...
 ├── docs
 ├── infra
 ├── lib
@@ -55,6 +107,7 @@ Repository layout:
 │   └── desktop
 ├── standalone
 │   ├── desktop_win64
+│   ├── desktop_wasm
 └── tools
 ```
 
@@ -127,8 +180,14 @@ cd .\build\desktop_win64\Debug\
 
 ## Resources
 
+- C++
+  - [ModernCppStarter](https://github.com/TheLartians/ModernCppStarter/tree/master)
+  - [CMake with include and source paths - basic setup](https://stackoverflow.com/questions/8304190/cmake-with-include-and-source-paths-basic-setup)
+- Monorepo
+  - [How to structure a monorepo](https://lucapette.me/writing/how-to-structure-a-monorepo/?utm_source=atom_feed)
+  - [A monorepo template that actually works](https://levelup.gitconnected.com/a-monorepo-template-that-actually-works-3efd87770fa5)
 - Raylib
   - Examples
-    - shaders_postprocessing
-      - [demo](https://www.raylib.com/examples/shaders/loader.html?name=shaders_postprocessing)
-      - [github](https://github.com/raysan5/raylib/blob/master/examples/shaders/shaders_postprocessing.c)
+    - [GitHub](https://github.com/raysan5/raylib/blob/master/examples/)
+    - [Demos](https://www.raylib.com/examples.html)
+      - [shaders_postprocessing](https://www.raylib.com/examples/shaders/loader.html?name=shaders_postprocessing) 

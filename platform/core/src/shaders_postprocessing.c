@@ -55,7 +55,7 @@ int main(void)
 
 	SetConfigFlags(FLAG_MSAA_4X_HINT); // Enable Multi Sampling Anti Aliasing 4x (if available)
 
-	InitWindow(screenWidth, screenHeight, "raylib [shaders] example - postprocessing shader");
+	InitWindow(screenWidth, screenHeight, "cpp20-raylib-starter");
 
 	// Define the camera to look into our 3d world
 	Camera camera = {0};
