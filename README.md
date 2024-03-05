@@ -26,7 +26,7 @@
   - :heavy_check_mark: Standard libraries
   - :heavy_check_mark: Raylib
 - Targets:
-  - :x: x86 Windows
+  - :x: Win64
 
 ## Dependencies
 
