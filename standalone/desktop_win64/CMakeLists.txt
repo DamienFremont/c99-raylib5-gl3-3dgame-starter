@@ -6,16 +6,10 @@ project(desktop_win64 LANGUAGES CXX)
 set(ASSETS   ../../assets)
 set(LIB      ../../lib)
 set(PLATFORM ../../platform)
-
-set(RESOURCES ${ASSETS}/resources)
-
 set(CORE ${PLATFORM}/core)
-
 set(RAYLIB ${LIB}/raylib-4.0.0_win64_msvc16)
 set(RAYLIB_LIB  "C:/Users/damien/git/cpp20-raylib-starter/lib/raylib-4.0.0_win64_msvc16/lib/raylib.lib")
 set(RAYLIB_BIN "${RAYLIB}/lib/raylib.dll")
-
-set(TARGET_DIR ${CMAKE_CURRENT_BINARY_DIR}/Debug)
 
 # ---- Sources ----
 include_directories(
@@ -41,10 +35,10 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 
 # ---- Dependencies ----
 target_link_libraries(${PROJECT_NAME} 
-${RAYLIB_LIB}
-"C:/Users/damien/git/cpp20-raylib-starter/lib/winmm-Win64-10.0.22621.0/lib/WinMM.Lib"
+  ${RAYLIB_LIB}
+  "C:/Users/damien/git/cpp20-raylib-starter/lib/winmm-Win64-10.0.22621.0/lib/WinMM.Lib"
 )
 
 # ---- Bundle ----
-file(COPY ${RESOURCES}  DESTINATION ${TARGET_DIR})
-file(COPY ${RAYLIB_BIN} DESTINATION ${TARGET_DIR})
+file(COPY ${ASSETS}/resources DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
+file(COPY ${ASSETS}/resources DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)

@@ -27,15 +27,16 @@
   - :heavy_check_mark: Raylib
 - Targets:
   - :heavy_check_mark: Win64 (Windows)
+  - :x: JS (Javascript)
   - :x: WASM (WebAssembly)
 - Graphics
   - :hourglass: Render: 
       :heavy_check_mark: PostProcessing
   - :hourglass: Camera: 
-      :x: ThirdPerson Camera
-      :x: FOV (Field Of View)
-      :x: Cinematic camera
-      :x: Dynamic resolution
+      :x: ThirdPerson
+      :x: FOV
+      :x: Cinematic
+      :x: Dynamic res.
   - :x: Lighting:
       :x: Real Time
       :x: Backed
@@ -44,7 +45,7 @@
       :heavy_check_mark: Textures
       :heavy_check_mark: Shaders
       :heavy_check_mark: Materials
-      :x: LOD (Level Of Details)
+      :x: LOD
   - :x: Visual Effects:
       :x: Particles
       :x: Distant Horizon
@@ -52,7 +53,7 @@
       :x: Color
       :x: Cubemap
       :x: Procedural
-- :x: World
+- World
   - :x: Terrain
       :x: Heightmap
       :x: SpeedTree
@@ -71,21 +72,26 @@
   - :x: Bot
   - :x: LUA scripts
 - Animation
-  - :x: Character Animation
-  - :x: IK (Inverse kinematic)
-- :x: Audio: 
-    :x: Sound
-    :x: Music
-    :x: Spatial Sound
-- :x: Input
-  - :x: UI (User Interface): 
-    :x: start menu
-    :x: quit menu
-    :x: config menu
-    :x: i18n
-  - Control:
-    :x: Keyboard
-    :x: Gamepad
+  - :x: Character
+  - :x: IK
+- Audio: 
+  - :x: Sound:
+      :x: Wave
+      :x: Spatial
+  - :x: Music:
+      :x: Player
+      :x: Wave
+      :x: Mp3
+      :x: Module
+- Input
+  - :x: UI: 
+      :x: start menu
+      :x: quit menu
+      :x: config menu
+      :x: i18n
+  - :x: Control:
+      :x: Keyboard
+      :x: Gamepad
 
 ## Dependencies
 
@@ -186,9 +192,21 @@ cd .\build\desktop_win64\Debug\
 .\desktop_win64.exe
 ```
 
+### Release
+
+```powershell
+# Build
+cmake -S "." -B "build"
+cmake --build build --config Release
+
+# Run
+cd .\build\desktop_win64\Release\
+.\desktop_win64.exe
+```
+
 ## Resources
 
-- C++
+- C
   - [ModernCppStarter](https://github.com/TheLartians/ModernCppStarter/tree/master)
   - [CMake with include and source paths - basic setup](https://stackoverflow.com/questions/8304190/cmake-with-include-and-source-paths-basic-setup)
 - Monorepo
