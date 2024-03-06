@@ -1,7 +1,7 @@
 :warning: WORK IN PROGRESS
 ==========================
 
-# C++ 2020 - RayLib - Starter
+# C 2017 - RayLib 5 - Starter
 
 <p align="center">
   <img src="./docs/README/thumb-raylib.png" height="175" width="auto" />
