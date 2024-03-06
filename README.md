@@ -25,6 +25,9 @@
   - :heavy_check_mark: C++20
   - :heavy_check_mark: Standard libraries
   - :heavy_check_mark: Raylib
+- Targets:
+  - :heavy_check_mark: Win64 (Windows)
+  - :x: WASM (WebAssembly)
 - Graphics
   - :hourglass: Render: 
       :heavy_check_mark: PostProcessing
@@ -40,22 +43,29 @@
       :heavy_check_mark: Meshes
       :heavy_check_mark: Textures
       :heavy_check_mark: Shaders
+      :heavy_check_mark: Materials
       :x: LOD (Level Of Details)
   - :x: Visual Effects:
       :x: Particles
+      :x: Distant Horizon
   - :x: Sky:
       :x: Color
       :x: Cubemap
       :x: Procedural
 - :x: World
-  - :x: Physics
   - :x: Terrain
-  - :x: SpeedTree
-  - :x: Water
-  - :x: LevelTick
-  - :x: Cloth
-  - :x: Voxel / Octree
-  - :x: GeoMod
+      :x: Heightmap
+      :x: SpeedTree
+  - :x: Physics
+      :x: hitbox
+      :x: gravity
+  - :x: Simulation
+      :x: LevelTick
+      :x: Water
+      :x: Cloth
+  - :x: Voxel
+      :x: Octree
+      :x: GeoMod
 - Scripting
   - :x: Properties
   - :x: Bot
@@ -67,17 +77,15 @@
     :x: Sound
     :x: Music
     :x: Spatial Sound
-- :x: UI (User Interface):
-    :x: Keyboard
-    :x: Gamepad
+- :x: Input
+  - :x: UI (User Interface): 
     :x: start menu
     :x: quit menu
     :x: config menu
     :x: i18n
-
-- Targets:
-  - :heavy_check_mark: Win64 (Windows)
-  - :x: WASM (WebAssembly)
+  - Control:
+    :x: Keyboard
+    :x: Gamepad
 
 ## Dependencies
 
