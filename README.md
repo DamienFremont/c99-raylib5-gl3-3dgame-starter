@@ -99,9 +99,7 @@
 
 ## Screenshots
 
-<p align="center">
-  <img src="./docs/README/thumb-screenshot.png" height="175" width="auto" />
-</p>
+![alt text](./docs/README/thumb-screenshot.png)
 
 ![alt text](./docs/README/diagrams-1.png)
 
@@ -180,16 +178,15 @@ VS Code:
 
 ## Usage
 
-### Build everything at once
+### Dev
 
 ```powershell
-# Build
+# Init: Build
 cmake -S "." -B "build"
 cmake --build build
 
-# Run
-cd .\build\desktop_win64\Debug\
-.\desktop_win64.exe
+# Dev: Build & Run
+cmake --build build | .\build\desktop_win64\Debug\desktop_win64.exe
 ```
 
 ### Release
@@ -200,8 +197,7 @@ cmake -S "." -B "build"
 cmake --build build --config Release
 
 # Run
-cd .\build\desktop_win64\Release\
-.\desktop_win64.exe
+.\build\desktop_win64\Release\desktop_win64.exe
 ```
 
 ## Resources
