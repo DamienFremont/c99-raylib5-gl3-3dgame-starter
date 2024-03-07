@@ -2,6 +2,10 @@
 
 #include "raylib.h"
 
+#include<stdio.h>
+#include<stdlib.h>
+
+
 #if defined(PLATFORM_DESKTOP)
 #define GLSL_VERSION 330
 #else // PLATFORM_ANDROID, PLATFORM_WEB
@@ -46,7 +50,7 @@ static const char *postproShaderText[] = {
 //------------------------------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
-int main(void)
+int main(const char *respath)
 {
 	// Initialization
 	//--------------------------------------------------------------------------------------
@@ -65,9 +69,21 @@ int main(void)
 	camera.fovy = 45.0f;						   // Camera field-of-view Y
 	camera.projection = CAMERA_PERSPECTIVE;		   // Camera projection type
 
+	char *mod_path = "resources\\models\\church.obj";
+	const char model_str[999];
+	snprintf(model_str, sizeof(model_str), "%s%s", respath, mod_path);
+
+	char *tex_path = "resources\\models\\church_diffuse.png";
+	const char texture_str[999];
+	snprintf(texture_str, sizeof(model_str), "%s%s", respath, tex_path);
+
+	char *sha_path = TextFormat("resources\\shaders\\glsl%i\\bloom.fs", GLSL_VERSION);
+	const char sha_str[999];
+	snprintf(sha_str, sizeof(model_str), "%s%s", respath, sha_path);
+
 	// Model model = LoadModel("resources/models/church.obj");					// Load OBJ model
-	Model model = LoadModel("resources/models/obj file.obj");					// Load OBJ model
-	Texture2D texture = LoadTexture("resources/models/church_diffuse.png"); // Load model texture (diffuse map)
+	Model model = LoadModel(model_str);					// Load OBJ model
+	Texture2D texture = LoadTexture(texture_str); // Load model texture (diffuse map)
 	model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;		// Set model diffuse texture
 
 	Vector3 position = {0.0f, 0.0f, 0.0f}; // Set model position
@@ -78,20 +94,9 @@ int main(void)
 	Shader shaders[MAX_POSTPRO_SHADERS] = {0};
 
 	// NOTE: Defining 0 (NULL) for vertex shader forces usage of internal default vertex shader
-	shaders[FX_GRAYSCALE] = LoadShader(0, TextFormat("resources/shaders/glsl%i/grayscale.fs", GLSL_VERSION));
-	shaders[FX_POSTERIZATION] = LoadShader(0, TextFormat("resources/shaders/glsl%i/posterization.fs", GLSL_VERSION));
-	shaders[FX_DREAM_VISION] = LoadShader(0, TextFormat("resources/shaders/glsl%i/dream_vision.fs", GLSL_VERSION));
-	shaders[FX_PIXELIZER] = LoadShader(0, TextFormat("resources/shaders/glsl%i/pixelizer.fs", GLSL_VERSION));
-	shaders[FX_CROSS_HATCHING] = LoadShader(0, TextFormat("resources/shaders/glsl%i/cross_hatching.fs", GLSL_VERSION));
-	shaders[FX_CROSS_STITCHING] = LoadShader(0, TextFormat("resources/shaders/glsl%i/cross_stitching.fs", GLSL_VERSION));
-	shaders[FX_PREDATOR_VIEW] = LoadShader(0, TextFormat("resources/shaders/glsl%i/predator.fs", GLSL_VERSION));
-	shaders[FX_SCANLINES] = LoadShader(0, TextFormat("resources/shaders/glsl%i/scanlines.fs", GLSL_VERSION));
-	shaders[FX_FISHEYE] = LoadShader(0, TextFormat("resources/shaders/glsl%i/fisheye.fs", GLSL_VERSION));
-	shaders[FX_SOBEL] = LoadShader(0, TextFormat("resources/shaders/glsl%i/sobel.fs", GLSL_VERSION));
-	shaders[FX_BLOOM] = LoadShader(0, TextFormat("resources/shaders/glsl%i/bloom.fs", GLSL_VERSION));
-	shaders[FX_BLUR] = LoadShader(0, TextFormat("resources/shaders/glsl%i/blur.fs", GLSL_VERSION));
+	shaders[FX_BLOOM] = LoadShader(0, sha_str);
 
-	int currentShader = FX_GRAYSCALE;
+	int currentShader = FX_BLOOM;
 
 	// Create a RenderTexture2D to be used for render to texture
 	RenderTexture2D target = LoadRenderTexture(screenWidth, screenHeight);
@@ -106,16 +111,6 @@ int main(void)
 		//----------------------------------------------------------------------------------
 		// SetCameraMode(camera, CAMERA_ORBITAL);
 		UpdateCamera(&camera);
-
-		if (IsKeyPressed(KEY_RIGHT))
-			currentShader++;
-		else if (IsKeyPressed(KEY_LEFT))
-			currentShader--;
-
-		if (currentShader >= MAX_POSTPRO_SHADERS)
-			currentShader = 0;
-		else if (currentShader < 0)
-			currentShader = MAX_POSTPRO_SHADERS - 1;
 		//----------------------------------------------------------------------------------
 
 		// Draw
@@ -141,10 +136,9 @@ int main(void)
 		// Draw 2d shapes and text over drawn texture
 		DrawRectangle(0, 9, 580, 30, Fade(LIGHTGRAY, 0.7f));
 
-		DrawText("(c) Church 3D model by Alberto Cano", screenWidth - 200, screenHeight - 20, 10, GRAY);
+		DrawText(model_str, screenWidth - 700, screenHeight - 20, 10, GRAY);
 		DrawText("CURRENT POSTPRO SHADER:", 10, 15, 20, BLACK);
 		DrawText(postproShaderText[currentShader], 330, 15, 20, RED);
-		DrawText("< >", 540, 10, 30, DARKBLUE);
 		DrawFPS(700, 15);
 		EndDrawing();
 		//----------------------------------------------------------------------------------

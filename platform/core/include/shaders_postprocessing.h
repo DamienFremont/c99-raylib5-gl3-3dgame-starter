@@ -1,2 +1,2 @@
 
-int main(void);
+int main(const char *exepath);
