@@ -177,7 +177,7 @@ cmake --build build --config Release
       :x: Octree
       :x: GeoMod
 - Scripting
-  - :x: Properties: 
+  - :hourglass: Properties: 
       :heavy_check_mark: code 
       :x: file
   - :hourglass: Console

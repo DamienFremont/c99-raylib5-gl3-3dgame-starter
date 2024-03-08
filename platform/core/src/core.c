@@ -1,4 +1,4 @@
-#include "shaders_postprocessing.h"
+#include "core.h"
 
 #include "raylib.h"
 
@@ -139,7 +139,11 @@ int main(AppProperties appProps)
 		ClearBackground(RAYWHITE); // Clear texture background
 		BeginMode3D(camera);
 		DrawModel(models[CHARACTER], position, 0.1f, WHITE);
-		DrawGrid(10, 1.0f);
+                    DrawCubeWiresV((Vector3){ 0.0f, 0.5f, 1.0f }, (Vector3){ 1.0f, 1.0f, 1.0f }, RED);
+                    DrawCubeV((Vector3){ 0.0f, 0.5f, 1.0f }, (Vector3){ 1.0f, 1.0f, 1.0f }, PURPLE);
+                    DrawCubeWiresV((Vector3){ 0.0f, 0.5f, -1.0f }, (Vector3){ 1.0f, 1.0f, 1.0f }, DARKGREEN);
+                    DrawCubeV((Vector3) { 0.0f, 0.5f, -1.0f }, (Vector3){ 1.0f, 1.0f, 1.0f }, YELLOW);
+                    DrawGrid(10, 1.0f);
 		EndMode3D();
 		EndTextureMode(); // End drawing to texture (now we have a texture available for next passes)
 

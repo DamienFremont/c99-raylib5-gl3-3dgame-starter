@@ -11,7 +11,7 @@ set(RAYLIB ${LIB}/raylib-5.0_win64_msvc16)
 
 # ---- Sources ----
 include_directories(include)
-add_library(${PROJECT_NAME} src/shaders_postprocessing.c)
+add_library(${PROJECT_NAME} src/core.c)
 
 # ---- Dependencies ----
 include_directories(${RAYLIB}/include)

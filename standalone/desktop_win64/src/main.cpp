@@ -1,5 +1,5 @@
 #include <windows.h>
-#include <shaders_postprocessing.h>
+#include <core.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -25,9 +25,9 @@ int APIENTRY WinMain(HINSTANCE hInstance,
     AppProperties appProperties;
     strcpy(appProperties.res_path, cstr);
     appProperties.msaa_enable = true;
-    appProperties.bloom_enable = false;
+    appProperties.bloom_enable = true;
     appProperties.glsl_version = GLSL_VERSION;
-    appProperties.fps_cap = 60;
+    appProperties.fps_cap = 0;
     appProperties.showFPS = true;
 
     return main(appProperties);
