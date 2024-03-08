@@ -7,8 +7,8 @@ set(ASSETS   ../../assets)
 set(LIB      ../../lib)
 set(PLATFORM ../../platform)
 set(CORE ${PLATFORM}/core)
-set(RAYLIB ${LIB}/raylib-4.0.0_win64_msvc16)
-set(RAYLIB_LIB  "C:/Users/damien/git/cpp20-raylib-starter/lib/raylib-4.0.0_win64_msvc16/lib/raylib.lib")
+set(RAYLIB ${LIB}/raylib-5.0_win64_msvc16)
+set(RAYLIB_LIB  "C:/Users/damien/git/cpp20-raylib-starter/lib/raylib-5.0_win64_msvc16/lib/raylib.lib")
 set(RAYLIB_BIN "${RAYLIB}/lib/raylib.dll")
 
 # ---- Sources ----
@@ -40,5 +40,7 @@ target_link_libraries(${PROJECT_NAME}
 )
 
 # ---- Bundle ----
+file(REMOVE_RECURSE                       ${CMAKE_CURRENT_BINARY_DIR}/Debug)
 file(COPY ${ASSETS}/resources DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
+file(REMOVE_RECURSE                       ${CMAKE_CURRENT_BINARY_DIR}/Release)
 file(COPY ${ASSETS}/resources DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
