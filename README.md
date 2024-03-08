@@ -213,3 +213,11 @@ cmake --build build --config Release
     - [GitHub](https://github.com/raysan5/raylib/blob/master/examples/)
     - [Demos](https://www.raylib.com/examples.html)
       - [shaders_postprocessing](https://www.raylib.com/examples/shaders/loader.html?name=shaders_postprocessing) 
+      - [shaders_hybrid_render](https://www.raylib.com/examples/shaders/loader.html?name=shaders_hybrid_render)
+
+There are several games made with raylib to highlight:
+- Hare136: https://play.google.com/store/apps/details?id=games.haremonic.slider
+- SideStep Legends: https://store.steampowered.com/app/2077590/Sidestep_Legends/
+- Pure Logic: https://store.steampowered.com/app/1861500/Pure_Logic/
+
+There are also many small games (and tools) made with raylib on itchio: https://itch.io/c/380928/made-with-raylib

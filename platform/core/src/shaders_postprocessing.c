@@ -2,15 +2,8 @@
 
 #include "raylib.h"
 
-#include<stdio.h>
-#include<stdlib.h>
-
-
-#if defined(PLATFORM_DESKTOP)
-#define GLSL_VERSION 330
-#else // PLATFORM_ANDROID, PLATFORM_WEB
-#define GLSL_VERSION 100
-#endif
+#include <stdio.h>
+#include <stdlib.h>
 
 #define MAX_POSTPRO_SHADERS 12
 
@@ -50,14 +43,15 @@ static const char *postproShaderText[] = {
 //------------------------------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
-int main(const char *respath)
+int main(AppProperties appProps)
 {
 	// Initialization
 	//--------------------------------------------------------------------------------------
 	const int screenWidth = 800;
 	const int screenHeight = 450;
 
-	SetConfigFlags(FLAG_MSAA_4X_HINT); // Enable Multi Sampling Anti Aliasing 4x (if available)
+	if (appProps.msaa_enable == true)
+		SetConfigFlags(FLAG_MSAA_4X_HINT); // Enable Multi Sampling Anti Aliasing 4x (if available)
 
 	InitWindow(screenWidth, screenHeight, "cpp20-raylib-starter");
 
@@ -69,22 +63,21 @@ int main(const char *respath)
 	camera.fovy = 45.0f;						   // Camera field-of-view Y
 	camera.projection = CAMERA_PERSPECTIVE;		   // Camera projection type
 
-	char *mod_path = "resources\\models\\church.obj";
+	char *mod_path = "resources\\models\\character.obj";
 	const char model_str[999];
-	snprintf(model_str, sizeof(model_str), "%s%s", respath, mod_path);
+	snprintf(model_str, sizeof(model_str), "%s%s", appProps.res_path, mod_path);
 
-	char *tex_path = "resources\\models\\church_diffuse.png";
+	char *tex_path = "resources\\models\\character_diffuse.png";
 	const char texture_str[999];
-	snprintf(texture_str, sizeof(model_str), "%s%s", respath, tex_path);
+	snprintf(texture_str, sizeof(model_str), "%s%s", appProps.res_path, tex_path);
 
-	char *sha_path = TextFormat("resources\\shaders\\glsl%i\\bloom.fs", GLSL_VERSION);
+	char *sha_path = TextFormat("resources\\shaders\\glsl%i\\bloom.fs", appProps.glsl_version);
 	const char sha_str[999];
-	snprintf(sha_str, sizeof(model_str), "%s%s", respath, sha_path);
+	snprintf(sha_str, sizeof(model_str), "%s%s", appProps.res_path, sha_path);
 
-	// Model model = LoadModel("resources/models/church.obj");					// Load OBJ model
-	Model model = LoadModel(model_str);					// Load OBJ model
-	Texture2D texture = LoadTexture(texture_str); // Load model texture (diffuse map)
-	model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;		// Set model diffuse texture
+	Model model = LoadModel(model_str);								 // Load OBJ model
+	Texture2D texture = LoadTexture(texture_str);					 // Load model texture (diffuse map)
+	model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture; // Set model diffuse texture
 
 	Vector3 position = {0.0f, 0.0f, 0.0f}; // Set model position
 
@@ -101,7 +94,7 @@ int main(const char *respath)
 	// Create a RenderTexture2D to be used for render to texture
 	RenderTexture2D target = LoadRenderTexture(screenWidth, screenHeight);
 
-	SetTargetFPS(0); // Set our game to run at 60 frames-per-second
+	SetTargetFPS(appProps.fps_cap); // Set our game to run at 60 frames-per-second
 	//--------------------------------------------------------------------------------------
 
 	// Main game loop
@@ -109,8 +102,7 @@ int main(const char *respath)
 	{
 		// Update
 		//----------------------------------------------------------------------------------
-		// SetCameraMode(camera, CAMERA_ORBITAL);
-		UpdateCamera(&camera);
+		UpdateCamera(&camera, CAMERA_ORBITAL);
 		//----------------------------------------------------------------------------------
 
 		// Draw
@@ -128,10 +120,12 @@ int main(const char *respath)
 		ClearBackground(RAYWHITE); // Clear screen background
 
 		// Render generated texture using selected postprocessing shader
-		BeginShaderMode(shaders[currentShader]);
+		if (appProps.bloom_enable == true)
+			BeginShaderMode(shaders[currentShader]);
 		// NOTE: Render texture must be y-flipped due to default OpenGL coordinates (left-bottom)
 		DrawTextureRec(target.texture, (Rectangle){0, 0, (float)target.texture.width, (float)-target.texture.height}, (Vector2){0, 0}, WHITE);
-		EndShaderMode();
+		if (appProps.bloom_enable == true)
+			EndShaderMode();
 
 		// Draw 2d shapes and text over drawn texture
 		DrawRectangle(0, 9, 580, 30, Fade(LIGHTGRAY, 0.7f));
