@@ -52,3 +52,6 @@ cmake_install.cmake
 
 # Sonar
 .scannerwork
+
+# Blender
+**/*.blend1
