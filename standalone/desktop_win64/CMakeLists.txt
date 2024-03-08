@@ -39,7 +39,7 @@ target_link_libraries(${PROJECT_NAME}
   "C:/Users/damien/git/cpp20-raylib-starter/lib/winmm-Win64-10.0.22621.0/lib/WinMM.Lib"
 )
 
-# ---- Bundle ----
+# ---- Bundle (first build only) ----
 file(REMOVE_RECURSE                       ${CMAKE_CURRENT_BINARY_DIR}/Debug)
 file(COPY ${ASSETS}/resources DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
 file(REMOVE_RECURSE                       ${CMAKE_CURRENT_BINARY_DIR}/Release)
