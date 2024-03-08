@@ -10,92 +10,20 @@
 ## Content
 
   - [Content](#content)
-  - [Features](#features)
   - [Dependencies](#dependencies)
   - [Screenshots](#screenshots)
   - [Install](#install)
   - [Usage](#usage)
+  - [Features](#features)
   - [Resources](#resources)
 
 ---------------------------------------
 
-## Features
-
-- Stack
-  - :heavy_check_mark: C++20
-  - :heavy_check_mark: Standard libraries
-  - :heavy_check_mark: Raylib
-- Targets:
-  - :heavy_check_mark: Win64 (Windows)
-  - :x: JS (Javascript)
-  - :x: WASM (WebAssembly)
-- Graphics
-  - :hourglass: Render: 
-      :heavy_check_mark: PostProcessing
-  - :hourglass: Camera: 
-      :x: ThirdPerson
-      :x: FOV
-      :x: Cinematic
-      :x: Dynamic res.
-  - :x: Lighting:
-      :x: Real Time
-      :x: Backed
-  - :hourglass: Meshes: 
-      :heavy_check_mark: Meshes
-      :heavy_check_mark: Textures
-      :heavy_check_mark: Shaders
-      :heavy_check_mark: Materials
-      :x: LOD
-  - :x: Visual Effects:
-      :x: Particles
-      :x: Distant Horizon
-  - :x: Sky:
-      :x: Color
-      :x: Cubemap
-      :x: Procedural
-- World
-  - :x: Terrain
-      :x: Heightmap
-      :x: SpeedTree
-  - :x: Physics
-      :x: hitbox
-      :x: gravity
-  - :x: Simulation
-      :x: LevelTick
-      :x: Water
-      :x: Cloth
-  - :x: Voxel
-      :x: Octree
-      :x: GeoMod
-- Scripting
-  - :x: Properties
-  - :x: Bot
-  - :x: LUA scripts
-- Animation
-  - :x: Character
-  - :x: IK
-- Audio: 
-  - :x: Sound:
-      :x: Wave
-      :x: Spatial
-  - :x: Music:
-      :x: Player
-      :x: Wave
-      :x: Mp3
-      :x: Module
-- Input
-  - :x: UI: 
-      :x: start menu
-      :x: quit menu
-      :x: config menu
-      :x: i18n
-  - :x: Control:
-      :x: Keyboard
-      :x: Gamepad
-
 ## Dependencies
 
-- [RayLib 4.0.0](https://www.raylib.com/)
+- C++ 2020
+- [RayLib 5.0.0](https://www.raylib.com/)
+- OpenGL 330
 
 ## Screenshots
 
@@ -199,6 +127,85 @@ cmake --build build --config Release
 # Run
 .\build\desktop_win64\Release\desktop_win64.exe
 ```
+
+## Features
+
+- Stack
+  - :heavy_check_mark: C++20
+  - :heavy_check_mark: Standard libraries
+  - :heavy_check_mark: Raylib
+- Targets:
+  - :heavy_check_mark: Win64 (Windows)
+  - :x: JS (Javascript)
+  - :x: WASM (WebAssembly)
+- Graphics
+  - :hourglass: Render: 
+      :heavy_check_mark: PostProcessing
+  - :hourglass: Camera: 
+      :x: ThirdPerson
+      :x: FOV
+      :x: Cinematic
+      :x: Dynamic res.
+  - :x: Lighting:
+      :x: Real Time
+      :x: Backed
+  - :hourglass: Meshes: 
+      :heavy_check_mark: Meshes
+      :heavy_check_mark: Textures
+      :heavy_check_mark: Shaders
+      :heavy_check_mark: Materials
+      :x: LOD
+  - :x: Visual Effects:
+      :x: Particles
+      :x: Distant Horizon
+  - :x: Sky:
+      :x: Color
+      :x: Cubemap
+      :x: Procedural
+- World
+  - :x: Terrain
+      :x: Heightmap
+      :x: SpeedTree
+  - :x: Physics
+      :x: hitbox
+      :x: gravity
+  - :x: Simulation
+      :x: LevelTick
+      :x: Water
+      :x: Cloth
+  - :x: Voxel
+      :x: Octree
+      :x: GeoMod
+- Scripting
+  - :x: Properties: 
+      :heavy_check_mark: code 
+      :x: file
+  - :hourglass: Console
+      :heavy_check_mark: output
+      :x: input    
+  - :x: Bot
+  - :x: LUA scripts
+- Animation
+  - :x: Character
+  - :x: IK
+- Audio: 
+  - :x: Sound:
+      :x: Wave
+      :x: Spatial
+  - :x: Music:
+      :x: Player
+      :x: Wave
+      :x: Mp3
+      :x: Module
+- Input
+  - :x: UI: 
+      :x: start menu
+      :x: quit menu
+      :x: config menu
+      :x: i18n
+  - :x: Control:
+      :x: Keyboard
+      :x: Gamepad
 
 ## Resources
 
