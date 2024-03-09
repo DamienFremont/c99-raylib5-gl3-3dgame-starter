@@ -45,3 +45,20 @@ vec.x = 0.0f;
 vec.y = 1.0f;
 vec.z = -1.0f;
 ```
+
+## Structure declaration ?
+
+```c
+typedef struct MyObject MyObject;
+struct MyObject
+{
+    int number;
+};
+```
+
+```c
+typedef struct MyObject
+{
+    int number;
+} MyObject;
+```

@@ -35,10 +35,10 @@ AppProperties initConfig()
     appProperties.glsl_version = GLSL_VERSION;
     appProperties.screen_width = getScreen(SD).width;
     appProperties.screen_height = getScreen(SD).height;
-    appProperties.fps_limit = 60;
+    appProperties.fps_limit = 0;
     appProperties.fps_counter_show = true;
     appProperties.postpro_msaa_enable = true;
-    appProperties.postpro_bloom_enable = true;
+    appProperties.postpro_bloom_enable = false;
     return appProperties;
 }
 

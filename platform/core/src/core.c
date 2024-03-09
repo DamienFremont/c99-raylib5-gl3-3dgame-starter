@@ -18,10 +18,6 @@ const char consoleOut[999];
 // 	strcpy(consoleOut, str);
 // }
 
-void changeStage(int* stage_p, int newValue){
-    *stage_p = newValue;
-}
-
 //------------------------------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
@@ -60,12 +56,15 @@ int main(AppProperties props)
 	SetTargetFPS(props.fps_limit);
 	bool showFPS = props.fps_counter_show;
 	int showConsole = 0;
+	int animationEnable = 1;
 
 	Shader postproShader = (props.postpro_bloom_enable == true) ? shaRes.shaders[FX_BLOOM] : shaRes.shaders[FX_DEFAULT];
 	Model model = lvlkRes.models[CHARACTER];
 	// Texture2D texture = res.textures[CHARACTER];
 
 	//--------------------------------------------------------------------------------------
+
+	InitInputEvent();
 
 	// Main game loop
 	while (!WindowShouldClose()) // Detect window close button or ESC key
@@ -77,8 +76,9 @@ int main(AppProperties props)
 		// Input
 		float char_speed = 0.05f; // TODO: tickCount
 
-		InputOut inout = CheckInputEvent((InputConfig){
+		InputOut inout = ExecuteInputEvent((InputConfig){
 			playerPosition,
+			showConsole,
 			char_speed});
 		playerPosition.x = inout.playerPosition.x;
 		playerPosition.y = inout.playerPosition.y;
@@ -97,9 +97,12 @@ int main(AppProperties props)
 			0.0f + playerPosition.z}; // Camera looking at point
 
 		// Animation
-		ModelAnimation anim = modelAnimations[animIndex];
-		animCurrentFrame = (animCurrentFrame + 1) % anim.frameCount; // TODO: tickCount
-		UpdateModelAnimation(model, anim, animCurrentFrame);
+		if (animationEnable == 1)
+		{
+			ModelAnimation anim = modelAnimations[animIndex];
+			animCurrentFrame = (animCurrentFrame + 1) % anim.frameCount; // TODO: tickCount
+			UpdateModelAnimation(model, anim, animCurrentFrame);
+		}
 
 		//----------------------------------------------------------------------------------
 
