@@ -1,39 +1,20 @@
+#include "input.h"
+
 #include <raylib.h>
 #include <stdbool.h>
 
-#include "level.h"
-
-typedef struct InputConfig InputConfig;
-struct InputConfig
+InputEvent_State InitInputEvent()
 {
-    Vector3 playerPosition;
-    int showConsole;
-    float char_speed;
-};
-
-typedef struct InputOut InputOut;
-struct InputOut
-{
-    Vector3 playerPosition;
-    int showConsole;
-    int animIndex;
-};
-
-typedef struct InputEventState InputEventState;
-struct InputEventState
-{
-    int KEY_F1_press;
-};
-
-InputEventState state = {0};
-
-InputOut InitInputEvent()
-{
+    InputEvent_State state = {0};
     state.KEY_F1_press = 0;
+    return state;
 }
 
-InputOut ExecuteInputEvent(InputConfig cfg)
+InputOut ExecuteInputEvent(InputEvent_State state, InputConfig cfg)
 {
+    const int ANIM_RUN = 6;
+    const int ANIM_IDLE = 4;
+
     InputOut out;
     out.showConsole = cfg.showConsole;
     out.animIndex = ANIM_IDLE;
@@ -43,12 +24,12 @@ InputOut ExecuteInputEvent(InputConfig cfg)
         cfg.playerPosition.z};
 
     // Common
-    if (IsKeyDown(KEY_F1) && state.KEY_F1_press == 0)
+    if (IsKeyPressed(KEY_F1) && state.KEY_F1_press == 0)
     {
         out.showConsole = !out.showConsole;
         state.KEY_F1_press = 1;
     }
-    else if (IsKeyUp(KEY_F1))
+    else if (IsKeyReleased(KEY_F1))
     {
         state.KEY_F1_press = 0;
     }

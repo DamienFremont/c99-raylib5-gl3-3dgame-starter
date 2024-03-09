@@ -1,3 +1,5 @@
+#include "camera.h"
+
 #include <raylib.h>
 
 Camera InitCamera()

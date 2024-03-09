@@ -1,7 +1,7 @@
+#pragma once
+
 #include "config.h"
 #include <raylib.h>
-
-#pragma once
 
 #define MAX_MODELS 1
 

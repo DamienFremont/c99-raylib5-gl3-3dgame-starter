@@ -1,15 +1,15 @@
 #include "core.h"
 
-#include "common.c"
-#include "console.c"
-#include "input.c"
-
-#include "level1.c"
-#include "prefabCamera.c"
-
 #include <raylib.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+#include "common.h"
+#include "console.h"
+#include "input.h"
+
+#include "level.h"
+#include "camera.h"
 
 const char consoleOut[999];
 
@@ -64,7 +64,7 @@ int main(AppProperties props)
 
 	//--------------------------------------------------------------------------------------
 
-	InitInputEvent();
+	InputEvent_State state = InitInputEvent();
 
 	// Main game loop
 	while (!WindowShouldClose()) // Detect window close button or ESC key
@@ -76,7 +76,7 @@ int main(AppProperties props)
 		// Input
 		float char_speed = 0.05f; // TODO: tickCount
 
-		InputOut inout = ExecuteInputEvent((InputConfig){
+		InputOut inout = ExecuteInputEvent(state, (InputConfig){
 			playerPosition,
 			showConsole,
 			char_speed});
