@@ -62,3 +62,21 @@ typedef struct MyObject
     int number;
 } MyObject;
 ```
+
+## CMake vars case ?
+
+```txt
+set(mygame "../../mygame")
+
+include_directories(
+  ${mygame}/src
+)
+```
+
+```txt
+set(MYGAME "../../mygame")
+
+include_directories(
+  ${MYGAME}/src
+)
+```
