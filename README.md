@@ -142,13 +142,10 @@ cmake --build build --config Release
   - :hourglass: Render: 
       :heavy_check_mark: PostProcessing
   - :hourglass: Camera: 
-      :x: ThirdPerson
+      :hourglass: ThirdPerson
       :x: FOV
-      :x: Cinematic
-      :x: Dynamic res.
   - :x: Lighting:
       :x: Real Time
-      :x: Backed
   - :hourglass: Meshes: 
       :heavy_check_mark: Meshes
       :heavy_check_mark: Textures
@@ -163,19 +160,11 @@ cmake --build build --config Release
       :x: Cubemap
       :x: Procedural
 - World
-  - :x: Terrain
-      :x: Heightmap
-      :x: SpeedTree
   - :x: Physics
       :x: hitbox
       :x: gravity
   - :x: Simulation
       :x: LevelTick
-      :x: Water
-      :x: Cloth
-  - :x: Voxel
-      :x: Octree
-      :x: GeoMod
 - Scripting
   - :hourglass: Properties: 
       :heavy_check_mark: code 
@@ -183,11 +172,8 @@ cmake --build build --config Release
   - :hourglass: Console
       :heavy_check_mark: output
       :x: input    
-  - :x: Bot
-  - :x: LUA scripts
 - Animation
-  - :x: Character
-  - :x: IK
+  - :heavy_check_mark: Character
 - Audio: 
   - :x: Sound:
       :x: Wave
@@ -196,16 +182,16 @@ cmake --build build --config Release
       :x: Player
       :x: Wave
       :x: Mp3
-      :x: Module
 - Input
   - :x: UI: 
-      :x: start menu
+      :x: main menu
       :x: quit menu
-      :x: config menu
       :x: i18n
-  - :x: Control:
-      :x: Keyboard
+  - :hourglass: Control:
+      :hourglass: Keyboard
       :x: Gamepad
+      :hourglass: Tank control
+      :x: 3D control
 
 ## Resources
 
