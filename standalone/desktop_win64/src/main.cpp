@@ -1,5 +1,7 @@
 #include <windows.h>
+
 #include <core.h>
+#include <resolutions.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,13 +10,18 @@
 
 #define GLSL_VERSION 330 // PLATFORM_DESKTOP
 
-const char* getRespath();
+// const char *getRespath();
+AppProperties initConfig();
 
 int APIENTRY WinMain(HINSTANCE hInstance,
                      HINSTANCE hPrevInstance,
                      LPSTR lpCmdLine, int nCmdShow)
 {
+    return main(initConfig());
+}
 
+AppProperties initConfig()
+{
     std::string str = _pgmptr;
     int exepath_len = str.size();
     std::string exebin = "\\desktop_win64.exe";
@@ -23,14 +30,16 @@ int APIENTRY WinMain(HINSTANCE hInstance,
     const char *cstr = str2.c_str();
 
     AppProperties appProperties;
+    strcpy(appProperties.appName, "cpp20-raylib-starter");
     strcpy(appProperties.res_path, cstr);
-    appProperties.msaa_enable = true;
-    appProperties.bloom_enable = true;
     appProperties.glsl_version = GLSL_VERSION;
-    appProperties.fps_cap = 0;
-    appProperties.showFPS = true;
-
-    return main(appProperties);
+    appProperties.screen_width = getScreen(SD).width;
+    appProperties.screen_height = getScreen(SD).height;
+    appProperties.fps_limit = 60;
+    appProperties.fps_counter_show = true;
+    appProperties.postpro_msaa_enable = true;
+    appProperties.postpro_bloom_enable = true;
+    return appProperties;
 }
 
 // const char* getRespath() {
