@@ -2,6 +2,7 @@
 
 #include <raylib.h>
 #include <time.h>
+
 #include "config.h"
 #include "console.h"
 #include "camera.h"
@@ -115,11 +116,11 @@ int Update_UnrealThirdPerson(UnrealThirdPerson_State *state)
     // Action
     state->camera.position = (Vector3){
         0.0f + state->playerPosition.x,
-        1.0f + state->playerPosition.y,
-        -1.0f + state->playerPosition.z}; // Camera position
+        0.5f + state->playerPosition.y,
+        -2.0f + state->playerPosition.z}; // Camera position
     state->camera.target = (Vector3){
         0.0f + state->playerPosition.x,
-        0.25f + state->playerPosition.y,
+        0.5f + state->playerPosition.y,
         0.0f + state->playerPosition.z}; // Camera looking at point
     // Animation
     if (animationEnable == 1)
@@ -138,8 +139,6 @@ void Texture_UnrealThirdPerson(UnrealThirdPerson_State *state)
         DrawModel(state->model, state->playerPosition, 0.1f, WHITE);
         DrawCubeWiresV((Vector3){0.0f, 0.5f, 1.0f}, (Vector3){1.0f, 1.0f, 1.0f}, RED);
         DrawCubeV((Vector3){0.0f, 0.5f, 1.0f}, (Vector3){1.0f, 1.0f, 1.0f}, PURPLE);
-        DrawCubeWiresV((Vector3){0.0f, 0.5f, -1.0f}, (Vector3){1.0f, 1.0f, 1.0f}, DARKGREEN);
-        DrawCubeV((Vector3){0.0f, 0.5f, -1.0f}, (Vector3){1.0f, 1.0f, 1.0f}, YELLOW);
         DrawGrid(10, 1.0f);
     }
     EndMode3D();

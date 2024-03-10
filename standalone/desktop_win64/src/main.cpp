@@ -1,12 +1,10 @@
 #include <windows.h>
 
-#include <core.h>
-#include <resolutions.h>
-
 #include <stdio.h>
 #include <stdlib.h>
-
 #include <string>
+#include "resolutions.h"
+#include "mygame.h"
 
 #define GLSL_VERSION 330 // PLATFORM_DESKTOP
 

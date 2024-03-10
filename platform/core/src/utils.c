@@ -1,5 +1,4 @@
 
-
 char *pathJoin(char *path1, char *path2)
 {
 	const char path[999];

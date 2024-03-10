@@ -6,6 +6,8 @@ project(desktop_win64 LANGUAGES CXX)
 set(assets     "../../assets")
 set(lib        "../../lib")
 set(platform   "../../platform")
+
+set(mygame     "${platform}/mygame")
 set(core       "${platform}/core")
 set(raylib     "${lib}/raylib-5.0_win64_msvc16")
 set(raylib_lib "C:/Users/damien/git/cpp20-raylib-starter/lib/raylib-5.0_win64_msvc16/lib/raylib.lib")
@@ -14,6 +16,8 @@ set(raylib_bin "${raylib}/lib/raylib.dll")
 # ---- Sources ----
 include_directories(
   src
+  ${mygame}/include
+  ${mygame}/src
   ${core}/include
   ${core}/src
   ${raylib}/include
@@ -21,6 +25,8 @@ include_directories(
 
 file(GLOB SOURCES
   "src/*.cpp"
+  "${mygame}/include/*.h"
+  "${mygame}/src/*.c"
   "${core}/include/*.h"
   "${core}/src/*.c"
 )
