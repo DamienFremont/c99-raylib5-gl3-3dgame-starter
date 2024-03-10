@@ -1,16 +1,15 @@
 #include "config.h"
 
 #include <raylib.h>
-
-// #pragma once
+#include <time.h>
 
 typedef struct Launcher_State Launcher_State;
 struct Launcher_State
 {
-    Texture2D texture;
     AppConfiguration appConfig;
-    int launcherDelay; // sec
-    int framesCounter; // FPS
+    Texture2D texture;
+    int durationInMs;
+    clock_t clockAtStartup;
 };
 
 Launcher_State InitLauncher(AppConfiguration appConfig);

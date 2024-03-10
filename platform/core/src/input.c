@@ -45,7 +45,8 @@ InputOut ExecuteInputEvent(InputEvent_State state, InputConfig cfg)
         out.playerPosition.x = cfg.playerPosition.x + cfg.char_speed;
         out.animIndex = ANIM_RUN;
     }
-    else if (IsKeyDown(KEY_W))
+    
+    if (IsKeyDown(KEY_W))
     {
         out.playerPosition.z = cfg.playerPosition.z + cfg.char_speed;
         out.animIndex = ANIM_RUN;

@@ -1,10 +1,12 @@
 #include "launcher.h"
 
 #include <raylib.h>
+#include <time.h>
 #include "config.h"
 
 Launcher_State InitLauncher(AppConfiguration appConfig)
 {
+    int clockTriggerSec = 2;
     // load
     char *logo_path = "resources\\launcher.png";
     const char logo_str[999];
@@ -15,8 +17,8 @@ Launcher_State InitLauncher(AppConfiguration appConfig)
 
     Launcher_State state = {0};
     state.appConfig = appConfig;
-    state.launcherDelay = 2;
-    state.framesCounter = 0;
+    state.durationInMs = clockTriggerSec * 1000;
+    state.clockAtStartup = clock();
     state.texture = texture;
     return state;
 }
@@ -25,11 +27,11 @@ int UpdateLauncher(Launcher_State *state)
 {
     int LAUNCHER = 0;
     int GAMEPLAY = 1;
-    int delay = (state->appConfig.fps_limit * state->launcherDelay);
-    // TODO: Update LOGO screen variables here!
-    state->framesCounter++; // Count frames
-    // Wait for 2 seconds (120 frames) before jumping to TITLE screen
-    if (state->framesCounter > delay)
+    // compute
+    clock_t difference = clock() - state->clockAtStartup;
+    int msec = difference * 1000 / CLOCKS_PER_SEC;
+    // changer level
+    if (msec > state->durationInMs)
     {
         return GAMEPLAY;
     }

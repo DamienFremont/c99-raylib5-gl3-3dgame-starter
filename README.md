@@ -123,6 +123,7 @@ cmake --build build | .\build\desktop_win64\Debug\desktop_win64.exe
 
 ```powershell
 # Build
+rm .\build\ -r -force
 cmake -S "." -B "build"
 cmake --build build --config Release
 
@@ -195,6 +196,8 @@ cmake --build build --config Release
       :x: Gamepad
       :hourglass: Tank control
       :x: 3D control
+- Other
+  - :heavy_check_mark: launching screen
 
 ## Resources
 
