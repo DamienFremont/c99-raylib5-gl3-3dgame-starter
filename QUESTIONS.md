@@ -129,3 +129,34 @@ int UpdateLauncher(Launcher_State *state); // read/write function
 
 void DrawLauncher(Launcher_State state); // read only
 ```
+
+## Property Case  ?
+
+```c
+// Camelcase
+struct LauncherState
+{
+    Texture2D texture;
+    int durationInMs;
+    clock_t clockAtStartup;
+};
+```
+
+```c
+// Snskecase
+struct LauncherState
+{
+    Texture2D texture;
+    int duration_in_ms;
+    clock_t clock_at_startup;
+};
+```
+
+```c
+struct LauncherState
+{
+    Texture2D texture;
+    int durationinms;
+    clock_t clockatstartup;
+};
+```
