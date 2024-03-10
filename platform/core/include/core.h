@@ -1,3 +1,3 @@
 #include "config.h"
 
-int main(AppProperties appProps);
+int main(AppConfiguration appProps);

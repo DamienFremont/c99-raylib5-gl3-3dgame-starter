@@ -3,7 +3,7 @@
 #include "core.h"
 #include "raylib.h"
 
-ShaderResources LoadShaders(AppProperties appProps)
+ShaderResources LoadShaders(AppConfiguration appProps)
 {
 	// 	shaders[FX_DEFAULT] = LoadShader(0, pathJoin(appProps.res_path, TextFormat("resources\\shaders\\glsl%i\\default.fs", appProps.glsl_version)));
 	// 	shaders[FX_BLOOM] = LoadShader(0, pathJoin(appProps.res_path, TextFormat("resources\\shaders\\glsl%i\\bloom.fs", appProps.glsl_version)));

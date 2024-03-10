@@ -2,8 +2,8 @@
 
 #pragma once
 
-typedef struct AppProperties AppProperties;
-struct AppProperties
+typedef struct AppConfiguration AppConfiguration;
+struct AppConfiguration
 {
     char appName[999];
 

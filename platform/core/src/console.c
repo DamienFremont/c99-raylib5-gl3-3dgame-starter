@@ -26,3 +26,8 @@ void DrawConsole(ConsoleConfig cfg)
         DrawFPS(cfg.screen_width - 100, 15);
     }
 }
+
+// log(char str)
+// {
+// 	strcpy(consoleOut, str);
+// }

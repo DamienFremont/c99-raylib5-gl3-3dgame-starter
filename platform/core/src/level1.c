@@ -2,18 +2,18 @@
 
 #include <raylib.h>
 
-LvlResources LoadLevel(AppProperties appProps)
+LvlResources LoadLevel(AppConfiguration appConfig)
 {
     // 	models[CHARACTER] = LoadModel(pathJoin(appProps.res_path, "resources\\models\\church.obj"));
 
     // resolve paths
     char *mod_path = "resources\\models\\character.glb";
     const char mod_str[999];
-    snprintf(mod_str, sizeof(mod_str), "%s\\%s", appProps.res_path, mod_path);
+    snprintf(mod_str, sizeof(mod_str), "%s\\%s", appConfig.res_path, mod_path);
 
     char *tex_path = "resources\\models\\church_diffuse.png";
     const char texture_str[999];
-    snprintf(texture_str, sizeof(texture_str), "%s\\%s", appProps.res_path, tex_path);
+    snprintf(texture_str, sizeof(texture_str), "%s\\%s", appConfig.res_path, tex_path);
 
     // load
     LvlResources res;

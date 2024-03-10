@@ -24,7 +24,7 @@ struct LvlResources
     ModelAnimation *modelAnimations;
 };
 
-LvlResources LoadLevel(AppProperties appProps);
+LvlResources LoadLevel(AppConfiguration appProps);
 
 void UnloadLevel();
 

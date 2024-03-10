@@ -17,6 +17,6 @@ struct ShaderResources
 	Shader shaders[MAX_POSTPRO_SHADERS];
 };
 
-ShaderResources LoadShaders(AppProperties appProps);
+ShaderResources LoadShaders(AppConfiguration appProps);
 
 void UnloadShaders(ShaderResources res);
