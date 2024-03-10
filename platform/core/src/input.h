@@ -1,5 +1,6 @@
 #include <raylib.h>
-// #include <stdbool.h>
+
+#pragma once
 
 typedef struct InputConfig InputConfig;
 struct InputConfig

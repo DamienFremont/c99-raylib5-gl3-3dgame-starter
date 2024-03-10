@@ -26,14 +26,14 @@ Launcher_State InitLauncher(AppConfiguration appConfig)
 int UpdateLauncher(Launcher_State *state)
 {
     int LAUNCHER = 0;
-    int GAMEPLAY = 1;
+    int LEVEL1 = 1;
     // compute
     clock_t difference = clock() - state->clockAtStartup;
     int msec = difference * 1000 / CLOCKS_PER_SEC;
     // changer level
     if (msec > state->durationInMs)
     {
-        return GAMEPLAY;
+        return LEVEL1;
     }
     return LAUNCHER;
 }

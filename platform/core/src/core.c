@@ -11,6 +11,7 @@
 #include "level.h"
 #include "camera.h"
 #include "launcher.h"
+#include "level_unrealthirdperson.h"
 
 const char consoleOut[999];
 
@@ -20,7 +21,8 @@ const char consoleOut[999];
 typedef enum GameScreen
 {
 	LAUNCHER = 0,
-	GAMEPLAY = 1
+	UNREAL_THIRDPERSON = 1,
+	GAMEPLAY2 = 2
 } GameScreen;
 
 //------------------------------------------------------------------------------------
@@ -61,6 +63,10 @@ int main(AppConfiguration appConfig)
 	Shader postproShader = (appConfig.postpro_bloom_enable == true) ? shaRes.shaders[FX_BLOOM] : shaRes.shaders[FX_DEFAULT];
 	Model model = lvlkRes.models[CHARACTER];
 	InputEvent_State state = InitInputEvent();
+
+	// GAMEPLAY2
+	UnrealThirdPerson_State unrealThirdPerson_State = Init_UnrealThirdPerson(appConfig, &target, consoleOut);
+
 	//--------------------------------------------------------------------------------------
 
 	// Main game loop
@@ -75,11 +81,15 @@ int main(AppConfiguration appConfig)
 			currentScreen = UpdateLauncher(&launcherState);
 		}
 		break;
-		case GAMEPLAY:
+		case UNREAL_THIRDPERSON:
+		{
+			Update_UnrealThirdPerson(&unrealThirdPerson_State);
+		}
+		break;
+		case GAMEPLAY2:
 		{
 			// Input
 			float char_speed = 0.05f; // TODO: tickCount
-
 			InputOut inout = ExecuteInputEvent(state, (InputConfig){
 														  playerPosition,
 														  showConsole,
@@ -119,7 +129,12 @@ int main(AppConfiguration appConfig)
 
 			switch (currentScreen)
 			{
-			case GAMEPLAY:
+			case UNREAL_THIRDPERSON:
+			{
+				Texture_UnrealThirdPerson(&unrealThirdPerson_State);
+			}
+			break;
+			case GAMEPLAY2:
 			{
 				// 3D
 				BeginMode3D(camera);
@@ -147,7 +162,12 @@ int main(AppConfiguration appConfig)
 				DrawLauncher(&launcherState);
 			}
 			break;
-			case GAMEPLAY:
+			case UNREAL_THIRDPERSON:
+			{
+				Draw_UnrealThirdPerson(&unrealThirdPerson_State, target);
+			}
+			break;
+			case GAMEPLAY2:
 			{
 				// postprocessing
 				BeginShaderMode(postproShader);
@@ -178,6 +198,8 @@ int main(AppConfiguration appConfig)
 	// GAMEPLAY
 	UnloadShaders(shaRes);
 	UnloadLevel(lvlkRes);
+	// GAMEPLAY2
+	Unload_UnrealThirdPerson(&unrealThirdPerson_State);
 	// LAUNCHER
 	UnloadLauncher(&launcherState);
 
