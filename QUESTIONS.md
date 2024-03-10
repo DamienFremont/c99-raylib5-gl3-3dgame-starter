@@ -80,3 +80,52 @@ include_directories(
   ${MYGAME}/src
 )
 ```
+
+## Properties visibily naming ?
+
+```c
+struct MyComp_State
+{
+    int counter;
+};
+
+struct MyComp_Props
+{
+    int increment;
+};
+```
+
+```c
+MyComp_State Init(MyComp_Props props);
+
+void UpdateMyComp(MyComp_State state, MyComp_Props props);
+
+void RenderComp(MyComp_State state, MyComp_Props props);
+```
+
+```c
+MyComp_Private Init(MyComp_Props public);
+
+void UpdateMyComp(MyComp_Private private, MyComp_Props public);
+
+void RenderComp(MyComp_Private private, MyComp_Props public);
+```
+
+
+## Mixing pointers and value ?
+
+```c
+Launcher_State InitLauncher();
+
+int UpdateLauncher(Launcher_State *state); // read/write function
+
+void DrawLauncher(Launcher_State *state); // read only
+```
+
+```c
+Launcher_State InitLauncher();
+
+int UpdateLauncher(Launcher_State *state); // read/write function
+
+void DrawLauncher(Launcher_State state); // read only
+```

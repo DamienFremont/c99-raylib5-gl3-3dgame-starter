@@ -171,6 +171,7 @@ cmake --build build --config Release
   - :hourglass: Properties: 
       :heavy_check_mark: code 
       :x: file
+      :x: save
   - :hourglass: Console
       :heavy_check_mark: output
       :x: input    
