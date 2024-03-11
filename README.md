@@ -11,27 +11,94 @@
 
 ## Content
 
-  - [Content](#content)
   - [Dependencies](#dependencies)
   - [Screenshots](#screenshots)
+  - [Features](#features)
   - [Install](#install)
   - [Usage](#usage)
-  - [Features](#features)
   - [Resources](#resources)
 
 ---------------------------------------
 
 ## Dependencies
 
-- C++ 2020
-- [RayLib 5.0.0](https://www.raylib.com/)
-- OpenGL 330
+- C++ 2020 / C 2017
+- [RayLib 5.0](https://www.raylib.com/)
+- OpenGL 3.30
 
 ## Screenshots
 
 ![alt text](./docs/README/thumb-screenshot.png)
 
 ![alt text](./docs/README/diagrams-1.png)
+
+## Features
+
+- Stack
+  - :heavy_check_mark: C++20
+  - :heavy_check_mark: Standard libraries
+  - :heavy_check_mark: Raylib
+- Targets:
+  - :heavy_check_mark: Win64 (Windows)
+  - :x: JS (Javascript)
+  - :x: WASM (WebAssembly)
+- Graphics
+  - :hourglass: Render: 
+      :heavy_check_mark: PostProcessing
+      :x: Blur
+  - :hourglass: Camera: 
+      :hourglass: ThirdPerson
+      :x: FOV
+  - :x: Lighting:
+      :x: Real Time
+  - :hourglass: Meshes: 
+      :heavy_check_mark: Meshes
+      :heavy_check_mark: Textures
+      :heavy_check_mark: Shaders
+      :heavy_check_mark: Materials
+      :x: LOD
+  - :x: Visual Effects:
+      :x: Particles
+      :x: Distant Horizon
+  - :x: Sky:
+      :heavy_check_markx: Color
+      :hourglass: Cubemap
+- World
+  - :x: Physics
+      :x: hitbox
+      :x: gravity
+  - :x: Simulation
+      :x: LevelTick
+- Scripting
+  - :hourglass: Properties: 
+      :heavy_check_mark: code 
+      :x: file
+      :x: save
+  - :hourglass: Console
+      :heavy_check_mark: output
+      :x: input    
+- Animation
+  - :heavy_check_mark: Character
+- Audio: 
+  - :x: Sound:
+      :x: Wave
+      :x: Spatial
+  - :x: Music:
+      :x: Player
+      :x: Wave
+      :x: Mp3
+- Input
+  - :x: UI: 
+      :x: main menu
+      :x: quit menu
+      :x: i18n
+  - :hourglass: Control:
+      :hourglass: Keyboard
+      :x: Gamepad
+      :hourglass: Tank control
+      :x: 3D control
+- Other
+  - :heavy_check_mark: launching screen
 
 Repository layout:
 ```
@@ -77,7 +144,72 @@ PowerShell:
 cmake -S "." -B "build" -G "Visual Studio 17 2022"
 ```
 
-VS Code:
+## Usage
+
+### CMake (CLI)
+
+Install:
+
+```powershell
+# Install, Build
+cmake -S "." -B "build"
+cmake --build build
+```
+
+Dev:
+
+```powershell
+# Build & Run
+cmake --build build | .\build\desktop_win64\Debug\desktop_win64.exe
+```
+
+```powershell
+# ReInstall ./assets/resources/* (if needed)
+cmake -S "." -B "build"
+```
+
+Release:
+
+```powershell
+# Clean, Install, Release
+rm .\build\ -r -force
+cmake -S "." -B "build"
+cmake --build build --config Release
+
+# Test
+.\build\desktop_win64\Release\desktop_win64.exe
+```
+
+### VisualStudio 2022 (IDE)
+
+Install:
+
+```powershell
+# Install
+cmake -S "." -B "build"
+```
+
+Install:
+
+![alt text](./docs/README/thumb-vs-open.png)
+
+Dev:
+
+![alt text](./docs/README/thumb-vs-debug.png)
+
+```powershell
+# ReInstall ./assets/resources/* (if needed)
+cmake -S "." -B "build"
+```
+
+### VSCode
+
+Install:
+
+```powershell
+# Install
+cmake -S "." -B "build"
+```
 
 .vscode/c_cpp_properties.json:
 ```json
@@ -106,104 +238,14 @@ VS Code:
 }
 ```
 
-## Usage
-
-### Dev
-
-```powershell
-# Init: Build
-cmake -S "." -B "build"
-cmake --build build
-
-# Dev: Build & Run
-cmake --build build | .\build\desktop_win64\Debug\desktop_win64.exe
-```
-
-### Release
-
-```powershell
-# Build
-rm .\build\ -r -force
-cmake -S "." -B "build"
-cmake --build build --config Release
-
-# Run
-.\build\desktop_win64\Release\desktop_win64.exe
-```
-
-## Features
-
-- Stack
-  - :heavy_check_mark: C++20
-  - :heavy_check_mark: Standard libraries
-  - :heavy_check_mark: Raylib
-- Targets:
-  - :heavy_check_mark: Win64 (Windows)
-  - :x: JS (Javascript)
-  - :x: WASM (WebAssembly)
-- Graphics
-  - :hourglass: Render: 
-      :heavy_check_mark: PostProcessing
-  - :hourglass: Camera: 
-      :hourglass: ThirdPerson
-      :x: FOV
-  - :x: Lighting:
-      :x: Real Time
-  - :hourglass: Meshes: 
-      :heavy_check_mark: Meshes
-      :heavy_check_mark: Textures
-      :heavy_check_mark: Shaders
-      :heavy_check_mark: Materials
-      :x: LOD
-  - :x: Visual Effects:
-      :x: Particles
-      :x: Distant Horizon
-  - :x: Sky:
-      :x: Color
-      :x: Cubemap
-      :x: Procedural
-- World
-  - :x: Physics
-      :x: hitbox
-      :x: gravity
-  - :x: Simulation
-      :x: LevelTick
-- Scripting
-  - :hourglass: Properties: 
-      :heavy_check_mark: code 
-      :x: file
-      :x: save
-  - :hourglass: Console
-      :heavy_check_mark: output
-      :x: input    
-- Animation
-  - :heavy_check_mark: Character
-- Audio: 
-  - :x: Sound:
-      :x: Wave
-      :x: Spatial
-  - :x: Music:
-      :x: Player
-      :x: Wave
-      :x: Mp3
-- Input
-  - :x: UI: 
-      :x: main menu
-      :x: quit menu
-      :x: i18n
-  - :hourglass: Control:
-      :hourglass: Keyboard
-      :x: Gamepad
-      :hourglass: Tank control
-      :x: 3D control
-- Other
-  - :heavy_check_mark: launching screen
-
 ## Resources
 
 - C
   - [ModernCppStarter](https://github.com/TheLartians/ModernCppStarter/tree/master)
+- CMake
   - [CMake with include and source paths - basic setup](https://stackoverflow.com/questions/8304190/cmake-with-include-and-source-paths-basic-setup)
+  - [CMake add_library](http://www.cunningplanning.com/post/cmake-add-library/)
+  - [Specify the default startup project in a Visual Studio solution.](https://cmake.org/cmake/help/latest/prop_dir/VS_STARTUP_PROJECT.html)
 - Monorepo
   - [How to structure a monorepo](https://lucapette.me/writing/how-to-structure-a-monorepo/?utm_source=atom_feed)
   - [A monorepo template that actually works](https://levelup.gitconnected.com/a-monorepo-template-that-actually-works-3efd87770fa5)

@@ -23,7 +23,7 @@ include_directories(
   ${raylib}/include
 )
 
-file(GLOB SOURCES
+file(GLOB EXEC_SOURCES
   "src/*.cpp"
   "${mygame}/include/*.h"
   "${mygame}/src/*.c"
@@ -32,7 +32,7 @@ file(GLOB SOURCES
 )
 
 # ---- Create standalone executable ---- 
-add_executable(${PROJECT_NAME} WIN32 ${SOURCES})
+add_executable(${PROJECT_NAME} WIN32 ${EXEC_SOURCES})
 set_target_properties(${PROJECT_NAME} PROPERTIES
   WIN32_EXECUTABLE ON 
   CXX_STANDARD 20 
