@@ -14,8 +14,13 @@ struct UnrealThirdPerson_State
     int showConsole;
     Shader postproShader;
     Camera camera;
+
     Vector3 playerPosition;
     Model model;
+
+    Model cubeModel;
+    Model rampModel;
+
     Shader *shaders;
     InputEvent_State input_State;
     int animIndex;

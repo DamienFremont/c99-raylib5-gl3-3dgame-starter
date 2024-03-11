@@ -22,7 +22,7 @@ Model LoadModels2(AppConfiguration appConfig)
     const char mod_str[999];
     snprintf(mod_str, sizeof(mod_str), "%s\\%s", appConfig.res_path, mod_path);
     // resolve paths
-    char *tex_path = "resources\\models\\church_diffuse.png";
+    char *tex_path = "resources\\models\\character_diffuse.png";
     const char texture_str[999];
     snprintf(texture_str, sizeof(texture_str), "%s\\%s", appConfig.res_path, tex_path);
     // load
@@ -32,6 +32,41 @@ Model LoadModels2(AppConfiguration appConfig)
 
     return model;
 }
+
+Model LoadCubeModel(AppConfiguration appConfig)
+{
+    // resolve paths
+    char *mod_path = "resources\\models\\SM_Cube.obj";
+    const char mod_str[999];
+    snprintf(mod_str, sizeof(mod_str), "%s\\%s", appConfig.res_path, mod_path);
+    // resolve paths
+    char *tex_path = "resources\\models\\character_diffuse.png";
+    const char texture_str[999];
+    snprintf(texture_str, sizeof(texture_str), "%s\\%s", appConfig.res_path, tex_path);
+    // load
+    Texture2D texture = LoadTexture(texture_str);
+    Model model = LoadModel(mod_str);
+    model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
+    return model;
+}
+
+Model LoadRampModel(AppConfiguration appConfig)
+{
+    // resolve paths
+    char *mod_path = "resources\\models\\SM_Ramp.obj";
+    const char mod_str[999];
+    snprintf(mod_str, sizeof(mod_str), "%s\\%s", appConfig.res_path, mod_path);
+    // resolve paths
+    char *tex_path = "resources\\models\\character_diffuse.png";
+    const char texture_str[999];
+    snprintf(texture_str, sizeof(texture_str), "%s\\%s", appConfig.res_path, tex_path);
+    // load
+    Texture2D texture = LoadTexture(texture_str);
+    Model model = LoadModel(mod_str);
+    model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
+    return model;
+}
+
 ModelAnimation *LoadAnimations2(AppConfiguration appConfig)
 {
     // resolve paths
@@ -88,9 +123,14 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     state.showConsole = 1;
     state.appConfig = appConfig;
     state.camera = camera;
-    state.playerPosition = (Vector3){0.0f, 0.0f, 0.0f};
     state.postproShader = (appConfig.postpro_bloom_enable == true) ? shaderBloom : shaderDefault;
+
+    state.playerPosition = (Vector3){9.0f, 0.0f, 11.0f};
     state.model = model;
+
+    state.rampModel = LoadRampModel(appConfig);
+    state.cubeModel = LoadCubeModel(appConfig);
+
     // state.shaders = shaders;
     state.target = target;
     state.input_State = input_State;
@@ -115,12 +155,12 @@ int Update_UnrealThirdPerson(UnrealThirdPerson_State *state)
     state->animIndex = inout.animIndex;
     // Action
     state->camera.position = (Vector3){
-        0.0f + state->playerPosition.x,
-        0.5f + state->playerPosition.y,
-        -2.0f + state->playerPosition.z}; // Camera position
+        -6.0f + state->playerPosition.x,
+        1.5f + state->playerPosition.y,
+        0.0f + state->playerPosition.z}; // Camera position
     state->camera.target = (Vector3){
         0.0f + state->playerPosition.x,
-        0.5f + state->playerPosition.y,
+        1.5f + state->playerPosition.y,
         0.0f + state->playerPosition.z}; // Camera looking at point
     // Animation
     if (animationEnable == 1)
@@ -136,10 +176,32 @@ void Texture_UnrealThirdPerson(UnrealThirdPerson_State *state)
     // 3D
     BeginMode3D(state->camera);
     {
-        DrawModel(state->model, state->playerPosition, 0.1f, WHITE);
-        DrawCubeWiresV((Vector3){0.0f, 0.5f, 1.0f}, (Vector3){1.0f, 1.0f, 1.0f}, RED);
-        DrawCubeV((Vector3){0.0f, 0.5f, 1.0f}, (Vector3){1.0f, 1.0f, 1.0f}, PURPLE);
-        DrawGrid(10, 1.0f);
+        const Vector3 V0 = (Vector3){0, 0, 0};
+        const Vector3 VY = (Vector3){0, 1, 0};
+        const float F0 = 0.0f;
+
+        DrawGrid(50, 1.0f);
+        DrawCubeWiresV((Vector3){9.0f, 1.0f, 11.0f}, (Vector3){1.0f, 2.0f, 1.0f}, RED);
+
+        DrawModelEx(state->model, state->playerPosition, VY, 90, (Vector3){0.45f, 0.45f, 0.45f}, WHITE);
+
+        // ramp 1
+        DrawModelEx(state->rampModel, (Vector3){17.0f, 0.0f, 6.0f}, VY, -90, (Vector3){2.0f, 0.3f, 4.0f}, GRAY);
+        // ramp 2
+        DrawModelEx(state->rampModel, (Vector3){18.0f, 0.0f, 15.0f}, VY, -90, (Vector3){2.0f, 1.0f, 4.0f}, GRAY);
+        DrawModelEx(state->cubeModel, (Vector3){18.0f, 0.0f, 15.0f}, V0, F0, (Vector3){2.0f, 1.0f, 7.0f}, GRAY);
+        DrawModelEx(state->rampModel, (Vector3){20.0f, 1.0f, 21.0f}, VY, -180, (Vector3){2.0f, 1.0f, 4.0f}, GRAY);
+        // big cube
+        DrawModelEx(state->cubeModel, (Vector3){12.0f, 0.0f, 17.0f}, V0, F0, (Vector3){6.0f, 2.0f, 5.0f}, GRAY);
+        // Playgrounf
+        DrawModelEx(state->cubeModel, (Vector3){0.0f, -0.5f, 0.1f}, V0, F0, (Vector3){30.0f, 0.5f, 35.0f}, LIGHTGRAY);
+        DrawModelEx(state->cubeModel, (Vector3){0.0f, 0.0f, 0.0f}, V0, F0, (Vector3){30.0f, 4.0f, 1.0f}, GRAY);
+        DrawModelEx(state->cubeModel, (Vector3){0.0f, 0.0f, 34.0f}, V0, F0, (Vector3){30.0f, 4.0f, 1.0f}, GRAY);
+        DrawModelEx(state->cubeModel, (Vector3){1.0f, 0.0f, 1.0f}, VY, -90, (Vector3){33.0f, 4.0f, 1.0f}, GRAY);
+        DrawModelEx(state->cubeModel, (Vector3){30.0f, 0.0f, 1.0f}, VY, -90, (Vector3){33.0f, 4.0f, 1.0f}, GRAY);
+
+        // ChamferCube
+        DrawModelEx(state->cubeModel, (Vector3){11.5f, 0.0f, 20.5f}, V0, F0, (Vector3){1.0f, 1.0f, 1.0f}, BLUE);
     }
     EndMode3D();
 }

@@ -16,8 +16,7 @@ const char consoleOut[999];
 typedef enum GameScreen
 {
 	LAUNCHER = 0,
-	UNREAL_THIRDPERSON = 1,
-	GAMEPLAY2 = 2
+	UNREAL_THIRDPERSON = 1
 } GameScreen;
 
 //------------------------------------------------------------------------------------

@@ -37,23 +37,23 @@ InputOut ExecuteInputEvent(InputEvent_State state, InputConfig cfg)
     // Level
     if (IsKeyDown(KEY_D))
     {
-        out.playerPosition.x = cfg.playerPosition.x - cfg.char_speed;
+        out.playerPosition.z = cfg.playerPosition.z + cfg.char_speed;
         out.animIndex = ANIM_RUN;
     }
     else if (IsKeyDown(KEY_A))
     {
-        out.playerPosition.x = cfg.playerPosition.x + cfg.char_speed;
+        out.playerPosition.z = cfg.playerPosition.z - cfg.char_speed;
         out.animIndex = ANIM_RUN;
     }
     
     if (IsKeyDown(KEY_W))
     {
-        out.playerPosition.z = cfg.playerPosition.z + cfg.char_speed;
+        out.playerPosition.x = cfg.playerPosition.x + cfg.char_speed;
         out.animIndex = ANIM_RUN;
     }
     else if (IsKeyDown(KEY_S))
     {
-        out.playerPosition.z = cfg.playerPosition.z - cfg.char_speed;
+        out.playerPosition.x = cfg.playerPosition.x - cfg.char_speed;
         out.animIndex = ANIM_RUN;
     }
 
