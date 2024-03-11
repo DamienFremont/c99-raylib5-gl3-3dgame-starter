@@ -1,5 +1,4 @@
 #include "config.h"
-
 #include <raylib.h>
 #include <time.h>
 

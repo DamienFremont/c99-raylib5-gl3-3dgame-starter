@@ -10,7 +10,17 @@ set(platform "../../platform")
 set(raylib   "${lib}/raylib-5.0_win64_msvc16")
 
 # ---- Sources ----
-include_directories(include)
+include_directories(
+    src
+    include
+)
+
+# ---- Create library ---- 
+file(GLOB EXEC_SOURCES
+     "src/*.c"
+     "include/*.h"
+)
+add_library(${PROJECT_NAME} ${EXEC_SOURCES})
 
 # ---- Dependencies ----
 include_directories(${raylib}/include)

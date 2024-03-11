@@ -22,6 +22,8 @@ struct UnrealThirdPerson_State
     Model rampModel;
     Model floorModel;
 
+    Model skybox;
+
     Shader *shaders;
     InputEvent_State input_State;
     int animIndex;

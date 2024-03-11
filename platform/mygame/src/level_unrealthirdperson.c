@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "assets.h"
+#include "skybox.h"
 
 typedef enum
 {
@@ -20,49 +21,46 @@ typedef enum
 
 UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, RenderTexture2D *target, char consoleOut)
 {
-    // load
-
+    // Texture2D
     Texture2D texture = LoadTextureResource(appConfig.res_path, "resources/models/character_diffuse.png");
+    Texture2D wallTexture = LoadTextureResource(appConfig.res_path, "resources/models/wall_diffuse-512.png");
+    Texture2D floorTexture = LoadTextureResource(appConfig.res_path, "resources/models/floor_diffuse-512.png");
+    // Model
+    Model skybox = LoadSkyboxResource(appConfig, "resources/skybox.png");
     Model model = LoadModelResource(appConfig.res_path, "resources/models/character.glb");
     model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
     // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_lightmap
-
-    Texture2D wallTexture = LoadTextureResource(appConfig.res_path, "resources/models/wall_diffuse-512.png");
     Model cubeModel = LoadModelResource(appConfig.res_path, "resources/models/SM_Cube.obj");
     cubeModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = wallTexture;
     Model rampModel = LoadModelResource(appConfig.res_path, "resources/models/SM_Ramp.obj");
     rampModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = wallTexture;
-
-    Texture2D floorTexture = LoadTextureResource(appConfig.res_path, "resources/models/floor_diffuse-512.png");
     Model floorModel = LoadModelResource(appConfig.res_path, "resources/models/SM_Cube.obj");
     floorModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = floorTexture;
-
+    // ModelAnimation
     ModelAnimation *modelAnimations = LoadAnimationsResource(appConfig.res_path, "resources/models/character.glb");
-
-    Shader shaderDefault = LoadShaderResource(appConfig.res_path, TextFormat("resources/shaders/glsl%i/blur.fs", appConfig.glsl_version));
-    Shader shaderBloom = LoadShaderResource(appConfig.res_path, TextFormat("resources/shaders/glsl%i/bloom.fs", appConfig.glsl_version));
-
-    InputEvent_State input_State = InitInputEvent();
+    // Shader
+    Shader shaderDefault = LoadShaderResource(appConfig.res_path, TextFormat("resources/shaders/glsl%i/default.fs", appConfig.glsl_version));
+    Shader shaderPostpro = LoadShaderResource(appConfig.res_path, TextFormat("resources/shaders/glsl%i/blur.fs", appConfig.glsl_version));
+    // other
     Camera camera = InitCamera();
+    InputEvent_State input_State = InitInputEvent();
     // init
     UnrealThirdPerson_State state = {0};
     state.consoleOut = consoleOut;
     state.showConsole = 0;
     state.appConfig = appConfig;
     state.camera = camera;
-    state.postproShader = (appConfig.postpro_bloom_enable == true) ? shaderBloom : shaderDefault;
-
+    state.postproShader = (appConfig.postpro_blur_enable == true) ? shaderPostpro : shaderDefault;
     state.playerPosition = (Vector3){9.0f, 0.0f, 11.0f};
     state.model = model;
-
     state.rampModel = rampModel;
     state.cubeModel = cubeModel;
     state.floorModel = floorModel;
-
+    state.skybox = skybox;
+    state.modelAnimations = modelAnimations;
     // state.shaders = shaders;
     state.target = target;
     state.input_State = input_State;
-    state.modelAnimations = modelAnimations;
     state.animCurrentFrame = 0;
     return state;
 }
@@ -136,6 +134,19 @@ void Texture_UnrealThirdPerson(UnrealThirdPerson_State *state)
         DrawModelEx(state->cubeModel, (Vector3){11.5f, 0.0f, 20.5f}, V0, F0, (Vector3){1.0f, 1.0f, 1.0f}, BLUE);
     }
     EndMode3D();
+
+    // Skybox
+    BeginMode3D(state->camera);
+    {
+        rlDisableBackfaceCulling();
+        rlDisableDepthMask();
+        {
+            DrawModel(state->skybox, (Vector3){0, 0, 0}, 1.0f, SKYBLUE);
+        }
+        rlEnableBackfaceCulling();
+        rlEnableDepthMask();
+    }
+    EndMode3D();
 }
 
 void Draw_UnrealThirdPerson(UnrealThirdPerson_State *state, RenderTexture2D target)
@@ -168,5 +179,6 @@ void Draw_UnrealThirdPerson(UnrealThirdPerson_State *state, RenderTexture2D targ
 
 void Unload_UnrealThirdPerson(UnrealThirdPerson_State *state)
 {
+    UnloadModel(state->skybox); // Unload skybox model
     // UnloadShadersAll(state->shaders);
 }

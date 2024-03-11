@@ -41,32 +41,6 @@ int main(AppConfiguration appConfig)
 	Launcher_State launcherState = InitLauncher(appConfig);
 	UnrealThirdPerson_State unrealThirdPerson_State = Init_UnrealThirdPerson(appConfig, &target, consoleOut);
 
-	// Skybox
-	int GLSL_VERSION = appConfig.glsl_version;
-	Mesh cube = GenMeshCube(500.0f, 500.0f, 500.0f);
-	Model skybox = LoadModelFromMesh(cube);
-	// Load skybox shader and set required locations
-
-	// NOTE: Some locations are automatically set at shader loading
-	skybox.materials[0].shader = LoadShaderResource2(appConfig.res_path,
-													TextFormat("resources/shaders/glsl%i/skybox.vs", GLSL_VERSION),
-													TextFormat("resources/shaders/glsl%i/skybox.fs", GLSL_VERSION));
-	SetShaderValue(skybox.materials[0].shader, GetShaderLocation(skybox.materials[0].shader, "environmentMap"), (int[1]){MATERIAL_MAP_CUBEMAP}, SHADER_UNIFORM_INT);
-	SetShaderValue(skybox.materials[0].shader, GetShaderLocation(skybox.materials[0].shader, "doGamma"), (int[1]){0}, SHADER_UNIFORM_INT);
-	SetShaderValue(skybox.materials[0].shader, GetShaderLocation(skybox.materials[0].shader, "vflipped"), (int[1]){0}, SHADER_UNIFORM_INT);
-	// Load cubemap shader and setup required shader locations
-	Shader shdrCubemap = LoadShaderResource2(appConfig.res_path,
-											TextFormat("resources/shaders/glsl%i/cubemap.vs", GLSL_VERSION),
-											TextFormat("resources/shaders/glsl%i/cubemap.fs", GLSL_VERSION));
-	SetShaderValue(shdrCubemap, GetShaderLocation(shdrCubemap, "equirectangularMap"), (int[1]){0}, SHADER_UNIFORM_INT);
-
-	// Load img texture
-	Image img = LoadImageResource(appConfig.res_path, "resources/skybox.png");
-	skybox.materials[0].maps[MATERIAL_MAP_CUBEMAP].texture = LoadTextureCubemap(img, CUBEMAP_LAYOUT_AUTO_DETECT); // CUBEMAP_LAYOUT_PANORAMA
-	UnloadImage(img);
-
-	Camera camera = InitCamera();
-
 	//--------------------------------------------------------------------------------------
 
 	// Main game loop
@@ -102,19 +76,6 @@ int main(AppConfiguration appConfig)
 			case UNREAL_THIRDPERSON:
 			{
 				Texture_UnrealThirdPerson(&unrealThirdPerson_State);
-
-				// Skybox
-				BeginMode3D(camera);
-				{
-					rlDisableBackfaceCulling();
-					rlDisableDepthMask();
-					{
-						DrawModel(skybox, (Vector3){0, 0, 0}, 1.0f, SKYBLUE);
-					}
-					rlEnableBackfaceCulling();
-					rlEnableDepthMask();
-				}
-				EndMode3D();
 			}
 			default:
 				break;
@@ -135,7 +96,6 @@ int main(AppConfiguration appConfig)
 			break;
 			case UNREAL_THIRDPERSON:
 			{
-
 				Draw_UnrealThirdPerson(&unrealThirdPerson_State, target);
 			}
 			default:
@@ -151,9 +111,6 @@ int main(AppConfiguration appConfig)
 	// Levels
 	Unload_UnrealThirdPerson(&unrealThirdPerson_State);
 	UnloadLauncher(&launcherState);
-
-	UnloadModel(skybox); // Unload skybox model
-
 	// target
 	UnloadRenderTexture(target);
 

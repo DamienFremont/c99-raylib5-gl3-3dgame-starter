@@ -18,5 +18,5 @@ struct AppConfiguration
     bool fps_counter_show;
 
     bool postpro_msaa_enable;
-    bool postpro_bloom_enable;
+    bool postpro_blur_enable;
 };
