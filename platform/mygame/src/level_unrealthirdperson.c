@@ -12,6 +12,7 @@
 #include <string.h>
 #include "assets.h"
 #include "skybox.h"
+#include "tiling.h"
 
 typedef enum
 {
@@ -21,10 +22,13 @@ typedef enum
 
 UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, RenderTexture2D *target, char consoleOut)
 {
+    int GLSL_VERSION = appConfig.glsl_version;
+    char *RESOURCES = appConfig.res_path;
+
     // Texture2D
     Texture2D texture = LoadTextureResource(appConfig.res_path, "resources/models/character_diffuse.png");
-    Texture2D wallTexture = LoadTextureResource(appConfig.res_path, "resources/models/wall_diffuse-512.png");
-    Texture2D floorTexture = LoadTextureResource(appConfig.res_path, "resources/models/floor_diffuse-512.png");
+    Texture2D wallTexture = LoadTextureResource(appConfig.res_path, "resources/models/MI_Grid_TopDark-1024.png");
+    Texture2D floorTexture = LoadTextureResource(appConfig.res_path, "resources/models/MI_Grid_Gray-1024.png");
     // Model
     Model skybox = LoadSkyboxResource(appConfig, "resources/skybox.png");
     Model model = LoadModelResource(appConfig.res_path, "resources/models/character.glb");
@@ -32,15 +36,30 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_lightmap
     Model cubeModel = LoadModelResource(appConfig.res_path, "resources/models/SM_Cube.obj");
     cubeModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = wallTexture;
+
+
+
     Model rampModel = LoadModelResource(appConfig.res_path, "resources/models/SM_Ramp.obj");
     rampModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = wallTexture;
+    // Texture2DTiling
+    Texture2DTiling floorTextureTiling2 = (Texture2DTiling){ 4 * 4.0f, 2 * 4.0f }; // TODO: why 1024px x 140sc ?
+    Shader floorTextureTiler2 = TileTexture2D(appConfig, floorTextureTiling2);
+    rampModel.materials[0].shader = floorTextureTiler2;
+
+    Model chamferCubeModel = LoadModelResource(appConfig.res_path, "resources/models/SM_Cube.obj");
+
     Model floorModel = LoadModelResource(appConfig.res_path, "resources/models/SM_Cube.obj");
     floorModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = floorTexture;
+    // Texture2DTiling
+    Texture2DTiling floorTextureTiling = (Texture2DTiling){140.0f, 140.0f}; // TODO: why 1024px x 140sc ?
+    Shader floorTextureTiler = TileTexture2D(appConfig, floorTextureTiling);
+    floorModel.materials[0].shader = floorTextureTiler;
+
     // ModelAnimation
-    ModelAnimation *modelAnimations = LoadAnimationsResource(appConfig.res_path, "resources/models/character.glb");
+    ModelAnimation *modelAnimations = LoadAnimationsResource(RESOURCES, "resources/models/character.glb");
     // Shader
-    Shader shaderDefault = LoadShaderResource(appConfig.res_path, TextFormat("resources/shaders/glsl%i/default.fs", appConfig.glsl_version));
-    Shader shaderPostpro = LoadShaderResource(appConfig.res_path, TextFormat("resources/shaders/glsl%i/blur.fs", appConfig.glsl_version));
+    Shader shaderDefault = LoadShaderResource(RESOURCES, TextFormat("resources/shaders/glsl%i/default.fs", GLSL_VERSION));
+    Shader shaderPostpro = LoadShaderResource(RESOURCES, TextFormat("resources/shaders/glsl%i/blur.fs", GLSL_VERSION));
     // other
     Camera camera = InitCamera();
     InputEvent_State input_State = InitInputEvent();
@@ -56,6 +75,7 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     state.rampModel = rampModel;
     state.cubeModel = cubeModel;
     state.floorModel = floorModel;
+    state.chamferCubeModel = chamferCubeModel;
     state.skybox = skybox;
     state.modelAnimations = modelAnimations;
     // state.shaders = shaders;
@@ -110,8 +130,8 @@ void Texture_UnrealThirdPerson(UnrealThirdPerson_State *state)
         const Vector3 V0 = (Vector3){0, 0, 0};
         const float F0 = 0.0f;
 
-        DrawGrid(50, 1.0f);
-        // DrawCubeWiresV((Vector3){9.0f, 1.0f, 11.0f}, (Vector3){1.0f, 2.0f, 1.0f}, RED);
+        // DrawGrid(50, 1.0f);
+        //  DrawCubeWiresV((Vector3){9.0f, 1.0f, 11.0f}, (Vector3){1.0f, 2.0f, 1.0f}, RED);
 
         DrawModelEx(state->model, state->playerPosition, VY, 90, (Vector3){0.45f, 0.45f, 0.45f}, WHITE);
 
@@ -123,15 +143,16 @@ void Texture_UnrealThirdPerson(UnrealThirdPerson_State *state)
         DrawModelEx(state->rampModel, (Vector3){20.0f, 1.0f, 21.0f}, VY, -180, (Vector3){2.0f, 1.0f, 4.0f}, GRAY);
         // big cube
         DrawModelEx(state->cubeModel, (Vector3){12.0f, 0.0f, 17.0f}, V0, F0, (Vector3){6.0f, 2.0f, 5.0f}, GRAY);
-        // Playgrounf
-        DrawModelEx(state->cubeModel, (Vector3){0.0f, -0.5f, 0.1f}, V0, F0, (Vector3){30.0f, 0.5f, 35.0f}, LIGHTGRAY);
+        // walls
         DrawModelEx(state->cubeModel, (Vector3){0.0f, 0.0f, 0.0f}, V0, F0, (Vector3){30.0f, 4.0f, 1.0f}, GRAY);
         DrawModelEx(state->cubeModel, (Vector3){0.0f, 0.0f, 34.0f}, V0, F0, (Vector3){30.0f, 4.0f, 1.0f}, GRAY);
         DrawModelEx(state->cubeModel, (Vector3){1.0f, 0.0f, 1.0f}, VY, -90, (Vector3){33.0f, 4.0f, 1.0f}, GRAY);
         DrawModelEx(state->cubeModel, (Vector3){30.0f, 0.0f, 1.0f}, VY, -90, (Vector3){33.0f, 4.0f, 1.0f}, GRAY);
+        // floor
+        DrawModelEx(state->floorModel, (Vector3){0.0f, -0.5f, 0.1f}, V0, F0, (Vector3){30.0f, 0.5f, 35.0f}, LIGHTGRAY);
 
         // ChamferCube
-        DrawModelEx(state->cubeModel, (Vector3){11.5f, 0.0f, 20.5f}, V0, F0, (Vector3){1.0f, 1.0f, 1.0f}, BLUE);
+        DrawModelEx(state->chamferCubeModel, (Vector3){11.5f, 0.0f, 20.5f}, V0, F0, (Vector3){1.0f, 1.0f, 1.0f}, BLUE);
     }
     EndMode3D();
 
@@ -168,6 +189,7 @@ void Draw_UnrealThirdPerson(UnrealThirdPerson_State *state, RenderTexture2D targ
             WHITE);
     }
     EndShaderMode();
+
     // 2D
     ConsoleConfig cfg = (ConsoleConfig){
         state->showConsole,

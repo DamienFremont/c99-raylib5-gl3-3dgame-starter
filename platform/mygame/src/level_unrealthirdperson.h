@@ -13,6 +13,7 @@ struct UnrealThirdPerson_State
 
     int showConsole;
     Shader postproShader;
+    Shader tilingShader;
     Camera camera;
 
     Vector3 playerPosition;
@@ -21,6 +22,7 @@ struct UnrealThirdPerson_State
     Model cubeModel;
     Model rampModel;
     Model floorModel;
+    Model chamferCubeModel;
 
     Model skybox;
 

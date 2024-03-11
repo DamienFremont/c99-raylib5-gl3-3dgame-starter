@@ -255,6 +255,7 @@ cmake -S "." -B "build"
     - [Demos](https://www.raylib.com/examples.html)
       - [shaders_postprocessing](https://www.raylib.com/examples/shaders/loader.html?name=shaders_postprocessing) 
       - [shaders_hybrid_render](https://www.raylib.com/examples/shaders/loader.html?name=shaders_hybrid_render)
+      - [shaders_texture_tiling](https://www.raylib.com/examples/shaders/loader.html?name=shaders_texture_tiling)
 
 There are several games made with raylib to highlight:
 - Hare136: https://play.google.com/store/apps/details?id=games.haremonic.slider
