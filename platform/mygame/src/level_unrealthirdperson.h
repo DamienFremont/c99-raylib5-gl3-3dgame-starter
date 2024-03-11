@@ -21,6 +21,7 @@ struct UnrealThirdPerson_State
 
     // StaticMeshComponent *components;
     Model model;
+    StaticMeshComponent modelComp;
     Model cubeModel;
     Model rampModel;
     Model floorModel;

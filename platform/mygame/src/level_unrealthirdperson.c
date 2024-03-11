@@ -39,6 +39,8 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     int GLSL_VERSION = appConfig.glsl_version;
     char *RESOURCES = appConfig.res_path;
 
+    const Vector3 VY = (Vector3){0, 1, 0};
+
     // Texture2D
     Texture2D texture = LoadTextureResource(appConfig.res_path, "resources/models/character_diffuse.png");
     Texture2D wallTexture = LoadTextureResource(appConfig.res_path, "resources/models/MI_Grid_TopDark-1024.png");
@@ -51,12 +53,10 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     Model cubeModel = LoadModelResource(appConfig.res_path, "resources/models/SM_Cube.obj");
     cubeModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = wallTexture;
 
-
-
     Model rampModel = LoadModelResource(appConfig.res_path, "resources/models/SM_Ramp.obj");
     rampModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = wallTexture;
     // Texture2DTiling
-    Shader floorTextureTiler2 = TileTexture2D(RESOURCES, GLSL_VERSION, (Vector2){ 4 * 4.0f, 2 * 4.0f });
+    Shader floorTextureTiler2 = TileTexture2D(RESOURCES, GLSL_VERSION, (Vector2){4 * 4.0f, 2 * 4.0f});
     rampModel.materials[0].shader = floorTextureTiler2;
 
     Model chamferCubeModel = LoadModelResource(appConfig.res_path, "resources/models/SM_Cube.obj");
@@ -84,6 +84,17 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     state.postproShader = (appConfig.postpro_blur_enable == true) ? shaderPostpro : shaderDefault;
     state.playerPosition = (Vector3){9.0f, 0.0f, 11.0f};
     state.model = model;
+    state.modelComp = (StaticMeshComponent){
+        "Player",
+        (Transform2){
+            (Vector3){9.0f, 0.0f, 11.0f},
+            (Rotation2){VY, ROTATE_P90},
+            (Vector3){0.45f, 0.45f, 0.45f},
+        },
+        model,
+        WHITE,
+        (Material2){
+            texture}};
     state.rampModel = rampModel;
     state.cubeModel = cubeModel;
     state.floorModel = floorModel;
@@ -145,7 +156,7 @@ void Texture_UnrealThirdPerson(UnrealThirdPerson_State *state)
         // DrawGrid(50, 1.0f);
         //  DrawCubeWiresV((Vector3){9.0f, 1.0f, 11.0f}, (Vector3){1.0f, 2.0f, 1.0f}, RED);
 
-        DrawModelEx(state->model, state->playerPosition, VY, 90, (Vector3){0.45f, 0.45f, 0.45f}, WHITE);
+        Draw_Component(state->modelComp);
 
         // ramp 1
         DrawModelEx(state->rampModel, (Vector3){17.0f, 0.0f, 6.0f}, VY, -90, (Vector3){2.0f, 0.3f, 4.0f}, GRAY);
