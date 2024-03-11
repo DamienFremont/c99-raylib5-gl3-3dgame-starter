@@ -20,6 +20,7 @@ struct UnrealThirdPerson_State
 
     Model cubeModel;
     Model rampModel;
+    Model floorModel;
 
     Shader *shaders;
     InputEvent_State input_State;

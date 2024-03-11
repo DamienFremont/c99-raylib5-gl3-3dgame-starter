@@ -8,120 +8,46 @@
 #include "camera.h"
 #include "input.h"
 
+#include <stdio.h>
+#include <string.h>
+#include "assets.h"
+
 typedef enum
 {
     FX_DEFAULT = 0,
     FX_BLOOM,
 } PostproShader;
 
-Model LoadModels2(AppConfiguration appConfig)
-{
-    // 	models[CHARACTER] = LoadModel(pathJoin(appProps.res_path, "resources\\models\\church.obj"));
-    // resolve paths
-    char *mod_path = "resources\\models\\character.glb";
-    const char mod_str[999];
-    snprintf(mod_str, sizeof(mod_str), "%s\\%s", appConfig.res_path, mod_path);
-    // resolve paths
-    char *tex_path = "resources\\models\\character_diffuse.png";
-    const char texture_str[999];
-    snprintf(texture_str, sizeof(texture_str), "%s\\%s", appConfig.res_path, tex_path);
-    // load
-    Texture2D texture = LoadTexture(texture_str);
-    Model model = LoadModel(mod_str);
-    model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
-
-    return model;
-}
-
-Model LoadCubeModel(AppConfiguration appConfig)
-{
-    // resolve paths
-    char *mod_path = "resources\\models\\SM_Cube.obj";
-    const char mod_str[999];
-    snprintf(mod_str, sizeof(mod_str), "%s\\%s", appConfig.res_path, mod_path);
-    // resolve paths
-    char *tex_path = "resources\\models\\character_diffuse.png";
-    const char texture_str[999];
-    snprintf(texture_str, sizeof(texture_str), "%s\\%s", appConfig.res_path, tex_path);
-    // load
-    Texture2D texture = LoadTexture(texture_str);
-    Model model = LoadModel(mod_str);
-    model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
-    return model;
-}
-
-Model LoadRampModel(AppConfiguration appConfig)
-{
-    // resolve paths
-    char *mod_path = "resources\\models\\SM_Ramp.obj";
-    const char mod_str[999];
-    snprintf(mod_str, sizeof(mod_str), "%s\\%s", appConfig.res_path, mod_path);
-    // resolve paths
-    char *tex_path = "resources\\models\\character_diffuse.png";
-    const char texture_str[999];
-    snprintf(texture_str, sizeof(texture_str), "%s\\%s", appConfig.res_path, tex_path);
-    // load
-    Texture2D texture = LoadTexture(texture_str);
-    Model model = LoadModel(mod_str);
-    model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
-    return model;
-}
-
-ModelAnimation *LoadAnimations2(AppConfiguration appConfig)
-{
-    // resolve paths
-    char *mod_path = "resources\\models\\character.glb";
-    const char mod_str[999];
-    snprintf(mod_str, sizeof(mod_str), "%s\\%s", appConfig.res_path, mod_path);
-    // load
-    int animsCount = 0;
-    ModelAnimation *modelAnimations = LoadModelAnimations(mod_str, &animsCount);
-    return modelAnimations;
-}
-
-Shader LoadShaderBloom(AppConfiguration appConfig)
-{
-    // 	shaders[FX_BLOOM] = LoadShader(0, pathJoin(appProps.res_path, TextFormat("resources\\shaders\\glsl%i\\bloom.fs", appProps.glsl_version)));
-    // resolve paths
-    char *sha_path = TextFormat("resources\\shaders\\glsl%i\\bloom.fs", appConfig.glsl_version);
-    const char sha_str[999];
-    snprintf(sha_str, sizeof(sha_str), "%s\\%s", appConfig.res_path, sha_path);
-    // load
-    Shader shader = LoadShader(0, sha_str);
-    return shader;
-}
-
-Shader LoadShaderDefault(AppConfiguration appConfig)
-{
-    // 	shaders[FX_DEFAULT] = LoadShader(0, pathJoin(appProps.res_path, TextFormat("resources\\shaders\\glsl%i\\default.fs", appProps.glsl_version)));
-    // resolve paths
-    char *shadef_path = TextFormat("resources\\shaders\\glsl%i\\default.fs", appConfig.glsl_version);
-    const char shadef_str[999];
-    snprintf(shadef_str, sizeof(shadef_str), "%s\\%s", appConfig.res_path, shadef_path);
-    // load
-    Shader shader = LoadShader(0, shadef_str);
-    return shader;
-}
-
-void UnloadShaders2(Shader *shaders)
-{
-    for (int i = 0; i < sizeof(shaders); i++)
-        UnloadShader(shaders[i]);
-}
-
 UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, RenderTexture2D *target, char consoleOut)
 {
     // load
-    Model model = LoadModels2(appConfig);
-    ModelAnimation *modelAnimations = LoadAnimations2(appConfig);
-    Shader shaderBloom = LoadShaderBloom(appConfig);
-    Shader shaderDefault = LoadShaderDefault(appConfig);
+
+    Texture2D texture = LoadTextureResource(appConfig.res_path, "resources/models/character_diffuse.png");
+    Model model = LoadModelResource(appConfig.res_path, "resources/models/character.glb");
+    model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
+    // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_lightmap
+
+    Texture2D wallTexture = LoadTextureResource(appConfig.res_path, "resources/models/wall_diffuse-512.png");
+    Model cubeModel = LoadModelResource(appConfig.res_path, "resources/models/SM_Cube.obj");
+    cubeModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = wallTexture;
+    Model rampModel = LoadModelResource(appConfig.res_path, "resources/models/SM_Ramp.obj");
+    rampModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = wallTexture;
+
+    Texture2D floorTexture = LoadTextureResource(appConfig.res_path, "resources/models/floor_diffuse-512.png");
+    Model floorModel = LoadModelResource(appConfig.res_path, "resources/models/SM_Cube.obj");
+    floorModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = floorTexture;
+
+    ModelAnimation *modelAnimations = LoadAnimationsResource(appConfig.res_path, "resources/models/character.glb");
+
+    Shader shaderDefault = LoadShaderResource(appConfig.res_path, TextFormat("resources/shaders/glsl%i/blur.fs", appConfig.glsl_version));
+    Shader shaderBloom = LoadShaderResource(appConfig.res_path, TextFormat("resources/shaders/glsl%i/bloom.fs", appConfig.glsl_version));
+
     InputEvent_State input_State = InitInputEvent();
     Camera camera = InitCamera();
     // init
     UnrealThirdPerson_State state = {0};
     state.consoleOut = consoleOut;
-    state.showConsole = 1;
+    state.showConsole = 0;
     state.appConfig = appConfig;
     state.camera = camera;
     state.postproShader = (appConfig.postpro_bloom_enable == true) ? shaderBloom : shaderDefault;
@@ -129,8 +55,9 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     state.playerPosition = (Vector3){9.0f, 0.0f, 11.0f};
     state.model = model;
 
-    state.rampModel = LoadRampModel(appConfig);
-    state.cubeModel = LoadCubeModel(appConfig);
+    state.rampModel = rampModel;
+    state.cubeModel = cubeModel;
+    state.floorModel = floorModel;
 
     // state.shaders = shaders;
     state.target = target;
@@ -170,19 +97,23 @@ int Update_UnrealThirdPerson(UnrealThirdPerson_State *state)
         state->animCurrentFrame = (state->animCurrentFrame + 1) % anim.frameCount; // TODO: tickCount
         UpdateModelAnimation(state->model, anim, state->animCurrentFrame);
     }
+
+    // TODO: https://www.raylib.com/examples/models/loader.html?name=models_box_collisions
 }
 
 void Texture_UnrealThirdPerson(UnrealThirdPerson_State *state)
 {
+
+    const Vector3 VY = (Vector3){0, 1, 0};
+
     // 3D
     BeginMode3D(state->camera);
     {
         const Vector3 V0 = (Vector3){0, 0, 0};
-        const Vector3 VY = (Vector3){0, 1, 0};
         const float F0 = 0.0f;
 
         DrawGrid(50, 1.0f);
-        DrawCubeWiresV((Vector3){9.0f, 1.0f, 11.0f}, (Vector3){1.0f, 2.0f, 1.0f}, RED);
+        // DrawCubeWiresV((Vector3){9.0f, 1.0f, 11.0f}, (Vector3){1.0f, 2.0f, 1.0f}, RED);
 
         DrawModelEx(state->model, state->playerPosition, VY, 90, (Vector3){0.45f, 0.45f, 0.45f}, WHITE);
 
@@ -210,6 +141,9 @@ void Texture_UnrealThirdPerson(UnrealThirdPerson_State *state)
 void Draw_UnrealThirdPerson(UnrealThirdPerson_State *state, RenderTexture2D target)
 {
     // postprocessing
+    // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_hybrid_render
+    // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_basic_lighting
+    // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_fog
     BeginShaderMode(state->postproShader);
     {
         DrawTextureRec(                              //
@@ -234,5 +168,5 @@ void Draw_UnrealThirdPerson(UnrealThirdPerson_State *state, RenderTexture2D targ
 
 void Unload_UnrealThirdPerson(UnrealThirdPerson_State *state)
 {
-    // UnloadShaders2(state->shaders);
+    // UnloadShadersAll(state->shaders);
 }
