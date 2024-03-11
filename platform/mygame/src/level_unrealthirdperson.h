@@ -3,6 +3,7 @@
 #include <raylib.h>
 #include <time.h>
 #include "input.h"
+#include "component.h"
 
 typedef struct UnrealThirdPerson_State UnrealThirdPerson_State;
 struct UnrealThirdPerson_State
@@ -17,8 +18,9 @@ struct UnrealThirdPerson_State
     Camera camera;
 
     Vector3 playerPosition;
-    Model model;
 
+    // StaticMeshComponent *components;
+    Model model;
     Model cubeModel;
     Model rampModel;
     Model floorModel;

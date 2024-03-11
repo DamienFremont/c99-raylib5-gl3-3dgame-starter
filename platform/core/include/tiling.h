@@ -2,12 +2,4 @@
 
 #include "config.h"
 
-typedef struct Texture2DTiling Texture2DTiling;
-struct Texture2DTiling
-{
-    float x;
-    float y;
-    // offset ?
-};
-
-Shader TileTexture2D(AppConfiguration appConfig, Texture2DTiling tiling);
+Shader TileTexture2D(char *RESOURCES, int GLSL_VERSION, Vector2 tiling);

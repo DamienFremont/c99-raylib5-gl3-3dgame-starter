@@ -7,7 +7,7 @@
 Model LoadSkyboxResource(AppConfiguration appConfig, char *assetpath)
 {
     Mesh cube = GenMeshCube(500.0f, 500.0f, 500.0f);
-    int GLSL_VERSION = appConfig.glsl_version;
+    int GLSL_VERSION = appConfig.glsl_version; // move to compile time declaration
     Model skybox = LoadModelFromMesh(cube);
     // Load skybox shader and set required locations
     // NOTE: Some locations are automatically set at shader loading

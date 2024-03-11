@@ -16,9 +16,23 @@
 
 typedef enum
 {
-    FX_DEFAULT = 0,
+    FX_DEFAULT,
     FX_BLOOM,
 } PostproShader;
+
+typedef enum
+{
+    MI_Grid_TopDark,
+    MI_Grid_Gray,
+} LevelTexture;
+
+typedef enum
+{
+    PlayerStart,
+    SM_Cube,
+    SM_Ramp,
+    SM_Cube4,
+} LevelModel;
 
 UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, RenderTexture2D *target, char consoleOut)
 {
@@ -42,8 +56,7 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     Model rampModel = LoadModelResource(appConfig.res_path, "resources/models/SM_Ramp.obj");
     rampModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = wallTexture;
     // Texture2DTiling
-    Texture2DTiling floorTextureTiling2 = (Texture2DTiling){ 4 * 4.0f, 2 * 4.0f }; // TODO: why 1024px x 140sc ?
-    Shader floorTextureTiler2 = TileTexture2D(appConfig, floorTextureTiling2);
+    Shader floorTextureTiler2 = TileTexture2D(RESOURCES, GLSL_VERSION, (Vector2){ 4 * 4.0f, 2 * 4.0f });
     rampModel.materials[0].shader = floorTextureTiler2;
 
     Model chamferCubeModel = LoadModelResource(appConfig.res_path, "resources/models/SM_Cube.obj");
@@ -51,8 +64,7 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     Model floorModel = LoadModelResource(appConfig.res_path, "resources/models/SM_Cube.obj");
     floorModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = floorTexture;
     // Texture2DTiling
-    Texture2DTiling floorTextureTiling = (Texture2DTiling){140.0f, 140.0f}; // TODO: why 1024px x 140sc ?
-    Shader floorTextureTiler = TileTexture2D(appConfig, floorTextureTiling);
+    Shader floorTextureTiler = TileTexture2D(RESOURCES, GLSL_VERSION, (Vector2){140.0f, 140.0f});
     floorModel.materials[0].shader = floorTextureTiler;
 
     // ModelAnimation

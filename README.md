@@ -45,7 +45,7 @@
 - Graphics
   - :hourglass: Render: 
       :heavy_check_mark: PostProcessing
-      :x: Blur
+      :hourglass: Texture tiling
   - :hourglass: Camera: 
       :hourglass: ThirdPerson
       :x: FOV
@@ -62,7 +62,7 @@
       :x: Distant Horizon
   - :x: Sky:
       :heavy_check_markx: Color
-      :hourglass: Cubemap
+      :heavy_check_markx: Cubemap
 - World
   - :x: Physics
       :x: hitbox
