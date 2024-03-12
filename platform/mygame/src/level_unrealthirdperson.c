@@ -34,22 +34,78 @@ typedef enum
     SM_Cube4,
 } LevelModel;
 
+StaticMeshComponent *Load_LevelTree(AppConfiguration appConfig)
+{
+    int GLSL_VERSION = appConfig.glsl_version;
+    char *RESOURCES = appConfig.res_path;
+
+    const Vector3 VECTOR_ZERO = (Vector3){0, 0, 0};
+    const Vector3 VECTOR__Y_ = (Vector3){0, 1, 0};
+
+    const float SCALE_1024 = 4.0f;
+
+    // Texture2D
+    Texture2D texture = LoadTextureResource(appConfig.res_path, "resources/models/character_diffuse.png");
+    Texture2D floorTexture = LoadTextureResource(appConfig.res_path, "resources/models/MI_Grid_Gray-1024.png");
+    Texture2D wallTexture = LoadTextureResource(appConfig.res_path, "resources/models/MI_Grid_TopDark-1024.png");
+
+    StaticMeshComponent tree[LEVEL_SIZE];
+    tree[0] = (StaticMeshComponent){
+        "Player",
+        (Transform2){
+            (Vector3){
+                9.0f, 0.0f, 11.0f},
+            (Rotation2){
+                VECTOR__Y_, ROTATE_P90},
+            (Vector3){
+                0.45f, 0.45f, 0.45f},
+        },
+        LoadModelResource(appConfig.res_path, "resources/models/character.glb"),
+        // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_lightmap
+        WHITE,
+        (Material2){
+            MATERIAL2_COLOR,
+            texture}};
+    tree[1] = (StaticMeshComponent){
+        "Floor",
+        (Transform2){
+            (Vector3){0.0f, -0.5f, 0.1f},
+            (Rotation2){VECTOR_ZERO, ROTATE_ZERO},
+            (Vector3){30.0f, 0.5f, 35.0f},
+        },
+        LoadModelResource(RESOURCES, "resources/models/SM_Cube.obj"),
+        LIGHTGRAY,
+        (Material2){
+            MATERIAL2_TEXTURESHADER,
+            floorTexture,
+            TileTexture2D(RESOURCES, GLSL_VERSION, (Vector2){140.0f, 140.0f})}};
+    tree[2] = (StaticMeshComponent){
+        "WallFront",
+        (Transform2){
+            (Vector3){30.0f, 0.0f, 1.0f},
+            (Rotation2){VECTOR__Y_, ROTATE_M90}, 
+            (Vector3){33.0f, 4.0f, 1.0f}
+        },
+        LoadModelResource(RESOURCES, "resources/models/SM_Cube.obj"),
+        GRAY,
+        (Material2){
+            MATERIAL2_TEXTURESHADER,
+            wallTexture,
+            TileTexture2D(RESOURCES, GLSL_VERSION, (Vector2){4 * SCALE_1024, 33 * SCALE_1024})}};
+    return tree;
+}
+
 UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, RenderTexture2D *target, char consoleOut)
 {
     int GLSL_VERSION = appConfig.glsl_version;
     char *RESOURCES = appConfig.res_path;
 
-    const Vector3 VY = (Vector3){0, 1, 0};
-
     // Texture2D
-    Texture2D texture = LoadTextureResource(appConfig.res_path, "resources/models/character_diffuse.png");
+    // Texture2D texture = LoadTextureResource(appConfig.res_path, "resources/models/character_diffuse.png");
     Texture2D wallTexture = LoadTextureResource(appConfig.res_path, "resources/models/MI_Grid_TopDark-1024.png");
-    Texture2D floorTexture = LoadTextureResource(appConfig.res_path, "resources/models/MI_Grid_Gray-1024.png");
     // Model
     Model skybox = LoadSkyboxResource(appConfig, "resources/skybox.png");
-    Model model = LoadModelResource(appConfig.res_path, "resources/models/character.glb");
-    model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
-    // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_lightmap
+
     Model cubeModel = LoadModelResource(appConfig.res_path, "resources/models/SM_Cube.obj");
     cubeModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = wallTexture;
 
@@ -60,12 +116,6 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     rampModel.materials[0].shader = floorTextureTiler2;
 
     Model chamferCubeModel = LoadModelResource(appConfig.res_path, "resources/models/SM_Cube.obj");
-
-    Model floorModel = LoadModelResource(appConfig.res_path, "resources/models/SM_Cube.obj");
-    floorModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = floorTexture;
-    // Texture2DTiling
-    Shader floorTextureTiler = TileTexture2D(RESOURCES, GLSL_VERSION, (Vector2){140.0f, 140.0f});
-    floorModel.materials[0].shader = floorTextureTiler;
 
     // ModelAnimation
     ModelAnimation *modelAnimations = LoadAnimationsResource(RESOURCES, "resources/models/character.glb");
@@ -83,21 +133,9 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     state.camera = camera;
     state.postproShader = (appConfig.postpro_blur_enable == true) ? shaderPostpro : shaderDefault;
     state.playerPosition = (Vector3){9.0f, 0.0f, 11.0f};
-    state.model = model;
-    state.modelComp = (StaticMeshComponent){
-        "Player",
-        (Transform2){
-            (Vector3){9.0f, 0.0f, 11.0f},
-            (Rotation2){VY, ROTATE_P90},
-            (Vector3){0.45f, 0.45f, 0.45f},
-        },
-        model,
-        WHITE,
-        (Material2){
-            texture}};
+    memcpy(state.components, Load_LevelTree(appConfig), sizeof(state.components));
     state.rampModel = rampModel;
     state.cubeModel = cubeModel;
-    state.floorModel = floorModel;
     state.chamferCubeModel = chamferCubeModel;
     state.skybox = skybox;
     state.modelAnimations = modelAnimations;
@@ -126,17 +164,21 @@ int Update_UnrealThirdPerson(UnrealThirdPerson_State *state)
     state->camera.position = (Vector3){
         -6.0f + state->playerPosition.x,
         1.5f + state->playerPosition.y,
-        0.0f + state->playerPosition.z}; // Camera position
+        0.0f + state->playerPosition.z};
     state->camera.target = (Vector3){
         0.0f + state->playerPosition.x,
         1.5f + state->playerPosition.y,
-        0.0f + state->playerPosition.z}; // Camera looking at point
+        0.0f + state->playerPosition.z};
+    state->components[0].transform.translation = (Vector3){
+        state->playerPosition.x,
+        state->playerPosition.y,
+        state->playerPosition.z};
     // Animation
     if (animationEnable == 1)
     {
         ModelAnimation anim = state->modelAnimations[state->animIndex];
         state->animCurrentFrame = (state->animCurrentFrame + 1) % anim.frameCount; // TODO: tickCount
-        UpdateModelAnimation(state->model, anim, state->animCurrentFrame);
+        UpdateModelAnimation(state->components[0].staticMesh, anim, state->animCurrentFrame);
     }
 
     // TODO: https://www.raylib.com/examples/models/loader.html?name=models_box_collisions
@@ -156,7 +198,12 @@ void Texture_UnrealThirdPerson(UnrealThirdPerson_State *state)
         // DrawGrid(50, 1.0f);
         //  DrawCubeWiresV((Vector3){9.0f, 1.0f, 11.0f}, (Vector3){1.0f, 2.0f, 1.0f}, RED);
 
-        Draw_Component(state->modelComp);
+        for (size_t i = 0; i < LEVEL_SIZE; i++)
+        {
+            Draw_Component(state->components[i]);
+        }
+        // Draw_Component(state->modelComp);
+        // Draw_Component(state->floorComp);
 
         // ramp 1
         DrawModelEx(state->rampModel, (Vector3){17.0f, 0.0f, 6.0f}, VY, -90, (Vector3){2.0f, 0.3f, 4.0f}, GRAY);
@@ -170,10 +217,8 @@ void Texture_UnrealThirdPerson(UnrealThirdPerson_State *state)
         DrawModelEx(state->cubeModel, (Vector3){0.0f, 0.0f, 0.0f}, V0, F0, (Vector3){30.0f, 4.0f, 1.0f}, GRAY);
         DrawModelEx(state->cubeModel, (Vector3){0.0f, 0.0f, 34.0f}, V0, F0, (Vector3){30.0f, 4.0f, 1.0f}, GRAY);
         DrawModelEx(state->cubeModel, (Vector3){1.0f, 0.0f, 1.0f}, VY, -90, (Vector3){33.0f, 4.0f, 1.0f}, GRAY);
-        DrawModelEx(state->cubeModel, (Vector3){30.0f, 0.0f, 1.0f}, VY, -90, (Vector3){33.0f, 4.0f, 1.0f}, GRAY);
+        // DrawModelEx(state->cubeModel, (Vector3){30.0f, 0.0f, 1.0f}, VY, -90, (Vector3){33.0f, 4.0f, 1.0f}, GRAY);
         // floor
-        DrawModelEx(state->floorModel, (Vector3){0.0f, -0.5f, 0.1f}, V0, F0, (Vector3){30.0f, 0.5f, 35.0f}, LIGHTGRAY);
-
         // ChamferCube
         DrawModelEx(state->chamferCubeModel, (Vector3){11.5f, 0.0f, 20.5f}, V0, F0, (Vector3){1.0f, 1.0f, 1.0f}, BLUE);
     }

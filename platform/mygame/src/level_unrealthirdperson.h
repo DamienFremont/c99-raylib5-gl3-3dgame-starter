@@ -5,6 +5,11 @@
 #include "input.h"
 #include "component.h"
 
+typedef enum
+{
+    LEVEL_SIZE = 3,
+} UnrealThirdPersonLevelSize;
+
 typedef struct UnrealThirdPerson_State UnrealThirdPerson_State;
 struct UnrealThirdPerson_State
 {
@@ -19,12 +24,9 @@ struct UnrealThirdPerson_State
 
     Vector3 playerPosition;
 
-    // StaticMeshComponent *components;
-    Model model;
-    StaticMeshComponent modelComp;
+    StaticMeshComponent components[LEVEL_SIZE];
     Model cubeModel;
     Model rampModel;
-    Model floorModel;
     Model chamferCubeModel;
 
     Model skybox;
