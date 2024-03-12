@@ -45,7 +45,7 @@
 - Graphics
   - :hourglass: Render: 
       :heavy_check_mark: PostProcessing
-      :hourglass: Texture tiling
+      :heavy_check_mark: Texture tiling
   - :hourglass: Camera: 
       :hourglass: ThirdPerson
       :x: FOV
