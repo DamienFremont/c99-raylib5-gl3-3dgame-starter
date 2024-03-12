@@ -12,6 +12,7 @@ set(core       "${platform}/core")
 set(raylib     "${lib}/raylib-5.0_win64_msvc16")
 set(raylib_lib "C:/Users/damien/git/cpp20-raylib-starter/lib/raylib-5.0_win64_msvc16/lib/raylib.lib")
 set(raylib_bin "${raylib}/lib/raylib.dll")
+set(raylibextra "${lib}/raylib-5.0-extra")
 
 # ---- Sources ----
 include_directories(
@@ -21,6 +22,7 @@ include_directories(
   ${core}/include
   ${core}/src
   ${raylib}/include
+  ${raylibextra}/include
 )
 
 file(GLOB EXEC_SOURCES
@@ -48,5 +50,6 @@ target_link_libraries(${PROJECT_NAME}
 # ---- Bundle (first build only) ----
 file(REMOVE_RECURSE                       ${CMAKE_CURRENT_BINARY_DIR}/Debug)
 file(COPY ${assets}/resources DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
+
 file(REMOVE_RECURSE                       ${CMAKE_CURRENT_BINARY_DIR}/Release)
 file(COPY ${assets}/resources DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)

@@ -217,7 +217,8 @@ StaticMeshComponent *Load_LevelTree(AppConfiguration appConfig)
             MATERIAL2_TEXTURESHADER,
             MI_Grid_TopDark,
             LoadLightShader(RESOURCES, GLSL_VERSION)}};
-            
+            // TODO: second material with alpha (texture)
+            // TODO: third material with netal
     return tree;
 }
 

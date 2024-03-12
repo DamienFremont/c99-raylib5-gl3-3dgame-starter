@@ -3,8 +3,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
+
+extern "C"
+{
 #include "resolutions.h"
+#include "config.h"
 #include "mygame.h"
+#include "demos.h"
+}
 
 #define GLSL_VERSION 330 // PLATFORM_DESKTOP
 
@@ -16,6 +22,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,
                      LPSTR lpCmdLine, int nCmdShow)
 {
     return main(initConfig());
+    // return scene_demo_shadowmap();
 }
 
 AppConfiguration initConfig()
@@ -36,7 +43,7 @@ AppConfiguration initConfig()
     appConfig.fps_limit = 60;
     appConfig.fps_counter_show = true;
     appConfig.postpro_msaa_enable = true;
-    appConfig.postpro_texturefilter = 2; 
+    appConfig.postpro_texturefilter = 2;
     appConfig.postpro_blur_enable = true;
     return appConfig;
 }
