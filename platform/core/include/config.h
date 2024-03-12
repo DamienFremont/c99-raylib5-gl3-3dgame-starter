@@ -19,4 +19,5 @@ struct AppConfiguration
 
     bool postpro_msaa_enable;
     bool postpro_blur_enable;
+    int postpro_texturefilter; // raylib.h:TextureFilter
 };

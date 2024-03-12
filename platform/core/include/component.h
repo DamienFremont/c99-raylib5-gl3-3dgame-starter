@@ -46,7 +46,8 @@ typedef enum
 {
     ROTATE_ZERO = 0,
     ROTATE_P90 = 90,
-    ROTATE_M90 = -90
+    ROTATE_M90 = -90,
+    ROTATE_M180 = -180,
 } Rotate;
 
 Material LoadMaterialResource(Texture2D texture, Shader shader);

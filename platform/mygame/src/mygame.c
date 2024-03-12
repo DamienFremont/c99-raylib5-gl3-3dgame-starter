@@ -31,10 +31,12 @@ int main(AppConfiguration appConfig)
 	//--------------------------------------------------------------------------------------
 	InitWindow(appConfig.screen_width, appConfig.screen_height, appConfig.appName);
 	SetTargetFPS(appConfig.fps_limit);
-	if (appConfig.postpro_msaa_enable == true)
-		SetConfigFlags(FLAG_MSAA_4X_HINT); // (if available)
+
 	// Create a RenderTexture2D to be used for render to texture
 	RenderTexture2D target = LoadRenderTexture(appConfig.screen_width, appConfig.screen_height);
+	if (appConfig.postpro_msaa_enable == true)
+		SetConfigFlags(FLAG_MSAA_4X_HINT); // (if available)
+	SetTextureFilter(target.texture, appConfig.postpro_texturefilter);
 
 	// Levels
 	int currentScreen = UNREAL_THIRDPERSON;

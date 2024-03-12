@@ -7,7 +7,7 @@
 
 typedef enum
 {
-    LEVEL_SIZE = 3,
+    LEVEL_SIZE = 12,
 } UnrealThirdPersonLevelSize;
 
 typedef struct UnrealThirdPerson_State UnrealThirdPerson_State;
