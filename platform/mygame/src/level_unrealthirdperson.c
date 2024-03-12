@@ -12,6 +12,8 @@
 #include "assets.h"
 #include "skybox.h"
 #include "tiling.h"
+#include "light.h"
+#include <raymath.h>
 
 typedef enum
 {
@@ -37,7 +39,6 @@ StaticMeshComponent *Load_LevelTree(AppConfiguration appConfig)
 {
     int GLSL_VERSION = appConfig.glsl_version;
     char *RESOURCES = appConfig.res_path;
-    const Vector3 VECTOR_ZERO = (Vector3){0, 0, 0};
     const Vector3 VECTOR__Y_ = (Vector3){0, 1, 0};
     const float SCALE_1024 = 4.0f;
     // Texture2D
@@ -69,7 +70,7 @@ StaticMeshComponent *Load_LevelTree(AppConfiguration appConfig)
             "SM_Cube4",
             (Transform2){
                 (Vector3){12.0f, 0.0f, 17.0f},
-                (Rotation2){VECTOR_ZERO, ROTATE_ZERO},
+                (Rotation2){Vector3Zero(), ROTATE_ZERO},
                 (Vector3){6.0f, 2.0f, 5.0f}},
             LoadModelResource(RESOURCES, "resources/models/SM_Cube.obj"),
             GRAY,
@@ -82,7 +83,7 @@ StaticMeshComponent *Load_LevelTree(AppConfiguration appConfig)
             "SM_Cube9",
             (Transform2){
                 (Vector3){18.0f, 0.0f, 15.0f},
-                (Rotation2){VECTOR_ZERO, ROTATE_ZERO},
+                (Rotation2){Vector3Zero(), ROTATE_ZERO},
                 (Vector3){2.0f, 1.0f, 7.0f}},
             LoadModelResource(RESOURCES, "resources/models/SM_Cube.obj"),
             GRAY,
@@ -124,7 +125,7 @@ StaticMeshComponent *Load_LevelTree(AppConfiguration appConfig)
             "SM_Cube",
             (Transform2){
                 (Vector3){0.0f, -0.5f, 0.1f},
-                (Rotation2){VECTOR_ZERO, ROTATE_ZERO},
+                (Rotation2){Vector3Zero(), ROTATE_ZERO},
                 (Vector3){30.0f, 0.5f, 35.0f},
             },
             LoadModelResource(RESOURCES, "resources/models/SM_Cube.obj"),
@@ -137,7 +138,7 @@ StaticMeshComponent *Load_LevelTree(AppConfiguration appConfig)
             "SM_Cube2",
             (Transform2){
                 (Vector3){0.0f, 0.0f, 0.0f},
-                (Rotation2){VECTOR_ZERO, ROTATE_ZERO},
+                (Rotation2){Vector3Zero(), ROTATE_ZERO},
                 (Vector3){30.0f, 4.0f, 1.0f}},
             LoadModelResource(RESOURCES, "resources/models/SM_Cube.obj"),
             GRAY,
@@ -149,7 +150,7 @@ StaticMeshComponent *Load_LevelTree(AppConfiguration appConfig)
             "SM_Cube3",
             (Transform2){
                 (Vector3){0.0f, 0.0f, 34.0f},
-                (Rotation2){VECTOR_ZERO, ROTATE_ZERO},
+                (Rotation2){Vector3Zero(), ROTATE_ZERO},
                 (Vector3){30.0f, 4.0f, 1.0f}},
             LoadModelResource(RESOURCES, "resources/models/SM_Cube.obj"),
             GRAY,
@@ -186,7 +187,7 @@ StaticMeshComponent *Load_LevelTree(AppConfiguration appConfig)
         "SM_ChamferCube",
         (Transform2){
             (Vector3){11.5f, 0.0f, 20.5f},
-            (Rotation2){VECTOR_ZERO, ROTATE_ZERO},
+            (Rotation2){Vector3Zero(), ROTATE_ZERO},
             (Vector3){1.0f, 1.0f, 1.0f}},
         LoadModelResource(RESOURCES, "resources/models/SM_Cube.obj"),
         BLUE,
@@ -203,6 +204,20 @@ StaticMeshComponent *Load_LevelTree(AppConfiguration appConfig)
             MATERIAL2_TEXTURESHADER,
             MI_Grid_TopDark,
             TileTexture2D(RESOURCES, GLSL_VERSION, (Vector2){4 * SCALE_1024, 2 * SCALE_1024})}};
+
+    tree[12] = (StaticMeshComponent){
+        "Test Ligth",
+        (Transform2){
+            (Vector3){12.0f, 0.0f, 13.0f},
+            (Rotation2){Vector3Zero(), ROTATE_ZERO},
+            (Vector3){2.0f, 2.0f, 2.0f}},
+        LoadModelResource(RESOURCES, "resources/models/SM_Cube.obj"),
+        WHITE,
+        (Material2){
+            MATERIAL2_TEXTURESHADER,
+            MI_Grid_TopDark,
+            LoadLightShader(RESOURCES, GLSL_VERSION)}};
+            
     return tree;
 }
 

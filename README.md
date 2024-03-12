@@ -28,7 +28,9 @@
 
 ## Screenshots
 
-![alt text](./docs/README/thumb-screenshot.png)
+![alt text](./docs/README/screenshot-raylib.png)
+
+![alt text](./docs/README/screenshot-unreal.jpg)
 
 ![alt text](./docs/README/diagrams-1.png)
 
@@ -49,8 +51,9 @@
   - :hourglass: Camera: 
       :hourglass: ThirdPerson
       :x: FOV
-  - :x: Lighting:
-      :x: Real Time
+  - :hourglass: Lighting:
+      :hourglass: Real Time
+      :x: Shadows
   - :hourglass: Meshes: 
       :heavy_check_mark: Meshes
       :heavy_check_mark: Textures
@@ -256,6 +259,8 @@ cmake -S "." -B "build"
       - [shaders_postprocessing](https://www.raylib.com/examples/shaders/loader.html?name=shaders_postprocessing) 
       - [shaders_hybrid_render](https://www.raylib.com/examples/shaders/loader.html?name=shaders_hybrid_render)
       - [shaders_texture_tiling](https://www.raylib.com/examples/shaders/loader.html?name=shaders_texture_tiling)
+      - [shaders_basic_lighting](https://www.raylib.com/examples/shaders/loader.html?name=shaders_basic_lighting)
+    - [how to properly setup raylib app to talk to glsl shaders](https://sepi.prose.sh/2022-09-11-how-to-properly-use-shaders-in-raylib)
 
 There are several games made with raylib to highlight:
 - Hare136: https://play.google.com/store/apps/details?id=games.haremonic.slider

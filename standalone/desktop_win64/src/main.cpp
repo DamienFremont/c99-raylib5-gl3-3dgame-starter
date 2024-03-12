@@ -28,7 +28,7 @@ AppConfiguration initConfig()
     const char *cstr = str2.c_str();
 
     AppConfiguration appConfig;
-    strcpy(appConfig.appName, "cpp20-raylib-starter");
+    strcpy(appConfig.appName, "game-3d-c17-raylib5-gl3-starter");
     strcpy(appConfig.res_path, cstr);
     appConfig.glsl_version = GLSL_VERSION;
     appConfig.screen_width = getScreen(SD).width;
