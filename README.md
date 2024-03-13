@@ -112,14 +112,13 @@ Repository layout:
 ├── docs
 ├── infra
 ├── lib
-│   ├── raylib-4.0.0-win64
+│   ├── raylib-5.0_win64_msvc16
 │   ├── winmm-10-win64
 ├── platform
-│   ├── core
-│   └── desktop
+│   ├── engine
+│   └── mygame
 ├── standalone
 │   ├── desktop_win64
-│   ├── desktop_wasm
 └── tools
 ```
 

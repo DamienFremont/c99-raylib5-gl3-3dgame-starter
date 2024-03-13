@@ -3,7 +3,7 @@
 #include <raylib.h>
 #include <time.h>
 #include "input.h"
-#include "component.h"
+#include "gameobject.h"
 
 typedef enum
 {

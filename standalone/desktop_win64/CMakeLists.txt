@@ -7,30 +7,38 @@ set(assets     "../../assets")
 set(lib        "../../lib")
 set(platform   "../../platform")
 
-set(mygame     "${platform}/mygame")
-set(core       "${platform}/core")
-set(raylib     "${lib}/raylib-5.0_win64_msvc16")
-set(raylib_lib "C:/Users/damien/git/cpp20-raylib-starter/lib/raylib-5.0_win64_msvc16/lib/raylib.lib")
-set(raylib_bin "${raylib}/lib/raylib.dll")
+set(mygame      "${platform}/mygame")
+set(engine      "${platform}/engine")
+set(raylib      "${lib}/raylib-5.0_win64_msvc16")
+set(raylib_lib  "C:/Users/damien/git/cpp20-raylib-starter/lib/raylib-5.0_win64_msvc16/lib/raylib.lib")
+set(raylib_bin  "${raylib}/lib/raylib.dll")
 set(raylibextra "${lib}/raylib-5.0-extra")
+
+set(demos      "${platform}/demos")
 
 # ---- Sources ----
 include_directories(
   src
   ${mygame}/include
   ${mygame}/src
-  ${core}/include
-  ${core}/src
+  ${engine}/include
+  ${engine}/src
   ${raylib}/include
   ${raylibextra}/include
+
+  ${demos}/include
+  ${demos}/src
 )
 
 file(GLOB EXEC_SOURCES
   "src/*.cpp"
   "${mygame}/include/*.h"
   "${mygame}/src/*.c"
-  "${core}/include/*.h"
-  "${core}/src/*.c"
+  "${engine}/include/*.h"
+  "${engine}/src/*.c"
+
+  "${demos}/include/*.h"
+  "${demos}/src/*.c"
 )
 
 # ---- Create standalone executable ---- 

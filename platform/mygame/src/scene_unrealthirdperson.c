@@ -1,17 +1,17 @@
-#include "level_unrealthirdperson.h"
+#include "scene_unrealthirdperson.h"
 
 #include <raylib.h>
 #include <time.h>
 
 #include "config.h"
 #include "console.h"
-#include "camera.h"
+#include "camera_thirdperson.h"
 #include "input.h"
 #include <stdio.h>
 #include <string.h>
 #include "assets.h"
 #include "skybox.h"
-#include "tiling.h"
+#include "material.h"
 #include "light.h"
 #include <raymath.h>
 

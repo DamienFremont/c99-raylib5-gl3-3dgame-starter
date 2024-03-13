@@ -1,12 +1,12 @@
-#include "mygame.h"
+#include "engine.h"
 
 #include <raylib.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "console.h"
-#include "launcher.h"
-#include "level_unrealthirdperson.h"
-#include "camera.h"
+#include "scene_launcher.h"
+#include "scene_unrealthirdperson.h"
+#include "camera_thirdperson.h"
 #include "assets.h"
 
 const char consoleOut[999];

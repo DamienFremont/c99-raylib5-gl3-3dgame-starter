@@ -1,4 +1,4 @@
-#include "component.h"
+#include "gameobject.h"
 
 #include <raylib.h>
 

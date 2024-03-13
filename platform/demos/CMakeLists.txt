@@ -1,14 +1,13 @@
 cmake_minimum_required(VERSION 3.28.3)
 
-project(mygame LANGUAGES C)
+project(demos LANGUAGES C)
 
 # ---- Vars ----
 set(assets   "../../assets")
 set(lib      "../../lib")
 set(platform "../../platform")
 
-set(engine      "${platform}/engine")
-set(raylib      "${lib}/raylib-5.0_win64_msvc16")
+set(raylib   "${lib}/raylib-5.0_win64_msvc16")
 set(raylibextra "${lib}/raylib-5.0-extra")
 
 # ---- Sources ----
@@ -26,5 +25,4 @@ add_library(${PROJECT_NAME} ${EXEC_SOURCES})
 
 # ---- Dependencies ----
 include_directories(${raylib}/include)
-include_directories(${engine}/include)
 include_directories(${raylibextra}/include)
