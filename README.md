@@ -116,7 +116,7 @@ Repository layout:
 │   ├── winmm-10-win64
 ├── platform
 │   ├── engine
-│   └── mygame
+│   └── game
 ├── standalone
 │   ├── desktop_win64
 └── tools
@@ -252,6 +252,7 @@ cmake -S "." -B "build"
   - [How to structure a monorepo](https://lucapette.me/writing/how-to-structure-a-monorepo/?utm_source=atom_feed)
   - [A monorepo template that actually works](https://levelup.gitconnected.com/a-monorepo-template-that-actually-works-3efd87770fa5)
 - Raylib
+  - [A small template to start your raylib game](https://github.com/raysan5/raylib-game-template)
   - Examples
     - [GitHub](https://github.com/raysan5/raylib/blob/master/examples/)
     - [Demos](https://www.raylib.com/examples.html)

@@ -1,24 +1,16 @@
-#include "engine.h"
+#include "game.h"
 
 #include <raylib.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "console.h"
-#include "scene_launcher.h"
-#include "scene_unrealthirdperson.h"
-#include "camera_thirdperson.h"
 #include "assets.h"
 
-const char consoleOut[999];
+#include "scenes.h"
+#include "scene_launcher.h"
+#include "scene_unrealthirdperson.h"
 
-//------------------------------------------------------------------------------------------
-// Types and Structures Definition
-//------------------------------------------------------------------------------------------
-typedef enum GameScreen
-{
-	LAUNCHER = 0,
-	UNREAL_THIRDPERSON = 1
-} GameScreen;
+const char consoleOut[999];
 
 //------------------------------------------------------------------------------------
 // Program main entry point

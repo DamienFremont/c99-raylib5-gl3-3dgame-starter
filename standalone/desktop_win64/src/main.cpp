@@ -8,7 +8,7 @@ extern "C"
 {
 #include "resolutions.h"
 #include "config.h"
-#include "engine.h"
+#include "game.h"
 #include "demos.h"
 }
 

@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.28.3)
 
-project(mygame LANGUAGES C)
+project(game LANGUAGES C)
 
 # ---- Vars ----
 set(assets   "../../assets")

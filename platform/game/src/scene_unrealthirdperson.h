@@ -1,5 +1,7 @@
 #include "config.h"
 
+#pragma once
+
 #include <raylib.h>
 #include <time.h>
 #include "input.h"
@@ -38,12 +40,4 @@ struct UnrealThirdPerson_State
     unsigned int animCurrentFrame;
 };
 
-UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, RenderTexture2D *target, char *consoleOut);
 
-int Update_UnrealThirdPerson(UnrealThirdPerson_State *state);
-
-void Texture_UnrealThirdPerson(UnrealThirdPerson_State *state);
-
-void Draw_UnrealThirdPerson(UnrealThirdPerson_State *state, RenderTexture2D target);
-
-void Unload_UnrealThirdPerson(UnrealThirdPerson_State *state);
