@@ -1,4 +1,4 @@
-#include "scene_unrealthirdperson.h"
+#include "screens.h"
 
 #include <raylib.h>
 #include <time.h>
@@ -6,6 +6,7 @@
 #include "config.h"
 #include "console.h"
 #include "camera_thirdperson.h"
+#include "gameobject.h"
 #include "input.h"
 #include <stdio.h>
 #include <string.h>
@@ -34,6 +35,195 @@ typedef enum
     SM_Ramp,
     SM_Cube4,
 } LevelModel;
+
+typedef enum
+{
+    LEVEL_SIZE = 13,
+} UnrealThirdPersonLevelSize;
+
+StaticMeshComponent *Load_LevelTree(AppConfiguration appConfig);
+void DrawConsole3D();
+
+//----------------------------------------------------------------------------------
+// Module Variables Definition (local)
+//----------------------------------------------------------------------------------
+static RenderTexture2D target;
+static char consoleOut;
+
+static int showConsole;
+static Shader postproShader;
+static Shader tilingShader;
+static Camera camera;
+
+static Vector3 playerPosition;
+
+static StaticMeshComponent components[LEVEL_SIZE];
+static Model cubeModel;
+static Model rampModel;
+static Model chamferCubeModel;
+
+static Model skybox;
+
+static Shader *shaders;
+static InputEvent_State input_State;
+static int animIndex;
+static ModelAnimation *modelAnimations;
+static unsigned int animCurrentFrame;
+int screenWidth;
+bool fps_counter_show;
+
+//----------------------------------------------------------------------------------
+// Gameplay Screen Functions Definition
+//----------------------------------------------------------------------------------
+
+void InitGameplayScreen(AppConfiguration appConfig, RenderTexture2D t, char consoleOut)
+{
+    int GLSL_VERSION = appConfig.glsl_version;
+    char *RESOURCES = appConfig.res_path;
+    // Shader
+    Shader shaderDefault = LoadShaderResource(RESOURCES, TextFormat("resources/shaders/glsl%i/default.fs", GLSL_VERSION));
+    Shader shaderPostpro = LoadShaderResource(RESOURCES, TextFormat("resources/shaders/glsl%i/blur.fs", GLSL_VERSION));
+    // init
+    consoleOut = consoleOut;
+    showConsole = 0;
+    camera = InitCamera();
+    postproShader = shaderDefault;
+    playerPosition = (Vector3){9.0f, 0.0f, 11.0f};
+    memcpy(components, Load_LevelTree(appConfig), sizeof(components));
+    skybox = LoadSkyboxResource(appConfig, "resources/images/skybox.png");
+    modelAnimations = LoadAnimationsResource(RESOURCES, "resources/models/character.glb");
+    // TODO: shaders = shaders;
+    target = t;
+    input_State = InitInputEvent();
+    animCurrentFrame = 0;
+    screenWidth = GetScreenWidth();
+    fps_counter_show = appConfig.fps_counter_show;
+}
+
+void UpdateGameplayScreen()
+{
+    int animationEnable = 1;
+    // Input
+    float char_speed = 0.05f; // TODO: tickCount
+    InputOut inout = ExecuteInputEvent(input_State, (InputConfig){
+                                                        playerPosition,
+                                                        showConsole,
+                                                        char_speed});
+    playerPosition.x = inout.playerPosition.x;
+    playerPosition.y = inout.playerPosition.y;
+    playerPosition.z = inout.playerPosition.z;
+    showConsole = inout.showConsole;
+    animIndex = inout.animIndex;
+    // Action
+    camera.position = (Vector3){
+        -6.0f + playerPosition.x,
+        1.5f + playerPosition.y,
+        0.0f + playerPosition.z};
+    camera.target = (Vector3){
+        0.0f + playerPosition.x,
+        1.5f + playerPosition.y,
+        0.0f + playerPosition.z};
+    components[0].transform.translation = (Vector3){
+        playerPosition.x,
+        playerPosition.y,
+        playerPosition.z};
+    // Animation
+    if (animationEnable == 1)
+    {
+        ModelAnimation anim = modelAnimations[animIndex];
+        animCurrentFrame = (animCurrentFrame + 1) % anim.frameCount; // TODO: tickCount
+        UpdateModelAnimation(components[0].staticMesh, anim, animCurrentFrame);
+    }
+    // TODO: https://www.raylib.com/examples/models/loader.html?name=models_box_collisions
+}
+
+void DrawGameplayScreen()
+{
+    BeginTextureMode(target); // Enable drawing to texture
+    {
+        ClearBackground(RAYWHITE); // Clear texture background
+
+        // 3D
+        BeginMode3D(camera);
+        {
+            for (size_t i = 0; i < LEVEL_SIZE; i++)
+                Draw_Component(components[i]);
+            if (showConsole == 1)
+                DrawConsole3D();
+        }
+        EndMode3D();
+        // Skybox
+        BeginMode3D(camera);
+        {
+            rlDisableBackfaceCulling();
+            rlDisableDepthMask();
+            {
+                DrawModel(skybox, (Vector3){0, 0, 0}, 1.0f, SKYBLUE);
+            }
+            rlEnableBackfaceCulling();
+            rlEnableDepthMask();
+        }
+        EndMode3D();
+    }
+    EndTextureMode();
+
+    BeginDrawing();
+    {
+        ClearBackground(RAYWHITE); // Clear screen background
+
+        // postprocessing
+        // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_hybrid_render
+        // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_basic_lighting
+        // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_fog
+        BeginShaderMode(postproShader);
+        {
+            DrawTextureRec(                              //
+                target.texture,                          //
+                (Rectangle){                             //
+                            0,                           //
+                            0,                           //
+                            (float)target.texture.width, //
+                            (float)-target.texture.height},
+                (Vector2){0, 0}, //
+                WHITE);
+        }
+        EndShaderMode();
+
+        // 2D
+        if (showConsole == 1)
+        {
+            ConsoleConfig cfg = (ConsoleConfig){
+                showConsole,
+                fps_counter_show,
+                screenWidth,
+                consoleOut};
+            DrawConsole(cfg);
+        }
+    }
+    EndDrawing();
+}
+
+void UnloadGameplayScreen()
+{
+    UnloadModel(skybox); // Unload skybox model
+    // TODO: UnloadShadersAll(shaders);
+}
+
+//----------------------------------------------------------------------------------
+
+// TODO: MOVEME
+void DrawConsole3D()
+{
+    // grid
+    DrawGrid(50, 1.0f);
+    // player hitbox
+    StaticMeshComponent player = components[0];
+    DrawCubeWiresV((Vector3){
+                       player.transform.translation.x,
+                       player.transform.translation.y + 1.0f,
+                       player.transform.translation.z},
+                   (Vector3){1.0f, 2.0f, 1.0f}, RED);
+}
 
 StaticMeshComponent *Load_LevelTree(AppConfiguration appConfig)
 {
@@ -217,145 +407,7 @@ StaticMeshComponent *Load_LevelTree(AppConfiguration appConfig)
             MATERIAL2_TEXTURESHADER,
             MI_Grid_TopDark,
             LoadLightShader(RESOURCES, GLSL_VERSION)}};
-            // TODO: second material with alpha (texture)
-            // TODO: third material with netal
+    // TODO: second material with alpha (texture)
+    // TODO: third material with netal
     return tree;
-}
-
-UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, RenderTexture2D *target, char consoleOut)
-{
-    int GLSL_VERSION = appConfig.glsl_version;
-    char *RESOURCES = appConfig.res_path;
-    // Shader
-    Shader shaderDefault = LoadShaderResource(RESOURCES, TextFormat("resources/shaders/glsl%i/default.fs", GLSL_VERSION));
-    Shader shaderPostpro = LoadShaderResource(RESOURCES, TextFormat("resources/shaders/glsl%i/blur.fs", GLSL_VERSION));
-    // init
-    UnrealThirdPerson_State state = {0};
-    state.consoleOut = consoleOut;
-    state.showConsole = 0;
-    state.appConfig = appConfig;
-    state.camera = InitCamera();
-    state.postproShader = (appConfig.postpro_blur_enable == true) ? shaderPostpro : shaderDefault;
-    state.playerPosition = (Vector3){9.0f, 0.0f, 11.0f};
-    memcpy(state.components, Load_LevelTree(appConfig), sizeof(state.components));
-    state.skybox = LoadSkyboxResource(appConfig, "resources/images/skybox.png");
-    state.modelAnimations = LoadAnimationsResource(RESOURCES, "resources/models/character.glb");
-    // TODO: state.shaders = shaders;
-    state.target = target;
-    state.input_State = InitInputEvent();
-    state.animCurrentFrame = 0;
-    return state;
-}
-
-int Update_UnrealThirdPerson(UnrealThirdPerson_State *state)
-{
-    int animationEnable = 1;
-    // Input
-    float char_speed = 0.05f; // TODO: tickCount
-    InputOut inout = ExecuteInputEvent(state->input_State, (InputConfig){
-                                                               state->playerPosition,
-                                                               state->showConsole,
-                                                               char_speed});
-    state->playerPosition.x = inout.playerPosition.x;
-    state->playerPosition.y = inout.playerPosition.y;
-    state->playerPosition.z = inout.playerPosition.z;
-    state->showConsole = inout.showConsole;
-    state->animIndex = inout.animIndex;
-    // Action
-    state->camera.position = (Vector3){
-        -6.0f + state->playerPosition.x,
-        1.5f + state->playerPosition.y,
-        0.0f + state->playerPosition.z};
-    state->camera.target = (Vector3){
-        0.0f + state->playerPosition.x,
-        1.5f + state->playerPosition.y,
-        0.0f + state->playerPosition.z};
-    state->components[0].transform.translation = (Vector3){
-        state->playerPosition.x,
-        state->playerPosition.y,
-        state->playerPosition.z};
-    // Animation
-    if (animationEnable == 1)
-    {
-        ModelAnimation anim = state->modelAnimations[state->animIndex];
-        state->animCurrentFrame = (state->animCurrentFrame + 1) % anim.frameCount; // TODO: tickCount
-        UpdateModelAnimation(state->components[0].staticMesh, anim, state->animCurrentFrame);
-    }
-    // TODO: https://www.raylib.com/examples/models/loader.html?name=models_box_collisions
-}
-
-void DrawConsole3D(UnrealThirdPerson_State *state)
-{
-    // grid
-    DrawGrid(50, 1.0f);
-    // player hitbox
-    StaticMeshComponent player = state->components[0];
-    DrawCubeWiresV((Vector3){
-                       player.transform.translation.x,
-                       player.transform.translation.y + 1.0f,
-                       player.transform.translation.z},
-                   (Vector3){1.0f, 2.0f, 1.0f}, RED);
-}
-
-void Texture_UnrealThirdPerson(UnrealThirdPerson_State *state)
-{
-    // 3D
-    BeginMode3D(state->camera);
-    {
-        for (size_t i = 0; i < LEVEL_SIZE; i++)
-            Draw_Component(state->components[i]);
-        if (state->showConsole == 1)
-            DrawConsole3D(state);
-    }
-    EndMode3D();
-    // Skybox
-    BeginMode3D(state->camera);
-    {
-        rlDisableBackfaceCulling();
-        rlDisableDepthMask();
-        {
-            DrawModel(state->skybox, (Vector3){0, 0, 0}, 1.0f, SKYBLUE);
-        }
-        rlEnableBackfaceCulling();
-        rlEnableDepthMask();
-    }
-    EndMode3D();
-}
-
-void Draw_UnrealThirdPerson(UnrealThirdPerson_State *state, RenderTexture2D target)
-{
-    // postprocessing
-    // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_hybrid_render
-    // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_basic_lighting
-    // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_fog
-    BeginShaderMode(state->postproShader);
-    {
-        DrawTextureRec(                              //
-            target.texture,                          //
-            (Rectangle){                             //
-                        0,                           //
-                        0,                           //
-                        (float)target.texture.width, //
-                        (float)-target.texture.height},
-            (Vector2){0, 0}, //
-            WHITE);
-    }
-    EndShaderMode();
-
-    // 2D
-    if (state->showConsole == 1)
-    {
-        ConsoleConfig cfg = (ConsoleConfig){
-            state->showConsole,
-            state->appConfig.fps_counter_show,
-            state->appConfig.screen_width,
-            state->consoleOut};
-        DrawConsole(cfg);
-    }
-}
-
-void Unload_UnrealThirdPerson(UnrealThirdPerson_State *state)
-{
-    UnloadModel(state->skybox); // Unload skybox model
-    // UnloadShadersAll(state->shaders);
 }

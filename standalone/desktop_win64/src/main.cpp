@@ -37,14 +37,14 @@ AppConfiguration initConfig()
     AppConfiguration appConfig;
     strcpy(appConfig.appName, "game-3d-c17-raylib5-gl3-starter");
     strcpy(appConfig.res_path, cstr);
-    appConfig.glsl_version = GLSL_VERSION;
-    appConfig.screen_width = getScreen(HD).width;
-    appConfig.screen_height = getScreen(HD).height;
+    // appConfig.glsl_version = GLSL_VERSION;
+    appConfig.screenWidth = getScreen(SD).width;
+    appConfig.screen_height = getScreen(SD).height;
     appConfig.fps_limit = 60;
     appConfig.fps_counter_show = true;
-    appConfig.postpro_msaa_enable = true;
+    // appConfig.postpro_msaa_enable = true;
     appConfig.postpro_texturefilter = 2;
-    appConfig.postpro_blur_enable = false;
+    // appConfig.postpro_blur_enable = false;
     return appConfig;
 }
 
