@@ -20,9 +20,9 @@ GameScreen currentScreen = LOGO;
 static int screenWidth = 800;
 static int screenHeight = 450;
 
-char consoleOut[999]; // TODO: REMOVEME
-char *resources;	// TODO: REMOVEME
-AppConfiguration config;	// TODO: REMOVEME
+char consoleOut[999];	 // TODO: REMOVEME
+char *resources;		 // TODO: REMOVEME
+AppConfiguration config; // TODO: REMOVEME
 RenderTexture2D target;
 
 //-----------------------------------------------------------------------------
@@ -37,6 +37,7 @@ static void ChangeToScreen(int screen); // Change to screen, no transition effec
 static void UpdateDrawFrame(void); // Update and draw one frame
 
 static void UnloadCurrentScreen(void);
+static void InitScreen(void);
 
 //-----------------------------------------------------------------------------
 // Main entry point
@@ -64,17 +65,20 @@ int main(AppConfiguration appConfig)
 	// SetMusicVolume(music, 1.0f);
 	// PlayMusicStream(music);
 
+	// Create a RenderTexture2D to be used for render to texture
+	target = LoadRenderTexture(screenWidth, screenHeight);
+	if (appConfig.postpro_msaa_enable == true)
+	{
+		SetConfigFlags(FLAG_MSAA_4X_HINT); // (if available)
+										   // SetTextureFilter(target.texture, TEXTURE_FILTER_ANISOTROPIC_4X);
+	}
+
 	// Setup and init first screen
 	currentScreen = LOGO;
-	InitLogoScreen(resources);
+	InitScreen(currentScreen);
 
 	SetTargetFPS(appConfig.fps_limit);
-
-	// Create a RenderTexture2D to be used for render to texture
-	 target = LoadRenderTexture(screenWidth, screenHeight);
-	// if (appConfig.postpro_msaa_enable == true)
-	// 	SetConfigFlags(FLAG_MSAA_4X_HINT); // (if available)
-	// SetTextureFilter(target.texture, appConfig.postpro_texturefilter);
+	//  DisableCursor();
 
 	//-------------------------------------------------------------------------
 
@@ -121,33 +125,25 @@ static void UnloadCurrentScreen(void)
 	}
 }
 
-// Change to next screen, no transition
-static void ChangeToScreen(GameScreen screen)
-{
-	// Unload current screen
-	switch (currentScreen)
-	{
-	case LOGO:
-		UnloadLogoScreen();
-		break;
-	case GAMEPLAY:
-		UnloadGameplayScreen();
-		break;
-	default:
-		break;
-	}
-	// Init next screen
+static void InitScreen(GameScreen screen) {
 	switch (screen)
 	{
 	case LOGO:
-		InitLogoScreen();
+		InitLogoScreen(resources);
 		break;
 	case GAMEPLAY:
-		InitGameplayScreen(config, target, consoleOut);
+		InitGameplayScreen(config, &target, consoleOut);
 		break;
 	default:
 		break;
 	}
+}
+
+// Change to next screen, no transition
+static void ChangeToScreen(GameScreen screen)
+{
+	UnloadCurrentScreen();
+	InitScreen(screen);
 	currentScreen = screen;
 }
 
@@ -181,21 +177,25 @@ static void UpdateDrawFrame(void)
 
 	// Draw
 	//-------------------------------------------------------------------------
-
-
-	switch (currentScreen)
+	BeginDrawing();
 	{
-	case LOGO:
-		DrawLogoScreen();
-		break;
-	case GAMEPLAY:
-		DrawGameplayScreen();
-		break;
-	default:
-		break;
-	}
+		ClearBackground(RAYWHITE);
 
-	// DrawFPS(10, 10);
+		switch (currentScreen)
+		{
+		case LOGO:
+			DrawLogoScreen();
+			break;
+		case GAMEPLAY:
+			DrawGameplayScreen();
+			break;
+		default:
+			break;
+		}
+
+		// DrawFPS(10, 10);
+	}
+	EndDrawing();
 
 	//----------------------------------------------------------------------------------
 }

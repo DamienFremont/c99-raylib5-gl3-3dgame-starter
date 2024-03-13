@@ -26,8 +26,8 @@ int FinishLogoScreen(void);
 //----------------------------------------------------------------------------------
 // Gameplay Screen Functions Declaration
 //----------------------------------------------------------------------------------
-void InitGameplayScreen(AppConfiguration appConfig, RenderTexture2D target, char consoleOut);
+void InitGameplayScreen(AppConfiguration appConfig, RenderTexture2D *target, char consoleOut);
 void UpdateGameplayScreen(void);
-void DrawGameplayScreen(void);
+void DrawGameplayScreen();
 void UnloadGameplayScreen(void);
 int FinishGameplayScreen(void);
