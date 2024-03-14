@@ -1,4 +1,4 @@
-#include "scene_unrealthirdperson_loader.h"
+#include "loader_unrealthirdperson.h"
 
 #include "assets.h"
 #include "material.h"

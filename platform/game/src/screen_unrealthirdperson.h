@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "scene_unrealthirdperson_loader.h"
 #include <raylib.h>
 #include <time.h>
 #include "input.h"
@@ -22,7 +21,7 @@ struct UnrealThirdPerson_State
 
     Vector3 playerPosition;
 
-    StaticMeshComponent components[LEVEL_SIZE];
+    StaticMeshComponent *components;
     Model cubeModel;
     Model rampModel;
     Model chamferCubeModel;
