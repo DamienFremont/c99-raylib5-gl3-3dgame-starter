@@ -11,8 +11,8 @@
 static int finishScreen = 0;
 // const
 static int DELAY_IN_SEC = 2;
-static char *ASSET_PATH = "resources/launcher.png";
-static const Color BACKGROUND_COLOR = {0, 0, 0, 255}; // black
+static char* ASSET_PATH = "resources\\launcher.png";
+static const Color BACKGROUND_COLOR = { 0, 0, 0, 255 }; // black
 // vars
 static int counterInMs = 0;
 static clock_t startClock = {0};
@@ -53,15 +53,23 @@ void UpdateLogoScreen(void)
 
 void DrawLogoScreen(void)
 {
-    DrawRectangle(0, 0, screenWidth, screenHeight, BACKGROUND_COLOR);
-    // DrawText("LOGO SCREEN", 20, 20, 40, LIGHTGRAY);
-    // DrawText("WAIT for 2 SECONDS...", 290, 220, 20, GRAY);
-    DrawTextureEx(screenTexture,
-                  (Vector2){
-                      logoPositionX, 0},
-                  0.0f,
-                  screenTextureScale,
-                  WHITE);
+    BeginDrawing();
+    {
+        ClearBackground(RAYWHITE);
+
+        DrawRectangle(0, 0, screenWidth, screenHeight, BACKGROUND_COLOR);
+        // DrawText("LOGO SCREEN", 20, 20, 40, LIGHTGRAY);
+        // DrawText("WAIT for 2 SECONDS...", 290, 220, 20, GRAY);
+        DrawTextureEx(screenTexture,
+            (Vector2) {
+            logoPositionX, 0
+        },
+            0.0f,
+            screenTextureScale,
+            WHITE);
+    }	
+    EndDrawing();
+
 }
 
 void UnloadLogoScreen(void)
