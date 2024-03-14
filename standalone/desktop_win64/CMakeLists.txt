@@ -7,21 +7,20 @@ set(assets     "../../assets")
 set(lib        "../../lib")
 set(platform   "../../platform")
 
-set(game      "${platform}/game")
+set(mygame      "${platform}/mygame")
 set(engine      "${platform}/engine")
 set(raylib      "${lib}/raylib-5.0_win64_msvc16")
-set(raylib_lib  "${raylib}/lib/raylib")
+set(raylib_lib  "C:/Users/damien/git/cpp20-raylib-starter/lib/raylib-5.0_win64_msvc16/lib/raylib.lib")
 set(raylib_bin  "${raylib}/lib/raylib.dll")
 set(raylibextra "${lib}/raylib-5.0-extra")
-set(winmm_lib   "${lib}/winmm-Win64-10.0.22621.0/lib/WinMM")
 
 set(demos      "${platform}/demos")
 
 # ---- Sources ----
 include_directories(
   src
-  ${game}/include
-  ${game}/src
+  ${mygame}/include
+  ${mygame}/src
   ${engine}/include
   ${engine}/src
   ${raylib}/include
@@ -33,8 +32,8 @@ include_directories(
 
 file(GLOB EXEC_SOURCES
   "src/*.cpp"
-  "${game}/include/*.h"
-  "${game}/src/*.c"
+  "${mygame}/include/*.h"
+  "${mygame}/src/*.c"
   "${engine}/include/*.h"
   "${engine}/src/*.c"
 
@@ -53,7 +52,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 # ---- Dependencies ----
 target_link_libraries(${PROJECT_NAME} 
   ${raylib_lib}
-  ${winmm_lib}
+  "C:/Users/damien/git/cpp20-raylib-starter/lib/winmm-Win64-10.0.22621.0/lib/WinMM.Lib"
 )
 
 # ---- Bundle (first build only) ----
