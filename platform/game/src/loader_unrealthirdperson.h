@@ -5,7 +5,8 @@
 
 typedef enum
 {
-    LEVEL_SIZE = 13,
+    LEVEL_SIZE = 12
+    // LEVEL_SIZE = 13,
 } UnrealThirdPersonLevelSize;
 
 StaticMeshComponent *Load_LevelTree(AppConfiguration appConfig);

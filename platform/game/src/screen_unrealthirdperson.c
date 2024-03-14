@@ -28,7 +28,7 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     state.showConsole = 0;
     state.appConfig = appConfig;
     state.camera = InitCamera();
-    state.postproShader = (appConfig.postpro_blur_enable == true) ? shaderPostpro : shaderDefault;
+    state.postproShader = (appConfig.postpro_blur_enable == false) ? shaderPostpro : shaderDefault;
     state.playerPosition = (Vector3){9.0f, 0.0f, 11.0f};
     state.components = Load_LevelTree(appConfig), sizeof(state.components);
     state.skybox = LoadSkyboxResource(appConfig, "resources/images/skybox.png");
@@ -56,12 +56,12 @@ int Update_UnrealThirdPerson(UnrealThirdPerson_State *state)
     state->animIndex = inout.animIndex;
     // Action
     state->camera.position = (Vector3){
-        -6.0f + state->playerPosition.x,
-        1.5f + state->playerPosition.y,
+        -4.0f + state->playerPosition.x,
+        1.0f + state->playerPosition.y,
         0.0f + state->playerPosition.z};
     state->camera.target = (Vector3){
         0.0f + state->playerPosition.x,
-        1.5f + state->playerPosition.y,
+        1.0f + state->playerPosition.y,
         0.0f + state->playerPosition.z};
     state->components[0].transform.translation = (Vector3){
         state->playerPosition.x,
