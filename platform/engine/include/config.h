@@ -11,7 +11,7 @@ struct AppConfiguration
 
     int glsl_version; // 330 desktop
 
-    int screenWidth;
+    int screen_width;
     int screen_height;
 
     int fps_limit; // 0 = Unlimited
