@@ -50,6 +50,9 @@ cmake_install.cmake
 # VSC
 .vscode
 
+# ItelliJ
+.idea
+
 # Sonar
 .scannerwork
 

@@ -1,4 +1,4 @@
-#include "engine.h"
+#include "game.h"
 
 #include <raylib.h>
 #include <stdio.h>
@@ -39,7 +39,7 @@ int main(AppConfiguration appConfig)
 	SetTextureFilter(target.texture, appConfig.postpro_texturefilter);
 
 	// Levels
-	int currentScreen = UNREAL_THIRDPERSON;
+	int currentScreen = LAUNCHER;
 	Launcher_State launcherState = InitLauncher(appConfig);
 	UnrealThirdPerson_State unrealThirdPerson_State = Init_UnrealThirdPerson(appConfig, &target, consoleOut);
 

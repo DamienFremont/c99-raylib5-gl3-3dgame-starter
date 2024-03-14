@@ -17,9 +17,11 @@ Launcher_State InitLauncher(AppConfiguration appConfig)
 
     Launcher_State state = {0};
     state.appConfig = appConfig;
-    state.durationInMs = clockTriggerSec * 1000;
-    state.clockAtStartup = clock();
-    state.texture = texture;
+    state.counterInMs = clockTriggerSec * 1000;
+    state.startClock = clock();
+    state.screenTexture = texture;
+    state.screenTextureScale = (float)GetScreenHeight() / GetScreenHeight();
+    state.logoPositionX = GetScreenWidth() / 2 - (state.screenTextureScale * texture.width) / 2;
     return state;
 }
 
@@ -28,10 +30,10 @@ int UpdateLauncher(Launcher_State *state)
     int LAUNCHER = 0;
     int LEVEL1 = 1;
     // compute
-    clock_t difference = clock() - state->clockAtStartup;
+    clock_t difference = clock() - state->startClock;
     int msec = difference * 1000 / CLOCKS_PER_SEC;
     // changer level
-    if (msec > state->durationInMs)
+    if (msec > state->counterInMs)
     {
         return LEVEL1;
     }
@@ -40,15 +42,18 @@ int UpdateLauncher(Launcher_State *state)
 
 void DrawLauncher(Launcher_State *state)
 {
-    DrawText("LOGO SCREEN", 20, 20, 40, LIGHTGRAY);
-    DrawText("WAIT for 2 SECONDS...", 290, 220, 20, GRAY);
-    DrawTexture(state->texture,
-                state->appConfig.screen_width / 2 - state->texture.width / 2,
-                state->appConfig.screen_height / 2 - state->texture.height / 2,
-                WHITE);
+    // DrawText("LOGO SCREEN", 20, 20, 40, LIGHTGRAY);
+    // DrawText("WAIT for 2 SECONDS...", 290, 220, 20, GRAY);
+    DrawRectangle(0, 0, state->appConfig.screen_width, state->appConfig.screen_height, BLACK);
+    DrawTextureEx(state->screenTexture,
+                  (Vector2){
+                      state->logoPositionX, 0},
+                  0.0f,
+                  state->screenTextureScale,
+                  WHITE);
 }
 
 void UnloadLauncher(Launcher_State *state)
 {
-    UnloadTexture(state->texture);
+    UnloadTexture(state->screenTexture);
 }

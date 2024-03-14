@@ -66,18 +66,18 @@ typedef struct MyObject
 ## CMake vars case ?
 
 ```txt
-set(mygame "../../mygame")
+set(game "../../game")
 
 include_directories(
-  ${mygame}/src
+  ${game}/src
 )
 ```
 
 ```txt
-set(MYGAME "../../mygame")
+set(game "../../game")
 
 include_directories(
-  ${MYGAME}/src
+  ${game}/src
 )
 ```
 

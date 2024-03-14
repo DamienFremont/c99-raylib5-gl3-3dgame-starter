@@ -7,7 +7,7 @@ set(assets     "../../assets")
 set(lib        "../../lib")
 set(platform   "../../platform")
 
-set(mygame      "${platform}/mygame")
+set(game      "${platform}/game")
 set(engine      "${platform}/engine")
 set(raylib      "${lib}/raylib-5.0_win64_msvc16")
 set(raylib_lib  "C:/Users/damien/git/cpp20-raylib-starter/lib/raylib-5.0_win64_msvc16/lib/raylib.lib")
@@ -19,8 +19,8 @@ set(demos      "${platform}/demos")
 # ---- Sources ----
 include_directories(
   src
-  ${mygame}/include
-  ${mygame}/src
+  ${game}/include
+  ${game}/src
   ${engine}/include
   ${engine}/src
   ${raylib}/include
@@ -32,8 +32,8 @@ include_directories(
 
 file(GLOB EXEC_SOURCES
   "src/*.cpp"
-  "${mygame}/include/*.h"
-  "${mygame}/src/*.c"
+  "${game}/include/*.h"
+  "${game}/src/*.c"
   "${engine}/include/*.h"
   "${engine}/src/*.c"
 

@@ -6,9 +6,11 @@ typedef struct Launcher_State Launcher_State;
 struct Launcher_State
 {
     AppConfiguration appConfig;
-    Texture2D texture;
-    int durationInMs;
-    clock_t clockAtStartup;
+    Texture2D screenTexture;
+    int counterInMs;
+    clock_t startClock;
+    float screenTextureScale;
+    int logoPositionX;
 };
 
 Launcher_State InitLauncher(AppConfiguration appConfig);

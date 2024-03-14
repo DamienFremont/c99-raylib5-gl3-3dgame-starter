@@ -1,14 +1,12 @@
 #include "config.h"
 
+#pragma once
+
+#include "scene_unrealthirdperson_loader.h"
 #include <raylib.h>
 #include <time.h>
 #include "input.h"
 #include "gameobject.h"
-
-typedef enum
-{
-    LEVEL_SIZE = 13,
-} UnrealThirdPersonLevelSize;
 
 typedef struct UnrealThirdPerson_State UnrealThirdPerson_State;
 struct UnrealThirdPerson_State

@@ -116,7 +116,7 @@ Repository layout:
 │   ├── winmm-10-win64
 ├── platform
 │   ├── engine
-│   └── mygame
+│   └── game
 ├── standalone
 │   ├── desktop_win64
 └── tools
