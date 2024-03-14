@@ -41,6 +41,6 @@ int Update_UnrealThirdPerson(UnrealThirdPerson_State *state);
 
 void Texture_UnrealThirdPerson(UnrealThirdPerson_State *state);
 
-void Draw_UnrealThirdPerson(UnrealThirdPerson_State *state, RenderTexture2D target);
+void Draw_UnrealThirdPerson(UnrealThirdPerson_State *state, RenderTexture2D *target);
 
 void Unload_UnrealThirdPerson(UnrealThirdPerson_State *state);
