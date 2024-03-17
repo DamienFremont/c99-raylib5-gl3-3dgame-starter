@@ -10,9 +10,10 @@ set(platform   "../../platform")
 set(game      "${platform}/game")
 set(engine      "${platform}/engine")
 set(raylib      "${lib}/raylib-5.0_win64_msvc16")
-set(raylib_lib  "C:/Users/damien/git/cpp20-raylib-starter/lib/raylib-5.0_win64_msvc16/lib/raylib.lib")
+set(raylib_lib  "${raylib}/lib/raylib")
 set(raylib_bin  "${raylib}/lib/raylib.dll")
 set(raylibextra "${lib}/raylib-5.0-extra")
+set(winmm_lib  "${lib}/winmm-Win64-10.0.22621.0/lib/WinMM")
 
 set(demos      "${platform}/demos")
 
@@ -52,7 +53,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 # ---- Dependencies ----
 target_link_libraries(${PROJECT_NAME} 
   ${raylib_lib}
-  "C:/Users/damien/git/cpp20-raylib-starter/lib/winmm-Win64-10.0.22621.0/lib/WinMM.Lib"
+  ${winmm_lib}
 )
 
 # ---- Bundle (first build only) ----
