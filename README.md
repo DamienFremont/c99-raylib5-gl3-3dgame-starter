@@ -265,7 +265,9 @@ cmake -S "." -B "build"
 1. Start Blender...
 1. Go to menu, File > New > General ...Delete Cube
 1. Go to menu, File > Import > FBX > "X bot.fbx"
-1. Go to menu, File > Export > M3D > scale: 2.0 > "X bot.m3d" > Export
+1. Click on the "Texture Paint" tab > click "new" > type "X_bot_diffuse"
+1. On right side panel > click "material" > "base color" > "image texture" > select "X_bot_diffuse"
+1. Go to menu, File > Export > M3D > scale: 2.0 > "X_bot.m3d" > Export
 
 ### 3D Animations
 
@@ -280,7 +282,7 @@ cmake -S "." -B "build"
 1. Start Blender...
 1. Go to menu, File > New > General ...Delete Cube
 1. Go to menu, File > Import > FBX > "Slow Run.fbx"
-1. Click on the Animation tab > click "editor type icon" > "non linear animation" (new channel editor)
+1. Click on the "Animation" tab > click "editor type icon" > "non linear animation" (new channel editor)
 1. click "push down action" (new channel)
 1. Go to menu, File > Export > M3D > scale: 2.0 > "Slow Run.m3d" > Export
 
