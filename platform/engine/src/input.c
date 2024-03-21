@@ -12,7 +12,7 @@ InputEvent_State InitInputEvent()
 
 InputOut ExecuteInputEvent(InputEvent_State state, InputConfig cfg)
 {
-    const int ANIM_RUN = 0;
+    const int ANIM_RUN = 1;
     const int ANIM_IDLE = 0;
 
     InputOut out;

@@ -31,7 +31,6 @@ struct UnrealThirdPerson_State
     Shader *shaders;
     InputEvent_State input_State;
     int animIndex;
-    ModelAnimation *modelAnimations;
     unsigned int animCurrentFrame;
 };
 
