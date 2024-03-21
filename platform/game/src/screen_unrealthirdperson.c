@@ -70,7 +70,7 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     SetShaderValue(shader, fogDensityLoc, &fogDensity, SHADER_UNIFORM_FLOAT);
 
     // NOTE: All models share the same shader
-    model.materials[0].shader = shader;
+    //model.materials[0].shader = shader;
     state.gameobjects[1].model.materials[0].shader = shader;
     state.gameobjects[2].model.materials[0].shader = shader;
     state.gameobjects[3].model.materials[0].shader = shader;

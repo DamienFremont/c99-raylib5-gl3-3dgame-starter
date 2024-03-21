@@ -28,7 +28,8 @@ GameObject *Load_LevelTree(AppConfiguration appConfig)
     const Vector3 VECTOR__Y_ = (Vector3){0, 1, 0};
     const float SCALE_1024 = 4.0f;
     // Texture2D
-    Texture2D texture = LoadTextureResource(RESOURCES, "resources/models/character_diffuse.png");
+    Texture2D diff1 = LoadTextureResource(RESOURCES, "resources/models/X_Bot_Beta_Surface_diffuse.png");
+    Texture2D diff2 = LoadTextureResource(RESOURCES, "resources/models/X_Bot_Beta_Joints_diffuse.png");
     Texture2D MI_Grid_Gray = LoadTextureResource(RESOURCES, "resources/models/MI_Grid_Gray-1024.png");
     Texture2D MI_Grid_TopDark = LoadTextureResource(RESOURCES, "resources/models/MI_Grid_TopDark-1024.png");
 
@@ -45,10 +46,14 @@ GameObject *Load_LevelTree(AppConfiguration appConfig)
         },
         LoadModelResource(RESOURCES, "resources/models/X_Bot.m3d"),
         // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_lightmap
-        GRAY,
+        WHITE,
         (Material2){
             MATERIAL2_TEXTURE,
-            texture}};
+            diff1}};
+
+    tree[0].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = diff1;
+    tree[0].model.materials[1].maps[MATERIAL_MAP_DIFFUSE].texture = diff1;
+    tree[0].model.materials[2].maps[MATERIAL_MAP_DIFFUSE].texture = diff2;
 
     // Block01
     {
