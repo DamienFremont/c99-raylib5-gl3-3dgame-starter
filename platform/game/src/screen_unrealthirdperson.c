@@ -32,7 +32,7 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     state.playerPosition = (Vector3){9.0f, 0.0f, 11.0f};
     state.components = Load_LevelTree(appConfig), sizeof(state.components);
     state.skybox = LoadSkyboxResource(appConfig, "resources/images/skybox.png");
-    state.modelAnimations = LoadAnimationsResource(RESOURCES, "resources/models/character.glb");
+    state.modelAnimations = LoadAnimationsResource(RESOURCES, "resources/animations/Slow_Run.m3d");
     // TODO: state.shaders = shaders;
     state.target = target;
     state.input_State = InitInputEvent();
@@ -70,7 +70,7 @@ int Update_UnrealThirdPerson(UnrealThirdPerson_State *state)
     // Animation
     if (animationEnable == 1)
     {
-        ModelAnimation anim = state->modelAnimations[state->animIndex];
+        ModelAnimation anim = state->modelAnimations[0];
         state->animCurrentFrame = (state->animCurrentFrame + 1) % anim.frameCount; // TODO: tickCount
         UpdateModelAnimation(state->components[0].staticMesh, anim, state->animCurrentFrame);
     }

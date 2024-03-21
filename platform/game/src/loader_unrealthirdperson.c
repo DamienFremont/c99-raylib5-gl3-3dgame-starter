@@ -38,11 +38,13 @@ StaticMeshComponent *Load_LevelTree(AppConfiguration appConfig)
         (Transform2){
             (Vector3){
                 9.0f, 0.0f, 11.0f},
-            (Rotation2){Vector3Zero(), ROTATE_ZERO},
-            (Vector3){
+                (Rotation2) {
+VECTOR__Y_, ROTATE_P90
+},
+(Vector3){
                 1.0f, 1.0f, 1.0f},
         },
-        LoadModelResource(RESOURCES, "resources/models/character.obj"),
+        LoadModelResource(RESOURCES, "resources/models/X_Bot.m3d"),
         // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_lightmap
         GRAY,
         (Material2){

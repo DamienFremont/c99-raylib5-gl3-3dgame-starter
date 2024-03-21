@@ -120,6 +120,7 @@ Repository layout:
 ├── standalone
 │   ├── desktop_win64
 └── tools
+│   └── blender
 ```
 
 ## Install
@@ -240,6 +241,49 @@ cmake -S "." -B "build"
 }
 ```
 
+## Assets Pipeline
+
+### Installation
+
+1. Download [io_scene_m3d.py](./tools/blender/io_scene_m3d.py)
+1. Start Blender
+1. Go to menu, "Edit" > "Preferences..." > "Add-ons" tab > "Install..." button
+1. Browse and double click on the downloaded file
+1. On the "Add-ons" tab, search for "m3d"
+1. Click on "Enable Add-on."
+1. Now in the menu, "File" > "Export" > "Model 3D (.m3d)" (and eventually "File" > "Import" > "Model 3D (.m3d)") should appear
+
+### 3D Models
+
+1. Start WebBrowser...
+1. https://www.mixamo.com
+1. Click Characters 
+1. search "X bot"
+1. Click Download
+1. Check Format: fbx, pose: t-pose
+1. Click Download
+1. Start Blender...
+1. Go to menu, File > New > General ...Delete Cube
+1. Go to menu, File > Import > FBX > "X bot.fbx"
+1. Go to menu, File > Export > M3D > scale: 2.0 > "X bot.m3d" > Export
+
+### 3D Animations
+
+1. Start WebBrowser...
+1. https://www.mixamo.com
+1. Click Animations 
+1. search "Slow Run"
+1. check "In Place" box
+1. Click Download
+1. Check Format: fbx, Skin: with skin
+1. Click Download
+1. Start Blender...
+1. Go to menu, File > New > General ...Delete Cube
+1. Go to menu, File > Import > FBX > "Slow Run.fbx"
+1. Click on the Animation tab > click "editor type icon" > "non linear animation" (new channel editor)
+1. click "push down action" (new channel)
+1. Go to menu, File > Export > M3D > scale: 2.0 > "Slow Run.m3d" > Export
+
 ## Resources
 
 - C
@@ -260,6 +304,10 @@ cmake -S "." -B "build"
       - [shaders_texture_tiling](https://www.raylib.com/examples/shaders/loader.html?name=shaders_texture_tiling)
       - [shaders_basic_lighting](https://www.raylib.com/examples/shaders/loader.html?name=shaders_basic_lighting)
     - [how to properly setup raylib app to talk to glsl shaders](https://sepi.prose.sh/2022-09-11-how-to-properly-use-shaders-in-raylib)
+- Model3D Format
+  -[Welcome to Model 3D!](https://bztsrc.gitlab.io/model3d/)
+  -[Model 3D Blender Integration](https://gitlab.com/bztsrc/model3d/tree/master/blender/)
+  -[io_scene_m3d.py](https://gitlab.com/bztsrc/model3d/-/blob/master/blender/io_scene_m3d.py)
 
 There are several games made with raylib to highlight:
 - Hare136: https://play.google.com/store/apps/details?id=games.haremonic.slider
