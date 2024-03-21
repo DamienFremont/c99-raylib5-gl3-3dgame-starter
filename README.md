@@ -37,71 +37,69 @@
 ## Features
 
 - Stack
-  - :heavy_check_mark: C++20
-  - :heavy_check_mark: Standard libraries
-  - :heavy_check_mark: Raylib
+  - [x] C17
+  - [x] Standard libraries
+  - [x] Raylib5
 - Targets:
-  - :heavy_check_mark: Win64 (Windows)
-  - :x: JS (Javascript)
-  - :x: WASM (WebAssembly)
+  - [x] Win64 (Windows)
+  - [ ] JS (Javascript)
+  - [ ] WASM (WebAssembly)
 - Graphics
   - :hourglass: Render: 
-      :heavy_check_mark: PostProcessing
-      :heavy_check_mark: Texture tiling
+      [x] PostProcessing
+      [x] Texture tiling
   - :hourglass: Camera: 
       :hourglass: ThirdPerson
-      :x: FOV
+      [ ] FOV
   - :hourglass: Lighting:
       :hourglass: Real Time
-      :x: Shadows
+      [ ] Shadows
   - :hourglass: Meshes: 
-      :heavy_check_mark: Meshes
-      :heavy_check_mark: Textures
-      :heavy_check_mark: Shaders
-      :heavy_check_mark: Materials
-      :x: LOD
-  - :x: Visual Effects:
-      :x: Particles
-      :x: Distant Horizon
-  - :x: Sky:
-      :heavy_check_markx: Color
-      :heavy_check_markx: Cubemap
+      [x] Meshes
+      [x] Textures
+      [x] Shaders
+      [x] Materials
+      [ ] LOD
+  - [x] Sky:
+      [x] Color
+      [x] Cubemap
+      :hourglass: Fog
 - World
-  - :x: Physics
-      :x: hitbox
-      :x: gravity
-  - :x: Simulation
-      :x: LevelTick
+  - [ ] Physics
+      [ ] hitbox
+      [ ] gravity
+  - [ ] Simulation
+      [ ] LevelTick
 - Scripting
   - :hourglass: Properties: 
-      :heavy_check_mark: code 
-      :x: file
-      :x: save
+      [x] code 
+      [ ] file
+      [ ] save
   - :hourglass: Console
-      :heavy_check_mark: output
-      :x: input    
+      [x] output
+      [ ] input    
 - Animation
-  - :heavy_check_mark: Character
+  - [x] Character
 - Audio: 
-  - :x: Sound:
-      :x: Wave
-      :x: Spatial
-  - :x: Music:
-      :x: Player
-      :x: Wave
-      :x: Mp3
+  - [ ] Sound:
+      [ ] Wave
+      [ ] Spatial
+  - [ ] Music:
+      [ ] Player
+      [ ] Wave
+      [ ] Mp3
 - Input
-  - :x: UI: 
-      :x: main menu
-      :x: quit menu
-      :x: i18n
+  - [ ] UI: 
+      [ ] main menu
+      [ ] quit menu
+      [ ] i18n
   - :hourglass: Control:
       :hourglass: Keyboard
-      :x: Gamepad
+      [ ] Gamepad
       :hourglass: Tank control
-      :x: 3D control
+      [ ] 3D control
 - Other
-  - :heavy_check_mark: launching screen
+  - [x] launching screen
 
 Repository layout:
 ```

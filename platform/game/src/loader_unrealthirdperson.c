@@ -38,10 +38,9 @@ StaticMeshComponent *Load_LevelTree(AppConfiguration appConfig)
         (Transform2){
             (Vector3){
                 9.0f, 0.0f, 11.0f},
-                (Rotation2) {
-VECTOR__Y_, ROTATE_P90
-},
-(Vector3){
+            (Rotation2){
+                VECTOR__Y_, ROTATE_P90},
+            (Vector3){
                 1.0f, 1.0f, 1.0f},
         },
         LoadModelResource(RESOURCES, "resources/models/X_Bot.m3d"),
@@ -192,19 +191,19 @@ VECTOR__Y_, ROTATE_P90
             MI_Grid_TopDark,
             TileTexture2D(RESOURCES, GLSL_VERSION, (Vector2){4 * SCALE_1024, 2 * SCALE_1024})}};
 
-    //tree[12] = (StaticMeshComponent){
-    //    "Test Ligth",
-    //    (Transform2){
-    //        (Vector3){12.0f, 0.0f, 13.0f},
-    //        (Rotation2){Vector3Zero(), ROTATE_ZERO},
-    //        (Vector3){2.0f, 2.0f, 2.0f}},
-    //    LoadModelResource(RESOURCES, "resources/models/SM_Cube.obj"),
-    //    WHITE,
-    //    (Material2){
-    //        MATERIAL2_TEXTURESHADER,
-    //        MI_Grid_TopDark,
-    //        LoadLightShader(RESOURCES, GLSL_VERSION)}};
-    // TODO: second material with alpha (texture)
-    // TODO: third material with netal
+    // tree[12] = (StaticMeshComponent){
+    //     "Test Ligth",
+    //     (Transform2){
+    //         (Vector3){12.0f, 0.0f, 13.0f},
+    //         (Rotation2){Vector3Zero(), ROTATE_ZERO},
+    //         (Vector3){2.0f, 2.0f, 2.0f}},
+    //     LoadModelResource(RESOURCES, "resources/models/SM_Cube.obj"),
+    //     WHITE,
+    //     (Material2){
+    //         MATERIAL2_TEXTURESHADER,
+    //         MI_Grid_TopDark,
+    //         LoadLightShader(RESOURCES, GLSL_VERSION)}};
+    //  TODO: second material with alpha (texture)
+    //  TODO: third material with netal
     return tree;
 }
