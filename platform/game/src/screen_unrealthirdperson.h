@@ -21,7 +21,7 @@ struct UnrealThirdPerson_State
 
     Vector3 playerPosition;
 
-    StaticMeshComponent *components;
+    GameObject *gameobjects;
     Model cubeModel;
     Model rampModel;
     Model chamferCubeModel;

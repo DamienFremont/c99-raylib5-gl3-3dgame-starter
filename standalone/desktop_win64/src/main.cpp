@@ -9,7 +9,6 @@ extern "C"
 #include "resolutions.h"
 #include "config.h"
 #include "game.h"
-#include "demos.h"
 }
 
 #define GLSL_VERSION 330 // PLATFORM_DESKTOP

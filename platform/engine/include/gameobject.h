@@ -32,12 +32,12 @@ typedef struct Transform2
     Vector3 scale;
 };
 
-typedef struct StaticMeshComponent StaticMeshComponent;
-struct StaticMeshComponent
+typedef struct GameObject GameObject;
+struct GameObject
 {
     char name[256];
     Transform2 transform;
-    Model staticMesh;
+    Model model;
     Color color;
     Material2 material;
 };
@@ -50,6 +50,8 @@ typedef enum
     ROTATE_M180 = -180,
 } Rotate;
 
-Material LoadMaterialResource(Texture2D texture, Shader shader);
+void Draw_Component(GameObject go);
 
-void Draw_Component(StaticMeshComponent comp);
+void Init_Models(GameObject *go_arr);
+
+void Init_Model(GameObject go);

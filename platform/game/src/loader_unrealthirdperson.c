@@ -21,7 +21,7 @@ typedef enum
     SM_Cube4,
 } LevelModel;
 
-StaticMeshComponent *Load_LevelTree(AppConfiguration appConfig)
+GameObject *Load_LevelTree(AppConfiguration appConfig)
 {
     int GLSL_VERSION = appConfig.glsl_version;
     char *RESOURCES = appConfig.res_path;
@@ -32,8 +32,8 @@ StaticMeshComponent *Load_LevelTree(AppConfiguration appConfig)
     Texture2D MI_Grid_Gray = LoadTextureResource(RESOURCES, "resources/models/MI_Grid_Gray-1024.png");
     Texture2D MI_Grid_TopDark = LoadTextureResource(RESOURCES, "resources/models/MI_Grid_TopDark-1024.png");
 
-    StaticMeshComponent tree[LEVEL_SIZE];
-    tree[0] = (StaticMeshComponent){
+    GameObject tree[LEVEL_SIZE];
+    tree[0] = (GameObject){
         "Player",
         (Transform2){
             (Vector3){
@@ -52,7 +52,7 @@ StaticMeshComponent *Load_LevelTree(AppConfiguration appConfig)
 
     // Block01
     {
-        tree[1] = (StaticMeshComponent){
+        tree[1] = (GameObject){
             "SM_Cube4",
             (Transform2){
                 (Vector3){12.0f, 0.0f, 17.0f},
@@ -65,7 +65,7 @@ StaticMeshComponent *Load_LevelTree(AppConfiguration appConfig)
                 MI_Grid_TopDark,
                 TileTexture2D(RESOURCES, GLSL_VERSION, (Vector2){2 * SCALE_1024, 5 * SCALE_1024})}};
         // "SM_Cube7"
-        tree[2] = (StaticMeshComponent){
+        tree[2] = (GameObject){
             "SM_Cube9",
             (Transform2){
                 (Vector3){18.0f, 0.0f, 15.0f},
@@ -80,7 +80,7 @@ StaticMeshComponent *Load_LevelTree(AppConfiguration appConfig)
         // "SM_Cube10"
         // "SM_QuarterCylinder3"
         // "SM_QuarterCylinder6"
-        tree[3] = (StaticMeshComponent){
+        tree[3] = (GameObject){
             "SM_Ramp2",
             (Transform2){
                 (Vector3){18.0f, 0.0f, 15.0f},
@@ -92,7 +92,7 @@ StaticMeshComponent *Load_LevelTree(AppConfiguration appConfig)
                 MATERIAL2_TEXTURESHADER,
                 MI_Grid_TopDark,
                 TileTexture2D(RESOURCES, GLSL_VERSION, (Vector2){4 * SCALE_1024, 2 * SCALE_1024})}};
-        tree[4] = (StaticMeshComponent){
+        tree[4] = (GameObject){
             "SM_Ramp3",
             (Transform2){
                 (Vector3){20.0f, 1.0f, 21.0f},
@@ -107,7 +107,7 @@ StaticMeshComponent *Load_LevelTree(AppConfiguration appConfig)
     }
     // Playground
     {
-        tree[5] = (StaticMeshComponent){
+        tree[5] = (GameObject){
             "SM_Cube",
             (Transform2){
                 (Vector3){0.0f, -0.5f, 0.1f},
@@ -120,7 +120,7 @@ StaticMeshComponent *Load_LevelTree(AppConfiguration appConfig)
                 MATERIAL2_TEXTURESHADER,
                 MI_Grid_Gray,
                 TileTexture2D(RESOURCES, GLSL_VERSION, (Vector2){30 * SCALE_1024, 35 * SCALE_1024})}};
-        tree[6] = (StaticMeshComponent){
+        tree[6] = (GameObject){
             "SM_Cube2",
             (Transform2){
                 (Vector3){0.0f, 0.0f, 0.0f},
@@ -132,7 +132,7 @@ StaticMeshComponent *Load_LevelTree(AppConfiguration appConfig)
                 MATERIAL2_TEXTURESHADER,
                 MI_Grid_TopDark,
                 TileTexture2D(RESOURCES, GLSL_VERSION, (Vector2){4 * SCALE_1024, 30 * SCALE_1024})}};
-        tree[7] = (StaticMeshComponent){
+        tree[7] = (GameObject){
             "SM_Cube3",
             (Transform2){
                 (Vector3){0.0f, 0.0f, 34.0f},
@@ -144,7 +144,7 @@ StaticMeshComponent *Load_LevelTree(AppConfiguration appConfig)
                 MATERIAL2_TEXTURESHADER,
                 MI_Grid_TopDark,
                 TileTexture2D(RESOURCES, GLSL_VERSION, (Vector2){4 * SCALE_1024, 30 * SCALE_1024})}};
-        tree[8] = (StaticMeshComponent){
+        tree[8] = (GameObject){
             "SM_Cube5",
             (Transform2){
                 (Vector3){1.0f, 0.0f, 1.0f},
@@ -156,7 +156,7 @@ StaticMeshComponent *Load_LevelTree(AppConfiguration appConfig)
                 MATERIAL2_TEXTURESHADER,
                 MI_Grid_TopDark,
                 TileTexture2D(RESOURCES, GLSL_VERSION, (Vector2){4 * SCALE_1024, 33 * SCALE_1024})}};
-        tree[9] = (StaticMeshComponent){
+        tree[9] = (GameObject){
             "SM_Cube6",
             (Transform2){
                 (Vector3){30.0f, 0.0f, 1.0f},
@@ -169,7 +169,7 @@ StaticMeshComponent *Load_LevelTree(AppConfiguration appConfig)
                 MI_Grid_TopDark,
                 TileTexture2D(RESOURCES, GLSL_VERSION, (Vector2){4 * SCALE_1024, 33 * SCALE_1024})}};
     }
-    tree[10] = (StaticMeshComponent){
+    tree[10] = (GameObject){
         "SM_ChamferCube",
         (Transform2){
             (Vector3){11.5f, 0.0f, 20.5f},
@@ -178,7 +178,7 @@ StaticMeshComponent *Load_LevelTree(AppConfiguration appConfig)
         LoadModelResource(RESOURCES, "resources/models/SM_Cube.obj"),
         BLUE,
         (Material2){MATERIAL2_COLOR}};
-    tree[11] = (StaticMeshComponent){
+    tree[11] = (GameObject){
         "SM_Ramp",
         (Transform2){
             (Vector3){17.0f, 0.0f, 6.0f},
@@ -191,7 +191,7 @@ StaticMeshComponent *Load_LevelTree(AppConfiguration appConfig)
             MI_Grid_TopDark,
             TileTexture2D(RESOURCES, GLSL_VERSION, (Vector2){4 * SCALE_1024, 2 * SCALE_1024})}};
 
-    // tree[12] = (StaticMeshComponent){
+    // tree[12] = (GameObject){
     //     "Test Ligth",
     //     (Transform2){
     //         (Vector3){12.0f, 0.0f, 13.0f},
