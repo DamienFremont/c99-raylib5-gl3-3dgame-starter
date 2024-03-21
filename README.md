@@ -303,6 +303,7 @@ cmake -S "." -B "build"
       - [shaders_hybrid_render](https://www.raylib.com/examples/shaders/loader.html?name=shaders_hybrid_render)
       - [shaders_texture_tiling](https://www.raylib.com/examples/shaders/loader.html?name=shaders_texture_tiling)
       - [shaders_basic_lighting](https://www.raylib.com/examples/shaders/loader.html?name=shaders_basic_lighting)
+      - [shaders_fog](https://www.raylib.com/examples/shaders/loader.html?name=shaders_fog)
     - [how to properly setup raylib app to talk to glsl shaders](https://sepi.prose.sh/2022-09-11-how-to-properly-use-shaders-in-raylib)
 - Model3D Format
   -[Welcome to Model 3D!](https://bztsrc.gitlab.io/model3d/)
