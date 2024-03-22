@@ -18,11 +18,11 @@ char *GetAssetPath(char *tmp, char *assetpath)
 }
 
 // TODO
-// char *GetGLSLVersionPath(char *tmp, char *assetpath)
-// {
-//     JoinPath(tmp, RESOURCES_PATH, TextFormat(assetpath, GLSL_VERSION));
-//     return tmp;
-// }
+char *GetShaderPath(char *tmp, char *assetpath)
+{
+    JoinPath(tmp, RESOURCES_PATH, TextFormat(assetpath, GLSL_VERSION));
+    return tmp;
+}
 
 char *JoinPath(char *dest, char *path1, char *path2)
 {

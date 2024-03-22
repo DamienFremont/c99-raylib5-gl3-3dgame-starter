@@ -25,9 +25,12 @@ static Shader shader_fog = {0};
 static Light light = {0};
 static Vector3 light_transform = {0.0f, 9.0f, 0.0f};
 
+static GameObject gos[LEVEL_SIZE];
+
 UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, RenderTexture2D *target, char consoleOut)
 {
     char tmp[PATH_MAX];
+    char tmp2[PATH_MAX];
     // Shader
     Shader shaderDefault = LoadShader(0, GetAssetPath(tmp, "resources/shaders/glsl%i/default.fs"));
     Shader shaderPostpro = LoadShader(0, GetAssetPath(tmp, "resources/shaders/glsl%i/blur.fs"));
@@ -39,7 +42,9 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     state.camera = InitCamera();
     state.postproShader = (appConfig.postpro_blur_enable == true) ? shaderPostpro : shaderDefault;
     state.playerPosition = (Vector3){9.0f, 0.0f, 11.0f};
-    state.gameobjects = Load_LevelTree(appConfig), sizeof(state.gameobjects);
+
+    Load_LevelTree(gos);
+
     state.skybox = LoadSkyboxResource(appConfig, "resources/images/skybox.png");
     int animCount = 0;
     anim0 = LoadModelAnimations(GetAssetPath(tmp, "resources/animations/Idle.m3d"), &animCount)[0];
@@ -49,8 +54,8 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     state.input_State = InitInputEvent();
     state.animCurrentFrame = 0;
 
-    Init_Models(state.gameobjects);
-    Model model = state.gameobjects[0].model;
+    Init_Models(gos);
+    Model model = gos[0].model;
 
     // Load shader and set up some uniforms
     Shader shader = LoadShader(
@@ -68,18 +73,18 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
 
     // NOTE: All models share the same shader
     // model.materials[0].shader = shader;
-    state.gameobjects[1].model.materials[0].shader = shader;
-    state.gameobjects[2].model.materials[0].shader = shader;
-    state.gameobjects[3].model.materials[0].shader = shader;
-    state.gameobjects[4].model.materials[0].shader = shader;
-    state.gameobjects[5].model.materials[0].shader = shader;
-    state.gameobjects[6].model.materials[0].shader = shader;
-    state.gameobjects[7].model.materials[0].shader = shader;
-    state.gameobjects[8].model.materials[0].shader = shader;
-    state.gameobjects[9].model.materials[0].shader = shader;
-    state.gameobjects[10].model.materials[0].shader = shader;
-    state.gameobjects[11].model.materials[0].shader = shader;
-    // state.skybox.materials[0].shader = shader;
+    gos[1].model.materials[0].shader = shader;
+    gos[2].model.materials[0].shader = shader;
+    gos[3].model.materials[0].shader = shader;
+    gos[4].model.materials[0].shader = shader;
+    gos[5].model.materials[0].shader = shader;
+    gos[6].model.materials[0].shader = shader;
+    gos[7].model.materials[0].shader = shader;
+    gos[8].model.materials[0].shader = shader;
+    gos[9].model.materials[0].shader = shader;
+    gos[10].model.materials[0].shader = shader;
+    gos[11].model.materials[0].shader = shader;
+        // state.skybox.materials[0].shader = shader;
 
     // Using just 1 point lights
     light = CreateLight(LIGHT_POINT, (Vector3){0, 2, 6}, Vector3Zero(), GRAY, shader);
@@ -112,7 +117,7 @@ int Update_UnrealThirdPerson(UnrealThirdPerson_State *state)
         0.0f + state->playerPosition.x,
         1.0f + state->playerPosition.y,
         0.0f + state->playerPosition.z};
-    state->gameobjects[0].transform.translation = (Vector3){
+    gos[0].transform.translation = (Vector3){
         state->playerPosition.x,
         state->playerPosition.y,
         state->playerPosition.z};
@@ -121,7 +126,7 @@ int Update_UnrealThirdPerson(UnrealThirdPerson_State *state)
     {
         ModelAnimation anim = state->animIndex == 0 ? anim0 : anim1;
         state->animCurrentFrame = (state->animCurrentFrame + 1) % anim.frameCount; // TODO: tickCount
-        UpdateModelAnimation(state->gameobjects[0].model, anim, state->animCurrentFrame);
+        UpdateModelAnimation(gos[0].model, anim, state->animCurrentFrame);
     }
     // TODO: https://www.raylib.com/examples/models/loader.html?name=models_box_collisions
 
@@ -136,7 +141,7 @@ void DrawConsole3D(UnrealThirdPerson_State *state)
     // grid
     DrawGrid(50, 1.0f);
     // player hitbox
-    GameObject player = state->gameobjects[0];
+    GameObject player = gos[0];
     DrawCubeWiresV((Vector3){
                        player.transform.translation.x,
                        player.transform.translation.y + 1.0f,
@@ -153,7 +158,7 @@ void Texture_UnrealThirdPerson(UnrealThirdPerson_State *state)
     BeginMode3D(state->camera);
     {
         for (size_t i = 0; i < LEVEL_SIZE; i++)
-            Draw_Component(state->gameobjects[i]);
+            Draw_Component(gos[i]);
         if (state->showConsole == 1)
             DrawConsole3D(state);
     }

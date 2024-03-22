@@ -7,7 +7,7 @@
 
 #pragma once
 
-GameObject *Load_LevelTree()
+GameObject *Load_LevelTree(GameObject *tree)
 {
     const Vector3 VECTOR__Y_ = (Vector3){0, 1, 0};
     const float SCALE_1024 = 4.0f;
@@ -18,7 +18,7 @@ GameObject *Load_LevelTree()
     Texture2D MI_Grid_Gray = LoadTexture(GetAssetPath(tmp, "resources/models/MI_Grid_Gray-1024.png"));
     Texture2D MI_Grid_TopDark = LoadTexture(GetAssetPath(tmp, "resources/models/MI_Grid_TopDark-1024.png"));
 
-    GameObject tree[LEVEL_SIZE];
+//    GameObject tree[LEVEL_SIZE];
     tree[0] = (GameObject){
         "Player",
         (Transform2){

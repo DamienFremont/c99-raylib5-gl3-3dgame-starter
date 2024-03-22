@@ -9,4 +9,4 @@ typedef enum
     // LEVEL_SIZE = 13,
 } UnrealThirdPersonLevelSize;
 
-GameObject *Load_LevelTree();
+GameObject *Load_LevelTree(GameObject *gos);
