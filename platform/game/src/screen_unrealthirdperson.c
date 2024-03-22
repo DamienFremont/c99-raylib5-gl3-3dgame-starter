@@ -1,6 +1,5 @@
 #include "screen_unrealthirdperson.h"
 
-
 #include <raylib.h>
 #include <time.h>
 #include "loader_unrealthirdperson.h"
@@ -19,41 +18,40 @@
 #include <rlights.h>
 #include <raymath.h>
 
-static ModelAnimation anim0 = { 0 };
-static ModelAnimation anim1 = { 0 };
+static ModelAnimation anim0 = {0};
+static ModelAnimation anim1 = {0};
 
-static Shader shader_fog = { 0 };
-static Light light = { 0 };
-static Vector3 light_transform = { 0.0f, 9.0f, 0.0f };
+static Shader shader_fog = {0};
+static Light light = {0};
+static Vector3 light_transform = {0.0f, 9.0f, 0.0f};
 
 UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, RenderTexture2D *target, char consoleOut)
 {
     int GLSL_VERSION = appConfig.glsl_version;
-    char *RESOURCES = appConfig.res_path;
+    char tmp[PATH_MAX];
     // Shader
-    Shader shaderDefault = LoadShaderResource(RESOURCES, TextFormat("resources/shaders/glsl%i/default.fs", GLSL_VERSION));
-    Shader shaderPostpro = LoadShaderResource(RESOURCES, TextFormat("resources/shaders/glsl%i/blur.fs", GLSL_VERSION));
+    Shader shaderDefault = LoadShader(0, GetAssetPath(tmp, TextFormat("resources/shaders/glsl%i/default.fs", GLSL_VERSION)));
+    Shader shaderPostpro = LoadShader(0, GetAssetPath(tmp, TextFormat("resources/shaders/glsl%i/blur.fs", GLSL_VERSION)));
     // init
     UnrealThirdPerson_State state = {0};
     state.consoleOut = consoleOut;
     state.showConsole = 0;
     state.appConfig = appConfig;
     state.camera = InitCamera();
-    state.postproShader = (appConfig.postpro_blur_enable == false) ? shaderPostpro : shaderDefault;
+    state.postproShader = (appConfig.postpro_blur_enable == true) ? shaderPostpro : shaderDefault;
     state.playerPosition = (Vector3){9.0f, 0.0f, 11.0f};
     state.gameobjects = Load_LevelTree(appConfig), sizeof(state.gameobjects);
     state.skybox = LoadSkyboxResource(appConfig, "resources/images/skybox.png");
-    anim0 = LoadAnimationsResource(RESOURCES, "resources/animations/Idle.m3d")[0];
-    anim1 = LoadAnimationsResource(RESOURCES, "resources/animations/Slow_Run.m3d")[0];
+    int animCount = 0;
+    anim0 = LoadModelAnimations(GetAssetPath(tmp, "resources/animations/Idle.m3d"), &animCount)[0];
+    anim1 = LoadModelAnimations(GetAssetPath(tmp, "resources/animations/Slow_Run.m3d"), &animCount)[0];
     // TODO: state.shaders = shaders;
     state.target = target;
     state.input_State = InitInputEvent();
     state.animCurrentFrame = 0;
 
-
     Init_Models(state.gameobjects);
     Model model = state.gameobjects[0].model;
-
 
     // Load shader and set up some uniforms
     Shader shader = LoadShader(
@@ -63,14 +61,14 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     shader.locs[SHADER_LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
     // Ambient light level
     int ambientLoc = GetShaderLocation(shader, "ambient");
-    SetShaderValue(shader, ambientLoc, (float[4]) { 0.2f, 0.2f, 0.2f, 1.0f }, SHADER_UNIFORM_VEC4);
+    SetShaderValue(shader, ambientLoc, (float[4]){0.2f, 0.2f, 0.2f, 1.0f}, SHADER_UNIFORM_VEC4);
     // Fog
     float fogDensity = 0.05f;
     int fogDensityLoc = GetShaderLocation(shader, "fogDensity");
     SetShaderValue(shader, fogDensityLoc, &fogDensity, SHADER_UNIFORM_FLOAT);
 
     // NOTE: All models share the same shader
-    //model.materials[0].shader = shader;
+    // model.materials[0].shader = shader;
     state.gameobjects[1].model.materials[0].shader = shader;
     state.gameobjects[2].model.materials[0].shader = shader;
     state.gameobjects[3].model.materials[0].shader = shader;
@@ -82,11 +80,10 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     state.gameobjects[9].model.materials[0].shader = shader;
     state.gameobjects[10].model.materials[0].shader = shader;
     state.gameobjects[11].model.materials[0].shader = shader;
-    //state.skybox.materials[0].shader = shader;
+    // state.skybox.materials[0].shader = shader;
 
     // Using just 1 point lights
-    light = CreateLight(LIGHT_POINT, (Vector3) { 0, 2, 6 }, Vector3Zero(), GRAY, shader);
-
+    light = CreateLight(LIGHT_POINT, (Vector3){0, 2, 6}, Vector3Zero(), GRAY, shader);
 
     shader_fog = shader;
 
@@ -129,7 +126,6 @@ int Update_UnrealThirdPerson(UnrealThirdPerson_State *state)
     }
     // TODO: https://www.raylib.com/examples/models/loader.html?name=models_box_collisions
 
-
     Shader shader = shader_fog;
     Camera camera = state->camera;
     // Update the light shader with the camera view position
@@ -149,7 +145,7 @@ void DrawConsole3D(UnrealThirdPerson_State *state)
                    (Vector3){1.0f, 2.0f, 1.0f}, RED);
     // light spot
     DrawCubeWiresV(light_transform,
-                   (Vector3) {1.0f, 1.0f, 1.0f}, YELLOW);
+                   (Vector3){1.0f, 1.0f, 1.0f}, YELLOW);
 }
 
 void Texture_UnrealThirdPerson(UnrealThirdPerson_State *state)
@@ -185,15 +181,15 @@ void Draw_UnrealThirdPerson(UnrealThirdPerson_State *state, RenderTexture2D *tar
     // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_fog
     BeginShaderMode(state->postproShader);
     {
-         DrawTextureRec(                              //
-             target->texture,                          //
-             (Rectangle){                             //
-                         0,                           //
-                         0,                           //
-                         (float)target->texture.width, //
-                         (float)-target->texture.height},
-             (Vector2){0, 0}, //
-             WHITE);
+        DrawTextureRec(                               //
+            target->texture,                          //
+            (Rectangle){                              //
+                        0,                            //
+                        0,                            //
+                        (float)target->texture.width, //
+                        (float)-target->texture.height},
+            (Vector2){0, 0}, //
+            WHITE);
     }
     EndShaderMode();
 

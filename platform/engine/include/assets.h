@@ -1,12 +1,12 @@
 #include <raylib.h>
 
-Image LoadImageResource(char* resourcesPath, char* assetPath);
+typedef enum
+{
+    PATH_MAX = 260,
+} ResourceUtils;
 
-Model LoadModelResource(char *resourcesPath, char *assetPath);
+void InitAssets(char *path);
 
-Texture2D LoadTextureResource(char* resourcesPath, char* assetPath);
+char *GetAssetPath(char *tmp, char *assetpath);
 
-ModelAnimation* LoadAnimationsResource(char* resourcesPath, char* assetPath);
-
-Shader LoadShaderResource(char* resourcesPath, char* assetPath);
-Shader LoadShaderResource2(char* resourcesPath, char* vsAssetPath, char* fsAssetPath);
+char *JoinPath(char *dest, char *path_1, char *path_2);
