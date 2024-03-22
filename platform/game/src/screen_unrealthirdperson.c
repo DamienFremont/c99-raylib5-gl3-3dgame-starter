@@ -27,11 +27,10 @@ static Vector3 light_transform = {0.0f, 9.0f, 0.0f};
 
 UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, RenderTexture2D *target, char consoleOut)
 {
-    int GLSL_VERSION = appConfig.glsl_version;
     char tmp[PATH_MAX];
     // Shader
-    Shader shaderDefault = LoadShader(0, GetAssetPath(tmp, TextFormat("resources/shaders/glsl%i/default.fs", GLSL_VERSION)));
-    Shader shaderPostpro = LoadShader(0, GetAssetPath(tmp, TextFormat("resources/shaders/glsl%i/blur.fs", GLSL_VERSION)));
+    Shader shaderDefault = LoadShader(0, GetAssetPath(tmp, "resources/shaders/glsl%i/default.fs"));
+    Shader shaderPostpro = LoadShader(0, GetAssetPath(tmp, "resources/shaders/glsl%i/blur.fs"));
     // init
     UnrealThirdPerson_State state = {0};
     state.consoleOut = consoleOut;
@@ -55,8 +54,8 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
 
     // Load shader and set up some uniforms
     Shader shader = LoadShader(
-        TextFormat("C:\\Users\\damien\\git\\cpp20-raylib-starter\\build\\desktop_win64\\Debug\\resources/shaders/glsl%i/lighting.vs", GLSL_VERSION),
-        TextFormat("C:\\Users\\damien\\git\\cpp20-raylib-starter\\build\\desktop_win64\\Debug\\resources/shaders/glsl%i/fog.fs", GLSL_VERSION));
+        TextFormat("C:\\Users\\damien\\git\\cpp20-raylib-starter\\build\\desktop_win64\\Debug\\resources/shaders/glsl%i/lighting.vs", 330), // TODO
+        TextFormat("C:\\Users\\damien\\git\\cpp20-raylib-starter\\build\\desktop_win64\\Debug\\resources/shaders/glsl%i/fog.fs", 330)); // TODO
     shader.locs[SHADER_LOC_MATRIX_MODEL] = GetShaderLocation(shader, "matModel");
     shader.locs[SHADER_LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
     // Ambient light level

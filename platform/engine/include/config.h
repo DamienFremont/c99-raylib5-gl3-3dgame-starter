@@ -8,7 +8,6 @@ struct AppConfiguration
     char appName[999];
 
     char res_path[999];
-
     int glsl_version; // 330 desktop
 
     int screen_width;

@@ -2,4 +2,4 @@
 
 #include "config.h"
 
-Shader TileTexture2D(int GLSL_VERSION, Vector2 tiling);
+Shader TileTexture2D(Vector2 tiling);

@@ -7,13 +7,13 @@
 #include "assets.h"
 
 
-Shader LoadLightShader(char *RESOURCES, int GLSL_VERSION)
+Shader LoadLightShader()
 {
     char tmp[PATH_MAX];
     // Load basic lighting shader
     Shader shader = LoadShader(
-        GetAssetPath(tmp, TextFormat("resources/shaders/glsl%i/lightbasic-vs.glsl", GLSL_VERSION)),
-        GetAssetPath(tmp, TextFormat("resources/shaders/glsl%i/lightbasic-fs.glsl", GLSL_VERSION)));
+        GetAssetPath(tmp, "resources/shaders/glsl%i/lightbasic-vs.glsl"),
+        GetAssetPath(tmp, "resources/shaders/glsl%i/lightbasic-fs.glsl"));
     shader.locs[SHADER_LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
     int ambientLoc = GetShaderLocation(shader, "ambientColor");
     Vector3 ambientColor_loc = (Vector3){1.0f, 1.0f, 0.8f};

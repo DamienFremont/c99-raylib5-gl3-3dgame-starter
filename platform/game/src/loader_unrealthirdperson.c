@@ -7,10 +7,8 @@
 
 #pragma once
 
-GameObject *Load_LevelTree(AppConfiguration appConfig)
+GameObject *Load_LevelTree()
 {
-    int GLSL_VERSION = appConfig.glsl_version;
-    char *RESOURCES = appConfig.res_path;
     const Vector3 VECTOR__Y_ = (Vector3){0, 1, 0};
     const float SCALE_1024 = 4.0f;
     char tmp[PATH_MAX];
@@ -55,7 +53,7 @@ GameObject *Load_LevelTree(AppConfiguration appConfig)
             (Material2){
                 MATERIAL2_TEXTURESHADER,
                 MI_Grid_TopDark,
-                TileTexture2D(GLSL_VERSION, (Vector2){2 * SCALE_1024, 5 * SCALE_1024})}};
+                TileTexture2D((Vector2){2 * SCALE_1024, 5 * SCALE_1024})}};
         // "SM_Cube7"
         tree[2] = (GameObject){
             "SM_Cube9",
@@ -68,7 +66,7 @@ GameObject *Load_LevelTree(AppConfiguration appConfig)
             (Material2){
                 MATERIAL2_TEXTURESHADER,
                 MI_Grid_TopDark,
-                TileTexture2D(GLSL_VERSION, (Vector2){7 * SCALE_1024, 2 * SCALE_1024})}};
+                TileTexture2D((Vector2){7 * SCALE_1024, 2 * SCALE_1024})}};
         // "SM_Cube10"
         // "SM_QuarterCylinder3"
         // "SM_QuarterCylinder6"
@@ -83,7 +81,7 @@ GameObject *Load_LevelTree(AppConfiguration appConfig)
             (Material2){
                 MATERIAL2_TEXTURESHADER,
                 MI_Grid_TopDark,
-                TileTexture2D(GLSL_VERSION, (Vector2){4 * SCALE_1024, 2 * SCALE_1024})}};
+                TileTexture2D((Vector2){4 * SCALE_1024, 2 * SCALE_1024})}};
         tree[4] = (GameObject){
             "SM_Ramp3",
             (Transform2){
@@ -95,7 +93,7 @@ GameObject *Load_LevelTree(AppConfiguration appConfig)
             (Material2){
                 MATERIAL2_TEXTURESHADER,
                 MI_Grid_TopDark,
-                TileTexture2D(GLSL_VERSION, (Vector2){4 * SCALE_1024, 2 * SCALE_1024})}};
+                TileTexture2D((Vector2){4 * SCALE_1024, 2 * SCALE_1024})}};
     }
     // Playground
     {
@@ -111,7 +109,7 @@ GameObject *Load_LevelTree(AppConfiguration appConfig)
             (Material2){
                 MATERIAL2_TEXTURESHADER,
                 MI_Grid_Gray,
-                TileTexture2D(GLSL_VERSION, (Vector2){30 * SCALE_1024, 35 * SCALE_1024})}};
+                TileTexture2D((Vector2){30 * SCALE_1024, 35 * SCALE_1024})}};
         tree[6] = (GameObject){
             "SM_Cube2",
             (Transform2){
@@ -123,7 +121,7 @@ GameObject *Load_LevelTree(AppConfiguration appConfig)
             (Material2){
                 MATERIAL2_TEXTURESHADER,
                 MI_Grid_TopDark,
-                TileTexture2D(GLSL_VERSION, (Vector2){4 * SCALE_1024, 30 * SCALE_1024})}};
+                TileTexture2D((Vector2){4 * SCALE_1024, 30 * SCALE_1024})}};
         tree[7] = (GameObject){
             "SM_Cube3",
             (Transform2){
@@ -135,7 +133,7 @@ GameObject *Load_LevelTree(AppConfiguration appConfig)
             (Material2){
                 MATERIAL2_TEXTURESHADER,
                 MI_Grid_TopDark,
-                TileTexture2D(GLSL_VERSION, (Vector2){4 * SCALE_1024, 30 * SCALE_1024})}};
+                TileTexture2D((Vector2){4 * SCALE_1024, 30 * SCALE_1024})}};
         tree[8] = (GameObject){
             "SM_Cube5",
             (Transform2){
@@ -147,7 +145,7 @@ GameObject *Load_LevelTree(AppConfiguration appConfig)
             (Material2){
                 MATERIAL2_TEXTURESHADER,
                 MI_Grid_TopDark,
-                TileTexture2D(GLSL_VERSION, (Vector2){4 * SCALE_1024, 33 * SCALE_1024})}};
+                TileTexture2D((Vector2){4 * SCALE_1024, 33 * SCALE_1024})}};
         tree[9] = (GameObject){
             "SM_Cube6",
             (Transform2){
@@ -159,7 +157,7 @@ GameObject *Load_LevelTree(AppConfiguration appConfig)
             (Material2){
                 MATERIAL2_TEXTURESHADER,
                 MI_Grid_TopDark,
-                TileTexture2D(GLSL_VERSION, (Vector2){4 * SCALE_1024, 33 * SCALE_1024})}};
+                TileTexture2D((Vector2){4 * SCALE_1024, 33 * SCALE_1024})}};
     }
     tree[10] = (GameObject){
         "SM_ChamferCube",
@@ -181,7 +179,7 @@ GameObject *Load_LevelTree(AppConfiguration appConfig)
         (Material2){
             MATERIAL2_TEXTURESHADER,
             MI_Grid_TopDark,
-            TileTexture2D(GLSL_VERSION, (Vector2){4 * SCALE_1024, 2 * SCALE_1024})}};
+            TileTexture2D((Vector2){4 * SCALE_1024, 2 * SCALE_1024})}};
 
     // tree[12] = (GameObject){
     //     "Test Ligth",

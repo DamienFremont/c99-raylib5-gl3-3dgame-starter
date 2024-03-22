@@ -30,7 +30,7 @@ int main(AppConfiguration appConfig)
 
 	// Initialization
 	//--------------------------------------------------------------------------------------
-	InitAssets(appConfig.res_path);
+	InitAssets(appConfig.res_path, appConfig.glsl_version);
 
 	InitWindow(appConfig.screen_width, appConfig.screen_height, appConfig.appName);
 	SetTargetFPS(appConfig.fps_limit);
