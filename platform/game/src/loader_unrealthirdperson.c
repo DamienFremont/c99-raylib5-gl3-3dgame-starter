@@ -3,23 +3,10 @@
 #include "assets.h"
 #include "material.h"
 #include "light.h"
+#include "resources.h"
 #include <raymath.h>
 
 #pragma once
-
-typedef enum
-{
-    MI_Grid_TopDark,
-    MI_Grid_Gray,
-} LevelTexture;
-
-typedef enum
-{
-    PlayerStart,
-    SM_Cube,
-    SM_Ramp,
-    SM_Cube4,
-} LevelModel;
 
 GameObject *Load_LevelTree(AppConfiguration appConfig)
 {
@@ -28,10 +15,11 @@ GameObject *Load_LevelTree(AppConfiguration appConfig)
     const Vector3 VECTOR__Y_ = (Vector3){0, 1, 0};
     const float SCALE_1024 = 4.0f;
     // Texture2D
-    Texture2D diff1 = LoadTextureResource(RESOURCES, "resources/models/X_Bot_Beta_Surface_diffuse.png");
-    Texture2D diff2 = LoadTextureResource(RESOURCES, "resources/models/X_Bot_Beta_Joints_diffuse.png");
-    Texture2D MI_Grid_Gray = LoadTextureResource(RESOURCES, "resources/models/MI_Grid_Gray-1024.png");
-    Texture2D MI_Grid_TopDark = LoadTextureResource(RESOURCES, "resources/models/MI_Grid_TopDark-1024.png");
+    char tmp[MAX_PATH];
+    Texture2D diff1 = LoadTexture(GetResourcePath(tmp, "resources/models/X_Bot_Beta_Surface_diffuse.png"));
+    Texture2D diff2 = LoadTexture(GetResourcePath(tmp, "resources/models/X_Bot_Beta_Joints_diffuse.png"));
+    Texture2D MI_Grid_Gray = LoadTexture(GetResourcePath(tmp, "resources/models/MI_Grid_Gray-1024.png"));
+    Texture2D MI_Grid_TopDark = LoadTexture(GetResourcePath(tmp, "resources/models/MI_Grid_TopDark-1024.png"));
 
     GameObject tree[LEVEL_SIZE];
     tree[0] = (GameObject){

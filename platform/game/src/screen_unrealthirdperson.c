@@ -39,7 +39,7 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     state.showConsole = 0;
     state.appConfig = appConfig;
     state.camera = InitCamera();
-    state.postproShader = (appConfig.postpro_blur_enable == true) ? shaderPostpro : shaderDefault;
+    state.postproShader = (appConfig.postpro_blur_enable == false) ? shaderPostpro : shaderDefault;
     state.playerPosition = (Vector3){9.0f, 0.0f, 11.0f};
     state.gameobjects = Load_LevelTree(appConfig), sizeof(state.gameobjects);
     state.skybox = LoadSkyboxResource(appConfig, "resources/images/skybox.png");
@@ -185,15 +185,15 @@ void Draw_UnrealThirdPerson(UnrealThirdPerson_State *state, RenderTexture2D *tar
     // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_fog
     BeginShaderMode(state->postproShader);
     {
-        DrawTextureRec(                              //
-            target->texture,                          //
-            (Rectangle){                             //
-                        0,                           //
-                        0,                           //
-                        (float)target->texture.width, //
-                        (float)-target->texture.height},
-            (Vector2){0, 0}, //
-            WHITE);
+         DrawTextureRec(                              //
+             target->texture,                          //
+             (Rectangle){                             //
+                         0,                           //
+                         0,                           //
+                         (float)target->texture.width, //
+                         (float)-target->texture.height},
+             (Vector2){0, 0}, //
+             WHITE);
     }
     EndShaderMode();
 

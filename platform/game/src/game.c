@@ -7,6 +7,7 @@
 #include "screens.h"
 #include "camera_thirdperson.h"
 #include "assets.h"
+#include "resources.h"
 
 const char consoleOut[999];
 
@@ -29,6 +30,8 @@ int main(AppConfiguration appConfig)
 
 	// Initialization
 	//--------------------------------------------------------------------------------------
+	InitResources(appConfig.res_path);
+
 	InitWindow(appConfig.screen_width, appConfig.screen_height, appConfig.appName);
 	SetTargetFPS(appConfig.fps_limit);
 
