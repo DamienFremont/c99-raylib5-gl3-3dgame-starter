@@ -181,6 +181,20 @@ GameObject *Load_LevelTree(GameObject *tree)
             MATERIAL2_TEXTURE,
             SM_Ramp,
             TileTexture2D((Vector2){4 * SCALE_1024, 2 * SCALE_1024})}};
-
+    tree[12] = (GameObject){
+        "PlayerShadow",
+        (Transform2){
+            (Vector3){
+                9.0f, 0.1f, 11.0f},
+            (Rotation2){
+                VECTOR__Y_, ROTATE_P90},
+            (Vector3){
+                1.0f, 0.0f, 1.0f},
+        },
+        LoadModel(GetAssetPath(tmp, "resources/models/X_Bot.m3d")),
+        // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_lightmap
+        BLACK,
+        (Material2){
+            MATERIAL2_COLOR}};
     return tree;
 }

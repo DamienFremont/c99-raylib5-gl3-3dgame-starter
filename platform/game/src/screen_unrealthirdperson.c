@@ -112,12 +112,17 @@ int Update_UnrealThirdPerson(UnrealThirdPerson_State *state)
         state->playerPosition.x,
         state->playerPosition.y,
         state->playerPosition.z};
+    gos[12].transform.translation = (Vector3){
+        state->playerPosition.x,
+        state->playerPosition.y + 0.01f,
+        state->playerPosition.z };
     // Animation
     if (animationEnable == 1)
     {
         ModelAnimation anim = state->animIndex == 0 ? anim0 : anim1;
         state->animCurrentFrame = (state->animCurrentFrame + 1) % anim.frameCount; // TODO: tickCount
         UpdateModelAnimation(gos[0].model, anim, state->animCurrentFrame);
+        UpdateModelAnimation(gos[12].model, anim, state->animCurrentFrame);
     }
     // TODO: https://www.raylib.com/examples/models/loader.html?name=models_box_collisions
 
