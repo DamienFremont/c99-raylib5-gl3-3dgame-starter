@@ -36,14 +36,8 @@
 
 ## Features
 
-- Stack
-  - [x] C17
-  - [x] Standard libraries
-  - [x] Raylib5
 - Targets:
   - [x] Win64 (Windows)
-  - [ ] JS (Javascript)
-  - [ ] WASM (WebAssembly)
 - Graphics
   - :hourglass: Render: 
       [x] PostProcessing
@@ -51,19 +45,14 @@
   - :hourglass: Camera: 
       :hourglass: ThirdPerson
       [ ] FOV
-  - :hourglass: Lighting:
-      :hourglass: Real Time
-      [ ] Shadows
+  - [x] Lighting: Real Time, Player Shadows
   - :hourglass: Meshes: 
       [x] Meshes
       [x] Textures
       [x] Shaders
       [x] Materials
       [ ] LOD
-  - [x] Sky:
-      [x] Color
-      [x] Cubemap
-      :hourglass: Fog
+  - [x] Sky: Color, Cubemap, Fog
 - World
   - [ ] Physics
       [ ] hitbox
