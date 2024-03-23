@@ -2,8 +2,7 @@
 #include <raylib.h>
 #include <time.h>
 
-typedef struct Launcher_State Launcher_State;
-struct Launcher_State
+typedef struct Launcher_State
 {
     AppConfiguration appConfig;
     Texture2D screenTexture;
@@ -11,7 +10,7 @@ struct Launcher_State
     clock_t startClock;
     float screenTextureScale;
     int logoPositionX;
-};
+} Launcher_State;
 
 Launcher_State InitLauncher(AppConfiguration appConfig);
 

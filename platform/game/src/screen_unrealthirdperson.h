@@ -7,12 +7,11 @@
 #include "input.h"
 #include "gameobject.h"
 
-typedef struct UnrealThirdPerson_State UnrealThirdPerson_State;
-struct UnrealThirdPerson_State
+typedef struct UnrealThirdPerson_State
 {
     AppConfiguration appConfig;
     RenderTexture2D *target;
-    char consoleOut;
+    char *consoleOut;
 
     int showConsole;
     Shader postproShader;
@@ -31,7 +30,7 @@ struct UnrealThirdPerson_State
     InputEvent_State input_State;
     int animIndex;
     unsigned int animCurrentFrame;
-};
+} UnrealThirdPerson_State;
 
 UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, RenderTexture2D *target, char *consoleOut);
 

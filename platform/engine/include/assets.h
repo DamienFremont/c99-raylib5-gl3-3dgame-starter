@@ -5,7 +5,7 @@ typedef enum
     PATH_MAX = 260,
 } ResourceUtils;
 
-void InitAssets(char *path);
+void InitAssets(char *path, int glsl_ver);
 
 char *GetAssetPath(char *tmp, char *assetpath);
 

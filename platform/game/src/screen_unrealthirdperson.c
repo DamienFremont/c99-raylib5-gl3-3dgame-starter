@@ -13,6 +13,7 @@
 #include "skybox.h"
 #include "material.h"
 #include "light.h"
+#include "screens.h"
 
 #define RLIGHTS_IMPLEMENTATION
 #include <rlights.h>
@@ -27,7 +28,7 @@ static Vector3 light_transform = {0.0f, 9.0f, 0.0f};
 
 static GameObject gos[LEVEL_SIZE];
 
-UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, RenderTexture2D *target, char consoleOut)
+UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, RenderTexture2D *target, char *consoleOut)
 {
     char tmp[PATH_MAX];
     char tmp2[PATH_MAX];
@@ -134,6 +135,7 @@ int Update_UnrealThirdPerson(UnrealThirdPerson_State *state)
     Camera camera = state->camera;
     // Update the light shader with the camera view position
     SetShaderValue(shader, shader.locs[SHADER_LOC_VECTOR_VIEW], &camera.position.x, SHADER_UNIFORM_VEC3);
+    return GAMEPLAY;
 }
 
 void DrawConsole3D(UnrealThirdPerson_State *state)
@@ -201,7 +203,7 @@ void Draw_UnrealThirdPerson(UnrealThirdPerson_State *state, RenderTexture2D *tar
     if (state->showConsole == 1)
     {
         ConsoleConfig cfg = (ConsoleConfig){
-            state->showConsole,
+            &state->showConsole,
             state->appConfig.fps_counter_show,
             state->appConfig.screen_width,
             state->consoleOut};

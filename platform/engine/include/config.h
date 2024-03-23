@@ -2,8 +2,7 @@
 
 #pragma once
 
-typedef struct AppConfiguration AppConfiguration;
-struct AppConfiguration
+typedef struct AppConfiguration
 {
     char appName[999];
 
@@ -19,4 +18,4 @@ struct AppConfiguration
     bool postpro_msaa_enable;
     bool postpro_blur_enable;
     int postpro_texturefilter; // raylib.h:TextureFilter
-};
+} AppConfiguration;

@@ -80,7 +80,7 @@ int UpdateScreen(int currentScreen, Launcher_State *launcherState, UnrealThirdPe
 	break;
 	case GAMEPLAY:
 	{
-		Update_UnrealThirdPerson(unrealThirdPerson_State);
+		currentScreen = Update_UnrealThirdPerson(unrealThirdPerson_State);
 	}
 	break;
 	default:
