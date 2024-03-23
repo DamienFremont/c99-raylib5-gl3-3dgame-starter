@@ -26,11 +26,4 @@ void Init_Model(GameObject go)
         Texture2D texture = go.material.texture;
         model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
     }
-    else if (go.material.type == MATERIAL2_TEXTURESHADER)
-    {
-        Texture2D texture = go.material.texture;
-        Shader shader = go.material.shader;
-        model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
-        model.materials[0].shader = shader;
-    }
 }

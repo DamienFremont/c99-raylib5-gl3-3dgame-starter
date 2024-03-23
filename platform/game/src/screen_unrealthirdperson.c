@@ -12,7 +12,6 @@
 #include "assets.h"
 #include "skybox.h"
 #include "material.h"
-#include "light.h"
 #include "screens.h"
 
 #define RLIGHTS_IMPLEMENTATION
@@ -73,22 +72,13 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     SetShaderValue(shader, fogDensityLoc, &fogDensity, SHADER_UNIFORM_FLOAT);
 
     // NOTE: All models share the same shader
-    // model.materials[0].shader = shader;
-    gos[1].model.materials[0].shader = shader;
-    gos[2].model.materials[0].shader = shader;
-    gos[3].model.materials[0].shader = shader;
-    gos[4].model.materials[0].shader = shader;
-    gos[5].model.materials[0].shader = shader;
-    gos[6].model.materials[0].shader = shader;
-    gos[7].model.materials[0].shader = shader;
-    gos[8].model.materials[0].shader = shader;
-    gos[9].model.materials[0].shader = shader;
-    gos[10].model.materials[0].shader = shader;
-    gos[11].model.materials[0].shader = shader;
-        // state.skybox.materials[0].shader = shader;
+    for (int i = 0; i < LEVEL_SIZE; i++)
+     gos[i].model.materials[0].shader = shader;
+
+    // state.skybox.materials[0].shader = shader;
 
     // Using just 1 point lights
-    light = CreateLight(LIGHT_POINT, (Vector3){0, 2, 6}, Vector3Zero(), GRAY, shader);
+    light = CreateLight(LIGHT_POINT, (Vector3){0, 2, 6}, Vector3Zero(), WHITE, shader);
 
     shader_fog = shader;
 

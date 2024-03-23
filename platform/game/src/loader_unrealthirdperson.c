@@ -2,7 +2,6 @@
 
 #include "assets.h"
 #include "material.h"
-#include "light.h"
 #include <raymath.h>
 
 #pragma once
@@ -15,10 +14,12 @@ GameObject *Load_LevelTree(GameObject *tree)
     // Texture2D
     Texture2D diff1 = LoadTexture(GetAssetPath(tmp, "resources/models/X_Bot_Beta_Surface_diffuse.png"));
     Texture2D diff2 = LoadTexture(GetAssetPath(tmp, "resources/models/X_Bot_Beta_Joints_diffuse.png"));
-    Texture2D MI_Grid_Gray = LoadTexture(GetAssetPath(tmp, "resources/models/MI_Grid_Gray-1024.png"));
+    // Texture2D MI_Grid_Gray = LoadTexture(GetAssetPath(tmp, "resources/models/MI_Grid_Gray-1024.png"));
+    Texture2D SM_Cube = LoadTexture(GetAssetPath(tmp, "resources/models/SM_Cube_diffuse.png"));
+    Texture2D SM_Ramp = LoadTexture(GetAssetPath(tmp, "resources/models/SM_Ramp_diffuse.png"));
+    Texture2D SM_Cube9 = LoadTexture(GetAssetPath(tmp, "resources/models/SM_Cube9_diffuse.png"));
     Texture2D MI_Grid_TopDark = LoadTexture(GetAssetPath(tmp, "resources/models/MI_Grid_TopDark-1024.png"));
 
-//    GameObject tree[LEVEL_SIZE];
     tree[0] = (GameObject){
         "Player",
         (Transform2){
@@ -51,7 +52,7 @@ GameObject *Load_LevelTree(GameObject *tree)
             LoadModel(GetAssetPath(tmp, "resources/models/SM_Cube.obj")),
             GRAY,
             (Material2){
-                MATERIAL2_TEXTURESHADER,
+                MATERIAL2_TEXTURE,
                 MI_Grid_TopDark,
                 TileTexture2D((Vector2){2 * SCALE_1024, 5 * SCALE_1024})}};
         // "SM_Cube7"
@@ -64,8 +65,8 @@ GameObject *Load_LevelTree(GameObject *tree)
             LoadModel(GetAssetPath(tmp, "resources/models/SM_Cube.obj")),
             GRAY,
             (Material2){
-                MATERIAL2_TEXTURESHADER,
-                MI_Grid_TopDark,
+                MATERIAL2_TEXTURE,
+                SM_Cube9,
                 TileTexture2D((Vector2){7 * SCALE_1024, 2 * SCALE_1024})}};
         // "SM_Cube10"
         // "SM_QuarterCylinder3"
@@ -79,8 +80,8 @@ GameObject *Load_LevelTree(GameObject *tree)
             LoadModel(GetAssetPath(tmp, "resources/models/SM_Ramp.obj")),
             GRAY,
             (Material2){
-                MATERIAL2_TEXTURESHADER,
-                MI_Grid_TopDark,
+                MATERIAL2_TEXTURE,
+                SM_Ramp,
                 TileTexture2D((Vector2){4 * SCALE_1024, 2 * SCALE_1024})}};
         tree[4] = (GameObject){
             "SM_Ramp3",
@@ -91,8 +92,8 @@ GameObject *Load_LevelTree(GameObject *tree)
             LoadModel(GetAssetPath(tmp, "resources/models/SM_Ramp.obj")),
             GRAY,
             (Material2){
-                MATERIAL2_TEXTURESHADER,
-                MI_Grid_TopDark,
+                MATERIAL2_TEXTURE,
+                SM_Ramp,
                 TileTexture2D((Vector2){4 * SCALE_1024, 2 * SCALE_1024})}};
     }
     // Playground
@@ -105,10 +106,10 @@ GameObject *Load_LevelTree(GameObject *tree)
                 (Vector3){30.0f, 0.5f, 35.0f},
             },
             LoadModel(GetAssetPath(tmp, "resources/models/SM_Cube.obj")),
-            LIGHTGRAY,
+            WHITE,
             (Material2){
-                MATERIAL2_TEXTURESHADER,
-                MI_Grid_Gray,
+                MATERIAL2_TEXTURE,
+                SM_Cube,
                 TileTexture2D((Vector2){30 * SCALE_1024, 35 * SCALE_1024})}};
         tree[6] = (GameObject){
             "SM_Cube2",
@@ -119,7 +120,7 @@ GameObject *Load_LevelTree(GameObject *tree)
             LoadModel(GetAssetPath(tmp, "resources/models/SM_Cube.obj")),
             GRAY,
             (Material2){
-                MATERIAL2_TEXTURESHADER,
+                MATERIAL2_TEXTURE,
                 MI_Grid_TopDark,
                 TileTexture2D((Vector2){4 * SCALE_1024, 30 * SCALE_1024})}};
         tree[7] = (GameObject){
@@ -131,7 +132,7 @@ GameObject *Load_LevelTree(GameObject *tree)
             LoadModel(GetAssetPath(tmp, "resources/models/SM_Cube.obj")),
             GRAY,
             (Material2){
-                MATERIAL2_TEXTURESHADER,
+                MATERIAL2_TEXTURE,
                 MI_Grid_TopDark,
                 TileTexture2D((Vector2){4 * SCALE_1024, 30 * SCALE_1024})}};
         tree[8] = (GameObject){
@@ -143,7 +144,7 @@ GameObject *Load_LevelTree(GameObject *tree)
             LoadModel(GetAssetPath(tmp, "resources/models/SM_Cube.obj")),
             GRAY,
             (Material2){
-                MATERIAL2_TEXTURESHADER,
+                MATERIAL2_TEXTURE,
                 MI_Grid_TopDark,
                 TileTexture2D((Vector2){4 * SCALE_1024, 33 * SCALE_1024})}};
         tree[9] = (GameObject){
@@ -155,7 +156,7 @@ GameObject *Load_LevelTree(GameObject *tree)
             LoadModel(GetAssetPath(tmp, "resources/models/SM_Cube.obj")),
             GRAY,
             (Material2){
-                MATERIAL2_TEXTURESHADER,
+                MATERIAL2_TEXTURE,
                 MI_Grid_TopDark,
                 TileTexture2D((Vector2){4 * SCALE_1024, 33 * SCALE_1024})}};
     }
@@ -177,23 +178,9 @@ GameObject *Load_LevelTree(GameObject *tree)
         LoadModel(GetAssetPath(tmp, "resources/models/SM_Ramp.obj")),
         GRAY,
         (Material2){
-            MATERIAL2_TEXTURESHADER,
-            MI_Grid_TopDark,
+            MATERIAL2_TEXTURE,
+            SM_Ramp,
             TileTexture2D((Vector2){4 * SCALE_1024, 2 * SCALE_1024})}};
 
-    // tree[12] = (GameObject){
-    //     "Test Ligth",
-    //     (Transform2){
-    //         (Vector3){12.0f, 0.0f, 13.0f},
-    //         (Rotation2){Vector3Zero(), ROTATE_ZERO},
-    //         (Vector3){2.0f, 2.0f, 2.0f}},
-    //     LoadModel(GetAssetPath(tmp, "resources/models/SM_Cube.obj"),
-    //     WHITE,
-    //     (Material2){
-    //         MATERIAL2_TEXTURESHADER,
-    //         MI_Grid_TopDark,
-    //         LoadLightShader(RESOURCES, GLSL_VERSION)}};
-    //  TODO: second material with alpha (texture)
-    //  TODO: third material with netal
     return tree;
 }
