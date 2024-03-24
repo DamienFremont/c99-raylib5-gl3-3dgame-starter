@@ -2,19 +2,19 @@
 
 #pragma once
 
-typedef enum
-{
-    MATERIAL2_COLOR = 0,
-    MATERIAL2_TEXTURE = 1,
-    MATERIAL2_TEXTURESHADER = 2,
-} Material2Type;
+//typedef enum
+//{
+//    MATERIAL2_COLOR = 0,
+//    MATERIAL2_TEXTURE = 1,
+//    MATERIAL2_TEXTURESHADER = 2,
+//} Material2Type;
 
-typedef struct Material2
-{
-    Material2Type type;
-    Texture2D texture;
-    Shader shader;
-} Material2;
+//typedef struct Material2
+//{
+//    Material2Type type;
+//    Texture2D texture;
+//    Shader shader;
+//} Material2;
 
 typedef struct Rotation2
 {
@@ -35,7 +35,7 @@ typedef struct GameObject
     Transform2 transform;
     Model model;
     Color color;
-    Material2 material;
+    //Material2 material;
 } GameObject;
 
 typedef enum
@@ -48,6 +48,6 @@ typedef enum
 
 void Draw_Component(GameObject go);
 
-void Init_Models(GameObject *go_arr);
-
-void Init_Model(GameObject go);
+//void Init_Models(GameObject *go_arr);
+//
+//void Init_Model(GameObject go);

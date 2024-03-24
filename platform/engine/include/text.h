@@ -8,6 +8,7 @@ typedef enum
 {
     FONT_SIZE_12 = 12
 } FontSize;
+
 typedef enum
 {
     FONT_SPACING_1 = 1

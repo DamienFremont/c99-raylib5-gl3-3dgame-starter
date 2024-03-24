@@ -48,21 +48,22 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     Load_LevelTree(gos);
 
     state.skybox = LoadSkyboxResource(appConfig, "resources/images/skybox.png");
+
     int animCount = 0;
     anim0 = LoadModelAnimations(GetAssetPath(tmp, "resources/animations/Idle.m3d"), &animCount)[0];
     anim1 = LoadModelAnimations(GetAssetPath(tmp, "resources/animations/Slow_Run.m3d"), &animCount)[0];
-    // TODO: state.shaders = shaders;
+
     state.target = target;
     state.input_State = InitInputEvent();
     state.animCurrentFrame = 0;
 
-    Init_Models(gos);
+    //Init_Models(gos);
     Model model = gos[0].model;
 
     // Load shader and set up some uniforms
     Shader shader = LoadShader(
-        TextFormat("C:\\Users\\damien\\git\\cpp20-raylib-starter\\build\\desktop_win64\\Debug\\resources/shaders/glsl%i/lighting.vs", 330), // TODO
-        TextFormat("C:\\Users\\damien\\git\\cpp20-raylib-starter\\build\\desktop_win64\\Debug\\resources/shaders/glsl%i/fog.fs", 330));     // TODO
+        GetShaderPath(tmp, "resources/shaders/glsl%i/lighting.vs"),
+        GetShaderPath(tmp2, "resources/shaders/glsl%i/fog.fs"));
     shader.locs[SHADER_LOC_MATRIX_MODEL] = GetShaderLocation(shader, "matModel");
     shader.locs[SHADER_LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
     // Ambient light level
@@ -76,8 +77,8 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     // NOTE: All models share the same shader
     for (int i = 0; i < LEVEL_SIZE; i++)
         gos[i].model.materials[0].shader = shader;
-
-    // state.skybox.materials[0].shader = shader;
+        
+    gos[11].model.materials[0].shader = shader;
 
     // Using just 1 point lights
     light = CreateLight(LIGHT_POINT, (Vector3){0, 2, 6}, Vector3Zero(), WHITE, shader);

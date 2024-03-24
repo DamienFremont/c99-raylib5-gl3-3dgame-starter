@@ -3,8 +3,16 @@
 #include "assets.h"
 #include "material.h"
 #include <raymath.h>
+#include <raylib.h>
 
 #pragma once
+
+Image GetTiledImage(int tilingX, int tilingY, Color col1, Color col2)
+{
+    const int res = 1024;
+    const int check = 256;
+    return GenImageChecked(res, res, check / tilingX, check / tilingY, col1, col2);
+}
 
 GameObject *Load_LevelTree(GameObject *tree)
 {
@@ -14,11 +22,6 @@ GameObject *Load_LevelTree(GameObject *tree)
     // Texture2D
     Texture2D diff1 = LoadTexture(GetAssetPath(tmp, "resources/models/X_Bot_Beta_Surface_diffuse.png"));
     Texture2D diff2 = LoadTexture(GetAssetPath(tmp, "resources/models/X_Bot_Beta_Joints_diffuse.png"));
-    // Texture2D MI_Grid_Gray = LoadTexture(GetAssetPath(tmp, "resources/models/MI_Grid_Gray-1024.png"));
-    Texture2D SM_Cube = LoadTexture(GetAssetPath(tmp, "resources/models/SM_Cube_diffuse.png"));
-    Texture2D SM_Ramp = LoadTexture(GetAssetPath(tmp, "resources/models/SM_Ramp_diffuse.png"));
-    Texture2D SM_Cube9 = LoadTexture(GetAssetPath(tmp, "resources/models/SM_Cube9_diffuse.png"));
-    Texture2D MI_Grid_TopDark = LoadTexture(GetAssetPath(tmp, "resources/models/MI_Grid_TopDark-1024.png"));
 
     tree[0] = (GameObject){
         "Player",
@@ -32,10 +35,7 @@ GameObject *Load_LevelTree(GameObject *tree)
         },
         LoadModel(GetAssetPath(tmp, "resources/models/X_Bot.m3d")),
         // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_lightmap
-        WHITE,
-        (Material2){
-            MATERIAL2_TEXTURE,
-            diff1}};
+        WHITE};
 
     tree[0].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = diff1;
     tree[0].model.materials[1].maps[MATERIAL_MAP_DIFFUSE].texture = diff1;
@@ -50,11 +50,10 @@ GameObject *Load_LevelTree(GameObject *tree)
                 (Rotation2){Vector3Zero(), ROTATE_ZERO},
                 (Vector3){6.0f, 2.0f, 5.0f}},
             LoadModel(GetAssetPath(tmp, "resources/models/SM_Cube.obj")),
-            GRAY,
-            (Material2){
-                MATERIAL2_TEXTURE,
-                MI_Grid_TopDark,
-                TileTexture2D((Vector2){2 * SCALE_1024, 5 * SCALE_1024})}};
+            DARKGRAY};
+
+        tree[1].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(2, 5, GRAY, DARKGRAY));
+
         // "SM_Cube7"
         tree[2] = (GameObject){
             "SM_Cube9",
@@ -63,11 +62,10 @@ GameObject *Load_LevelTree(GameObject *tree)
                 (Rotation2){Vector3Zero(), ROTATE_ZERO},
                 (Vector3){2.0f, 1.0f, 7.0f}},
             LoadModel(GetAssetPath(tmp, "resources/models/SM_Cube.obj")),
-            GRAY,
-            (Material2){
-                MATERIAL2_TEXTURE,
-                SM_Cube9,
-                TileTexture2D((Vector2){7 * SCALE_1024, 2 * SCALE_1024})}};
+            DARKGRAY};
+
+        tree[2].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(7, 2, GRAY, DARKGRAY));
+
         // "SM_Cube10"
         // "SM_QuarterCylinder3"
         // "SM_QuarterCylinder6"
@@ -78,11 +76,10 @@ GameObject *Load_LevelTree(GameObject *tree)
                 (Rotation2){VECTOR__Y_, ROTATE_M90},
                 (Vector3){2.0f, 1.0f, 4.0f}},
             LoadModel(GetAssetPath(tmp, "resources/models/SM_Ramp.obj")),
-            GRAY,
-            (Material2){
-                MATERIAL2_TEXTURE,
-                SM_Ramp,
-                TileTexture2D((Vector2){4 * SCALE_1024, 2 * SCALE_1024})}};
+            DARKGRAY};
+
+        tree[3].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 2, GRAY, DARKGRAY));
+
         tree[4] = (GameObject){
             "SM_Ramp3",
             (Transform2){
@@ -90,11 +87,9 @@ GameObject *Load_LevelTree(GameObject *tree)
                 (Rotation2){VECTOR__Y_, ROTATE_M180},
                 (Vector3){2.0f, 1.0f, 4.0f}},
             LoadModel(GetAssetPath(tmp, "resources/models/SM_Ramp.obj")),
-            GRAY,
-            (Material2){
-                MATERIAL2_TEXTURE,
-                SM_Ramp,
-                TileTexture2D((Vector2){4 * SCALE_1024, 2 * SCALE_1024})}};
+            DARKGRAY};
+
+        tree[4].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 2, GRAY, DARKGRAY));
     }
     // Playground
     {
@@ -106,11 +101,10 @@ GameObject *Load_LevelTree(GameObject *tree)
                 (Vector3){30.0f, 0.5f, 35.0f},
             },
             LoadModel(GetAssetPath(tmp, "resources/models/SM_Cube.obj")),
-            WHITE,
-            (Material2){
-                MATERIAL2_TEXTURE,
-                SM_Cube,
-                TileTexture2D((Vector2){30 * SCALE_1024, 35 * SCALE_1024})}};
+            WHITE};
+
+        tree[5].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(30, 30, WHITE, LIGHTGRAY));
+
         tree[6] = (GameObject){
             "SM_Cube2",
             (Transform2){
@@ -118,11 +112,10 @@ GameObject *Load_LevelTree(GameObject *tree)
                 (Rotation2){Vector3Zero(), ROTATE_ZERO},
                 (Vector3){30.0f, 4.0f, 1.0f}},
             LoadModel(GetAssetPath(tmp, "resources/models/SM_Cube.obj")),
-            GRAY,
-            (Material2){
-                MATERIAL2_TEXTURE,
-                MI_Grid_TopDark,
-                TileTexture2D((Vector2){4 * SCALE_1024, 30 * SCALE_1024})}};
+            DARKGRAY};
+
+        tree[6].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 30, GRAY, DARKGRAY));
+
         tree[7] = (GameObject){
             "SM_Cube3",
             (Transform2){
@@ -130,11 +123,10 @@ GameObject *Load_LevelTree(GameObject *tree)
                 (Rotation2){Vector3Zero(), ROTATE_ZERO},
                 (Vector3){30.0f, 4.0f, 1.0f}},
             LoadModel(GetAssetPath(tmp, "resources/models/SM_Cube.obj")),
-            GRAY,
-            (Material2){
-                MATERIAL2_TEXTURE,
-                MI_Grid_TopDark,
-                TileTexture2D((Vector2){4 * SCALE_1024, 30 * SCALE_1024})}};
+            DARKGRAY};
+
+        tree[7].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 30, GRAY, DARKGRAY));
+
         tree[8] = (GameObject){
             "SM_Cube5",
             (Transform2){
@@ -142,11 +134,10 @@ GameObject *Load_LevelTree(GameObject *tree)
                 (Rotation2){VECTOR__Y_, ROTATE_M90},
                 (Vector3){33.0f, 4.0f, 1.0f}},
             LoadModel(GetAssetPath(tmp, "resources/models/SM_Cube.obj")),
-            GRAY,
-            (Material2){
-                MATERIAL2_TEXTURE,
-                MI_Grid_TopDark,
-                TileTexture2D((Vector2){4 * SCALE_1024, 33 * SCALE_1024})}};
+            DARKGRAY};
+
+        tree[8].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 33, GRAY, DARKGRAY));
+
         tree[9] = (GameObject){
             "SM_Cube6",
             (Transform2){
@@ -154,11 +145,9 @@ GameObject *Load_LevelTree(GameObject *tree)
                 (Rotation2){VECTOR__Y_, ROTATE_M90},
                 (Vector3){33.0f, 4.0f, 1.0f}},
             LoadModel(GetAssetPath(tmp, "resources/models/SM_Cube.obj")),
-            GRAY,
-            (Material2){
-                MATERIAL2_TEXTURE,
-                MI_Grid_TopDark,
-                TileTexture2D((Vector2){4 * SCALE_1024, 33 * SCALE_1024})}};
+            DARKGRAY};
+
+        tree[9].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 33, GRAY, DARKGRAY));
     }
     tree[10] = (GameObject){
         "SM_ChamferCube",
@@ -167,8 +156,8 @@ GameObject *Load_LevelTree(GameObject *tree)
             (Rotation2){Vector3Zero(), ROTATE_ZERO},
             (Vector3){1.0f, 1.0f, 1.0f}},
         LoadModel(GetAssetPath(tmp, "resources/models/SM_Cube.obj")),
-        BLUE,
-        (Material2){MATERIAL2_COLOR}};
+        BLUE};
+
     tree[11] = (GameObject){
         "SM_Ramp",
         (Transform2){
@@ -176,11 +165,10 @@ GameObject *Load_LevelTree(GameObject *tree)
             (Rotation2){VECTOR__Y_, ROTATE_M90},
             (Vector3){2.0f, 0.3f, 4.0f}},
         LoadModel(GetAssetPath(tmp, "resources/models/SM_Ramp.obj")),
-        GRAY,
-        (Material2){
-            MATERIAL2_TEXTURE,
-            SM_Ramp,
-            TileTexture2D((Vector2){4 * SCALE_1024, 2 * SCALE_1024})}};
+        GRAY};
+
+    tree[11].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 2, GRAY, DARKGRAY));
+
     tree[12] = (GameObject){
         "PlayerShadow",
         (Transform2){
@@ -193,8 +181,7 @@ GameObject *Load_LevelTree(GameObject *tree)
         },
         LoadModel(GetAssetPath(tmp, "resources/models/X_Bot.m3d")),
         // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_lightmap
-        BLACK,
-        (Material2){
-            MATERIAL2_COLOR}};
+        BLACK};
+
     return tree;
 }
