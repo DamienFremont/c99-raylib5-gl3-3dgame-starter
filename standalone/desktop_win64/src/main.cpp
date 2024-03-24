@@ -43,7 +43,7 @@ AppConfiguration initConfig()
     appConfig.fps_counter_show = true;
     appConfig.postpro_msaa_enable = true;
     appConfig.postpro_texturefilter = 2;
-    appConfig.postpro_blur_enable = false;
+    appConfig.postpro_bloom_enable = true;
     return appConfig;
 }
 

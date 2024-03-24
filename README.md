@@ -243,6 +243,7 @@ Get 3D Animations:
 - VS Code
   - [Configure C/C++ debugging](https://code.visualstudio.com/docs/cpp/launch-json-reference)
 - Raylib
+  - [raylib-game-template](https://github.com/raysan5/raylib-game-template)
   - [Examples GitHub](https://github.com/raysan5/raylib/blob/master/examples/)
   - [Examples Demos](https://www.raylib.com/examples.html)
     - [shaders_postprocessing](https://www.raylib.com/examples/shaders/loader.html?name=shaders_postprocessing) 
@@ -250,6 +251,7 @@ Get 3D Animations:
     - [shaders_basic_lighting](https://www.raylib.com/examples/shaders/loader.html?name=shaders_basic_lighting)
     - [shaders_fog](https://www.raylib.com/examples/shaders/loader.html?name=shaders_fog)
     - [text_draw_3d](https://www.raylib.com/examples/text/loader.html?name=text_draw_3d)
+    - [textures_image_processing](https://www.raylib.com/examples/textures/loader.html?name=textures_image_processing)
   - [how to properly setup raylib app to talk to glsl shaders](https://sepi.prose.sh/2022-09-11-how-to-properly-use-shaders-in-raylib)
 - Model3D Format
   -[Welcome to Model 3D!](https://bztsrc.gitlab.io/model3d/)

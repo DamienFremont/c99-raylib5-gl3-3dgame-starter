@@ -1,5 +1,7 @@
 #include "game.h"
 
+// SOURCE: https://github.com/raysan5/raylib-game-template
+
 #include <raylib.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,10 +10,7 @@
 #include "camera_thirdperson.h"
 #include "assets.h"
 
-
 const char consoleOut[999];
-
-
 
 //----------------------------------------------------------------------------------
 // Local Functions Declaration
@@ -42,9 +41,10 @@ int main(AppConfiguration appConfig)
 	SetTextureFilter(target.texture, appConfig.postpro_texturefilter);
 
 	// Levels
-	int currentScreen = GAMEPLAY;
+	int currentScreen = LOGO;
 	Launcher_State launcherState = InitLauncher(appConfig);
 	UnrealThirdPerson_State unrealThirdPerson_State = Init_UnrealThirdPerson(appConfig, &target, consoleOut);
+	Init_Menu(appConfig, &target);
 
 	//--------------------------------------------------------------------------------------
 
@@ -60,6 +60,7 @@ int main(AppConfiguration appConfig)
 	// Levels
 	Unload_UnrealThirdPerson(&unrealThirdPerson_State);
 	UnloadLauncher(&launcherState);
+	Unload_Menu();
 	// target
 	UnloadRenderTexture(target);
 
@@ -83,6 +84,11 @@ int UpdateScreen(int currentScreen, Launcher_State *launcherState, UnrealThirdPe
 		currentScreen = Update_UnrealThirdPerson(unrealThirdPerson_State);
 	}
 	break;
+	case MENU:
+	{
+		currentScreen = Update_Menu();
+	}
+	break;
 	default:
 		break;
 	}
@@ -91,40 +97,24 @@ int UpdateScreen(int currentScreen, Launcher_State *launcherState, UnrealThirdPe
 
 void DrawScreen(int currentScreen, Launcher_State *launcherState, UnrealThirdPerson_State *unrealThirdPerson_State, RenderTexture2D *target)
 {
-	BeginTextureMode(*target); // Enable drawing to texture
+	switch (currentScreen)
 	{
-		ClearBackground(RAYWHITE); // Clear texture background
-
-		switch (currentScreen)
-		{
-		case GAMEPLAY:
-		{
-			Texture_UnrealThirdPerson(unrealThirdPerson_State);
-		}
-		default:
-			break;
-		}
+	case LOGO:
+	{
+		DrawLauncher(launcherState);
 	}
-	EndTextureMode();
-
-	BeginDrawing();
+	break;
+	case GAMEPLAY:
 	{
-		ClearBackground(RAYWHITE); // Clear screen background
-
-		switch (currentScreen)
-		{
-		case LOGO:
-		{
-			DrawLauncher(launcherState);
-		}
+		Draw_UnrealThirdPerson(unrealThirdPerson_State, target);
+	}
+	break;
+	case MENU:
+	{
+		Draw_Menu(target);
+	}
+	break;
+	default:
 		break;
-		case GAMEPLAY:
-		{
-			Draw_UnrealThirdPerson(unrealThirdPerson_State, target);
-		}
-		default:
-			break;
-		}
 	}
-	EndDrawing();
-}	
+}

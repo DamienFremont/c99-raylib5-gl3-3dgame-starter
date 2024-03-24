@@ -34,32 +34,44 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     char tmp[PATH_MAX];
     char tmp2[PATH_MAX];
     // Shader
+    // SOURCE: https://www.raylib.com/examples/shaders/loader.html?name=shaders_postprocessing
     Shader shaderDefault = LoadShader(0, GetAssetPath(tmp, "resources/shaders/glsl%i/default.fs"));
-    Shader shaderPostpro = LoadShader(0, GetAssetPath(tmp, "resources/shaders/glsl%i/blur.fs"));
+    Shader shaderPostpro = LoadShader(0, GetAssetPath(tmp, "resources/shaders/glsl%i/bloom.fs"));
     // init
     UnrealThirdPerson_State state = {0};
     state.consoleOut = consoleOut;
     state.showConsole = 0;
     state.appConfig = appConfig;
     state.camera = InitCamera();
-    state.postproShader = (appConfig.postpro_blur_enable == true) ? shaderPostpro : shaderDefault;
+    state.postproShader = (appConfig.postpro_bloom_enable == true) ? shaderPostpro : shaderDefault;
     state.playerPosition = (Vector3){9.0f, 0.0f, 11.0f};
 
     Load_LevelTree(gos);
 
-    state.skybox = LoadSkyboxResource(appConfig, "resources/images/skybox.png");
+    Color LIGHTYELLOW = (Color){255, 255, 230, 255};
+    Color sunColor = LIGHTYELLOW;
+
+    // SOURCE: https://www.raylib.com/examples/textures/loader.html?name=textures_image_processing
+    Image skyboxImg = LoadImage(GetAssetPath(tmp, "resources/images/skybox.png"));
+    if (appConfig.postpro_bloom_enable == true)
+    {
+        ImageColorBrightness(&skyboxImg, -80);
+    }
+    ImageColorTint(&skyboxImg, sunColor);
+    state.skybox = LoadSkyboxImage(appConfig, skyboxImg);
 
     int animCount = 0;
     anim0 = LoadModelAnimations(GetAssetPath(tmp, "resources/animations/Idle.m3d"), &animCount)[0];
-    anim1 = LoadModelAnimations(GetAssetPath(tmp, "resources/animations/Slow_Run.m3d"), &animCount)[0];
+    anim1 = LoadModelAnimations(GetAssetPath(tmp, "resources/animations/Running.m3d"), &animCount)[0];
 
     state.target = target;
     state.input_State = InitInputEvent();
     state.animCurrentFrame = 0;
 
-    //Init_Models(gos);
+    // Init_Models(gos);
     Model model = gos[0].model;
 
+    // SOURCE: https://www.raylib.com/examples/shaders/loader.html?name=shaders_fog
     // Load shader and set up some uniforms
     Shader shader = LoadShader(
         GetShaderPath(tmp, "resources/shaders/glsl%i/lighting.vs"),
@@ -73,15 +85,11 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     float fogDensity = 0.05f;
     int fogDensityLoc = GetShaderLocation(shader, "fogDensity");
     SetShaderValue(shader, fogDensityLoc, &fogDensity, SHADER_UNIFORM_FLOAT);
-
     // NOTE: All models share the same shader
     for (int i = 0; i < LEVEL_SIZE; i++)
         gos[i].model.materials[0].shader = shader;
-        
-    gos[11].model.materials[0].shader = shader;
-
     // Using just 1 point lights
-    light = CreateLight(LIGHT_POINT, (Vector3){0, 2, 6}, Vector3Zero(), WHITE, shader);
+    light = CreateLight(LIGHT_POINT, (Vector3){0, 2, 6}, Vector3Zero(), sunColor, shader);
 
     shader_fog = shader;
 
@@ -92,7 +100,7 @@ int Update_UnrealThirdPerson(UnrealThirdPerson_State *state)
 {
     int animationEnable = 1;
     // Input
-    float char_speed = 0.05f; // TODO: tickCount
+    float char_speed = 0.1f; // TODO: tickCount
     InputOut inout = ExecuteInputEvent(state->input_State, (InputConfig){
                                                                state->playerPosition,
                                                                state->showConsole,
@@ -133,6 +141,12 @@ int Update_UnrealThirdPerson(UnrealThirdPerson_State *state)
     Camera camera = state->camera;
     // Update the light shader with the camera view position
     SetShaderValue(shader, shader.locs[SHADER_LOC_VECTOR_VIEW], &camera.position.x, SHADER_UNIFORM_VEC3);
+
+    if (IsKeyPressed(KEY_TAB))
+    {
+        return MENU;
+    }
+
     return GAMEPLAY;
 }
 
@@ -167,61 +181,76 @@ void DrawConsole3D(UnrealThirdPerson_State *state)
                    (Vector3){1.0f, 1.0f, 1.0f}, YELLOW);
 }
 
-void Texture_UnrealThirdPerson(UnrealThirdPerson_State *state)
-{
-    // 3D
-    BeginMode3D(state->camera);
-    {
-        for (size_t i = 0; i < LEVEL_SIZE; i++)
-            Draw_Component(gos[i]);
-        if (state->showConsole == 1)
-            DrawConsole3D(state);
-    }
-    EndMode3D();
-    // Skybox
-    BeginMode3D(state->camera);
-    {
-        rlDisableBackfaceCulling();
-        rlDisableDepthMask();
-        {
-            DrawModel(state->skybox, (Vector3){0, 0, 0}, 1.0f, SKYBLUE);
-        }
-        rlEnableBackfaceCulling();
-        rlEnableDepthMask();
-    }
-    EndMode3D();
-}
-
 void Draw_UnrealThirdPerson(UnrealThirdPerson_State *state, RenderTexture2D *target)
 {
-    // postprocessing
-    // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_hybrid_render
-    // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_basic_lighting
-    // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_fog
-    BeginShaderMode(state->postproShader);
+    BeginTextureMode(*target);
     {
-        DrawTextureRec(                               //
-            target->texture,                          //
-            (Rectangle){                              //
-                        0,                            //
-                        0,                            //
-                        (float)target->texture.width, //
-                        (float)-target->texture.height},
-            (Vector2){0, 0}, //
-            WHITE);
-    }
-    EndShaderMode();
+        ClearBackground(RAYWHITE); // Clear texture background
 
-    // 2D
-    if (state->showConsole == 1)
-    {
-        ConsoleConfig cfg = (ConsoleConfig){
-            &state->showConsole,
-            state->appConfig.fps_counter_show,
-            state->appConfig.screen_width,
-            state->consoleOut};
-        DrawConsole(cfg);
+        // Skybox
+        BeginMode3D(state->camera);
+        {
+            rlDisableBackfaceCulling();
+            rlDisableDepthMask();
+            {
+                DrawModel(state->skybox, (Vector3){0, 0, 0}, 1.0f, SKYBLUE);
+            }
+            rlEnableBackfaceCulling();
+            rlEnableDepthMask();
+        }
+        EndMode3D();
+
+        // 3D
+        BeginMode3D(state->camera);
+        {
+            for (size_t i = 0; i < LEVEL_SIZE; i++)
+                Draw_Component(gos[i]);
+            if (state->showConsole == 1)
+                DrawConsole3D(state);
+        }
+        EndMode3D();
     }
+    EndTextureMode();
+
+    BeginDrawing();
+    {
+        ClearBackground(RAYWHITE); // Clear texture background
+
+        // postprocessing
+        // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_basic_lighting
+        // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_fog
+        BeginShaderMode(state->postproShader);
+        {
+            DrawTextureRec(                               //
+                target->texture,                          //
+                (Rectangle){                              //
+                            0,                            //
+                            0,                            //
+                            (float)target->texture.width, //
+                            (float)-target->texture.height},
+                (Vector2){0, 0}, //
+                WHITE);
+        }
+        EndShaderMode();
+
+        // 2D
+        if (state->showConsole == 1)
+        {
+            ConsoleConfig cfg = (ConsoleConfig){
+                &state->showConsole,
+                state->appConfig.fps_counter_show,
+                state->appConfig.screen_width,
+                state->consoleOut};
+            DrawConsole(cfg);
+        }
+        else
+        {
+            DrawText("Use keys [W][A][S][D] to move character", 10, 10 + 30 * 0, 20, GRAY);
+            DrawText("Press [TAB] to toggle menu", 10, 10 + 30 * 1, 20, GRAY);
+            DrawText("Press [F1] to toggle console", 10, 10 + 30 * 2, 20, GRAY);
+        }
+    }
+    EndDrawing();
 }
 
 void Unload_UnrealThirdPerson(UnrealThirdPerson_State *state)

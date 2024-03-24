@@ -42,15 +42,21 @@ int UpdateLauncher(Launcher_State *state)
 
 void DrawLauncher(Launcher_State *state)
 {
-    // DrawText("LOGO SCREEN", 20, 20, 40, LIGHTGRAY);
-    // DrawText("WAIT for 2 SECONDS...", 290, 220, 20, GRAY);
-    DrawRectangle(0, 0, state->appConfig.screen_width, state->appConfig.screen_height, BLACK);
-    DrawTextureEx(state->screenTexture,
-                  (Vector2){
-                      state->logoPositionX, 0},
-                  0.0f,
-                  state->screenTextureScale,
-                  WHITE);
+    BeginDrawing();
+    {
+        ClearBackground(RAYWHITE); // Clear texture background
+
+        // DrawText("LOGO SCREEN", 20, 20, 40, LIGHTGRAY);
+        // DrawText("WAIT for 2 SECONDS...", 290, 220, 20, GRAY);
+        DrawRectangle(0, 0, state->appConfig.screen_width, state->appConfig.screen_height, BLACK);
+        DrawTextureEx(state->screenTexture,
+                      (Vector2){
+                          state->logoPositionX, 0},
+                      0.0f,
+                      state->screenTextureScale,
+                      WHITE);
+    }
+    EndDrawing();
 }
 
 void UnloadLauncher(Launcher_State *state)

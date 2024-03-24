@@ -36,8 +36,6 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
 
 int Update_UnrealThirdPerson(UnrealThirdPerson_State *state);
 
-void Texture_UnrealThirdPerson(UnrealThirdPerson_State *state);
-
 void Draw_UnrealThirdPerson(UnrealThirdPerson_State *state, RenderTexture2D *target);
 
 void Unload_UnrealThirdPerson(UnrealThirdPerson_State *state);

@@ -8,6 +8,16 @@
 Model LoadSkyboxResource(AppConfiguration appConfig, char *assetpath)
 {
     char tmp[PATH_MAX];
+    Image img = LoadImage(GetAssetPath(tmp, assetpath));
+    Model skybox = LoadSkyboxImage(appConfig, img);
+    UnloadImage(img);
+    return skybox;
+}
+
+
+Model LoadSkyboxImage(AppConfiguration appConfig, Image img)
+{
+    char tmp[PATH_MAX];
     char tmp2[PATH_MAX];
 
     Mesh cube = GenMeshCube(500.0f, 500.0f, 500.0f);
@@ -26,9 +36,6 @@ Model LoadSkyboxResource(AppConfiguration appConfig, char *assetpath)
         GetAssetPath(tmp2, "resources/shaders/glsl%i/cubemap.fs"));
     SetShaderValue(shdrCubemap, GetShaderLocation(shdrCubemap, "equirectangularMap"), (int[1]){0}, SHADER_UNIFORM_INT);
     // Load img texture
-    Image img = LoadImage(GetAssetPath(tmp, assetpath));
     skybox.materials[0].maps[MATERIAL_MAP_CUBEMAP].texture = LoadTextureCubemap(img, CUBEMAP_LAYOUT_AUTO_DETECT); // CUBEMAP_LAYOUT_PANORAMA
-    UnloadImage(img);
-
     return skybox;
 }

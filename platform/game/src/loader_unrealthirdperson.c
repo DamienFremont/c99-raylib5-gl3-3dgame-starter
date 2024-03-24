@@ -19,9 +19,15 @@ GameObject *Load_LevelTree(GameObject *tree)
     const Vector3 VECTOR__Y_ = (Vector3){0, 1, 0};
     const float SCALE_1024 = 4.0f;
     char tmp[PATH_MAX];
+
     // Texture2D
-    Texture2D diff1 = LoadTexture(GetAssetPath(tmp, "resources/models/X_Bot_Beta_Surface_diffuse.png"));
-    Texture2D diff2 = LoadTexture(GetAssetPath(tmp, "resources/models/X_Bot_Beta_Joints_diffuse.png"));
+    Image playerTextureImg = LoadImage(GetAssetPath(tmp, "resources/models/Character_diffuse.png"));
+    ImageColorBrightness(&playerTextureImg, +80);
+    ImageColorContrast(&playerTextureImg, +40);
+
+    Texture2D playerTexture = LoadTextureFromImage(playerTextureImg);
+
+    char *playerModelPath = "resources/models/Character.m3d";
 
     tree[0] = (GameObject){
         "Player",
@@ -33,13 +39,15 @@ GameObject *Load_LevelTree(GameObject *tree)
             (Vector3){
                 1.0f, 1.0f, 1.0f},
         },
-        LoadModel(GetAssetPath(tmp, "resources/models/X_Bot.m3d")),
+        LoadModel(GetAssetPath(tmp, playerModelPath)),
         // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_lightmap
         WHITE};
 
-    tree[0].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = diff1;
-    tree[0].model.materials[1].maps[MATERIAL_MAP_DIFFUSE].texture = diff1;
-    tree[0].model.materials[2].maps[MATERIAL_MAP_DIFFUSE].texture = diff2;
+    // tree[0].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = playerTexture;
+    // tree[0].model.materials[0].maps[MATERIAL_MAP_SPECULAR].texture = playerTexture;
+    tree[0].model.materials[1].maps[MATERIAL_MAP_DIFFUSE].texture = playerTexture;
+    // tree[0].model.materials[1].maps[MATERIAL_MAP_SPECULAR].texture = playerTexture;
+    tree[0].model.materials[2].maps[MATERIAL_MAP_DIFFUSE].texture = playerTexture;
 
     // Block01
     {
@@ -227,9 +235,9 @@ GameObject *Load_LevelTree(GameObject *tree)
             (Vector3){
                 1.0f, 0.0f, 1.0f},
         },
-        LoadModel(GetAssetPath(tmp, "resources/models/X_Bot.m3d")),
+        LoadModel(GetAssetPath(tmp, playerModelPath)),
         // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_lightmap
-        BLACK};
+        DARKGRAY};
 
     return tree;
 }
