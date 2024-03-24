@@ -1,6 +1,3 @@
-@REM ReInstall ./assets/resources/* (if needed)
-@REM cmake -S "." -B "build"
-
 @REM Build
 cmake --build build
 

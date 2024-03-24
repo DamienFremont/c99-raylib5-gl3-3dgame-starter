@@ -136,97 +136,37 @@ cmake -S "." -B "build" -G "Visual Studio 17 2022"
 
 ## Usage
 
-### CMake (CLI)
-
-Install:
+### CLI (pure CMake)
 
 ```powershell
-# Install, Build
-cmake -S "." -B "build"
-cmake --build build
-```
+.\tools\ci\install.bat
 
-Dev:
-
-```powershell
-# Build & Run
-cmake --build build | .\build\desktop_win64\Debug\desktop_win64.exe
-```
-
-```powershell
-# ReInstall ./assets/resources/* (if needed)
-cmake -S "." -B "build"
-```
-
-Release:
-
-```powershell
-# Clean, Install, Release
-rm .\build\ -r -force
-cmake -S "." -B "build"
-cmake --build build --config Release
-
-# Test
-.\build\desktop_win64\Release\desktop_win64.exe
+.\tools\ci\dev.bat
+# OR
+.\tools\ci\release.bat
 ```
 
 ### VisualStudio 2022 (IDE)
 
-Install:
-
 ```powershell
-# Install
-cmake -S "." -B "build"
+.\tools\ci\install.bat
 ```
-
-Install:
 
 ![alt text](./docs/README/thumb-vs-open.png)
 
-Dev:
-
 ![alt text](./docs/README/thumb-vs-debug.png)
-
-```powershell
-# ReInstall ./assets/resources/* (if needed)
-cmake -S "." -B "build"
-```
 
 ### VSCode
 
-Install:
-
 ```powershell
-# Install
-cmake -S "." -B "build"
+.\tools\ci\install.bat
 ```
 
-.vscode/c_cpp_properties.json:
-```json
-{
-    "configurations": [
-        {
-            "name": "Win32",
-            "includePath": [
-                "${workspaceFolder}/**",
-                "${workspaceFolder}/platform/core/include",
-                "${workspaceFolder}/platform/desktop/include"
-            ],
-            "defines": [
-                "_DEBUG",
-                "UNICODE",
-                "_UNICODE"
-            ],
-            "windowsSdkVersion": "10.0.22621.0",
-            "compilerPath": "cl.exe",
-            "cStandard": "c17",
-            "cppStandard": "c++20",
-            "intelliSenseMode": "windows-msvc-x64"
-        }
-    ],
-    "version": 4
-}
-```
+Run (press Ctrl+F5, or Menu > "Run" > "Run without Debugging")
+
+Debug (press F5, or Menu > "Run" > "Start Debugging")
+
+![alt text](./docs/README/thumb-vsc-debug.png)
 
 ## Assets Pipeline
 
@@ -281,9 +221,12 @@ cmake -S "." -B "build"
   - [CMake with include and source paths - basic setup](https://stackoverflow.com/questions/8304190/cmake-with-include-and-source-paths-basic-setup)
   - [CMake add_library](http://www.cunningplanning.com/post/cmake-add-library/)
   - [Specify the default startup project in a Visual Studio solution.](https://cmake.org/cmake/help/latest/prop_dir/VS_STARTUP_PROJECT.html)
+  - [How To Automatically Build CMake](https://medium.com/@damngoodtech/how-to-automatically-build-compile-and-test-cmake-c-unit-tests-on-file-save-9e7fe259e7ae)
 - Monorepo
   - [How to structure a monorepo](https://lucapette.me/writing/how-to-structure-a-monorepo/?utm_source=atom_feed)
   - [A monorepo template that actually works](https://levelup.gitconnected.com/a-monorepo-template-that-actually-works-3efd87770fa5)
+- VS Code
+  - [Configure C/C++ debugging](https://code.visualstudio.com/docs/cpp/launch-json-reference)
 - Raylib
   - Examples
     - [GitHub](https://github.com/raysan5/raylib/blob/master/examples/)
