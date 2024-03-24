@@ -16,6 +16,7 @@
   - [Features](#features)
   - [Install](#install)
   - [Usage](#usage)
+  - [Assets](#assets)
   - [Resources](#resources)
 
 ---------------------------------------
@@ -108,6 +109,7 @@ Repository layout:
 │   ├── desktop_win64
 └── tools
 │   └── blender
+│   └── ci
 ```
 
 ## Install
@@ -168,9 +170,11 @@ Debug (press F5, or Menu > "Run" > "Start Debugging")
 
 ![alt text](./docs/README/thumb-vsc-debug.png)
 
-## Assets Pipeline
+## Assets
 
-### Installation
+### Pipeline
+
+Installation:
 
 1. Download [io_scene_m3d.py](./tools/blender/io_scene_m3d.py)
 1. Start Blender
@@ -180,7 +184,7 @@ Debug (press F5, or Menu > "Run" > "Start Debugging")
 1. Click on "Enable Add-on."
 1. Now in the menu, "File" > "Export" > "Model 3D (.m3d)" (and eventually "File" > "Import" > "Model 3D (.m3d)") should appear
 
-### 3D Models
+Get 3D Models:
 
 1. Start WebBrowser...
 1. https://www.mixamo.com
@@ -196,7 +200,7 @@ Debug (press F5, or Menu > "Run" > "Start Debugging")
 1. On right side panel > click "material" > "base color" > "image texture" > select "X_bot_diffuse"
 1. Go to menu, File > Export > M3D > scale: 2.0 > "X_bot.m3d" > Export
 
-### 3D Animations
+Get 3D Animations:
 
 1. Start WebBrowser...
 1. https://www.mixamo.com
@@ -228,19 +232,19 @@ Debug (press F5, or Menu > "Run" > "Start Debugging")
 - VS Code
   - [Configure C/C++ debugging](https://code.visualstudio.com/docs/cpp/launch-json-reference)
 - Raylib
-  - Examples
-    - [GitHub](https://github.com/raysan5/raylib/blob/master/examples/)
-    - [Demos](https://www.raylib.com/examples.html)
-      - [shaders_postprocessing](https://www.raylib.com/examples/shaders/loader.html?name=shaders_postprocessing) 
-      - [shaders_hybrid_render](https://www.raylib.com/examples/shaders/loader.html?name=shaders_hybrid_render)
-      - [shaders_texture_tiling](https://www.raylib.com/examples/shaders/loader.html?name=shaders_texture_tiling)
-      - [shaders_basic_lighting](https://www.raylib.com/examples/shaders/loader.html?name=shaders_basic_lighting)
-      - [shaders_fog](https://www.raylib.com/examples/shaders/loader.html?name=shaders_fog)
-    - [how to properly setup raylib app to talk to glsl shaders](https://sepi.prose.sh/2022-09-11-how-to-properly-use-shaders-in-raylib)
+  - [Examples GitHub](https://github.com/raysan5/raylib/blob/master/examples/)
+  - [Examples Demos](https://www.raylib.com/examples.html)
+    - [shaders_postprocessing](https://www.raylib.com/examples/shaders/loader.html?name=shaders_postprocessing) 
+    - [shaders_texture_tiling](https://www.raylib.com/examples/shaders/loader.html?name=shaders_texture_tiling)
+    - [shaders_basic_lighting](https://www.raylib.com/examples/shaders/loader.html?name=shaders_basic_lighting)
+    - [shaders_fog](https://www.raylib.com/examples/shaders/loader.html?name=shaders_fog)
+  - [how to properly setup raylib app to talk to glsl shaders](https://sepi.prose.sh/2022-09-11-how-to-properly-use-shaders-in-raylib)
 - Model3D Format
   -[Welcome to Model 3D!](https://bztsrc.gitlab.io/model3d/)
   -[Model 3D Blender Integration](https://gitlab.com/bztsrc/model3d/tree/master/blender/)
   -[io_scene_m3d.py](https://gitlab.com/bztsrc/model3d/-/blob/master/blender/io_scene_m3d.py)
+
+## References
 
 There are several games made with raylib to highlight:
 - Hare136: https://play.google.com/store/apps/details?id=games.haremonic.slider
