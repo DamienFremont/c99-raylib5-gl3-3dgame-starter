@@ -91,6 +91,54 @@ GameObject *Load_LevelTree(GameObject *tree)
 
         tree[4].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 2, GRAY, DARKGRAY));
     }
+
+    // Cylinder
+    {
+        tree[13] = (GameObject){
+            "SM_QuarterCylinder11",
+            (Transform2){
+                (Vector3){22.0f, 0.0f, 7.0f},
+                (Rotation2){Vector3Zero(), ROTATE_ZERO},
+                (Vector3){4.0f, 1.0f, 4.0f}},
+            LoadModel(GetAssetPath(tmp, "resources/models/SM_QuarterCylinder.obj")),
+            GRAY};
+
+        tree[13].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 2, GRAY, DARKGRAY));
+
+        tree[14] = (GameObject){
+            "SM_QuarterCylinder12",
+            (Transform2){
+                (Vector3){22.0f, 0.0f, 7.0f},
+                (Rotation2){VECTOR__Y_, ROTATE_M90},
+                (Vector3){4.0f, 1.0f, 4.0f}},
+            LoadModel(GetAssetPath(tmp, "resources/models/SM_QuarterCylinder.obj")),
+            GRAY};
+
+        tree[14].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 1, GRAY, DARKGRAY));
+
+        tree[15] = (GameObject){
+            "SM_QuarterCylinder13",
+            (Transform2){
+                (Vector3){22.0f, 0.0f, 7.0f},
+                (Rotation2){VECTOR__Y_, ROTATE_M180},
+                (Vector3){4.0f, 1.0f, 4.0f}},
+            LoadModel(GetAssetPath(tmp, "resources/models/SM_QuarterCylinder.obj")),
+            GRAY};
+
+        tree[15].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 1, GRAY, DARKGRAY));
+
+        tree[16] = (GameObject){
+            "SM_QuarterCylinder14",
+            (Transform2){
+                (Vector3){22.0f, 0.0f, 7.0f},
+                (Rotation2){VECTOR__Y_, ROTATE_M270},
+                (Vector3){4.0f, 1.0f, 4.0f}},
+            LoadModel(GetAssetPath(tmp, "resources/models/SM_QuarterCylinder.obj")),
+            GRAY};
+
+        tree[16].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 1, GRAY, DARKGRAY));
+    }
+
     // Playground
     {
         tree[5] = (GameObject){

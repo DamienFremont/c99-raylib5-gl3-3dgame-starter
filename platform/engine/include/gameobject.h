@@ -44,6 +44,7 @@ typedef enum
     ROTATE_P90 = 90,
     ROTATE_M90 = -90,
     ROTATE_M180 = -180,
+    ROTATE_M270 = -270,
 } Rotate;
 
 void Draw_Component(GameObject go);
