@@ -48,7 +48,7 @@ cmake_install.cmake
 *.sln
 
 # VSC
-.vscode
+.vscode/settings.json
 
 # ItelliJ
 .idea
