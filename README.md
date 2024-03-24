@@ -140,6 +140,9 @@ cmake -S "." -B "build" -G "Visual Studio 17 2022"
 
 ### CLI (pure CMake)
 
+- Pros: basic, no Editor, CI friendly.
+- Cons: manual actions intensive.
+
 ```powershell
 .\tools\ci\install.bat
 
@@ -149,6 +152,9 @@ cmake -S "." -B "build" -G "Visual Studio 17 2022"
 ```
 
 ### VisualStudio 2022 (IDE)
+
+- Pros: better integration, 1 step compile+debug.
+- Cons: very laggy UI, bad search tools.
 
 ```powershell
 .\tools\ci\install.bat
@@ -160,8 +166,13 @@ cmake -S "." -B "build" -G "Visual Studio 17 2022"
 
 ### VSCode
 
+- Pros: better code editor, lightweight. 
+- Cons: 2 steps compile+debug
+
 ```powershell
 .\tools\ci\install.bat
+
+.\tools\ci\watch.bat
 ```
 
 Run (press Ctrl+F5, or Menu > "Run" > "Run without Debugging")
@@ -238,6 +249,7 @@ Get 3D Animations:
     - [shaders_texture_tiling](https://www.raylib.com/examples/shaders/loader.html?name=shaders_texture_tiling)
     - [shaders_basic_lighting](https://www.raylib.com/examples/shaders/loader.html?name=shaders_basic_lighting)
     - [shaders_fog](https://www.raylib.com/examples/shaders/loader.html?name=shaders_fog)
+    - [text_draw_3d](https://www.raylib.com/examples/text/loader.html?name=text_draw_3d)
   - [how to properly setup raylib app to talk to glsl shaders](https://sepi.prose.sh/2022-09-11-how-to-properly-use-shaders-in-raylib)
 - Model3D Format
   -[Welcome to Model 3D!](https://bztsrc.gitlab.io/model3d/)

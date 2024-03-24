@@ -14,6 +14,8 @@
 #include "material.h"
 #include "screens.h"
 
+#include "text.h"
+
 #define RLIGHTS_IMPLEMENTATION
 #include <rlights.h>
 #include <raymath.h>
@@ -60,7 +62,7 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     // Load shader and set up some uniforms
     Shader shader = LoadShader(
         TextFormat("C:\\Users\\damien\\git\\cpp20-raylib-starter\\build\\desktop_win64\\Debug\\resources/shaders/glsl%i/lighting.vs", 330), // TODO
-        TextFormat("C:\\Users\\damien\\git\\cpp20-raylib-starter\\build\\desktop_win64\\Debug\\resources/shaders/glsl%i/fog.fs", 330)); // TODO
+        TextFormat("C:\\Users\\damien\\git\\cpp20-raylib-starter\\build\\desktop_win64\\Debug\\resources/shaders/glsl%i/fog.fs", 330));     // TODO
     shader.locs[SHADER_LOC_MATRIX_MODEL] = GetShaderLocation(shader, "matModel");
     shader.locs[SHADER_LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
     // Ambient light level
@@ -73,7 +75,7 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
 
     // NOTE: All models share the same shader
     for (int i = 0; i < LEVEL_SIZE; i++)
-     gos[i].model.materials[0].shader = shader;
+        gos[i].model.materials[0].shader = shader;
 
     // state.skybox.materials[0].shader = shader;
 
@@ -115,7 +117,7 @@ int Update_UnrealThirdPerson(UnrealThirdPerson_State *state)
     gos[12].transform.translation = (Vector3){
         state->playerPosition.x,
         state->playerPosition.y + 0.01f,
-        state->playerPosition.z };
+        state->playerPosition.z};
     // Animation
     if (animationEnable == 1)
     {
@@ -144,6 +146,21 @@ void DrawConsole3D(UnrealThirdPerson_State *state)
                        player.transform.translation.y + 1.0f,
                        player.transform.translation.z},
                    (Vector3){1.0f, 2.0f, 1.0f}, RED);
+    // gameobjects
+    for (size_t i = 0; i < LEVEL_SIZE; i++)
+    {
+        DrawText3D(GetFontDefault(), gos[i].name, (Vector3){gos[i].transform.translation.x, gos[i].transform.translation.y + 0.01f, gos[i].transform.translation.z + 0.5f},
+                   FONT_SIZE_12, FONT_SPACING_1, FONT_LINE_SPACING_1, BACKFACE_FALSE, BLACK);
+    }
+    // physics
+    for (size_t i = 0; i < LEVEL_SIZE; i++)
+    {
+        DrawCubeWiresV((Vector3){
+                           gos[i].transform.translation.x + gos[i].transform.scale.x / 2,
+                           gos[i].transform.translation.y + gos[i].transform.scale.y / 2,
+                           gos[i].transform.translation.z + gos[i].transform.scale.z / 2},
+                       (Vector3){gos[i].transform.scale.x, gos[i].transform.scale.y, gos[i].transform.scale.z}, GREEN);
+    }
     // light spot
     DrawCubeWiresV(light_transform,
                    (Vector3){1.0f, 1.0f, 1.0f}, YELLOW);
