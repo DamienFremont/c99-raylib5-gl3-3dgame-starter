@@ -28,22 +28,26 @@ static Light light = {0};
 static Vector3 light_transform = {0.0f, 9.0f, 0.0f};
 
 static GameObject gos[LEVEL_SIZE];
+static bool postprocessing = false;
 
-UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, RenderTexture2D *target, char *consoleOut)
+UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, RenderTexture2D *target)
 {
     char tmp[PATH_MAX];
     char tmp2[PATH_MAX];
-    // Shader
-    // SOURCE: https://www.raylib.com/examples/shaders/loader.html?name=shaders_postprocessing
-    Shader shaderDefault = LoadShader(0, GetAssetPath(tmp, "resources/shaders/glsl%i/default.fs"));
-    Shader shaderPostpro = LoadShader(0, GetAssetPath(tmp, "resources/shaders/glsl%i/bloom.fs"));
+
     // init
     UnrealThirdPerson_State state = {0};
-    state.consoleOut = consoleOut;
     state.showConsole = 0;
     state.appConfig = appConfig;
     state.camera = InitCamera();
-    state.postproShader = (appConfig.postpro_bloom_enable == true) ? shaderPostpro : shaderDefault;
+
+    // SOURCE: https://www.raylib.com/examples/shaders/loader.html?name=shaders_postprocessing
+    // shaders_postprocessing
+    Shader shaderDefault = LoadShader(0, GetAssetPath(tmp, "resources/shaders/glsl%i/default.fs"));
+    Shader shaderPostpro = LoadShader(0, GetAssetPath(tmp, "resources/shaders/glsl%i/bloom.fs"));
+    postprocessing = appConfig.postpro_bloom_enable;
+    state.postproShader = (postprocessing == true) ? shaderPostpro : shaderDefault;
+
     state.playerPosition = (Vector3){9.0f, 0.0f, 11.0f};
 
     Load_LevelTree(gos);
@@ -53,7 +57,7 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
 
     // SOURCE: https://www.raylib.com/examples/textures/loader.html?name=textures_image_processing
     Image skyboxImg = LoadImage(GetAssetPath(tmp, "resources/images/skybox.png"));
-    if (appConfig.postpro_bloom_enable == true)
+    if (postprocessing == true)
     {
         ImageColorBrightness(&skyboxImg, -80);
     }
@@ -150,7 +154,7 @@ int Update_UnrealThirdPerson(UnrealThirdPerson_State *state)
     return GAMEPLAY;
 }
 
-void DrawConsole3D(UnrealThirdPerson_State *state)
+void Draw_3D_Console(UnrealThirdPerson_State *state)
 {
     // grid
     DrawGrid(50, 1.0f);
@@ -181,76 +185,111 @@ void DrawConsole3D(UnrealThirdPerson_State *state)
                    (Vector3){1.0f, 1.0f, 1.0f}, YELLOW);
 }
 
-void Draw_UnrealThirdPerson(UnrealThirdPerson_State *state, RenderTexture2D *target)
+void Draw_2D(UnrealThirdPerson_State *state)
 {
-    BeginTextureMode(*target);
+    if (state->showConsole == 1)
     {
-        ClearBackground(RAYWHITE); // Clear texture background
-
-        // Skybox
-        BeginMode3D(state->camera);
-        {
-            rlDisableBackfaceCulling();
-            rlDisableDepthMask();
-            {
-                DrawModel(state->skybox, (Vector3){0, 0, 0}, 1.0f, SKYBLUE);
-            }
-            rlEnableBackfaceCulling();
-            rlEnableDepthMask();
-        }
-        EndMode3D();
-
-        // 3D
-        BeginMode3D(state->camera);
-        {
-            for (size_t i = 0; i < LEVEL_SIZE; i++)
-                Draw_Component(gos[i]);
-            if (state->showConsole == 1)
-                DrawConsole3D(state);
-        }
-        EndMode3D();
+        ConsoleConfig cfg = (ConsoleConfig){
+            &state->showConsole,
+            state->appConfig.fps_counter_show,
+            state->appConfig.screen_width};
+        DrawConsole(cfg);
     }
-    EndTextureMode();
+    else
+    {
+        DrawText("Use keys [W][A][S][D] to move character", 10, 10 + 30 * 0, 20, GRAY);
+        DrawText("Press [TAB] to toggle menu", 10, 10 + 30 * 1, 20, GRAY);
+        DrawText("Press [F1] to toggle console", 10, 10 + 30 * 2, 20, GRAY);
+    }
+}
 
+void Draw_3D_Skybox(UnrealThirdPerson_State *state)
+{
+    BeginMode3D(state->camera);
+    {
+        rlDisableBackfaceCulling();
+        rlDisableDepthMask();
+        {
+            DrawModel(state->skybox, (Vector3){0, 0, 0}, 1.0f, SKYBLUE);
+        }
+        rlEnableBackfaceCulling();
+        rlEnableDepthMask();
+    }
+    EndMode3D();
+}
+
+void Draw_3D_Models(UnrealThirdPerson_State *state)
+{
+    BeginMode3D(state->camera);
+    {
+        for (size_t i = 0; i < LEVEL_SIZE; i++)
+            Draw_Component(gos[i]);
+        if (state->showConsole == 1)
+            Draw_3D_Console(state);
+    }
+    EndMode3D();
+}
+
+void Draw_PostProcessing(UnrealThirdPerson_State *state, RenderTexture2D *target)
+{
+    BeginShaderMode(state->postproShader);
+    {
+        DrawTextureRec(                               //
+            target->texture,                          //
+            (Rectangle){                              //
+                        0,                            //
+                        0,                            //
+                        (float)target->texture.width, //
+                        (float)-target->texture.height},
+            (Vector2){0, 0}, //
+            WHITE);
+    }
+    EndShaderMode();
+}
+
+void Draw_Pipeline_Default(UnrealThirdPerson_State *state, RenderTexture2D *target)
+{
     BeginDrawing();
     {
-        ClearBackground(RAYWHITE); // Clear texture background
+        ClearBackground(RAYWHITE);
 
-        // postprocessing
-        // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_basic_lighting
-        // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_fog
-        BeginShaderMode(state->postproShader);
-        {
-            DrawTextureRec(                               //
-                target->texture,                          //
-                (Rectangle){                              //
-                            0,                            //
-                            0,                            //
-                            (float)target->texture.width, //
-                            (float)-target->texture.height},
-                (Vector2){0, 0}, //
-                WHITE);
-        }
-        EndShaderMode();
-
-        // 2D
-        if (state->showConsole == 1)
-        {
-            ConsoleConfig cfg = (ConsoleConfig){
-                &state->showConsole,
-                state->appConfig.fps_counter_show,
-                state->appConfig.screen_width,
-                state->consoleOut};
-            DrawConsole(cfg);
-        }
-        else
-        {
-            DrawText("Use keys [W][A][S][D] to move character", 10, 10 + 30 * 0, 20, GRAY);
-            DrawText("Press [TAB] to toggle menu", 10, 10 + 30 * 1, 20, GRAY);
-            DrawText("Press [F1] to toggle console", 10, 10 + 30 * 2, 20, GRAY);
-        }
+        Draw_3D_Skybox(state);
+        Draw_3D_Models(state);
+        Draw_2D(state);
     }
     EndDrawing();
+}
+
+void Draw_Pipeline_PostProcessing(UnrealThirdPerson_State *state, RenderTexture2D *target)
+{
+    // 1/2 Render
+    BeginTextureMode(*target);
+    {
+        ClearBackground(RAYWHITE);
+
+        Draw_3D_Skybox(state);
+        Draw_3D_Models(state);
+    }
+    EndTextureMode();
+    // 2/2 Draw
+    BeginDrawing();
+    {
+        ClearBackground(RAYWHITE);
+
+        Draw_PostProcessing(state, target);
+        Draw_2D(state);
+    }
+    EndDrawing();
+}
+
+void Draw_UnrealThirdPerson(UnrealThirdPerson_State *state, RenderTexture2D *target)
+{
+    if (postprocessing == true)
+    {
+        Draw_Pipeline_PostProcessing(state, target);
+        return;
+    }
+    Draw_Pipeline_Default(state, target);
 }
 
 void Unload_UnrealThirdPerson(UnrealThirdPerson_State *state)

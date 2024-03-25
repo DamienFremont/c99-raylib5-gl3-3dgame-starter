@@ -2,13 +2,13 @@
 
 #pragma once
 
-typedef struct ConsoleConfig ConsoleConfig;
-struct ConsoleConfig
+typedef struct ConsoleConfig
 {
     int *showConsole;
     bool showFPS;
     int screen_width;
-    char consoleOut[999];
-};
+} ConsoleConfig;
+
+void LogConsole(char* str);
 
 void DrawConsole(ConsoleConfig cfg);

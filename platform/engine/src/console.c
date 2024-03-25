@@ -3,6 +3,13 @@
 #include <stdbool.h>
 #include <raylib.h>
 
+static char consoleOut[999];
+
+void LogConsole(char* str)
+{
+    strcpy(consoleOut, str);
+}
+
 void DrawConsole(ConsoleConfig cfg)
 {
     const int LINE_HEIGHT = 20;
@@ -13,7 +20,7 @@ void DrawConsole(ConsoleConfig cfg)
     // Init
     const char line1[999] = "Console:";
     const char line2[999];
-    snprintf(line2, sizeof(line2), "> %s", cfg.consoleOut);
+    snprintf(line2, sizeof(line2), "> %s", consoleOut);
     // Draw
     DrawRectangle(0, 0, cfg.screen_width, LINE_HEIGHT * LINES_COUNT, BLACK);
     DrawText(line1, 10, 20 + LINE_HEIGHT * LINE_1, 10, WHITE);
@@ -26,8 +33,3 @@ void DrawConsole(ConsoleConfig cfg)
         DrawFPS(cfg.screen_width - 100, 15);
     }
 }
-
-// log(char str)
-// {
-// 	strcpy(consoleOut, str);
-// }

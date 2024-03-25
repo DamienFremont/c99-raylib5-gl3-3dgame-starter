@@ -10,8 +10,6 @@
 #include "camera_thirdperson.h"
 #include "assets.h"
 
-const char consoleOut[999];
-
 //----------------------------------------------------------------------------------
 // Local Functions Declaration
 //----------------------------------------------------------------------------------
@@ -25,26 +23,27 @@ void DrawScreen(int currentScreen, Launcher_State *launcherState, UnrealThirdPer
 
 int main(AppConfiguration appConfig)
 {
-	strcpy(consoleOut, "Hello Console!");
+	LogConsole("Hello Console!");
 
 	// Initialization
 	//--------------------------------------------------------------------------------------
 	InitAssets(appConfig.res_path, appConfig.glsl_version);
 
+	if (appConfig.postpro_msaa_enable == true)
+		SetConfigFlags(FLAG_MSAA_4X_HINT); // Enable Multi Sampling Anti Aliasing 4x (if available)
+
 	InitWindow(appConfig.screen_width, appConfig.screen_height, appConfig.appName);
 	SetTargetFPS(appConfig.fps_limit);
 
 	// Create a RenderTexture2D to be used for render to texture
-	RenderTexture2D target = LoadRenderTexture(appConfig.screen_width, appConfig.screen_height);
-	if (appConfig.postpro_msaa_enable == true)
-		SetConfigFlags(FLAG_MSAA_4X_HINT); // (if available)
-	SetTextureFilter(target.texture, appConfig.postpro_texturefilter);
+	RenderTexture2D postprocessing_target = LoadRenderTexture(appConfig.screen_width, appConfig.screen_height);
+	SetTextureFilter(postprocessing_target.texture, appConfig.postpro_texturefilter);
 
 	// Levels
 	int currentScreen = LOGO;
 	Launcher_State launcherState = InitLauncher(appConfig);
-	UnrealThirdPerson_State unrealThirdPerson_State = Init_UnrealThirdPerson(appConfig, &target, consoleOut);
-	Init_Menu(appConfig, &target);
+	UnrealThirdPerson_State unrealThirdPerson_State = Init_UnrealThirdPerson(appConfig, &postprocessing_target);
+	Init_Menu(appConfig);
 
 	//--------------------------------------------------------------------------------------
 
@@ -52,7 +51,7 @@ int main(AppConfiguration appConfig)
 	while (!WindowShouldClose()) // Detect window close button or ESC key
 	{
 		currentScreen = UpdateScreen(currentScreen, &launcherState, &unrealThirdPerson_State);
-		DrawScreen(currentScreen, &launcherState, &unrealThirdPerson_State, &target);
+		DrawScreen(currentScreen, &launcherState, &unrealThirdPerson_State, &postprocessing_target);
 	}
 
 	// De-Initialization
@@ -62,7 +61,7 @@ int main(AppConfiguration appConfig)
 	UnloadLauncher(&launcherState);
 	Unload_Menu();
 	// target
-	UnloadRenderTexture(target);
+	UnloadRenderTexture(postprocessing_target);
 
 	CloseWindow(); // Close window and OpenGL context
 	//--------------------------------------------------------------------------------------
@@ -95,7 +94,7 @@ int UpdateScreen(int currentScreen, Launcher_State *launcherState, UnrealThirdPe
 	return currentScreen;
 }
 
-void DrawScreen(int currentScreen, Launcher_State *launcherState, UnrealThirdPerson_State *unrealThirdPerson_State, RenderTexture2D *target)
+void DrawScreen(int currentScreen, Launcher_State *launcherState, UnrealThirdPerson_State *unrealThirdPerson_State, RenderTexture2D *postprocessing_target)
 {
 	switch (currentScreen)
 	{
@@ -106,12 +105,12 @@ void DrawScreen(int currentScreen, Launcher_State *launcherState, UnrealThirdPer
 	break;
 	case GAMEPLAY:
 	{
-		Draw_UnrealThirdPerson(unrealThirdPerson_State, target);
+		Draw_UnrealThirdPerson(unrealThirdPerson_State, postprocessing_target);
 	}
 	break;
 	case MENU:
 	{
-		Draw_Menu(target);
+		Draw_Menu();
 	}
 	break;
 	default:

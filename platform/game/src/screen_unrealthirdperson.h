@@ -11,7 +11,6 @@ typedef struct UnrealThirdPerson_State
 {
     AppConfiguration appConfig;
     RenderTexture2D *target;
-    char *consoleOut;
 
     int showConsole;
     Shader postproShader;
@@ -32,7 +31,7 @@ typedef struct UnrealThirdPerson_State
     unsigned int animCurrentFrame;
 } UnrealThirdPerson_State;
 
-UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, RenderTexture2D *target, char *consoleOut);
+UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, RenderTexture2D *target);
 
 int Update_UnrealThirdPerson(UnrealThirdPerson_State *state);
 
