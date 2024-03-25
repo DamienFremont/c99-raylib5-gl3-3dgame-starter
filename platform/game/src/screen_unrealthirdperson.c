@@ -166,23 +166,23 @@ void Draw_3D_Console(UnrealThirdPerson_State *state)
                        player.transform.translation.z},
                    (Vector3){1.0f, 2.0f, 1.0f}, RED);
     // gameobjects
-    for (size_t i = 0; i < LEVEL_SIZE; i++)
-    {
-        DrawText3D(GetFontDefault(), gos[i].name, (Vector3){gos[i].transform.translation.x, gos[i].transform.translation.y + 0.01f, gos[i].transform.translation.z + 0.5f},
-                   FONT_SIZE_12, FONT_SPACING_1, FONT_LINE_SPACING_1, BACKFACE_FALSE, BLACK);
-    }
+    // for (size_t i = 0; i < LEVEL_SIZE; i++)
+    // {
+    //     DrawText3D(GetFontDefault(), gos[i].name, (Vector3){gos[i].transform.translation.x, gos[i].transform.translation.y + 0.01f, gos[i].transform.translation.z + 0.5f},
+    //                FONT_SIZE_12, FONT_SPACING_1, FONT_LINE_SPACING_1, BACKFACE_FALSE, BLACK);
+    // }
     // physics
-    for (size_t i = 0; i < LEVEL_SIZE; i++)
-    {
-        DrawCubeWiresV((Vector3){
-                           gos[i].transform.translation.x + gos[i].transform.scale.x / 2,
-                           gos[i].transform.translation.y + gos[i].transform.scale.y / 2,
-                           gos[i].transform.translation.z + gos[i].transform.scale.z / 2},
-                       (Vector3){gos[i].transform.scale.x, gos[i].transform.scale.y, gos[i].transform.scale.z}, GREEN);
-    }
+    // for (size_t i = 0; i < LEVEL_SIZE; i++)
+    // {
+    //     DrawCubeWiresV((Vector3){
+    //                        gos[i].transform.translation.x + gos[i].transform.scale.x / 2,
+    //                        gos[i].transform.translation.y + gos[i].transform.scale.y / 2,
+    //                        gos[i].transform.translation.z + gos[i].transform.scale.z / 2},
+    //                    (Vector3){gos[i].transform.scale.x, gos[i].transform.scale.y, gos[i].transform.scale.z}, GREEN);
+    // }
     // light spot
-    DrawCubeWiresV(light_transform,
-                   (Vector3){1.0f, 1.0f, 1.0f}, YELLOW);
+    // DrawCubeWiresV(light_transform,
+    //                (Vector3){1.0f, 1.0f, 1.0f}, YELLOW);
 }
 
 void Draw_2D(UnrealThirdPerson_State *state)
@@ -197,8 +197,8 @@ void Draw_2D(UnrealThirdPerson_State *state)
     }
     else
     {
-        DrawText("Use keys [W][A][S][D] to move character", 10, 10 + 30 * 0, 20, GRAY);
-        DrawText("Press [TAB] to toggle menu", 10, 10 + 30 * 1, 20, GRAY);
+        DrawText("Press [TAB] to toggle menu", 10, 10 + 30 * 0, 20, GRAY);
+        DrawText("Use keys [W][A][S][D][SPACE] to move character", 10, 10 + 30 * 1, 20, GRAY);
         DrawText("Press [F1] to toggle console", 10, 10 + 30 * 2, 20, GRAY);
     }
 }

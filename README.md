@@ -39,6 +39,7 @@
 
 - Targets:
   - [x] Win64 (Windows)
+  - [ ] WASM (WebAssembly)
 - Graphics
   - :hourglass: Render: 
       [x] PostProcessing
@@ -67,7 +68,7 @@
       [ ] save
   - :hourglass: Console
       [x] output
-      [ ] input    
+      [ ] input
 - Animation
   - [x] Character
 - Audio: 
@@ -80,9 +81,9 @@
       [ ] Mp3
 - Input
   - [ ] UI: 
-      [ ] main menu
-      [ ] quit menu
-      [ ] i18n
+      [x] lauch screen
+      [x] settings menu
+      [ ] translations i18n
   - :hourglass: Control:
       :hourglass: Keyboard
       [ ] Gamepad
@@ -245,7 +246,7 @@ Get 3D Animations:
 - Raylib
   - [raylib-game-template](https://github.com/raysan5/raylib-game-template)
   - [Examples GitHub](https://github.com/raysan5/raylib/blob/master/examples/)
-  - [Examples Demos](https://www.raylib.com/examples.html)
+  - [Examples Demos (HTML5)](https://www.raylib.com/examples.html)
     - [shaders_postprocessing](https://www.raylib.com/examples/shaders/loader.html?name=shaders_postprocessing) 
     - [shaders_texture_tiling](https://www.raylib.com/examples/shaders/loader.html?name=shaders_texture_tiling)
     - [shaders_basic_lighting](https://www.raylib.com/examples/shaders/loader.html?name=shaders_basic_lighting)
@@ -253,6 +254,9 @@ Get 3D Animations:
     - [text_draw_3d](https://www.raylib.com/examples/text/loader.html?name=text_draw_3d)
     - [textures_image_processing](https://www.raylib.com/examples/textures/loader.html?name=textures_image_processing)
   - [how to properly setup raylib app to talk to glsl shaders](https://sepi.prose.sh/2022-09-11-how-to-properly-use-shaders-in-raylib)
+  - WASM
+    - [Working for Web (HTML5)](https://github.com/raysan5/raylib/wiki/Working-for-Web-(HTML5))
+    - [Creating Discord Activities with raylib](https://github.com/raysan5/raylib/wiki/Creating-Discord-Activities-with-raylib)
 - Model3D Format
   -[Welcome to Model 3D!](https://bztsrc.gitlab.io/model3d/)
   -[Model 3D Blender Integration](https://gitlab.com/bztsrc/model3d/tree/master/blender/)
