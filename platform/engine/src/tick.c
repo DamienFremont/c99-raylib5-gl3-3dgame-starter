@@ -2,9 +2,6 @@
 
 #include <time.h>
 
-static clock_t Tick_StartClock = {0};
-static clock_t Tick_CurrentClock = {0};
-
 TickState InitTick(int tickRateInHz)
 {
     return (TickState){
@@ -15,16 +12,16 @@ TickState InitTick(int tickRateInHz)
 
 void StartTick(TickState *state)
 {
-    Tick_StartClock = clock();
+    state->startClock = clock();
     state->current = 0;
     state->lastUpdate = 0;
 }
 
 int IsTickUpdate(TickState *state)
 {
-    Tick_CurrentClock = clock();
+    state->currentClock = clock();
     // compute
-    clock_t diff = Tick_CurrentClock - Tick_StartClock;
+    clock_t diff = state->currentClock - state->startClock;
     int diffInMs = diff * 1000 / CLOCKS_PER_SEC;
     // restart
     if (diffInMs > TIME_1_SECOND)

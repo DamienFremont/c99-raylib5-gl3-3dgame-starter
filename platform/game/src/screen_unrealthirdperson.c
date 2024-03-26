@@ -116,12 +116,6 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
 
 void UpdateRender(UnrealThirdPerson_State *state)
 {
-    //if (!IsTickUpdate(&renderTick)) {
-    //    renderTick.lastUpdate = 0; // FIXME / REMOVEME
-    //        return;
-    //}
-    //else
-    //    UpdateTick(&renderTick);
     Shader shader = shader_fog;
     Camera camera = state->camera;
     // Update the light shader with the camera view position
@@ -130,10 +124,8 @@ void UpdateRender(UnrealThirdPerson_State *state)
 
 void UpdatePlayerAnimation(UnrealThirdPerson_State *state)
 {
-    if (!IsTickUpdate(&animationTick)) {
-        //animationTick.lastUpdate = 0; // FIXME / REMOVEME
+    if (!IsTickUpdate(&animationTick))
         return;
-    }
     else
         UpdateTick(&animationTick);
     ModelAnimation anim = state->animIndex == 0 ? anim0 : anim1;
@@ -171,10 +163,8 @@ void UpdatePlayerPosition(UnrealThirdPerson_State* state) {
 
 void UpdatePlayerInput(UnrealThirdPerson_State *state)
 {
-    if (!IsTickUpdate(&inputTick)) {
-        //inputTick.lastUpdate = 0; // FIXME / REMOVEME
+    if (!IsTickUpdate(&inputTick))
         return;
-    }
     else
         UpdateTick(&inputTick);
 
