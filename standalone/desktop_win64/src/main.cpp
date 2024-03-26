@@ -48,7 +48,7 @@ AppConfiguration initConfig()
     appConfig.glsl_version = GLSL_VERSION;
     appConfig.screen_width = getScreen(HD).width;
     appConfig.screen_height = getScreen(HD).height;
-    appConfig.fps_limit = 60;
+    appConfig.fps_limit = 0;
     appConfig.fps_counter_show = true;
     appConfig.postpro_msaa_enable = true;
     appConfig.postpro_texturefilter = TEXTURE_FILTER_ANISOTROPIC_4X;
