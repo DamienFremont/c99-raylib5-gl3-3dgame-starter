@@ -99,7 +99,7 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     for (int i = 0; i < LEVEL_SIZE; i++)
         gos[i].model.materials[0].shader = shader;
     // Using just 1 point lights
-    light = CreateLight(LIGHT_POINT, (Vector3){0, 2, 6}, Vector3Zero(), sunColor, shader);
+    light = CreateLight(LIGHT_POINT, (Vector3){0, 2, 30}, Vector3Zero(), sunColor, shader);
 
     shader_fog = shader;
 
