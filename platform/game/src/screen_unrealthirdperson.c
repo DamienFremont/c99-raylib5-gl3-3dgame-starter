@@ -195,7 +195,6 @@ int Update_UnrealThirdPerson(UnrealThirdPerson_State *state)
     UpdatePlayerPosition(state);
     UpdateRender(state);
     //UpdatePhysics(state);
-    //LogConsole(TextFormat("animationTick.current/lastUpdate: %i %i", animationTick.current, animationTick.lastUpdate));
     if (IsKeyPressed(KEY_TAB))
     {
         return MENU;
@@ -238,6 +237,7 @@ void Draw_2D(UnrealThirdPerson_State *state)
 {
     if (state->showConsole == 1)
     {
+        LogConsole(TextFormat("animationTick.current/lastUpdate: %i %i", animationTick.current, animationTick.lastUpdate));
         ConsoleConfig cfg = (ConsoleConfig){
             &state->showConsole,
             state->appConfig.fps_counter_show,

@@ -46,7 +46,7 @@
       [x] Texture tiling
   - :hourglass: Camera: 
       :hourglass: ThirdPerson
-  - [x] Lighting: Real Time, Player Shadows
+  - [ ] Lighting: Real Time, Player Shadows
   - :hourglass: Meshes: 
       [x] Meshes
       [x] Textures
@@ -212,6 +212,17 @@ Get 3D Animations:
 1. Click on the "Animation" tab > click "editor type icon" > "non linear animation" (new channel editor)
 1. click "push down action" (new channel)
 1. Go to menu, File > Export > M3D > scale: 2.0 > "Slow Run.m3d" > Export
+
+## FAQ
+
+### Why Player Character is unlit ?
+
+Cause: Broken Lighting shader. Can't have lighting AND model animation at the same time!
+- lighting works with `.obj` format
+- animation works with `.m3d` and `.glb` format
+- can't load `.obj` model then use `.m3d` animations because `.obj` format is mesh only (doesn't contains any bones)
+
+![alt text](./docs/README/faq-character-lighting.png)
 
 ## Resources
 

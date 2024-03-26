@@ -43,10 +43,8 @@ GameObject *Load_LevelTree(GameObject *tree)
         // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_lightmap
         WHITE};
 
-    // tree[0].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = playerTexture;
-    // tree[0].model.materials[0].maps[MATERIAL_MAP_SPECULAR].texture = playerTexture;
+    tree[0].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = playerTexture;
     tree[0].model.materials[1].maps[MATERIAL_MAP_DIFFUSE].texture = playerTexture;
-    // tree[0].model.materials[1].maps[MATERIAL_MAP_SPECULAR].texture = playerTexture;
     tree[0].model.materials[2].maps[MATERIAL_MAP_DIFFUSE].texture = playerTexture;
 
     // Block01
