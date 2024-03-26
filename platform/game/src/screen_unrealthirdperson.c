@@ -15,64 +15,11 @@
 #include "screens.h"
 
 #include "text.h"
+#include "tick.h"
 
 #define RLIGHTS_IMPLEMENTATION
 #include <rlights.h>
 #include <raymath.h>
-
-#include <time.h>
-
-
-
-static int TIME_1_SECOND = 1 * 1000;
-static clock_t Tick_StartClock = { 0 };
-static clock_t Tick_CurrentClock = { 0 };
-
-typedef struct TickState
-{
-    int rateInHz;
-    int current;
-    int lastUpdate;
-} TickState;
-
-TickState InitTick(int tickRateInHz) {
-    return (TickState) {
-        tickRateInHz,
-            1,
-            0
-    };
-}
-
-void StartTick(TickState* state) {
-    Tick_StartClock = clock();
-    state->current = 0;
-    state->lastUpdate = 0;
-}
-
-int UpdateTick(TickState* state) {
-    state->lastUpdate = state->current;
-}
-
-int IsTickUpdate(TickState* state) {
-    Tick_CurrentClock = clock();
-    // compute
-    clock_t diff = Tick_CurrentClock - Tick_StartClock;
-    int diffInMs = diff * 1000 / CLOCKS_PER_SEC;
-    // restart
-    if (diffInMs > TIME_1_SECOND)
-    {
-        StartTick(state);
-        return 0;
-    }
-    // current
-    int tickInMs = (1000 / state->rateInHz);
-    state->current = (diffInMs / tickInMs);
-    // check
-    return state->current > state->lastUpdate;
-}
-
-
-
 
 static ModelAnimation anim0 = {0};
 static ModelAnimation anim1 = {0};
@@ -84,12 +31,7 @@ static Vector3 light_transform = {0.0f, 9.0f, 0.0f};
 static GameObject gos[LEVEL_SIZE];
 static bool postprocessing = false;
 
-
-//static int PHYSICS_TICK_RATE = 1; // in Hz
-static int ANIMATION_TICK_RATE = 75; // in Hz
-//static int INPUT_TICK_RATE = 60; // in Hz
-static TickState animationTick = { 0 };
-
+static TickState animationTick = {0};
 
 UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, RenderTexture2D *target)
 {
@@ -158,7 +100,7 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
 
     shader_fog = shader;
 
-    animationTick = InitTick(ANIMATION_TICK_RATE);
+    animationTick = InitTick(25);
     StartTick(&animationTick);
 
     return state;
@@ -170,14 +112,13 @@ int Update_UnrealThirdPerson(UnrealThirdPerson_State *state)
 
     // Input
     float char_speed = 0.1f; // TODO: tickCount
-    InputOut inout = ExecuteInputEvent(state->input_State, (InputConfig) {
-    state->playerPosition,
-        state->showConsole,
-        char_speed
-    });
+    InputOut inout = ExecuteInputEvent(state->input_State, (InputConfig){
+                                                               state->playerPosition,
+                                                               state->showConsole,
+                                                               char_speed});
     state->playerPosition.x = inout.playerPosition.x;
-        state->playerPosition.y = inout.playerPosition.y;
-        state->playerPosition.z = inout.playerPosition.z;
+    state->playerPosition.y = inout.playerPosition.y;
+    state->playerPosition.z = inout.playerPosition.z;
     state->showConsole = inout.showConsole;
     state->animIndex = inout.animIndex;
 
@@ -185,33 +126,38 @@ int Update_UnrealThirdPerson(UnrealThirdPerson_State *state)
     state->camera.position = (Vector3){
         -4.0f + state->playerPosition.x,
         1.0f + state->playerPosition.y,
-        0.0f + state->playerPosition.z };
+        0.0f + state->playerPosition.z};
     state->camera.target = (Vector3){
         0.0f + state->playerPosition.x,
         1.0f + state->playerPosition.y,
-        0.0f + state->playerPosition.z };
+        0.0f + state->playerPosition.z};
     gos[0].transform.translation = (Vector3){
         state->playerPosition.x,
         state->playerPosition.y,
-        state->playerPosition.z };
+        state->playerPosition.z};
     gos[12].transform.translation = (Vector3){
         state->playerPosition.x,
         state->playerPosition.y + 0.01f,
-        state->playerPosition.z };
+        state->playerPosition.z};
 
     // Animation
-    if (IsTickUpdate(&animationTick)) {
+    if (IsTickUpdate(&animationTick))
+    {
         UpdateTick(&animationTick);
-
-        if (animationEnable == 1)
-        {
-            ModelAnimation anim = state->animIndex == 1 ? anim0 : anim1;
-            state->animCurrentFrame = (state->animCurrentFrame + 1) % anim.frameCount; // TODO: tickCount
-            UpdateModelAnimation(gos[0].model, anim, state->animCurrentFrame);
-            UpdateModelAnimation(gos[12].model, anim, state->animCurrentFrame);
-        }
-        // TODO: https://www.raylib.com/examples/models/loader.html?name=models_box_collisions
+        
+        ModelAnimation anim = state->animIndex == 0 ? anim0 : anim1;
+        int animationFPS = 25; // Blender export
+        int HACK = 3; // FIXME
+        int frameInMs = TIME_1_SECOND / animationFPS;
+        int tickInMs = TIME_1_SECOND / animationTick.rateInHz;
+        int frames = tickInMs / frameInMs;
+        state->animCurrentFrame = (state->animCurrentFrame + frames * HACK) % anim.frameCount;
+        UpdateModelAnimation(gos[0].model, anim, state->animCurrentFrame);
+        UpdateModelAnimation(gos[12].model, anim, state->animCurrentFrame);
     }
+
+    // Physics
+    // TODO: https://www.raylib.com/examples/models/loader.html?name=models_box_collisions
 
     // Render
     Shader shader = shader_fog;
