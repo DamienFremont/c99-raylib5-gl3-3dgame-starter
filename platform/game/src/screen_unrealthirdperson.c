@@ -16,6 +16,7 @@
 
 #include "text.h"
 #include "tick.h"
+#include "console.h"
 
 #define RLIGHTS_IMPLEMENTATION
 #include <rlights.h>
@@ -32,6 +33,8 @@ static GameObject gos[LEVEL_SIZE];
 static bool postprocessing = false;
 
 static TickState animationTick = {0};
+static TickState inputTick = {0};
+static TickState renderTick = {0};
 
 UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, RenderTexture2D *target)
 {
@@ -40,7 +43,7 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
 
     // init
     UnrealThirdPerson_State state = {0};
-    state.showConsole = 0;
+    state.showConsole = 1;
     state.appConfig = appConfig;
     state.camera = InitCamera();
 
@@ -101,16 +104,80 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     shader_fog = shader;
 
     animationTick = InitTick(25);
+    inputTick = InitTick(120);
+    renderTick = InitTick(30);
+
     StartTick(&animationTick);
+    StartTick(&inputTick);
+    StartTick(&renderTick);
 
     return state;
 }
 
-int Update_UnrealThirdPerson(UnrealThirdPerson_State *state)
+void UpdateRender(UnrealThirdPerson_State *state)
 {
-    int animationEnable = 1;
+    //if (!IsTickUpdate(&renderTick)) {
+    //    renderTick.lastUpdate = 0; // FIXME / REMOVEME
+    //        return;
+    //}
+    //else
+    //    UpdateTick(&renderTick);
+    Shader shader = shader_fog;
+    Camera camera = state->camera;
+    // Update the light shader with the camera view position
+    SetShaderValue(shader, shader.locs[SHADER_LOC_VECTOR_VIEW], &camera.position.x, SHADER_UNIFORM_VEC3);
+}
 
-    // Input
+void UpdatePlayerAnimation(UnrealThirdPerson_State *state)
+{
+    if (!IsTickUpdate(&animationTick)) {
+        //animationTick.lastUpdate = 0; // FIXME / REMOVEME
+        return;
+    }
+    else
+        UpdateTick(&animationTick);
+    ModelAnimation anim = state->animIndex == 0 ? anim0 : anim1;
+    int animationFPS = 25; // Blender export
+    int HACK = 3;          // FIXME
+    int frameInMs = TIME_1_SECOND / animationFPS;
+    int tickInMs = TIME_1_SECOND / animationTick.rateInHz;
+    int frames = tickInMs / frameInMs;
+    state->animCurrentFrame = (state->animCurrentFrame + frames * HACK) % anim.frameCount;
+    UpdateModelAnimation(gos[0].model, anim, state->animCurrentFrame);
+    UpdateModelAnimation(gos[12].model, anim, state->animCurrentFrame);
+}
+
+void UpdatePlayerCamera(UnrealThirdPerson_State* state) {
+    state->camera.position = (Vector3){
+        -4.0f + state->playerPosition.x,
+        1.0f + state->playerPosition.y,
+        0.0f + state->playerPosition.z };
+    state->camera.target = (Vector3){
+        0.0f + state->playerPosition.x,
+        1.0f + state->playerPosition.y,
+        0.0f + state->playerPosition.z };
+}
+
+void UpdatePlayerPosition(UnrealThirdPerson_State* state) {
+    gos[0].transform.translation = (Vector3){
+        state->playerPosition.x,
+        state->playerPosition.y,
+        state->playerPosition.z };
+    gos[12].transform.translation = (Vector3){
+        state->playerPosition.x,
+        state->playerPosition.y + 0.01f,
+        state->playerPosition.z };
+}
+
+void UpdatePlayerInput(UnrealThirdPerson_State *state)
+{
+    if (!IsTickUpdate(&inputTick)) {
+        //inputTick.lastUpdate = 0; // FIXME / REMOVEME
+        return;
+    }
+    else
+        UpdateTick(&inputTick);
+
     float char_speed = 0.1f; // TODO: tickCount
     InputOut inout = ExecuteInputEvent(state->input_State, (InputConfig){
                                                                state->playerPosition,
@@ -120,56 +187,29 @@ int Update_UnrealThirdPerson(UnrealThirdPerson_State *state)
     state->playerPosition.y = inout.playerPosition.y;
     state->playerPosition.z = inout.playerPosition.z;
     state->showConsole = inout.showConsole;
-    state->animIndex = inout.animIndex;
-
-    // Action
-    state->camera.position = (Vector3){
-        -4.0f + state->playerPosition.x,
-        1.0f + state->playerPosition.y,
-        0.0f + state->playerPosition.z};
-    state->camera.target = (Vector3){
-        0.0f + state->playerPosition.x,
-        1.0f + state->playerPosition.y,
-        0.0f + state->playerPosition.z};
-    gos[0].transform.translation = (Vector3){
-        state->playerPosition.x,
-        state->playerPosition.y,
-        state->playerPosition.z};
-    gos[12].transform.translation = (Vector3){
-        state->playerPosition.x,
-        state->playerPosition.y + 0.01f,
-        state->playerPosition.z};
-
-    // Animation
-    if (IsTickUpdate(&animationTick))
-    {
-        UpdateTick(&animationTick);
-        
-        ModelAnimation anim = state->animIndex == 0 ? anim0 : anim1;
-        int animationFPS = 25; // Blender export
-        int HACK = 3; // FIXME
-        int frameInMs = TIME_1_SECOND / animationFPS;
-        int tickInMs = TIME_1_SECOND / animationTick.rateInHz;
-        int frames = tickInMs / frameInMs;
-        state->animCurrentFrame = (state->animCurrentFrame + frames * HACK) % anim.frameCount;
-        UpdateModelAnimation(gos[0].model, anim, state->animCurrentFrame);
-        UpdateModelAnimation(gos[12].model, anim, state->animCurrentFrame);
+    if (inout.animIndex != state->animIndex) {
+        state->animIndex = inout.animIndex;
     }
+}
 
-    // Physics
+void UpdatePhysics(UnrealThirdPerson_State *state)
+{
     // TODO: https://www.raylib.com/examples/models/loader.html?name=models_box_collisions
+}
 
-    // Render
-    Shader shader = shader_fog;
-    Camera camera = state->camera;
-    // Update the light shader with the camera view position
-    SetShaderValue(shader, shader.locs[SHADER_LOC_VECTOR_VIEW], &camera.position.x, SHADER_UNIFORM_VEC3);
-
+int Update_UnrealThirdPerson(UnrealThirdPerson_State *state)
+{
+    UpdatePlayerInput(state);
+    UpdatePlayerAnimation(state);
+    UpdatePlayerCamera(state);
+    UpdatePlayerPosition(state);
+    UpdateRender(state);
+    //UpdatePhysics(state);
+    //LogConsole(TextFormat("animationTick.current/lastUpdate: %i %i", animationTick.current, animationTick.lastUpdate));
     if (IsKeyPressed(KEY_TAB))
     {
         return MENU;
     }
-
     return GAMEPLAY;
 }
 
@@ -185,23 +225,23 @@ void Draw_3D_Console(UnrealThirdPerson_State *state)
                        player.transform.translation.z},
                    (Vector3){1.0f, 2.0f, 1.0f}, RED);
     // gameobjects
-    // for (size_t i = 0; i < LEVEL_SIZE; i++)
-    // {
-    //     DrawText3D(GetFontDefault(), gos[i].name, (Vector3){gos[i].transform.translation.x, gos[i].transform.translation.y + 0.01f, gos[i].transform.translation.z + 0.5f},
-    //                FONT_SIZE_12, FONT_SPACING_1, FONT_LINE_SPACING_1, BACKFACE_FALSE, BLACK);
-    // }
-    // physics
-    // for (size_t i = 0; i < LEVEL_SIZE; i++)
-    // {
-    //     DrawCubeWiresV((Vector3){
-    //                        gos[i].transform.translation.x + gos[i].transform.scale.x / 2,
-    //                        gos[i].transform.translation.y + gos[i].transform.scale.y / 2,
-    //                        gos[i].transform.translation.z + gos[i].transform.scale.z / 2},
-    //                    (Vector3){gos[i].transform.scale.x, gos[i].transform.scale.y, gos[i].transform.scale.z}, GREEN);
-    // }
+    for (size_t i = 0; i < LEVEL_SIZE; i++)
+    {
+        DrawText3D(GetFontDefault(), gos[i].name, (Vector3){gos[i].transform.translation.x, gos[i].transform.translation.y + 0.01f, gos[i].transform.translation.z + 0.5f},
+                   FONT_SIZE_12, FONT_SPACING_1, FONT_LINE_SPACING_1, BACKFACE_FALSE, BLACK);
+    }
+    // TODO: physics
+    for (size_t i = 0; i < LEVEL_SIZE; i++)
+    {
+        DrawCubeWiresV((Vector3){
+                           gos[i].transform.translation.x + gos[i].transform.scale.x / 2,
+                           gos[i].transform.translation.y + gos[i].transform.scale.y / 2,
+                           gos[i].transform.translation.z + gos[i].transform.scale.z / 2},
+                       (Vector3){gos[i].transform.scale.x, gos[i].transform.scale.y, gos[i].transform.scale.z}, GREEN);
+    }
     // light spot
-    // DrawCubeWiresV(light_transform,
-    //                (Vector3){1.0f, 1.0f, 1.0f}, YELLOW);
+    DrawCubeWiresV(light_transform,
+                   (Vector3){1.0f, 1.0f, 1.0f}, YELLOW);
 }
 
 void Draw_2D(UnrealThirdPerson_State *state)

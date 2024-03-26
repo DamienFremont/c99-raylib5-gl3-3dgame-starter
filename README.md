@@ -46,39 +46,25 @@
       [x] Texture tiling
   - :hourglass: Camera: 
       :hourglass: ThirdPerson
-      [ ] FOV
   - [x] Lighting: Real Time, Player Shadows
   - :hourglass: Meshes: 
       [x] Meshes
       [x] Textures
       [x] Shaders
       [x] Materials
-      [ ] LOD
   - [x] Sky: Color, Cubemap, Fog
 - World
   - [ ] Physics
       [ ] hitbox
       [ ] gravity
   - [ ] Simulation
-      [ ] LevelTick
+      [x] Tick
 - Scripting
   - :hourglass: Properties: 
       [x] code 
-      [ ] file
-      [ ] save
-  - :hourglass: Console
-      [x] output
-      [ ] input
+  - [x] Console
 - Animation
   - [x] Character
-- Audio: 
-  - [ ] Sound:
-      [ ] Wave
-      [ ] Spatial
-  - [ ] Music:
-      [ ] Player
-      [ ] Wave
-      [ ] Mp3
 - Input
   - [ ] UI: 
       [x] lauch screen
@@ -86,9 +72,7 @@
       [ ] translations i18n
   - :hourglass: Control:
       :hourglass: Keyboard
-      [ ] Gamepad
       :hourglass: Tank control
-      [ ] 3D control
 - Other
   - [x] launching screen
 

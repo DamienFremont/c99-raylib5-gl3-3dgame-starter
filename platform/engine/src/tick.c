@@ -36,7 +36,7 @@ int IsTickUpdate(TickState *state)
     int tickInMs = (1000 / state->rateInHz);
     state->current = (diffInMs / tickInMs);
     // check
-    return state->current > state->lastUpdate;
+    return (state->current > state->lastUpdate);
 }
 
 int UpdateTick(TickState *state)
