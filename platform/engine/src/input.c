@@ -24,34 +24,34 @@ InputOut ExecuteInputEvent(InputEvent_State state, InputConfig cfg)
         cfg.playerPosition.z};
 
     // Common
-    if (IsKeyPressed(KEY_F1) && state.KEY_F1_press == 0)
+    if (IsKeyDown(KEY_F1) && state.KEY_F1_press == 0)
     {
         out.showConsole = !out.showConsole;
         state.KEY_F1_press = 1;
     }
-    else if (IsKeyReleased(KEY_F1))
+    else if (IsKeyUp(KEY_F1))
     {
         state.KEY_F1_press = 0;
     }
 
     // Level
-    if (IsKeyDown(KEY_D))
+    if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT))
     {
         out.playerPosition.z = cfg.playerPosition.z + cfg.char_speed;
         out.animIndex = ANIM_RUN;
     }
-    else if (IsKeyDown(KEY_A))
+    else if (IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT))
     {
         out.playerPosition.z = cfg.playerPosition.z - cfg.char_speed;
         out.animIndex = ANIM_RUN;
     }
     
-    if (IsKeyDown(KEY_W))
+    if (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP))
     {
         out.playerPosition.x = cfg.playerPosition.x + cfg.char_speed;
         out.animIndex = ANIM_RUN;
     }
-    else if (IsKeyDown(KEY_S))
+    else if (IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN))
     {
         out.playerPosition.x = cfg.playerPosition.x - cfg.char_speed;
         out.animIndex = ANIM_RUN;
