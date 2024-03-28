@@ -40,7 +40,7 @@ int main(AppConfiguration appConfig)
 	SetTextureFilter(postprocessing_target.texture, appConfig.postpro_texturefilter);
 
 	// Levels
-	int currentScreen = GAMEPLAY;
+	int currentScreen = LOGO;
 	Launcher_State launcherState = InitLauncher(appConfig);
 	UnrealThirdPerson_State unrealThirdPerson_State = Init_UnrealThirdPerson(appConfig, &postprocessing_target);
 	Init_Menu(appConfig);

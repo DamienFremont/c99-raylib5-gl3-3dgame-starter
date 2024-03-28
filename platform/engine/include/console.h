@@ -5,7 +5,6 @@
 typedef struct ConsoleConfig
 {
     int *showConsole;
-    bool showFPS;
     int screen_width;
 } ConsoleConfig;
 

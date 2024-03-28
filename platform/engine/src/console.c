@@ -28,8 +28,4 @@ void DrawConsole(ConsoleConfig cfg)
 
     DrawGrid(50, 1.0f);
     DrawCubeWiresV((Vector3){9.0f, 1.0f, 11.0f}, (Vector3){1.0f, 2.0f, 1.0f}, RED);
-    if (cfg.showFPS == true)
-    {
-        DrawFPS(cfg.screen_width - 100, 15);
-    }
 }

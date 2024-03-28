@@ -43,7 +43,7 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
 
     // init
     UnrealThirdPerson_State state = {0};
-    state.showConsole = 1;
+    state.showConsole = 0;
     state.appConfig = appConfig;
     state.camera = InitCamera();
 
@@ -99,7 +99,7 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     for (int i = 0; i < LEVEL_SIZE; i++)
         gos[i].model.materials[0].shader = shader;
     // Using just 1 point lights
-    light = CreateLight(LIGHT_POINT, (Vector3){0, 2, 30}, Vector3Zero(), sunColor, shader);
+    light = CreateLight(LIGHT_POINT, (Vector3){0, 9, 30}, Vector3Zero(), sunColor, shader);
 
     shader_fog = shader;
 
@@ -139,26 +139,28 @@ void UpdatePlayerAnimation(UnrealThirdPerson_State *state)
     UpdateModelAnimation(gos[12].model, anim, state->animCurrentFrame);
 }
 
-void UpdatePlayerCamera(UnrealThirdPerson_State* state) {
+void UpdatePlayerCamera(UnrealThirdPerson_State *state)
+{
     state->camera.position = (Vector3){
         -4.0f + state->playerPosition.x,
         1.0f + state->playerPosition.y,
-        0.0f + state->playerPosition.z };
+        0.0f + state->playerPosition.z};
     state->camera.target = (Vector3){
         0.0f + state->playerPosition.x,
         1.0f + state->playerPosition.y,
-        0.0f + state->playerPosition.z };
+        0.0f + state->playerPosition.z};
 }
 
-void UpdatePlayerPosition(UnrealThirdPerson_State* state) {
+void UpdatePlayerPosition(UnrealThirdPerson_State *state)
+{
     gos[0].transform.translation = (Vector3){
         state->playerPosition.x,
         state->playerPosition.y,
-        state->playerPosition.z };
+        state->playerPosition.z};
     gos[12].transform.translation = (Vector3){
         state->playerPosition.x,
         state->playerPosition.y + 0.01f,
-        state->playerPosition.z };
+        state->playerPosition.z};
 }
 
 void UpdatePlayerInput(UnrealThirdPerson_State *state)
@@ -177,7 +179,8 @@ void UpdatePlayerInput(UnrealThirdPerson_State *state)
     state->playerPosition.y = inout.playerPosition.y;
     state->playerPosition.z = inout.playerPosition.z;
     state->showConsole = inout.showConsole;
-    if (inout.animIndex != state->animIndex) {
+    if (inout.animIndex != state->animIndex)
+    {
         state->animIndex = inout.animIndex;
     }
 }
@@ -194,7 +197,7 @@ int Update_UnrealThirdPerson(UnrealThirdPerson_State *state)
     UpdatePlayerCamera(state);
     UpdatePlayerPosition(state);
     UpdateRender(state);
-    //UpdatePhysics(state);
+    // UpdatePhysics(state);
     if (IsKeyPressed(KEY_TAB))
     {
         return MENU;
@@ -240,7 +243,6 @@ void Draw_2D(UnrealThirdPerson_State *state)
         LogConsole(TextFormat("animationTick.current/lastUpdate: %i %i", animationTick.current, animationTick.lastUpdate));
         ConsoleConfig cfg = (ConsoleConfig){
             &state->showConsole,
-            state->appConfig.fps_counter_show,
             state->appConfig.screen_width};
         DrawConsole(cfg);
     }
@@ -249,6 +251,10 @@ void Draw_2D(UnrealThirdPerson_State *state)
         DrawText("Press [TAB] to toggle menu", 10, 10 + 30 * 0, 20, GRAY);
         DrawText("Use keys [W][A][S][D][SPACE] to move character", 10, 10 + 30 * 1, 20, GRAY);
         DrawText("Press [F1] to toggle console", 10, 10 + 30 * 2, 20, GRAY);
+    }
+    if (state->appConfig.fps_counter_show == true)
+    {
+        DrawFPS(state->appConfig.screen_width - 100, 15);
     }
 }
 
