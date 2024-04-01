@@ -2,20 +2,6 @@
 
 #pragma once
 
-//typedef enum
-//{
-//    MATERIAL2_COLOR = 0,
-//    MATERIAL2_TEXTURE = 1,
-//    MATERIAL2_TEXTURESHADER = 2,
-//} Material2Type;
-
-//typedef struct Material2
-//{
-//    Material2Type type;
-//    Texture2D texture;
-//    Shader shader;
-//} Material2;
-
 typedef struct Rotation2
 {
     Vector3 axis;

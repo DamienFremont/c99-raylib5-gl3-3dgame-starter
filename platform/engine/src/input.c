@@ -10,20 +10,8 @@ InputEvent_State InitInputEvent()
     return state;
 }
 
-InputOut ExecuteInputEvent(InputEvent_State state, InputConfig cfg)
+InputOut Console(InputOut out, InputEvent_State state)
 {
-    const int ANIM_RUN = 1;
-    const int ANIM_IDLE = 0;
-
-    InputOut out;
-    out.showConsole = cfg.showConsole;
-    out.animIndex = ANIM_IDLE;
-    out.playerPosition = (Vector3){
-        cfg.playerPosition.x,
-        cfg.playerPosition.y,
-        cfg.playerPosition.z};
-
-    // Common
     if (IsKeyDown(KEY_F1) && state.KEY_F1_press == 0)
     {
         out.showConsole = !out.showConsole;
@@ -33,8 +21,22 @@ InputOut ExecuteInputEvent(InputEvent_State state, InputConfig cfg)
     {
         state.KEY_F1_press = 0;
     }
+        return out;
 
-    // Level
+}
+
+InputOut TankControl(InputOut out, InputConfig cfg)
+{
+    const int ANIM_RUN = 1;
+    const int ANIM_IDLE = 0;
+
+    out.animIndex = ANIM_IDLE;
+    out.playerPosition = (Vector3){
+        cfg.playerPosition.x,
+        cfg.playerPosition.y,
+        cfg.playerPosition.z};
+
+
     if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT))
     {
         out.playerPosition.z = cfg.playerPosition.z + cfg.char_speed;
@@ -45,7 +47,7 @@ InputOut ExecuteInputEvent(InputEvent_State state, InputConfig cfg)
         out.playerPosition.z = cfg.playerPosition.z - cfg.char_speed;
         out.animIndex = ANIM_RUN;
     }
-    
+
     if (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP))
     {
         out.playerPosition.x = cfg.playerPosition.x + cfg.char_speed;
@@ -57,5 +59,14 @@ InputOut ExecuteInputEvent(InputEvent_State state, InputConfig cfg)
         out.animIndex = ANIM_RUN;
     }
 
+    return out;
+}
+
+InputOut ExecuteInputEvent(InputEvent_State state, InputConfig cfg)
+{
+    InputOut out;
+    out.showConsole = cfg.showConsole;
+    out = Console(out, state);
+    out = TankControl(out, cfg);
     return out;
 }
