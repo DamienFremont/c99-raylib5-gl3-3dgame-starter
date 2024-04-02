@@ -239,6 +239,7 @@ Cause: Broken Lighting shader. Can't have lighting AND model animation at the sa
 - VS Code
   - [Configure C/C++ debugging](https://code.visualstudio.com/docs/cpp/launch-json-reference)
 - Raylib
+  - [raylib vs SDL - A libraries comparison](https://gist.github.com/raysan5/17392498d40e2cb281f5d09c0a4bf798)
   - [raylib-game-template](https://github.com/raysan5/raylib-game-template)
   - [Examples GitHub](https://github.com/raysan5/raylib/blob/master/examples/)
   - [Examples Demos (HTML5)](https://www.raylib.com/examples.html)
