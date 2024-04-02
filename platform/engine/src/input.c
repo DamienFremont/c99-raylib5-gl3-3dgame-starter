@@ -12,27 +12,34 @@ InputActionValue Helper_Axis2D(float x, float y)
 
 bool MoveAction(InputAction *out)
 {
-    // X
-    if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT))
+    out->MoveAction_InputActionValue = Helper_Axis2D(0, 0);
+    // input
+    bool up = IsKeyDown(KEY_W) || IsKeyDown(KEY_UP);
+    bool down = IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN);
+    bool left = IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT);
+    bool right = IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT);
+    // action
+    if (left || right || up || down)
     {
-        out->MoveAction_InputActionValue = Helper_Axis2D(1, 0);
         out->MoveAction = true;
     }
-    else if (IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT))
+    // X
+    if (left)
     {
-        out->MoveAction_InputActionValue = Helper_Axis2D(-1, 0);
-        out->MoveAction = true;
+        out->MoveAction_InputActionValue.Axis2D.x = -1;
+    }
+    else if (right)
+    {
+        out->MoveAction_InputActionValue.Axis2D.x = 1;
     }
     // Y
-    if (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP))
+    if (up)
     {
-        out->MoveAction_InputActionValue = Helper_Axis2D(0, 1);
-        out->MoveAction = true;
+        out->MoveAction_InputActionValue.Axis2D.y = 1;
     }
-    else if (IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN))
+    else if (down)
     {
-        out->MoveAction_InputActionValue = Helper_Axis2D(0, -1);
-        out->MoveAction = true;
+        out->MoveAction_InputActionValue.Axis2D.y = -1;
     }
 }
 
