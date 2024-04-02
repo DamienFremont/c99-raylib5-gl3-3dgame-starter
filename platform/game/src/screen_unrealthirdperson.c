@@ -7,6 +7,7 @@
 #include "console.h"
 #include "camera_thirdperson.h"
 #include "input.h"
+#include "control.h"
 #include <stdio.h>
 #include <string.h>
 #include "assets.h"
@@ -35,6 +36,8 @@ static bool postprocessing = false;
 static TickState animationTick = {0};
 static TickState inputTick = {0};
 static TickState renderTick = {0};
+
+float CHAR_SPEED = 0.1f;
 
 UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, RenderTexture2D *target)
 {
@@ -75,7 +78,6 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     anim1 = LoadModelAnimations(GetAssetPath(tmp, "resources/animations/Running.m3d"), &animCount)[0];
 
     state.target = target;
-    state.input_State = InitInputEvent();
     state.animCurrentFrame = 0;
 
     // Init_Models(gos);
@@ -163,26 +165,35 @@ void UpdatePlayerPosition(UnrealThirdPerson_State *state)
         state->playerPosition.z};
 }
 
+void SetupPlayerInputComponent(UnrealThirdPerson_State *state, InputAction action)
+{
+    // Jumping
+    // TODO:
+    // Moving
+    if (action.MoveAction == true)
+    {
+        TankControl_Move(&state->playerPosition, action.MoveAction_InputActionValue, CHAR_SPEED);
+    }
+    // Looking
+    // TODO:
+}
+
+void SetupPlayerAnimation(UnrealThirdPerson_State *state, InputAction action)
+{
+    state->animIndex = 0;
+    if (action.MoveAction == true)
+        state->animIndex = 1;
+}
+
 void UpdatePlayerInput(UnrealThirdPerson_State *state)
 {
     if (!IsTickUpdate(&inputTick))
         return;
     else
         UpdateTick(&inputTick);
-
-    float char_speed = 0.1f; // TODO: tickCount
-    InputOut inout = ExecuteInputEvent(state->input_State, (InputConfig){
-                                                               state->playerPosition,
-                                                               state->showConsole,
-                                                               char_speed});
-    state->playerPosition.x = inout.playerPosition.x;
-    state->playerPosition.y = inout.playerPosition.y;
-    state->playerPosition.z = inout.playerPosition.z;
-    state->showConsole = inout.showConsole;
-    if (inout.animIndex != state->animIndex)
-    {
-        state->animIndex = inout.animIndex;
-    }
+    InputAction action = ExecuteInputEvent();
+    SetupPlayerInputComponent(state, action);
+    SetupPlayerAnimation(state, action);
 }
 
 void UpdatePhysics(UnrealThirdPerson_State *state)

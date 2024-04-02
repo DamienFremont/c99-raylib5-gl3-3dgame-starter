@@ -2,25 +2,17 @@
 
 #pragma once
 
-typedef struct InputConfig
+typedef struct InputActionValue
 {
-    Vector3 playerPosition;
-    int showConsole;
-    float char_speed;
-} InputConfig;
+    bool Button;
+    float Axis1D;
+    Vector2 Axis2D;
+} InputActionValue;
 
-typedef struct InputOut
+typedef struct InputAction
 {
-    Vector3 playerPosition;
-    int showConsole;
-    int animIndex;
-} InputOut;
+    bool MoveAction;
+    InputActionValue MoveAction_InputActionValue;
+} InputAction;
 
-typedef struct InputEvent_State
-{
-    int KEY_F1_press;
-} InputEvent_State;
-
-InputEvent_State InitInputEvent();
-
-InputOut ExecuteInputEvent(InputEvent_State state, InputConfig cfg);
+InputAction ExecuteInputEvent();

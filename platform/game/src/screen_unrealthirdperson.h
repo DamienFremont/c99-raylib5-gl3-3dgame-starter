@@ -26,7 +26,6 @@ typedef struct UnrealThirdPerson_State
     Model skybox;
 
     Shader *shaders;
-    InputEvent_State input_State;
     int animIndex;
     unsigned int animCurrentFrame;
 } UnrealThirdPerson_State;
