@@ -35,6 +35,8 @@
 
 ![alt text](./docs/README/diagrams-1.png)
 
+![alt text](./docs/README/diagrams-2.png)
+
 ## Features
 
 - Targets:
