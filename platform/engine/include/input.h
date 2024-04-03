@@ -28,4 +28,6 @@ typedef struct InputActions
     InputAction MoveAction;
 } InputActions;
 
-InputActions ExecuteInputEvent();
+void InitInputActions(InputActions *actions);
+
+void ExecuteInputActions(InputActions *actions);

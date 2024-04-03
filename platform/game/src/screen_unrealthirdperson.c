@@ -39,6 +39,8 @@ static TickState renderTick = {0};
 
 float MAX_WALK_SPEED = 0.1f;
 
+static InputActions actions;
+
 UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, RenderTexture2D *target)
 {
     char tmp[PATH_MAX];
@@ -113,6 +115,8 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     StartTick(&inputTick);
     StartTick(&renderTick);
 
+    InitInputActions(&actions);
+
     return state;
 }
 
@@ -165,21 +169,26 @@ void UpdatePlayerPosition(UnrealThirdPerson_State *state)
         state->playerPosition.z};
 }
 
-void SetupPlayerInputComponent(UnrealThirdPerson_State *state, InputActions actions)
+void SetupPlayerInputComponent(UnrealThirdPerson_State *state, InputActions *actions)
 {
+    // console
+    if (actions->ConsoleAction.State.Completed == true)
+    {
+        state->showConsole = !state->showConsole;
+        actions->ConsoleAction.State.Completed = false;
+    }
+
     // TODO: Jumping
     // Moving
-    if (actions.MoveAction.State.Triggered == true)
-    {
-        TankControl_Move(&state->playerPosition, actions.MoveAction.Value, MAX_WALK_SPEED);
-    }
+    if (actions->MoveAction.State.Triggered == true)
+        TankControl_Move(&state->playerPosition, actions->MoveAction.Value, MAX_WALK_SPEED);
     // TODO: Looking
 }
 
-void SetupPlayerAnimation(UnrealThirdPerson_State *state, InputActions actions)
+void SetupPlayerAnimation(UnrealThirdPerson_State *state, InputActions *actions)
 {
     state->animIndex = 0;
-    if (actions.MoveAction.State.Triggered == true)
+    if (actions->MoveAction.State.Triggered == true)
         state->animIndex = 1;
 }
 
@@ -189,9 +198,9 @@ void UpdatePlayerInput(UnrealThirdPerson_State *state)
         return;
     else
         UpdateTick(&inputTick);
-    InputActions actions = ExecuteInputEvent();
-    SetupPlayerInputComponent(state, actions);
-    SetupPlayerAnimation(state, actions);
+    ExecuteInputActions(&actions);
+    SetupPlayerInputComponent(state, &actions);
+    SetupPlayerAnimation(state, &actions);
 }
 
 void UpdatePhysics(UnrealThirdPerson_State *state)
