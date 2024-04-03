@@ -2,6 +2,13 @@
 
 #pragma once
 
+typedef struct InputActionState
+{
+    bool Started;
+    bool Completed;
+    bool Triggered;
+} InputActionState;
+
 typedef struct InputActionValue
 {
     bool Button;
@@ -11,8 +18,14 @@ typedef struct InputActionValue
 
 typedef struct InputAction
 {
-    bool MoveAction;
-    InputActionValue MoveAction_InputActionValue;
+    InputActionState State;
+    InputActionValue Value;
 } InputAction;
 
-InputAction ExecuteInputEvent();
+typedef struct InputActions
+{
+    InputAction ConsoleAction;
+    InputAction MoveAction;
+} InputActions;
+
+InputActions ExecuteInputEvent();

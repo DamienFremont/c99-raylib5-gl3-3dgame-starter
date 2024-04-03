@@ -37,7 +37,7 @@ static TickState animationTick = {0};
 static TickState inputTick = {0};
 static TickState renderTick = {0};
 
-float CHAR_SPEED = 0.1f;
+float MAX_WALK_SPEED = 0.1f;
 
 UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, RenderTexture2D *target)
 {
@@ -165,23 +165,21 @@ void UpdatePlayerPosition(UnrealThirdPerson_State *state)
         state->playerPosition.z};
 }
 
-void SetupPlayerInputComponent(UnrealThirdPerson_State *state, InputAction action)
+void SetupPlayerInputComponent(UnrealThirdPerson_State *state, InputActions actions)
 {
-    // Jumping
-    // TODO:
+    // TODO: Jumping
     // Moving
-    if (action.MoveAction == true)
+    if (actions.MoveAction.State.Triggered == true)
     {
-        TankControl_Move(&state->playerPosition, action.MoveAction_InputActionValue, CHAR_SPEED);
+        TankControl_Move(&state->playerPosition, actions.MoveAction.Value, MAX_WALK_SPEED);
     }
-    // Looking
-    // TODO:
+    // TODO: Looking
 }
 
-void SetupPlayerAnimation(UnrealThirdPerson_State *state, InputAction action)
+void SetupPlayerAnimation(UnrealThirdPerson_State *state, InputActions actions)
 {
     state->animIndex = 0;
-    if (action.MoveAction == true)
+    if (actions.MoveAction.State.Triggered == true)
         state->animIndex = 1;
 }
 
@@ -191,9 +189,9 @@ void UpdatePlayerInput(UnrealThirdPerson_State *state)
         return;
     else
         UpdateTick(&inputTick);
-    InputAction action = ExecuteInputEvent();
-    SetupPlayerInputComponent(state, action);
-    SetupPlayerAnimation(state, action);
+    InputActions actions = ExecuteInputEvent();
+    SetupPlayerInputComponent(state, actions);
+    SetupPlayerAnimation(state, actions);
 }
 
 void UpdatePhysics(UnrealThirdPerson_State *state)
@@ -208,7 +206,7 @@ int Update_UnrealThirdPerson(UnrealThirdPerson_State *state)
     UpdatePlayerCamera(state);
     UpdatePlayerPosition(state);
     UpdateRender(state);
-    // UpdatePhysics(state);
+    // TODO: UpdatePhysics(state);
     if (IsKeyPressed(KEY_TAB))
     {
         return MENU;
