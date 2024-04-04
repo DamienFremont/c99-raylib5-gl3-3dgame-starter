@@ -27,8 +27,13 @@
 // Const
 //----------------------------------------------------------------------------------
 
+const int TICK_ANIMAT = 25;
+const int TICK_INPUT = 120;
+const int TICK_RENDER = 30;
+
 const float MAX_WALK_SPEED = 0.08f;
 const float MAX_WALK_ROTAT = 0.1f * 15;
+
 const Vector3 SCENE_FORWARD = {1, 0, 0};
 
 // TODO: move to Load_LevelTree()
@@ -127,9 +132,9 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
 
     shader_fog = shader;
 
-    animationTick = InitTick(25);
-    inputTick = InitTick(120);
-    renderTick = InitTick(30);
+    animationTick = InitTick(TICK_ANIMAT);
+    inputTick = InitTick(TICK_INPUT);
+    renderTick = InitTick(TICK_RENDER);
 
     StartTick(&animationTick);
     StartTick(&inputTick);
@@ -326,7 +331,7 @@ void Draw_3D_Models(UnrealThirdPerson_State *state)
     BeginMode3D(state->camera);
     {
         for (size_t i = 0; i < LEVEL_SIZE; i++)
-            Draw_Component(gos[i]);
+            Draw_GameObject(gos[i]);
         if (state->showConsole == 1)
             Draw_3D_Console(state);
     }

@@ -2,7 +2,7 @@
 
 #include <raylib.h>
 
-void Draw_Component(GameObject go)
+void Draw_GameObject(GameObject go)
 {
     DrawModelEx(go.model,
                 go.transform.translation,

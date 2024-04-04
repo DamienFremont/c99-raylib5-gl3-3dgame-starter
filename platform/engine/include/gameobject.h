@@ -37,7 +37,7 @@ typedef enum
 
 static const Vector3 ROTATION_YAW = {0, 1, 0};
 
-void Draw_Component(GameObject go);
+void Draw_GameObject(GameObject go);
 
 //void Init_Models(GameObject *go_arr);
 //
