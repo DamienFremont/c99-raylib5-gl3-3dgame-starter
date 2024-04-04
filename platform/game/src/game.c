@@ -10,6 +10,8 @@
 #include "camera_thirdperson.h"
 #include "assets.h"
 
+static const SCREEN = GAMEPLAY;
+
 //----------------------------------------------------------------------------------
 // Local Functions Declaration
 //----------------------------------------------------------------------------------
@@ -40,7 +42,7 @@ int main(AppConfiguration appConfig)
 	SetTextureFilter(postprocessing_target.texture, appConfig.postpro_texturefilter);
 
 	// Levels
-	int currentScreen = LOGO;
+	int currentScreen = SCREEN;
 	Launcher_State launcherState = InitLauncher(appConfig);
 	UnrealThirdPerson_State unrealThirdPerson_State = Init_UnrealThirdPerson(appConfig, &postprocessing_target);
 	Init_Menu(appConfig);

@@ -17,8 +17,6 @@ typedef struct UnrealThirdPerson_State
     Shader tilingShader;
     Camera camera;
 
-    Vector3 playerPosition;
-
     Model cubeModel;
     Model rampModel;
     Model chamferCubeModel;

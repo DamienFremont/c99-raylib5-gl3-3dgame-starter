@@ -22,6 +22,8 @@ typedef struct GameObject
     Model model;
     Color color;
     //Material2 material;
+    // TODO: Resources
+    // TODO: Instances
 } GameObject;
 
 typedef enum
@@ -32,6 +34,8 @@ typedef enum
     ROTATE_M180 = -180,
     ROTATE_M270 = -270,
 } Rotate;
+
+static const Vector3 ROTATION_YAW = {0, 1, 0};
 
 void Draw_Component(GameObject go);
 

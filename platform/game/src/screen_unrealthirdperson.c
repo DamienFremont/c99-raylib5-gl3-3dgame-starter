@@ -23,12 +23,27 @@
 #include <rlights.h>
 #include <raymath.h>
 
+//----------------------------------------------------------------------------------
+// Const
+//----------------------------------------------------------------------------------
+
+const float MAX_WALK_SPEED = 0.08f;
+const float MAX_WALK_ROTAT = 0.1f * 15;
+const Vector3 SCENE_FORWARD = {1, 0, 0};
+
+// TODO: move to Load_LevelTree()
+static Vector3 light_transform = {0.0f, 9.0f, 0.0f};
+
+//----------------------------------------------------------------------------------
+// Vars
+//----------------------------------------------------------------------------------
+
+// TODO: move to Load_LevelTree()
 static ModelAnimation anim0 = {0};
 static ModelAnimation anim1 = {0};
 
 static Shader shader_fog = {0};
 static Light light = {0};
-static Vector3 light_transform = {0.0f, 9.0f, 0.0f};
 
 static GameObject gos[LEVEL_SIZE];
 static bool postprocessing = false;
@@ -37,9 +52,8 @@ static TickState animationTick = {0};
 static TickState inputTick = {0};
 static TickState renderTick = {0};
 
-float MAX_WALK_SPEED = 0.1f;
-
 static InputActions actions;
+static Controller playerController;
 
 UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, RenderTexture2D *target)
 {
@@ -52,6 +66,7 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     state.appConfig = appConfig;
     state.camera = InitCamera();
 
+    // TODO: move to Load_LevelTree()
     // SOURCE: https://www.raylib.com/examples/shaders/loader.html?name=shaders_postprocessing
     // shaders_postprocessing
     Shader shaderDefault = LoadShader(0, GetAssetPath(tmp, "resources/shaders/glsl%i/default.fs"));
@@ -59,13 +74,18 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     postprocessing = appConfig.postpro_bloom_enable;
     state.postproShader = (postprocessing == true) ? shaderPostpro : shaderDefault;
 
-    state.playerPosition = (Vector3){9.0f, 0.0f, 11.0f};
+    playerController = (Controller){
+        (Vector3){9.0f, 0.0f, 11.0f},
+        SCENE_FORWARD,
+    };
 
     Load_LevelTree(gos);
 
+    // TODO: move to Load_LevelTree()
     Color LIGHTYELLOW = (Color){255, 255, 230, 255};
     Color sunColor = LIGHTYELLOW;
 
+    // TODO: move to Load_LevelTree()
     // SOURCE: https://www.raylib.com/examples/textures/loader.html?name=textures_image_processing
     Image skyboxImg = LoadImage(GetAssetPath(tmp, "resources/images/skybox.png"));
     if (postprocessing == true)
@@ -75,6 +95,7 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     ImageColorTint(&skyboxImg, sunColor);
     state.skybox = LoadSkyboxImage(appConfig, skyboxImg);
 
+    // TODO: move to Load_LevelTree()
     int animCount = 0;
     anim0 = LoadModelAnimations(GetAssetPath(tmp, "resources/animations/Idle.m3d"), &animCount)[0];
     anim1 = LoadModelAnimations(GetAssetPath(tmp, "resources/animations/Running.m3d"), &animCount)[0];
@@ -82,7 +103,6 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     state.target = target;
     state.animCurrentFrame = 0;
 
-    // Init_Models(gos);
     Model model = gos[0].model;
 
     // SOURCE: https://www.raylib.com/examples/shaders/loader.html?name=shaders_fog
@@ -148,25 +168,38 @@ void UpdatePlayerAnimation(UnrealThirdPerson_State *state)
 void UpdatePlayerCamera(UnrealThirdPerson_State *state)
 {
     state->camera.position = (Vector3){
-        -4.0f + state->playerPosition.x,
-        1.0f + state->playerPosition.y,
-        0.0f + state->playerPosition.z};
+        -4.0f + playerController.position.x,
+        1.0f + playerController.position.y,
+        0.0f + playerController.position.z};
     state->camera.target = (Vector3){
-        0.0f + state->playerPosition.x,
-        1.0f + state->playerPosition.y,
-        0.0f + state->playerPosition.z};
+        0.0f + playerController.position.x,
+        1.0f + playerController.position.y,
+        0.0f + playerController.position.z};
 }
 
 void UpdatePlayerPosition(UnrealThirdPerson_State *state)
 {
+    // player
     gos[0].transform.translation = (Vector3){
-        state->playerPosition.x,
-        state->playerPosition.y,
-        state->playerPosition.z};
+        playerController.position.x,
+        playerController.position.y,
+        playerController.position.z};
+    float angleRad = Vector2Angle(
+        (Vector2){
+            0,
+            1},
+        (Vector2){
+            playerController.direction.x,
+            playerController.direction.z});
+    float angleDeg = RAD2DEG * angleRad;
+    gos[0].transform.rotation = (Rotation2){
+        ROTATION_YAW,
+        -angleDeg };
+    // shadow
     gos[12].transform.translation = (Vector3){
-        state->playerPosition.x,
-        state->playerPosition.y + 0.01f,
-        state->playerPosition.z};
+        playerController.position.x,
+        playerController.position.y + 0.01f,
+        playerController.position.z};
 }
 
 void SetupPlayerInputComponent(UnrealThirdPerson_State *state, InputActions *actions)
@@ -177,11 +210,10 @@ void SetupPlayerInputComponent(UnrealThirdPerson_State *state, InputActions *act
         state->showConsole = !state->showConsole;
         actions->ConsoleAction.State.Completed = false;
     }
-
     // TODO: Jumping
     // Moving
     if (actions->MoveAction.State.Triggered == true)
-        TankControl_Move(&state->playerPosition, actions->MoveAction.Value, MAX_WALK_SPEED);
+        TankControl_Move(&playerController.position, actions->MoveAction.Value, MAX_WALK_SPEED, MAX_WALK_ROTAT);
     // TODO: Looking
 }
 
@@ -258,11 +290,9 @@ void Draw_2D(UnrealThirdPerson_State *state)
 {
     if (state->showConsole == 1)
     {
-        LogConsole(TextFormat("animationTick.current/lastUpdate: %i %i", animationTick.current, animationTick.lastUpdate));
-        ConsoleConfig cfg = (ConsoleConfig){
-            &state->showConsole,
-            state->appConfig.screen_width};
-        DrawConsole(cfg);
+        // LogConsole(TextFormat("animationTick.current/lastUpdate: %i %i", animationTick.current, animationTick.lastUpdate));
+        LogConsole(TextFormat("playerController.direction.x,y,z: %f %f %f", playerController.direction.x, playerController.direction.y, playerController.direction.z));
+        DrawConsole();
     }
     else
     {

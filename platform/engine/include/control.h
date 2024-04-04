@@ -3,5 +3,12 @@
 #pragma once
 
 #include "control.h"
+#include "gameobject.h"
 
-void TankControl_Move(Vector3 *playerPosition, InputActionValue value, float char_speed);
+typedef struct Controller
+{
+    Vector3 position;
+    Vector3 direction;
+} Controller;
+
+void TankControl_Move(Controller *playerGO, InputActionValue value, float char_speed, float char_rot);
