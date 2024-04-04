@@ -7,11 +7,31 @@ void TankControl_Move(Controller *player, InputActionValue value, float char_spe
     float new_step = (char_speed) * (value.Axis2D.y);
     float new_angle = - (char_rot) * (value.Axis2D.x);
     Vector3 new_dir = Vector3RotateByAxisAngle(player->direction, ROTATION_YAW, DEG2RAD * new_angle);
-
     Vector3 new_dis = Vector3Scale(new_dir, new_step);
-    //Vector3 new_dis = {(char_speed) * (value.Axis2D.y),0,(char_speed) * (value.Axis2D.x)};
-    
     Vector3 new_pos = Vector3Add(player->position, new_dis);
     player->direction = new_dir;
     player->position = new_pos;
+}
+
+void TankControl_Look(Camera *camera, Controller player, int cameraDistance, int cameraHeight)
+{
+    camera->position = (Vector3){
+        player.position.x - (player.direction.x * cameraDistance),
+        player.position.y + cameraHeight,
+        player.position.z - (player.direction.z * cameraDistance)};
+    camera->target = (Vector3){
+        player.position.x,
+        player.position.y + cameraHeight,
+        player.position.z};
+}
+
+float TankControl_ModelRotationAngle(Vector3 modelDirection)
+{
+    const Vector2 LEVEL_DIRECTION_2D = {0, 1};
+    Vector2 dir2D = {
+        modelDirection.x,
+        modelDirection.z};
+    float rad = Vector2Angle(LEVEL_DIRECTION_2D, dir2D);
+    float deg = RAD2DEG * rad;
+    return -deg;
 }

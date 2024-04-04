@@ -32,7 +32,10 @@ const int TICK_INPUT = 120;
 const int TICK_RENDER = 30;
 
 const float MAX_WALK_SPEED = 0.08f;
-const float MAX_WALK_ROTAT = 0.1f * 15;
+const float MAX_WALK_ROTAT = 0.08f * 15;
+
+const int CAM_DIST = 4;
+const int CAM_HEIGHT = 1;
 
 const Vector3 SCENE_FORWARD = {1, 0, 0};
 
@@ -172,14 +175,7 @@ void UpdatePlayerAnimation(UnrealThirdPerson_State *state)
 
 void UpdatePlayerCamera(UnrealThirdPerson_State *state)
 {
-    state->camera.position = (Vector3){
-        -4.0f + playerController.position.x,
-        1.0f + playerController.position.y,
-        0.0f + playerController.position.z};
-    state->camera.target = (Vector3){
-        0.0f + playerController.position.x,
-        1.0f + playerController.position.y,
-        0.0f + playerController.position.z};
+    TankControl_Look(&state->camera, playerController, CAM_DIST, CAM_HEIGHT);
 }
 
 void UpdatePlayerPosition(UnrealThirdPerson_State *state)
@@ -189,22 +185,15 @@ void UpdatePlayerPosition(UnrealThirdPerson_State *state)
         playerController.position.x,
         playerController.position.y,
         playerController.position.z};
-    float angleRad = Vector2Angle(
-        (Vector2){
-            0,
-            1},
-        (Vector2){
-            playerController.direction.x,
-            playerController.direction.z});
-    float angleDeg = RAD2DEG * angleRad;
     gos[0].transform.rotation = (Rotation2){
         ROTATION_YAW,
-        -angleDeg };
+        TankControl_ModelRotationAngle(playerController.direction)};
     // shadow
     gos[12].transform.translation = (Vector3){
         playerController.position.x,
         playerController.position.y + 0.01f,
         playerController.position.z};
+    gos[12].transform.rotation = gos[0].transform.rotation;
 }
 
 void SetupPlayerInputComponent(UnrealThirdPerson_State *state, InputActions *actions)
@@ -247,12 +236,14 @@ void UpdatePhysics(UnrealThirdPerson_State *state)
 
 int Update_UnrealThirdPerson(UnrealThirdPerson_State *state)
 {
+    // tick
     UpdatePlayerInput(state);
+    UpdatePlayerPosition(state);
     UpdatePlayerAnimation(state);
     UpdatePlayerCamera(state);
-    UpdatePlayerPosition(state);
-    UpdateRender(state);
     // TODO: UpdatePhysics(state);
+    // no tick
+    UpdateRender(state);
     if (IsKeyPressed(KEY_TAB))
     {
         return MENU;
