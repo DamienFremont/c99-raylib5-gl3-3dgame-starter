@@ -5,9 +5,7 @@
 
 2024's small template to start your raylib game. Featuring 3D, C 2017, Raylib 5.0, OpenGL 3 and a modular architecture.
 
-<p align="center">
-  <img src="./docs/README/thumb-raylib.png" height="175" width="auto" />
-</p>
+![alt text](./docs/README/screenshot-raylib.gif)
 
 ## Content
 
@@ -32,8 +30,6 @@
 ![alt text](./docs/README/screenshot-unreal.jpg)
 
 ![alt text](./docs/README/screenshot-raylib.png)
-
-![alt text](./docs/README/screenshot-raylib.gif)
 
 ![alt text](./docs/README/screenshot-raylib-2.png)
 
