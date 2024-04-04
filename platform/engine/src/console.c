@@ -10,7 +10,7 @@ void LogConsole(char* str)
     strcpy(consoleOut, str);
 }
 
-void DrawConsole(ConsoleConfig cfg)
+void DrawConsole()
 {
     const int LINE_HEIGHT = 20;
     const int LINE_1 = 0;
@@ -22,7 +22,7 @@ void DrawConsole(ConsoleConfig cfg)
     const char line2[999];
     snprintf(line2, sizeof(line2), "> %s", consoleOut);
     // Draw
-    DrawRectangle(0, 0, cfg.screen_width, LINE_HEIGHT * LINES_COUNT, BLACK);
+    DrawRectangle(0, 0, GetScreenWidth(), LINE_HEIGHT * LINES_COUNT, BLACK);
     DrawText(line1, 10, 20 + LINE_HEIGHT * LINE_1, 10, WHITE);
     DrawText(line2, 10, 20 + LINE_HEIGHT * LINE_2, 10, WHITE);
 
