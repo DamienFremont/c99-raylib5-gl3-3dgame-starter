@@ -33,8 +33,9 @@
 
 ![alt text](./docs/README/screenshot-raylib.png)
 
-![alt text](./docs/README/screenshot-raylib-2.png)
+![alt text](./docs/README/screenshot-raylib.gif)
 
+![alt text](./docs/README/screenshot-raylib-2.png)
 
 ![alt text](./docs/README/diagrams-1.png)
 
@@ -46,13 +47,12 @@
   - [x] Win64 (Windows)
   - [ ] WASM (WebAssembly)
 - Graphics
-  - :hourglass: Render: 
+  - [ ] Render: 
       [x] PostProcessing
-      [x] Texture tiling
-  - :hourglass: Camera: 
-      :hourglass: ThirdPerson
-  - [ ] Lighting: Real Time, Player Shadows
-  - :hourglass: Meshes: 
+      :hourglass:  Texture tiling
+  - [x] Camera: ThirdPerson
+  - [x] Lighting: Real Time, Player Shadows
+  - [x] Meshes: 
       [x] Meshes
       [x] Textures
       [x] Shaders
@@ -65,19 +65,12 @@
   - [ ] Simulation
       [x] Tick
 - Scripting
-  - :hourglass: Properties: 
-      [x] code 
   - [x] Console
 - Animation
   - [x] Character
 - Input
-  - [ ] UI: 
-      [x] lauch screen
-      [x] settings menu
-      [ ] translations i18n
-  - :hourglass: Control:
-      :hourglass: Keyboard
-      :hourglass: Tank control
+  - [x] UI: lauch screen, settings menu
+  - [x] Control: Keyboard, Tank control
 - Other
   - [x] launching screen
 
