@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include "console.h"
 #include "screens.h"
-#include "camera_thirdperson.h"
+#include "camera.h"
 #include "assets.h"
 
 static const SCREEN = GAMEPLAY;

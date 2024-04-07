@@ -1,4 +1,4 @@
-#include "camera_thirdperson.h"
+#include "camera.h"
 
 #include <raylib.h>
 
@@ -11,4 +11,16 @@ Camera InitCamera()
     camera.fovy = 45.0f;                           // Camera field-of-view Y
     camera.projection = CAMERA_PERSPECTIVE;        // Camera projection type
     return camera;
+}
+
+void FixedCamera_Look(Camera *camera, Controller player, int cameraDistance, int cameraHeight)
+{
+    camera->position = (Vector3){
+        player.position.x - (player.direction.x * cameraDistance),
+        player.position.y + cameraHeight,
+        player.position.z - (player.direction.z * cameraDistance)};
+    camera->target = (Vector3){
+        player.position.x,
+        player.position.y + cameraHeight,
+        player.position.z};
 }

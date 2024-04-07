@@ -13,18 +13,6 @@ void TankControl_Move(Controller *player, InputActionValue value, float char_spe
     player->position = new_pos;
 }
 
-void TankControl_Look(Camera *camera, Controller player, int cameraDistance, int cameraHeight)
-{
-    camera->position = (Vector3){
-        player.position.x - (player.direction.x * cameraDistance),
-        player.position.y + cameraHeight,
-        player.position.z - (player.direction.z * cameraDistance)};
-    camera->target = (Vector3){
-        player.position.x,
-        player.position.y + cameraHeight,
-        player.position.z};
-}
-
 float TankControl_ModelRotationAngle(Vector3 modelDirection)
 {
     const Vector2 LEVEL_DIRECTION_2D = {0, 1};

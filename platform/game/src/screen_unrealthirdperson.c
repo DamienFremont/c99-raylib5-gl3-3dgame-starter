@@ -5,7 +5,7 @@
 #include "loader_unrealthirdperson.h"
 #include "config.h"
 #include "console.h"
-#include "camera_thirdperson.h"
+#include "camera.h"
 #include "input.h"
 #include "control.h"
 #include <stdio.h>
@@ -175,7 +175,7 @@ void UpdatePlayerAnimation(UnrealThirdPerson_State *state)
 
 void UpdatePlayerCamera(UnrealThirdPerson_State *state)
 {
-    TankControl_Look(&state->camera, playerController, CAM_DIST, CAM_HEIGHT);
+    FixedCamera_Look(&state->camera, playerController, CAM_DIST, CAM_HEIGHT);
 }
 
 void UpdatePlayerPosition(UnrealThirdPerson_State *state)
