@@ -1,9 +1,7 @@
 #include "input.h"
+#include "gameobject.h"
 
 #pragma once
-
-#include "control.h"
-#include "gameobject.h"
 
 typedef struct Controller
 {

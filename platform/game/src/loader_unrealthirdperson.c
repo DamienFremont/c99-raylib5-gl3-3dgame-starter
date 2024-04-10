@@ -1,11 +1,10 @@
 #include "loader_unrealthirdperson.h"
 
-#include "assets.h"
-#include "material.h"
 #include <raymath.h>
 #include <raylib.h>
-
-#pragma once
+#include "assets.h"
+#include "material.h"
+#include "skybox.h"
 
 Image GetTiledImage(int tilingX, int tilingY, Color col1, Color col2)
 {
@@ -237,4 +236,20 @@ GameObject *Load_LevelTree(GameObject *tree)
         DARKGRAY};
 
     return tree;
+}
+
+Model Load_LevelSkybox(Color sunColor, bool postprocessing)
+{
+    char tmp[PATH_MAX];
+
+    // SOURCE: https://www.raylib.com/examples/textures/loader.html?name=textures_image_processing
+    Image skyboxImg = LoadImage(GetAssetPath(tmp, "resources/images/skybox.png"));
+    if (postprocessing == true)
+    {
+        ImageColorBrightness(&skyboxImg, -80);
+    }
+    ImageColorTint(&skyboxImg, sunColor);
+    Model skybox = LoadSkyboxFromImage(skyboxImg);
+    UnloadImage(skyboxImg);
+    return skybox;
 }

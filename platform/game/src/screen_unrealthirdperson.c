@@ -11,14 +11,11 @@
 #include <stdio.h>
 #include <string.h>
 #include "assets.h"
-#include "skybox.h"
 #include "material.h"
 #include "screens.h"
-
 #include "text.h"
 #include "tick.h"
 #include "console.h"
-
 #define RLIGHTS_IMPLEMENTATION
 #include <rlights.h>
 #include <raymath.h>
@@ -40,7 +37,8 @@ const int CAM_HEIGHT = 1;
 const Vector3 SCENE_FORWARD = {1, 0, 0};
 
 // TODO: move to Load_LevelTree()
-static Vector3 light_transform = {0.0f, 9.0f, 0.0f};
+const Vector3 LIGHT_TRANSFORM = {0.0f, 9.0f, 30.0f};
+const Color LIGHTYELLOW = {255, 255, 230, 255};
 
 //----------------------------------------------------------------------------------
 // Vars
@@ -88,20 +86,7 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     };
 
     Load_LevelTree(gos);
-
-    // TODO: move to Load_LevelTree()
-    Color LIGHTYELLOW = (Color){255, 255, 230, 255};
-    Color sunColor = LIGHTYELLOW;
-
-    // TODO: move to Load_LevelTree()
-    // SOURCE: https://www.raylib.com/examples/textures/loader.html?name=textures_image_processing
-    Image skyboxImg = LoadImage(GetAssetPath(tmp, "resources/images/skybox.png"));
-    if (postprocessing == true)
-    {
-        ImageColorBrightness(&skyboxImg, -80);
-    }
-    ImageColorTint(&skyboxImg, sunColor);
-    state.skybox = LoadSkyboxImage(appConfig, skyboxImg);
+    state.skybox = Load_LevelSkybox(LIGHTYELLOW, postprocessing);
 
     // TODO: move to Load_LevelTree()
     int animCount = 0;
@@ -131,8 +116,7 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     for (int i = 0; i < LEVEL_SIZE; i++)
         gos[i].model.materials[0].shader = shader;
     // Using just 1 point lights
-    light = CreateLight(LIGHT_POINT, (Vector3){0, 9, 30}, Vector3Zero(), sunColor, shader);
-
+    light = CreateLight(LIGHT_POINT, LIGHT_TRANSFORM, Vector3Zero(), LIGHTYELLOW, shader);
     shader_fog = shader;
 
     animationTick = InitTick(TICK_ANIMAT);
@@ -278,7 +262,7 @@ void Draw_3D_Console(UnrealThirdPerson_State *state)
                        (Vector3){gos[i].transform.scale.x, gos[i].transform.scale.y, gos[i].transform.scale.z}, GREEN);
     }
     // light spot
-    DrawCubeWiresV(light_transform,
+    DrawCubeWiresV(LIGHT_TRANSFORM,
                    (Vector3){1.0f, 1.0f, 1.0f}, YELLOW);
 }
 
@@ -393,6 +377,17 @@ void Draw_UnrealThirdPerson(UnrealThirdPerson_State *state, RenderTexture2D *tar
 
 void Unload_UnrealThirdPerson(UnrealThirdPerson_State *state)
 {
-    UnloadModel(state->skybox); // Unload skybox model
-    // UnloadShadersAll(state->shaders);
+    // skybox
+    UnloadSkybox(state->skybox);
+    // player
+    UnloadModelAnimation(anim0);
+    UnloadModelAnimation(anim1);
+    // level
+    for (int i = 1; i < sizeof(gos); i++)
+    {
+        UnloadModel(gos[i].model);
+    }
+    // shaders
+    UnloadShader(shader_fog);
+    // TODO: UnloadShader() shaders
 }

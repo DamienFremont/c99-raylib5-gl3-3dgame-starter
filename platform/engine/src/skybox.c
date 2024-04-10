@@ -1,21 +1,10 @@
 #include "skybox.h"
 
 #include <raylib.h>
-#include "config.h"
 
 #include "assets.h"
 
-Model LoadSkyboxResource(AppConfiguration appConfig, char *assetpath)
-{
-    char tmp[PATH_MAX];
-    Image img = LoadImage(GetAssetPath(tmp, assetpath));
-    Model skybox = LoadSkyboxImage(appConfig, img);
-    UnloadImage(img);
-    return skybox;
-}
-
-
-Model LoadSkyboxImage(AppConfiguration appConfig, Image img)
+Model LoadSkyboxFromImage(Image img)
 {
     char tmp[PATH_MAX];
     char tmp2[PATH_MAX];
@@ -38,4 +27,11 @@ Model LoadSkyboxImage(AppConfiguration appConfig, Image img)
     // Load img texture
     skybox.materials[0].maps[MATERIAL_MAP_CUBEMAP].texture = LoadTextureCubemap(img, CUBEMAP_LAYOUT_AUTO_DETECT); // CUBEMAP_LAYOUT_PANORAMA
     return skybox;
+}
+
+Model UnloadSkybox(Model skybox)
+{
+    UnloadShader(skybox.materials[0].shader);
+    UnloadTexture(skybox.materials[0].maps[MATERIAL_MAP_CUBEMAP].texture);
+    UnloadModel(skybox); // Unload skybox model
 }

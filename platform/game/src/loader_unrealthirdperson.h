@@ -9,3 +9,5 @@ typedef enum
 } UnrealThirdPersonLevelSize;
 
 GameObject *Load_LevelTree(GameObject *gos);
+
+Model Load_LevelSkybox(Color sunColor, bool postprocessing);

@@ -1,8 +1,7 @@
 #include <raylib.h>
+#include "control.h"
 
 #pragma once
-
-#include "control.h"
 
 Camera InitCamera();
 

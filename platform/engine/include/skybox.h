@@ -1,6 +1,7 @@
 #include <raylib.h>
-#include "config.h"
 
-Model LoadSkyboxResource(AppConfiguration appConfig, char *assetpath);
+#pragma once
 
-Model LoadSkyboxImage(AppConfiguration appConfig, Image img);
+Model LoadSkyboxFromImage(Image img);
+
+Model UnloadSkybox(Model skybox);
