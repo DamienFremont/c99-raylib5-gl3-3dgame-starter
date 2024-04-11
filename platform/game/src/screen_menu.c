@@ -31,7 +31,6 @@ int Update_Menu()
     if (CheckCollisionPointRec(GetMousePosition(), BUTTON_MEDIUM))
     {
         mouseHoverRec = 1;
-
         if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
         {
             currentProcess = 1;
@@ -47,7 +46,6 @@ int Update_Menu()
     {
         return GAMEPLAY;
     }
-
     return MENU;
 }
 

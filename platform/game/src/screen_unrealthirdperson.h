@@ -7,6 +7,10 @@
 #include "input.h"
 #include "gameobject.h"
 
+//----------------------------------------------------------------------------------
+// Types and Structures Definition
+//----------------------------------------------------------------------------------
+
 typedef struct UnrealThirdPerson_State
 {
     AppConfiguration appConfig;

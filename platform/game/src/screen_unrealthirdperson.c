@@ -23,7 +23,7 @@
 #include "render.h"
 
 //----------------------------------------------------------------------------------
-// Const
+// Types and Structures Definition
 //----------------------------------------------------------------------------------
 
 const int TICK_ANIMAT = 25;
@@ -40,7 +40,7 @@ const Vector3 LIGHT_TRANSFORM = {0.0f, 9.0f, 39.0f};
 const Color LIGHT_COLOR = {255, 255, 230, 255}; // YELLOW
 
 //----------------------------------------------------------------------------------
-// Vars
+// Local Variables Definition (local to this module)
 //----------------------------------------------------------------------------------
 
 static bool postprocessing = false;
@@ -59,10 +59,25 @@ static InputActions actions;
 static Controller playerController;
 static ModelAnimation playerAnimations[2];
 
+//----------------------------------------------------------------------------------
+// Local Functions Declaration
+//----------------------------------------------------------------------------------
+
+void Draw_Pipeline_Default(UnrealThirdPerson_State *state, RenderTexture2D *target);
+void Draw_Pipeline_PostProcessing(UnrealThirdPerson_State *state, RenderTexture2D *target);
+void UpdatePlayerAnimation(UnrealThirdPerson_State *state);
+void UpdatePlayerCamera();
+void UpdatePlayerPosition(UnrealThirdPerson_State *state);
+void UpdatePlayerInput(UnrealThirdPerson_State *state);
+void UpdateRender();
+
+//----------------------------------------------------------------------------------
+// Module specific Functions Definition
+//----------------------------------------------------------------------------------
+
 UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, RenderTexture2D *target)
 {
     char tmp[PATH_MAX];
-    char tmp2[PATH_MAX];
 
     // init
     UnrealThirdPerson_State state = {0};
@@ -116,6 +131,51 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     return state;
 }
 
+int Update_UnrealThirdPerson(UnrealThirdPerson_State *state)
+{
+    // tick
+    UpdatePlayerInput(state);
+    UpdatePlayerPosition(state);
+    UpdatePlayerAnimation(state);
+    UpdatePlayerCamera();
+    // TODO: UpdatePhysics(state);
+    // no tick
+    UpdateRender();
+    if (IsKeyPressed(KEY_TAB))
+    {
+        return MENU;
+    }
+    return GAMEPLAY;
+}
+
+void Draw_UnrealThirdPerson(UnrealThirdPerson_State *state, RenderTexture2D *target)
+{
+    if (postprocessing == true)
+    {
+        Draw_Pipeline_PostProcessing(state, target);
+        return;
+    }
+    Draw_Pipeline_Default(state, target);
+}
+
+void Unload_UnrealThirdPerson(UnrealThirdPerson_State *state)
+{
+    // skybox
+    UnloadSkybox(skybox);
+    // animations
+    UnloadModelAnimations(playerAnimations, sizeof(playerAnimations));
+    // level
+    for (int i = 1; i < sizeof(gos); i++)
+        UnloadModel(gos[i].model);
+    // shaders
+    UnloadShader(light_shader);
+    // TODO: UnloadShader() shaders
+}
+
+//----------------------------------------------------------------------------------
+// Local Functions Definition
+//----------------------------------------------------------------------------------
+
 void UpdateRender()
 {
     UpdateLighting(light_shader, camera);
@@ -140,7 +200,7 @@ void UpdatePlayerAnimation(UnrealThirdPerson_State *state)
 
 void UpdatePlayerCamera()
 {
-    FixedCamera_Look(&camera, playerController, CAM_DIST, CAM_HEIGHT);
+    CameraFixed_Look(&camera, playerController, CAM_DIST, CAM_HEIGHT);
 }
 
 void UpdatePlayerPosition(UnrealThirdPerson_State *state)
@@ -199,25 +259,18 @@ void UpdatePhysics(UnrealThirdPerson_State *state)
     // TODO: https://www.raylib.com/examples/models/loader.html?name=models_box_collisions
 }
 
-int Update_UnrealThirdPerson(UnrealThirdPerson_State *state)
+void Draw_3D_Console()
 {
-    // tick
-    UpdatePlayerInput(state);
-    UpdatePlayerPosition(state);
-    UpdatePlayerAnimation(state);
-    UpdatePlayerCamera();
-    // TODO: UpdatePhysics(state);
-    // no tick
-    UpdateRender();
-    if (IsKeyPressed(KEY_TAB))
+    for (size_t i = 0; i < LEVEL_SIZE; i++)
     {
-        return MENU;
+        Draw_GameObject(gos[i]);
+        Draw_GameObject_Console(gos[i]);
     }
-    return GAMEPLAY;
-}
-
-void Draw_3D_Console(UnrealThirdPerson_State *state)
-{
+    DrawGrid(50, 1.0f);
+    Draw_GameObject_PlayerHitBox(gos[0]);
+    // TODO: move to Load_LevelTree()
+    // light spot
+    DrawCubeWiresV(LIGHT_TRANSFORM, (Vector3){1.0f, 1.0f, 1.0f}, YELLOW);
 }
 
 void Draw_2D(UnrealThirdPerson_State *state)
@@ -247,15 +300,8 @@ void Draw_3D_Models(UnrealThirdPerson_State *state)
         if (state->showConsole == 1)
         {
             for (size_t i = 0; i < LEVEL_SIZE; i++)
-            {
                 Draw_GameObject(gos[i]);
-                Draw_GameObject_Console(gos[i]);
-            }
-            DrawGrid(50, 1.0f);
-            Draw_GameObject_PlayerHitBox(gos[0]);
-            // TODO: move to Load_LevelTree()
-            // light spot
-            DrawCubeWiresV(LIGHT_TRANSFORM, (Vector3){1.0f, 1.0f, 1.0f}, YELLOW);
+            Draw_3D_Console();
         }
         else
             for (size_t i = 0; i < LEVEL_SIZE; i++)
@@ -266,13 +312,13 @@ void Draw_3D_Models(UnrealThirdPerson_State *state)
 
 void Draw_Pipeline_Default(UnrealThirdPerson_State *state, RenderTexture2D *target)
 {
-    // Stage 1/1 Draw
     BeginDrawing();
     {
         ClearBackground(RAYWHITE);
-
+        // Stage 1/2 Geometry
         Draw_3D_Skybox(skybox, camera);
         Draw_3D_Models(state);
+        // Stage 2/2 2D
         Draw_2D(state);
     }
     EndDrawing();
@@ -280,46 +326,21 @@ void Draw_Pipeline_Default(UnrealThirdPerson_State *state, RenderTexture2D *targ
 
 void Draw_Pipeline_PostProcessing(UnrealThirdPerson_State *state, RenderTexture2D *target)
 {
-    // Stage 1/2 Render
     BeginTextureMode(*target);
     {
         ClearBackground(RAYWHITE);
-
+        // Stage 1/3 Geometry
         Draw_3D_Skybox(skybox, camera);
         Draw_3D_Models(state);
     }
     EndTextureMode();
-    // Stage 2/2 Draw
     BeginDrawing();
     {
         ClearBackground(RAYWHITE);
-
+        // Stage 2/3 PostProcessing
         Draw_PostProcessing(state->postproShader, target);
+        // Stage 3/3 2D
         Draw_2D(state);
     }
     EndDrawing();
-}
-
-void Draw_UnrealThirdPerson(UnrealThirdPerson_State *state, RenderTexture2D *target)
-{
-    if (postprocessing == true)
-    {
-        Draw_Pipeline_PostProcessing(state, target);
-        return;
-    }
-    Draw_Pipeline_Default(state, target);
-}
-
-void Unload_UnrealThirdPerson(UnrealThirdPerson_State *state)
-{
-    // skybox
-    UnloadSkybox(skybox);
-    // animations
-    UnloadModelAnimations(playerAnimations, sizeof(playerAnimations));
-    // level
-    for (int i = 1; i < sizeof(gos); i++)
-        UnloadModel(gos[i].model);
-    // shaders
-    UnloadShader(light_shader);
-    // TODO: UnloadShader() shaders
 }

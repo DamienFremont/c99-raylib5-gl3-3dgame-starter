@@ -13,7 +13,7 @@ Camera InitCamera()
     return camera;
 }
 
-void FixedCamera_Look(Camera *camera, Controller player, int cameraDistance, int cameraHeight)
+void CameraFixed_Look(Camera *camera, Controller player, int cameraDistance, int cameraHeight)
 {
     camera->position = (Vector3){
         player.position.x - (player.direction.x * cameraDistance),
@@ -23,4 +23,9 @@ void FixedCamera_Look(Camera *camera, Controller player, int cameraDistance, int
         player.position.x,
         player.position.y + cameraHeight,
         player.position.z};
+}
+
+void CameraFollow_Look(Camera *camera, Controller player, int cameraDistance, int cameraHeight)
+{
+    // TODO
 }
