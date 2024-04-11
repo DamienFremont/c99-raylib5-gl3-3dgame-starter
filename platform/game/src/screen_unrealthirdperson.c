@@ -75,6 +75,7 @@ void Init_Lighting();
 void Init_UnrealThirdPerson(AppConfiguration appConfig, RenderTexture2D *target)
 {
     showConsole = 0;
+    fps_counter_show = appConfig.fps_counter_show;
     camera = InitCamera();
     Init_PostProcess(target, appConfig.postpro_bloom_enable);
     Load_LevelTree(gos);

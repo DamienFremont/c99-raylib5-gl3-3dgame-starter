@@ -4,6 +4,10 @@
 
 #pragma once
 
+//---------------------------------------------------------
+// Types and Structures Definition
+//---------------------------------------------------------
+
 typedef enum
 {
     FONT_SIZE_12 = 12
@@ -24,6 +28,9 @@ typedef enum
     BACKFACE_FALSE = 0
 } BackFace;
 
-void DrawTextCodepoint3D(Font font, int codepoint, Vector3 position, float fontSize, bool backface, Color tint);
+//---------------------------------------------------------
+// Module Functions Declaration
+//---------------------------------------------------------
 
+void DrawTextCodepoint3D(Font font, int codepoint, Vector3 position, float fontSize, bool backface, Color tint);
 void DrawText3D(Font font, const char *text, Vector3 position, float fontSize, float fontSpacing, float lineSpacing, bool backface, Color tint);

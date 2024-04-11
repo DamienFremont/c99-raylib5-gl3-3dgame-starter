@@ -2,6 +2,10 @@
 
 #pragma once
 
+//---------------------------------------------------------
+// Types and Structures Definition
+//---------------------------------------------------------
+
 typedef struct InputActionState
 {
     bool Started;
@@ -28,6 +32,9 @@ typedef struct InputActions
     InputAction MoveAction;
 } InputActions;
 
-void InitInputActions(InputActions *actions);
+//---------------------------------------------------------
+// Module Functions Declaration
+//---------------------------------------------------------
 
+void InitInputActions(InputActions *actions);
 void ExecuteInputActions(InputActions *actions);

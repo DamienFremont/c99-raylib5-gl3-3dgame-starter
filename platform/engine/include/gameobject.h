@@ -2,6 +2,10 @@
 
 #pragma once
 
+//---------------------------------------------------------
+// Types and Structures Definition
+//---------------------------------------------------------
+
 typedef struct Rotation2
 {
     Vector3 axis;
@@ -37,12 +41,12 @@ typedef enum
 
 static const Vector3 ROTATION_YAW = {0, 1, 0};
 
+//---------------------------------------------------------
+// Module Functions Declaration
+//---------------------------------------------------------
+
 void Draw_GameObject(GameObject go);
-
 //void Init_Models(GameObject *go_arr);
-//
 //void Init_Model(GameObject go);
-
 void Draw_GameObject_Console(GameObject go);
-
 void Draw_GameObject_PlayerHitBox(GameObject go);

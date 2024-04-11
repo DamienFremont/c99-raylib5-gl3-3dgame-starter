@@ -1,5 +1,9 @@
 #pragma once
 
+//---------------------------------------------------------
+// Types and Structures Definition
+//---------------------------------------------------------
+
 struct ScreenResolution
 {
     char name[4];
@@ -15,6 +19,10 @@ typedef enum
     QHD,
     UHD,
 } ScreenResolutionType;
+
+//---------------------------------------------------------
+// Module Functions Declaration
+//---------------------------------------------------------
 
 ScreenResolution getScreen(ScreenResolutionType type)
 {

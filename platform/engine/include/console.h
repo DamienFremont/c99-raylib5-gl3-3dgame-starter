@@ -2,6 +2,9 @@
 
 #pragma once
 
-void LogConsole(char* str);
+//---------------------------------------------------------
+// Module Functions Declaration
+//---------------------------------------------------------
 
+void LogConsole(char* str);
 void DrawConsole();

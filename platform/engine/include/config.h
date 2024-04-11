@@ -2,6 +2,10 @@
 
 #pragma once
 
+//---------------------------------------------------------
+// Types and Structures Definition
+//---------------------------------------------------------
+
 typedef struct AppConfiguration
 {
     char appName[999];
