@@ -10,42 +10,42 @@
 #include "camera.h"
 #include "assets.h"
 
-static const SCREEN = GAMEPLAY;
+static const SCREEN_START = GAMEPLAY;
 
 //---------------------------------------------------------
 // Local Functions Declaration
 //---------------------------------------------------------
 
-int UpdateScreen(int currentScreen);
-void DrawScreen(int currentScreen, RenderTexture2D *target);
+int UpdateScreen(int screen);
+void DrawScreen(int screen, RenderTexture2D *target);
 
 //-----------------------------------------------------------
 // Program main entry point
 //-----------------------------------------------------------
 
-int main(AppConfiguration appConfig)
+int main(AppConfiguration cfg)
 {
 	LogConsole("Hello Console!");
 
 	// Initialization
 	//-------------------------------------------------------------
-	InitAssets(appConfig.res_path, appConfig.glsl_version);
+	InitAssets(cfg.res_path, cfg.glsl_version);
 
-	if (appConfig.postpro_msaa_enable == true)
+	if (cfg.postpro_msaa_enable == true)
 		SetConfigFlags(FLAG_MSAA_4X_HINT); // Enable Multi Sampling Anti Aliasing 4x (if available)
 
-	InitWindow(appConfig.screen_width, appConfig.screen_height, appConfig.appName);
-	SetTargetFPS(appConfig.fps_limit);
+	InitWindow(cfg.screen_width, cfg.screen_height, cfg.appName);
+	SetTargetFPS(cfg.fps_limit);
 
 	// Create a RenderTexture2D to be used for render to texture
-	RenderTexture2D postprocessing_target = LoadRenderTexture(GetScreenWidth(), GetScreenHeight());
-	SetTextureFilter(postprocessing_target.texture, appConfig.postpro_texturefilter);
+	RenderTexture2D target = LoadRenderTexture(GetScreenWidth(), GetScreenHeight());
+	SetTextureFilter(target.texture, cfg.postpro_texturefilter);
 
 	// Levels
-	int currentScreen = SCREEN;
-	InitLauncher(appConfig);
-	Init_UnrealThirdPerson(appConfig, &postprocessing_target);
-	Init_Menu(appConfig);
+	int currentScreen = SCREEN_START;
+	InitLauncher(cfg);
+	Init_UnrealThirdPerson(cfg, &target);
+	Init_Menu(cfg);
 
 	//-------------------------------------------------------------
 
@@ -53,7 +53,7 @@ int main(AppConfiguration appConfig)
 	while (!WindowShouldClose()) // Detect window close button or ESC key
 	{
 		currentScreen = UpdateScreen(currentScreen);
-		DrawScreen(currentScreen, &postprocessing_target);
+		DrawScreen(currentScreen, &target);
 	}
 
 	// De-Initialization
@@ -63,7 +63,7 @@ int main(AppConfiguration appConfig)
 	UnloadLauncher();
 	Unload_Menu();
 	// target
-	UnloadRenderTexture(postprocessing_target);
+	UnloadRenderTexture(target);
 
 	CloseWindow(); // Close window and OpenGL context
 	//-------------------------------------------------------------

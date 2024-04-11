@@ -22,19 +22,6 @@
 #include "lighting.h"
 #include "render.h"
 
-//---------------------------------------------------------
-// Types and Structures Definition
-//---------------------------------------------------------
-
-const int TICK_ANIMAT = 25;
-const int TICK_INPUT = 120;
-const int TICK_RENDER = 30;
-const float MAX_WALK_SPEED = 0.08f;
-const float MAX_WALK_ROTAT = 0.08f * 15;
-const int CAM_DIST = 4;
-const int CAM_HEIGHT = 1;
-const Vector3 SCENE_FORWARD = {1, 0, 0};
-
 // TODO: move to Load_LevelTree()
 const Vector3 LIGHT_TRANSFORM = {0.0f, 9.0f, 39.0f};
 const Color LIGHT_COLOR = {255, 255, 230, 255}; // YELLOW
@@ -48,18 +35,18 @@ Shader postproShader = {0};
 RenderTexture2D *postproTarget;
 
 // TODO: move to Load_LevelTree()
-static Camera camera;
-static Model skybox;
-static Shader light_shader = {0};
-static Light light_point = {0};
+Camera camera;
+Model skybox;
+Shader light_shader = {0};
+Light light_point = {0};
 
-static GameObject gos[LEVEL_SIZE];
-static TickState animationTick = {0};
-static TickState inputTick = {0};
-static TickState renderTick = {0};
-static InputActions actions;
-static Controller playerController;
-static ModelAnimation playerAnimations[2];
+GameObject gos[LEVEL_SIZE];
+TickState animationTick = {0};
+TickState inputTick = {0};
+TickState renderTick = {0};
+InputActions actions;
+Controller playerController;
+ModelAnimation playerAnimations[2];
 
 bool showConsole;
 bool fps_counter_show;
@@ -77,64 +64,35 @@ void UpdatePlayerCamera();
 void UpdatePlayerPosition();
 void UpdatePlayerInput();
 void UpdateRender();
+void Init_PostProcess(RenderTexture2D *target, bool postprocessing_enable);
+void Init_Animation();
+void Init_Lighting();
 
 //---------------------------------------------------------
 // Module specific Functions Definition
 //---------------------------------------------------------
 
-void Init_PostProcess(RenderTexture2D *target, bool postprocessing_enable)
-{
-    const char *POSTPROC_DEFAULT = "resources/shaders/glsl%i/default.fs";
-    const char *POSTPROC_BLOOM = "resources/shaders/glsl%i/bloom.fs";
-    char *shaderPath = (postprocessing == true) ? POSTPROC_BLOOM : POSTPROC_DEFAULT;
-    char tmp[PATH_MAX];
-    // TODO: move to Load_LevelTree()
-    // SOURCE: https://www.raylib.com/examples/shaders/loader.html?name=shaders_postprocessing
-    postprocessing = postprocessing_enable;
-    postproShader = LoadShader(0, GetAssetPath(tmp, shaderPath));
-    postproTarget = target;
-}
-
 void Init_UnrealThirdPerson(AppConfiguration appConfig, RenderTexture2D *target)
 {
-    char tmp[PATH_MAX];
-
-    // init
     showConsole = 0;
     camera = InitCamera();
-
     Init_PostProcess(target, appConfig.postpro_bloom_enable);
-
-    // GAME OBJECTS
     Load_LevelTree(gos);
     skybox = Load_LevelSkybox(LIGHT_COLOR, postprocessing);
-
-    // ANIMATION
-    // TODO: move to Load_LevelTree()
-    int tmpAnimCount = 0;
-    playerAnimations[0] = LoadModelAnimations(GetAssetPath(tmp, "resources/animations/Idle.m3d"), &tmpAnimCount)[0];
-    playerAnimations[1] = LoadModelAnimations(GetAssetPath(tmp, "resources/animations/Running.m3d"), &tmpAnimCount)[0];
-    animCurrentFrame = 0;
-
-    // LIGHTING
-    light_shader = LoadLighting();
-    light_point = CreateLight(LIGHT_POINT, LIGHT_TRANSFORM, Vector3Zero(), LIGHT_COLOR, light_shader);
-    for (int i = 0; i < LEVEL_SIZE; i++)
-        SetModelLighting(gos[i].model, light_shader);
-
+    Init_Animation();
+    Init_Lighting();
     // TICKS
-    animationTick = InitTick(TICK_ANIMAT);
-    inputTick = InitTick(TICK_INPUT);
-    renderTick = InitTick(TICK_RENDER);
+    animationTick = InitTick(25);
+    inputTick = InitTick(120);
+    renderTick = InitTick(30);
     StartTick(&animationTick);
     StartTick(&inputTick);
     StartTick(&renderTick);
-
     // PLAYER
     // TODO: move to Load_LevelTree()
     playerController = (Controller){
-        (Vector3){9.0f, 0.0f, 11.0f},
-        SCENE_FORWARD,
+        (Vector3){9.0f, 0.0f, 11.0f}, // player position
+        (Vector3){1, 0, 0},           // screen forward
     };
     InitInputActions(&actions);
 }
@@ -209,7 +167,7 @@ void UpdatePlayerAnimation()
 
 void UpdatePlayerCamera()
 {
-    CameraFixed_Look(&camera, playerController, CAM_DIST, CAM_HEIGHT);
+    CameraFixed_Look(&camera, playerController, 4, 1);
 }
 
 void UpdatePlayerPosition()
@@ -241,7 +199,7 @@ void SetupPlayerInputComponent(InputActions *actions)
     // TODO: Jumping
     // Moving
     if (actions->MoveAction.State.Triggered == true)
-        TankControl_Move(&playerController.position, actions->MoveAction.Value, MAX_WALK_SPEED, MAX_WALK_ROTAT);
+        TankControl_Move(&playerController.position, actions->MoveAction.Value, 0.08f, 0.08f * 15);
     // TODO: Looking
 }
 
@@ -352,4 +310,35 @@ void Draw_Pipeline_PostProcessing(RenderTexture2D *target)
         Draw_2D();
     }
     EndDrawing();
+}
+
+void Init_PostProcess(RenderTexture2D *target, bool postprocessing_enable)
+{
+    const char *POSTPROC_DEFAULT = "resources/shaders/glsl%i/default.fs";
+    const char *POSTPROC_BLOOM = "resources/shaders/glsl%i/bloom.fs";
+    char *shaderPath = (postprocessing == true) ? POSTPROC_BLOOM : POSTPROC_DEFAULT;
+    char tmp[PATH_MAX];
+    // TODO: move to Load_LevelTree()
+    // SOURCE: https://www.raylib.com/examples/shaders/loader.html?name=shaders_postprocessing
+    postprocessing = postprocessing_enable;
+    postproShader = LoadShader(0, GetAssetPath(tmp, shaderPath));
+    postproTarget = target;
+}
+
+void Init_Animation()
+{
+    char tmp[PATH_MAX];
+    // TODO: move to Load_LevelTree()
+    int tmpAnimCount = 0;
+    playerAnimations[0] = LoadModelAnimations(GetAssetPath(tmp, "resources/animations/Idle.m3d"), &tmpAnimCount)[0];
+    playerAnimations[1] = LoadModelAnimations(GetAssetPath(tmp, "resources/animations/Running.m3d"), &tmpAnimCount)[0];
+    animCurrentFrame = 0;
+}
+
+void Init_Lighting()
+{
+    light_shader = LoadLighting();
+    light_point = CreateLight(LIGHT_POINT, LIGHT_TRANSFORM, Vector3Zero(), LIGHT_COLOR, light_shader);
+    for (int i = 0; i < LEVEL_SIZE; i++)
+        SetModelLighting(gos[i].model, light_shader);
 }
