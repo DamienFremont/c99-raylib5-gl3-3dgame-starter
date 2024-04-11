@@ -11,7 +11,6 @@
 #include <stdio.h>
 #include <string.h>
 #include "assets.h"
-#include "material.h"
 #include "screens.h"
 #include "text.h"
 #include "tick.h"
@@ -28,13 +27,10 @@
 const int TICK_ANIMAT = 25;
 const int TICK_INPUT = 120;
 const int TICK_RENDER = 30;
-
 const float MAX_WALK_SPEED = 0.08f;
 const float MAX_WALK_ROTAT = 0.08f * 15;
-
 const int CAM_DIST = 4;
 const int CAM_HEIGHT = 1;
-
 const Vector3 SCENE_FORWARD = {1, 0, 0};
 
 // TODO: move to Load_LevelTree()
@@ -45,22 +41,20 @@ const Color LIGHT_COLOR = {255, 255, 230, 255}; // YELLOW
 // Vars
 //----------------------------------------------------------------------------------
 
-// TODO: move to Load_LevelTree()
-static ModelAnimation anim0 = {0};
-static ModelAnimation anim1 = {0};
+static bool postprocessing = false;
 
+// TODO: move to Load_LevelTree()
+static Model skybox;
 static Shader light_shader = {0};
 static Light light_point = {0};
 
 static GameObject gos[LEVEL_SIZE];
-static bool postprocessing = false;
-
 static TickState animationTick = {0};
 static TickState inputTick = {0};
 static TickState renderTick = {0};
-
 static InputActions actions;
 static Controller playerController;
+static ModelAnimation playerAnimations[2];
 
 UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, RenderTexture2D *target)
 {
@@ -73,6 +67,7 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     state.appConfig = appConfig;
     state.camera = InitCamera();
 
+    // SHADERS
     // TODO: move to Load_LevelTree()
     // SOURCE: https://www.raylib.com/examples/shaders/loader.html?name=shaders_postprocessing
     // shaders_postprocessing
@@ -80,40 +75,39 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     Shader shaderPostpro = LoadShader(0, GetAssetPath(tmp, "resources/shaders/glsl%i/bloom.fs"));
     postprocessing = appConfig.postpro_bloom_enable;
     state.postproShader = (postprocessing == true) ? shaderPostpro : shaderDefault;
+    state.target = target;
 
+    // GAME OBJECTS
+    Load_LevelTree(gos);
+    skybox = Load_LevelSkybox(LIGHT_COLOR, postprocessing);
+
+    // ANIMATION
+    // TODO: move to Load_LevelTree()
+    int tmpAnimCount = 0;
+    playerAnimations[0] = LoadModelAnimations(GetAssetPath(tmp, "resources/animations/Idle.m3d"), &tmpAnimCount)[0];
+    playerAnimations[1] = LoadModelAnimations(GetAssetPath(tmp, "resources/animations/Running.m3d"), &tmpAnimCount)[0];
+    state.animCurrentFrame = 0;
+
+    // LIGHTING
+    light_shader = LoadLighting();
+    light_point = CreateLight(LIGHT_POINT, LIGHT_TRANSFORM, Vector3Zero(), LIGHT_COLOR, light_shader);
+    for (int i = 0; i < LEVEL_SIZE; i++)
+        SetModelLighting(gos[i].model, light_shader);
+
+    // TICKS
+    animationTick = InitTick(TICK_ANIMAT);
+    inputTick = InitTick(TICK_INPUT);
+    renderTick = InitTick(TICK_RENDER);
+    StartTick(&animationTick);
+    StartTick(&inputTick);
+    StartTick(&renderTick);
+
+    // PLAYER
     // TODO: move to Load_LevelTree()
     playerController = (Controller){
         (Vector3){9.0f, 0.0f, 11.0f},
         SCENE_FORWARD,
     };
-
-    Load_LevelTree(gos);
-    state.skybox = Load_LevelSkybox(LIGHT_COLOR, postprocessing);
-
-    // TODO: move to Load_LevelTree()
-    int animCount = 0;
-    anim0 = LoadModelAnimations(GetAssetPath(tmp, "resources/animations/Idle.m3d"), &animCount)[0];
-    anim1 = LoadModelAnimations(GetAssetPath(tmp, "resources/animations/Running.m3d"), &animCount)[0];
-
-    state.target = target;
-    state.animCurrentFrame = 0;
-
-    Model model = gos[0].model;
-
-    light_shader = LoadLighting();
-    light_point = CreateLight(LIGHT_POINT, LIGHT_TRANSFORM, Vector3Zero(), LIGHT_COLOR, light_shader);
-
-    for (int i = 0; i < LEVEL_SIZE; i++)
-        SetModelLighting(gos[i].model, light_shader);
-
-    animationTick = InitTick(TICK_ANIMAT);
-    inputTick = InitTick(TICK_INPUT);
-    renderTick = InitTick(TICK_RENDER);
-
-    StartTick(&animationTick);
-    StartTick(&inputTick);
-    StartTick(&renderTick);
-
     InitInputActions(&actions);
 
     return state;
@@ -133,7 +127,7 @@ void UpdatePlayerAnimation(UnrealThirdPerson_State *state)
         return;
     else
         UpdateTick(&animationTick);
-    ModelAnimation anim = state->animIndex == 0 ? anim0 : anim1;
+    ModelAnimation anim = state->animIndex == 0 ? playerAnimations[0] : playerAnimations[1];
     int animationFPS = 25; // Blender export
     int HACK = 3;          // FIXME
     int frameInMs = TIME_1_SECOND / animationFPS;
@@ -280,7 +274,7 @@ void Draw_3D_Skybox(UnrealThirdPerson_State *state)
         rlDisableBackfaceCulling();
         rlDisableDepthMask();
         {
-            DrawModel(state->skybox, (Vector3){0, 0, 0}, 1.0f, SKYBLUE);
+            DrawModel(skybox, (Vector3){0, 0, 0}, 1.0f, SKYBLUE);
         }
         rlEnableBackfaceCulling();
         rlEnableDepthMask();
@@ -365,15 +359,12 @@ void Draw_UnrealThirdPerson(UnrealThirdPerson_State *state, RenderTexture2D *tar
 void Unload_UnrealThirdPerson(UnrealThirdPerson_State *state)
 {
     // skybox
-    UnloadSkybox(state->skybox);
-    // player
-    UnloadModelAnimation(anim0);
-    UnloadModelAnimation(anim1);
+    UnloadSkybox(skybox);
+    // animations
+    UnloadModelAnimations(playerAnimations, sizeof(playerAnimations));
     // level
     for (int i = 1; i < sizeof(gos); i++)
-    {
         UnloadModel(gos[i].model);
-    }
     // shaders
     UnloadShader(light_shader);
     // TODO: UnloadShader() shaders

@@ -21,8 +21,6 @@ typedef struct UnrealThirdPerson_State
     Model rampModel;
     Model chamferCubeModel;
 
-    Model skybox;
-
     Shader *shaders;
     int animIndex;
     unsigned int animCurrentFrame;
