@@ -115,10 +115,7 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
 
 void UpdateRender(UnrealThirdPerson_State *state)
 {
-    Shader shader = light_shader;
-    Camera camera = state->camera;
-    // Update the light shader with the camera view position
-    SetShaderValue(shader, shader.locs[SHADER_LOC_VECTOR_VIEW], &camera.position.x, SHADER_UNIFORM_VEC3);
+    UpdateLighting(light_shader, state->camera);
 }
 
 void UpdatePlayerAnimation(UnrealThirdPerson_State *state)

@@ -25,6 +25,12 @@ Shader LoadLighting()
     return shader;
 }
 
+void UpdateLighting(Shader shader, Camera camera)
+{
+    // Update the light shader with the camera view position
+    SetShaderValue(shader, shader.locs[SHADER_LOC_VECTOR_VIEW], &camera.position.x, SHADER_UNIFORM_VEC3);
+}
+
 void UnloadLighting(Shader shader)
 {
     UnloadShader(shader);

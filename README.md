@@ -58,8 +58,7 @@
   - [ ] Physics
       [ ] hitbox
       [ ] gravity
-  - [ ] Simulation
-      [x] Tick
+  - [x] Simulation: Tick Systems
 - Scripting
   - [x] Console
 - Animation
