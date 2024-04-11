@@ -29,6 +29,21 @@ Model LoadSkyboxFromImage(Image img)
     return skybox;
 }
 
+void Draw_3D_Skybox(Model skybox, Camera camera)
+{
+    BeginMode3D(camera);
+    {
+        rlDisableBackfaceCulling();
+        rlDisableDepthMask();
+        {
+            DrawModel(skybox, (Vector3){0, 0, 0}, 1.0f, SKYBLUE);
+        }
+        rlEnableBackfaceCulling();
+        rlEnableDepthMask();
+    }
+    EndMode3D();
+}
+
 Model UnloadSkybox(Model skybox)
 {
     UnloadShader(skybox.materials[0].shader);

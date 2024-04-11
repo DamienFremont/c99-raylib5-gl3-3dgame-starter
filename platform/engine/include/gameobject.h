@@ -42,3 +42,7 @@ void Draw_GameObject(GameObject go);
 //void Init_Models(GameObject *go_arr);
 //
 //void Init_Model(GameObject go);
+
+void Draw_GameObject_Console(GameObject go);
+
+void Draw_GameObject_PlayerHitBox(GameObject go);

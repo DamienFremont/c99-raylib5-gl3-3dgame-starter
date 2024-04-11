@@ -15,7 +15,6 @@ typedef struct UnrealThirdPerson_State
     int showConsole;
     Shader postproShader;
     Shader tilingShader;
-    Camera camera;
 
     Model cubeModel;
     Model rampModel;
