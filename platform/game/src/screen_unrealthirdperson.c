@@ -16,6 +16,7 @@
 #include "text.h"
 #include "tick.h"
 #include "console.h"
+#include "lighting.h"
 #define RLIGHTS_IMPLEMENTATION
 #include <rlights.h>
 #include <raymath.h>
@@ -37,8 +38,8 @@ const int CAM_HEIGHT = 1;
 const Vector3 SCENE_FORWARD = {1, 0, 0};
 
 // TODO: move to Load_LevelTree()
-const Vector3 LIGHT_TRANSFORM = {0.0f, 9.0f, 30.0f};
-const Color LIGHTYELLOW = {255, 255, 230, 255};
+const Vector3 LIGHT_TRANSFORM = {0.0f, 9.0f, 39.0f};
+const Color LIGHT_COLOR = {255, 255, 230, 255}; // YELLOW
 
 //----------------------------------------------------------------------------------
 // Vars
@@ -48,8 +49,8 @@ const Color LIGHTYELLOW = {255, 255, 230, 255};
 static ModelAnimation anim0 = {0};
 static ModelAnimation anim1 = {0};
 
-static Shader shader_fog = {0};
-static Light light = {0};
+static Shader light_shader = {0};
+static Light light_point = {0};
 
 static GameObject gos[LEVEL_SIZE];
 static bool postprocessing = false;
@@ -80,13 +81,14 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
     postprocessing = appConfig.postpro_bloom_enable;
     state.postproShader = (postprocessing == true) ? shaderPostpro : shaderDefault;
 
+    // TODO: move to Load_LevelTree()
     playerController = (Controller){
         (Vector3){9.0f, 0.0f, 11.0f},
         SCENE_FORWARD,
     };
 
     Load_LevelTree(gos);
-    state.skybox = Load_LevelSkybox(LIGHTYELLOW, postprocessing);
+    state.skybox = Load_LevelSkybox(LIGHT_COLOR, postprocessing);
 
     // TODO: move to Load_LevelTree()
     int animCount = 0;
@@ -98,26 +100,11 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
 
     Model model = gos[0].model;
 
-    // SOURCE: https://www.raylib.com/examples/shaders/loader.html?name=shaders_fog
-    // Load shader and set up some uniforms
-    Shader shader = LoadShader(
-        GetShaderPath(tmp, "resources/shaders/glsl%i/lighting.vs"),
-        GetShaderPath(tmp2, "resources/shaders/glsl%i/fog.fs"));
-    shader.locs[SHADER_LOC_MATRIX_MODEL] = GetShaderLocation(shader, "matModel");
-    shader.locs[SHADER_LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
-    // Ambient light level
-    int ambientLoc = GetShaderLocation(shader, "ambient");
-    SetShaderValue(shader, ambientLoc, (float[4]){0.2f, 0.2f, 0.2f, 1.0f}, SHADER_UNIFORM_VEC4);
-    // Fog
-    float fogDensity = 0.05f;
-    int fogDensityLoc = GetShaderLocation(shader, "fogDensity");
-    SetShaderValue(shader, fogDensityLoc, &fogDensity, SHADER_UNIFORM_FLOAT);
-    // NOTE: All models share the same shader
+    light_shader = LoadLighting();
+    light_point = CreateLight(LIGHT_POINT, LIGHT_TRANSFORM, Vector3Zero(), LIGHT_COLOR, light_shader);
+
     for (int i = 0; i < LEVEL_SIZE; i++)
-        gos[i].model.materials[0].shader = shader;
-    // Using just 1 point lights
-    light = CreateLight(LIGHT_POINT, LIGHT_TRANSFORM, Vector3Zero(), LIGHTYELLOW, shader);
-    shader_fog = shader;
+        SetModelLighting(gos[i].model, light_shader);
 
     animationTick = InitTick(TICK_ANIMAT);
     inputTick = InitTick(TICK_INPUT);
@@ -134,7 +121,7 @@ UnrealThirdPerson_State Init_UnrealThirdPerson(AppConfiguration appConfig, Rende
 
 void UpdateRender(UnrealThirdPerson_State *state)
 {
-    Shader shader = shader_fog;
+    Shader shader = light_shader;
     Camera camera = state->camera;
     // Update the light shader with the camera view position
     SetShaderValue(shader, shader.locs[SHADER_LOC_VECTOR_VIEW], &camera.position.x, SHADER_UNIFORM_VEC3);
@@ -388,6 +375,6 @@ void Unload_UnrealThirdPerson(UnrealThirdPerson_State *state)
         UnloadModel(gos[i].model);
     }
     // shaders
-    UnloadShader(shader_fog);
+    UnloadShader(light_shader);
     // TODO: UnloadShader() shaders
 }
