@@ -1,7 +1,7 @@
-#include "gameobject.h"
+#include "eng_gameobject.h"
 
 #include <raylib.h>
-#include <text.h>
+#include "eng_text.h"
 
 const Vector3 PLAYER_HITBOX_BOUNDARY = {1.0f, 2.0f, 1.0f};
 

@@ -1,4 +1,4 @@
-#include "screen_unrealthirdperson.h"
+#include "gam_screen_unrealthirdperson.h"
 
 #include <raylib.h>
 #include <time.h>
@@ -7,20 +7,20 @@
 #include <raymath.h>
 #include <stdio.h>
 #include <string.h>
-#include "loader_unrealthirdperson.h"
-#include "config.h"
-#include "console.h"
-#include "camera.h"
-#include "input.h"
-#include "control.h"
-#include "assets.h"
-#include "gameobject.h"
-#include "screens.h"
-#include "text.h"
-#include "tick.h"
-#include "console.h"
-#include "lighting.h"
-#include "render.h"
+#include "gam_screens.h"
+#include "gam_loader_unrealthirdperson.h"
+#include "eng_config.h"
+#include "eng_console.h"
+#include "eng_camera.h"
+#include "eng_input.h"
+#include "eng_control.h"
+#include "eng_assets.h"
+#include "eng_gameobject.h"
+#include "eng_text.h"
+#include "eng_tick.h"
+#include "eng_console.h"
+#include "eng_lighting.h"
+#include "eng_render.h"
 
 // TODO: move to Load_LevelTree()
 const Vector3 LIGHT_TRANSFORM = {0.0f, 9.0f, 39.0f};

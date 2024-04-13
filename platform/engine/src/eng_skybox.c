@@ -1,8 +1,8 @@
-#include "skybox.h"
+#include "eng_skybox.h"
 
 #include <raylib.h>
 
-#include "assets.h"
+#include "eng_assets.h"
 
 Model LoadSkyboxFromImage(Image img)
 {

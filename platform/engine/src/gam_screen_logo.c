@@ -1,8 +1,8 @@
-#include "screen_logo.h"
+#include "gam_screen_logo.h"
 
 #include <raylib.h>
 #include <time.h>
-#include "config.h"
+#include "eng_config.h"
 
 //---------------------------------------------------------
 // Types and Structures Definition

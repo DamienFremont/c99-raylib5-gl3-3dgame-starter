@@ -1,7 +1,7 @@
-#include "lighting.h"
+#include "eng_lighting.h"
 
 #include <raylib.h>
-#include "assets.h" // PATH_MAX
+#include "eng_assets.h" // PATH_MAX
 
 Shader LoadLighting()
 {

@@ -1,7 +1,7 @@
-#include "material.h"
+#include "eng_material.h"
 
-#include "config.h"
-#include "assets.h"
+#include "eng_config.h"
+#include "eng_assets.h"
 
 // FIXME:
 Shader TileTexture2D(Vector2 tiling)

@@ -1,10 +1,10 @@
-#include "loader_unrealthirdperson.h"
+#include "gam_loader_unrealthirdperson.h"
 
 #include <raymath.h>
 #include <raylib.h>
-#include "assets.h"
-#include "material.h"
-#include "skybox.h"
+#include "eng_assets.h"
+#include "eng_material.h"
+#include "eng_skybox.h"
 
 Image GetTiledImage(int tilingX, int tilingY, Color col1, Color col2)
 {

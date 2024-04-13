@@ -1,8 +1,6 @@
-#include "config.h"
+#include "eng_config.h"
 
 #pragma once
-
-#include <raylib.h>
 
 //---------------------------------------------------------
 // Module Functions Declaration

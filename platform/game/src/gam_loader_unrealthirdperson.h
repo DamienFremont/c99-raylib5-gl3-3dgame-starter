@@ -1,5 +1,6 @@
-#include "config.h"
-#include "gameobject.h"
+#include <raylib.h>
+#include "eng_config.h"
+#include "eng_gameobject.h"
 
 #pragma once
 

@@ -1,6 +1,6 @@
-#include "screen_logo.h"
-#include "screen_unrealthirdperson.h"
-#include "screen_menu.h"
+#include "gam_screen_logo.h"
+#include "gam_screen_unrealthirdperson.h"
+#include "gam_screen_menu.h"
 
 //-----------------------------------------------------------------
 // Types and Structures Definition

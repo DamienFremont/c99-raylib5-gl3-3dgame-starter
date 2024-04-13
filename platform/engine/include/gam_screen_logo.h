@@ -1,9 +1,12 @@
 #include <raylib.h>
-
-#include "config.h"
+#include <time.h>
+#include "eng_config.h"
 
 //---------------------------------------------------------
 // Module Functions Declaration
 //---------------------------------------------------------
 
-Shader TileTexture2D(Vector2 tiling);
+void InitLauncher(AppConfiguration appConfig);
+int UpdateLauncher();
+void DrawLauncher();
+void UnloadLauncher();

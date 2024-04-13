@@ -1,14 +1,14 @@
-#include "game.h"
+#include "gam_game.h"
 
 // SOURCE: https://github.com/raysan5/raylib-game-template
 
 #include <raylib.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "console.h"
-#include "screens.h"
-#include "camera.h"
-#include "assets.h"
+#include "gam_screens.h"
+#include "eng_console.h"
+#include "eng_camera.h"
+#include "eng_assets.h"
 
 static const SCREEN_START = GAMEPLAY;
 

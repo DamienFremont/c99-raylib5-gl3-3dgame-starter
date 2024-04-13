@@ -1,7 +1,7 @@
-#include "screen_menu.h"
+#include "gam_screen_menu.h"
 
 #include <raylib.h>
-#include "screens.h"
+#include "gam_screens.h"
 
 static int currentProcess = -1;
 static int mouseHoverRec = -1;

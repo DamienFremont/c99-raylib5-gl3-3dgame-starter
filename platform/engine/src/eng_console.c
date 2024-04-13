@@ -1,4 +1,4 @@
-#include "console.h"
+#include "eng_console.h"
 
 #include <stdbool.h>
 #include <raylib.h>
