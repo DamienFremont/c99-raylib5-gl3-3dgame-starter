@@ -3,6 +3,10 @@
 #include "eng_config.h"
 #include "eng_assets.h"
 
+//---------------------------------------------------------
+// Module specific Functions Definition
+//---------------------------------------------------------
+
 // FIXME:
 Shader TileTexture2D(Vector2 tiling)
 {

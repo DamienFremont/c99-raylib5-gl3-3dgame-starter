@@ -2,6 +2,10 @@
 
 #include <raylib.h>
 
+//---------------------------------------------------------
+// Module specific Functions Definition
+//---------------------------------------------------------
+
 Camera InitCamera()
 {
     Camera camera = {0};

@@ -6,12 +6,15 @@
 #include "eng_material.h"
 #include "eng_skybox.h"
 
-Image GetTiledImage(int tilingX, int tilingY, Color col1, Color col2)
-{
-    const int res = 1024;
-    const int check = 256;
-    return GenImageChecked(res, res, check / tilingX, check / tilingY, col1, col2);
-}
+//---------------------------------------------------------
+// Local Functions Declaration
+//---------------------------------------------------------
+
+Image GetTiledImage(int tilingX, int tilingY, Color col1, Color col2);
+
+//---------------------------------------------------------
+// Module specific Functions Definition
+//---------------------------------------------------------
 
 GameObject *Load_LevelTree(GameObject *tree)
 {
@@ -252,4 +255,15 @@ Model Load_LevelSkybox(Color sunColor, bool postprocessing)
     Model skybox = LoadSkyboxFromImage(skyboxImg);
     UnloadImage(skyboxImg);
     return skybox;
+}
+
+//---------------------------------------------------------
+// Local Functions Definition
+//---------------------------------------------------------
+
+Image GetTiledImage(int tilingX, int tilingY, Color col1, Color col2)
+{
+    const int res = 1024;
+    const int check = 256;
+    return GenImageChecked(res, res, check / tilingX, check / tilingY, col1, col2);
 }

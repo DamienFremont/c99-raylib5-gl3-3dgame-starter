@@ -3,6 +3,7 @@
 #include <raylib.h>
 #include <time.h>
 #include "eng_config.h"
+#include "eng_assets.h"
 
 //---------------------------------------------------------
 // Types and Structures Definition
@@ -35,9 +36,8 @@ void InitLauncher(AppConfiguration appConfig)
 {
     int clockTriggerSec = 2;
     // load
-    const char logo_str[999];
-    snprintf(logo_str, sizeof(logo_str), "%s\\%s", appConfig.res_path, LOGO_URI);
-    Image image = LoadImage(logo_str);
+    char tmp[PATH_MAX];
+    Image image = LoadImage(GetAssetPath(tmp, LOGO_URI));
     Texture2D texture = LoadTextureFromImage(image);
     UnloadImage(image);
     // start

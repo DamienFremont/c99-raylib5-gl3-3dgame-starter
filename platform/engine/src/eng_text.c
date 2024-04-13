@@ -1,5 +1,9 @@
 #include "eng_text.h"
 
+//---------------------------------------------------------
+// Module specific Functions Definition
+//---------------------------------------------------------
+
 // SOURCE: https://www.raylib.com/examples/text/loader.html?name=text_draw_3d
 
 // Draw codepoint at specified position in 3D space

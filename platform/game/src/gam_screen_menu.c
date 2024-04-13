@@ -3,6 +3,10 @@
 #include <raylib.h>
 #include "gam_screens.h"
 
+//---------------------------------------------------------
+// Local Variables Definition (local to this module)
+//---------------------------------------------------------
+
 static int currentProcess = -1;
 static int mouseHoverRec = -1;
 
@@ -18,6 +22,10 @@ static Rectangle BUTTON_SMALL = {
 
 static int FONT_SIZE_20 = 20;
 static int FONT_SIZE_10 = 10;
+
+//---------------------------------------------------------
+// Module specific Functions Definition
+//---------------------------------------------------------
 
 void Init_Menu(AppConfiguration appConfig)
 {

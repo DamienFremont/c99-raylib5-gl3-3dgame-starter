@@ -2,8 +2,16 @@
 
 #include <raylib.h>
 
+//---------------------------------------------------------
+// Types and Structures Definition
+//---------------------------------------------------------
+
 static char RESOURCES_PATH[PATH_MAX];
 static int GLSL_VERSION = 330;
+
+//---------------------------------------------------------
+// Module specific Functions Definition
+//---------------------------------------------------------
 
 void InitAssets(char *path, int glsl_ver)
 {

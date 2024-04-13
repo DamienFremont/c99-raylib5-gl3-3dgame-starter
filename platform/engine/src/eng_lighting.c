@@ -3,6 +3,10 @@
 #include <raylib.h>
 #include "eng_assets.h" // PATH_MAX
 
+//---------------------------------------------------------
+// Module specific Functions Definition
+//---------------------------------------------------------
+
 Shader LoadLighting()
 {
     char tmp[PATH_MAX];

@@ -2,6 +2,10 @@
 
 #include <time.h>
 
+//---------------------------------------------------------
+// Module specific Functions Definition
+//---------------------------------------------------------
+
 TickState InitTick(int tickRateInHz)
 {
     return (TickState){

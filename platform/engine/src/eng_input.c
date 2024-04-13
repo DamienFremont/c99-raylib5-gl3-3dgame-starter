@@ -2,23 +2,42 @@
 
 #include <stdbool.h>
 
+//---------------------------------------------------------
+// Local Functions Declaration
+//---------------------------------------------------------
+
+bool MoveAction(InputActions *actions);
+bool ConsoleAction(InputActions *out);
+
+//---------------------------------------------------------
+// Module specific Functions Definition
+//---------------------------------------------------------
+
 void InitInputActions(InputActions *actions)
 {
     actions->ConsoleAction = (InputAction){(InputActionState){false, false, false}, 0};
     actions->MoveAction = (InputAction){0, 0};
 }
 
-InputActionValue Build_ActionValue_Axis2D(float x, float y)
+void ExecuteInputActions(InputActions *actions)
 {
-    return (InputActionValue){
-        0, // NULL
-        0, // NULL
-        (Vector2){x, y}};
+    ConsoleAction(actions);
+    MoveAction(actions);
+    // TODO: JumpAction(&out);
+    // TODO: LookAction(&out);
 }
+
+//---------------------------------------------------------
+// Local Functions Definition
+//---------------------------------------------------------
 
 bool MoveAction(InputActions *actions)
 {
-    actions->MoveAction.Value = Build_ActionValue_Axis2D(0, 0);
+    const InputActionValue axis2D = (InputActionValue){
+        0, // NULL
+        0, // NULL
+        (Vector2){0, 0}};
+    actions->MoveAction.Value = axis2D;
     actions->MoveAction.State.Triggered = false;
     // input
     bool up = IsKeyDown(KEY_W) || IsKeyDown(KEY_UP);
@@ -57,12 +76,4 @@ bool ConsoleAction(InputActions *out)
         out->ConsoleAction.State.Started = false;
         out->ConsoleAction.State.Completed = true;
     }
-}
-
-void ExecuteInputActions(InputActions *actions)
-{
-    ConsoleAction(actions);
-    MoveAction(actions);
-    // TODO: JumpAction(&out);
-    // TODO: LookAction(&out);
 }

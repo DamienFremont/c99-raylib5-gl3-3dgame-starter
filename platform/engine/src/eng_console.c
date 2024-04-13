@@ -3,7 +3,15 @@
 #include <stdbool.h>
 #include <raylib.h>
 
+//---------------------------------------------------------
+// Types and Structures Definition
+//---------------------------------------------------------
+
 static char consoleOut[999];
+
+//---------------------------------------------------------
+// Module specific Functions Definition
+//---------------------------------------------------------
 
 void LogConsole(char* str)
 {

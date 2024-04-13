@@ -22,13 +22,13 @@
 #include "eng_lighting.h"
 #include "eng_render.h"
 
-// TODO: move to Load_LevelTree()
-const Vector3 LIGHT_TRANSFORM = {0.0f, 9.0f, 39.0f};
-const Color LIGHT_COLOR = {255, 255, 230, 255}; // YELLOW
-
 //---------------------------------------------------------
 // Local Variables Definition (local to this module)
 //---------------------------------------------------------
+
+// TODO: move to Load_LevelTree()
+const Vector3 LIGHT_TRANSFORM = {0.0f, 9.0f, 39.0f};
+const Color LIGHT_COLOR = {255, 255, 230, 255}; // YELLOW
 
 bool postprocessing = false;
 Shader postproShader = {0};

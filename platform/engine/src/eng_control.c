@@ -2,6 +2,10 @@
 
 #include <raymath.h>
 
+//---------------------------------------------------------
+// Module specific Functions Definition
+//---------------------------------------------------------
+
 void TankControl_Move(Controller *player, InputActionValue value, float char_speed, float char_rot)
 {
     float new_step = (char_speed) * (value.Axis2D.y);

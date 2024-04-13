@@ -2,6 +2,10 @@
 
 #include <raylib.h>
 
+//---------------------------------------------------------
+// Module specific Functions Definition
+//---------------------------------------------------------
+
 void Draw_PostProcessing(Shader postproShader, RenderTexture2D *target)
 {
     BeginShaderMode(postproShader);

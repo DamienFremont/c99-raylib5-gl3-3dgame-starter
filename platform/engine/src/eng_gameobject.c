@@ -3,7 +3,15 @@
 #include <raylib.h>
 #include "eng_text.h"
 
+//---------------------------------------------------------
+// Types and Structures Definition
+//---------------------------------------------------------
+
 const Vector3 PLAYER_HITBOX_BOUNDARY = {1.0f, 2.0f, 1.0f};
+
+//---------------------------------------------------------
+// Module specific Functions Definition
+//---------------------------------------------------------
 
 void Draw_GameObject(GameObject go)
 {

@@ -1,8 +1,11 @@
 #include "eng_skybox.h"
 
 #include <raylib.h>
-
 #include "eng_assets.h"
+
+//---------------------------------------------------------
+// Module specific Functions Definition
+//---------------------------------------------------------
 
 Model LoadSkyboxFromImage(Image img)
 {
