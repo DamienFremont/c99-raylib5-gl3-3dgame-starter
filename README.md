@@ -217,6 +217,17 @@ Cause: Broken Lighting shader. Can't have lighting AND model animation at the sa
 
 ![alt text](./docs/README/faq-character-lighting.png)
 
+### What about performance ?
+
+Condition: GPU: RTX-2060, CPU: i5-9600K, RAM: 32 GB
+- Raylib (GL3) "High": `~2500 FPS` (AA `4x`, Postpro `Bloom`)
+- Raylib (GL3) "Low": `~3000 FPS`
+- Unreal (DX12) "Low": `~150 FPS` (Settings=`Low`)
+
+![alt text](./docs/README/faq-performance-fps.png)
+
+![alt text](./docs/README/faq-performance-fps-2.png)
+
 ## Resources
 
 - C
