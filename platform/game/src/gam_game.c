@@ -96,7 +96,7 @@ int UpdateScreen(int currentScreen)
 	return currentScreen;
 }
 
-void DrawScreen(int currentScreen, RenderTexture2D *postprocessing_target)
+void DrawScreen(int currentScreen, RenderTexture2D *target)
 {
 	switch (currentScreen)
 	{
@@ -107,7 +107,7 @@ void DrawScreen(int currentScreen, RenderTexture2D *postprocessing_target)
 	break;
 	case GAMEPLAY:
 	{
-		Draw_UnrealThirdPerson(postprocessing_target);
+		Draw_UnrealThirdPerson(target);
 	}
 	break;
 	case MENU:

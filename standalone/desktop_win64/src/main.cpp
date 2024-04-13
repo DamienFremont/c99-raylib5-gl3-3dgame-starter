@@ -15,15 +15,19 @@ extern "C"
 // Types and Structures Definition
 //---------------------------------------------------------
 
+#define WINDOW_TITLE "game-3d-c17-raylib5-gl3-starter"
+#define EXEC_FILENAME "\\desktop_win64.exe" // PLATFORM_DESKTOP_WIN64
 #define GLSL_VERSION 330 // PLATFORM_DESKTOP
+// #define GRAPHICS_API_OPENGL_ES2
+// #define PLATFORM_DESKTOP_SDL
 #define TEXTURE_FILTER_ANISOTROPIC_4X 3
 
 //---------------------------------------------------------
 // Local Functions Declaration
 //---------------------------------------------------------
 
-AppConfiguration initConfig();
-const char* getRespath();
+AppConfiguration InitConfig();
+char* GetExecutionPath();
 
 //---------------------------------------------------------
 // Module specific Functions Definition
@@ -31,9 +35,11 @@ const char* getRespath();
 
 int APIENTRY WinMain(HINSTANCE hInstance,
                      HINSTANCE hPrevInstance,
-                     LPSTR lpCmdLine, int nCmdShow)
+                     LPSTR lpCmdLine, 
+                     int nCmdShow)
 {
-    AppConfiguration cfg = initConfig();
+    AppConfiguration cfg = InitConfig();
+    strcpy(cfg.res_path, GetExecutionPath());
     return main(cfg);
 }
 
@@ -41,23 +47,10 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 // Local Functions Definition
 //---------------------------------------------------------
 
-const char *getRespath()
-{
-    char res[999];
-    std::string str = _pgmptr;
-    int exepath_len = str.size();
-    std::string exebin = "\\desktop_win64.exe";
-    int exebin_len = exebin.size();
-    std::string str2 = str.substr(0, exepath_len - exebin_len);
-    strcpy(res, str2.c_str());
-    return res;
-}
-
-AppConfiguration initConfig()
+AppConfiguration InitConfig()
 {
     AppConfiguration appConfig = { 0 };
-    strcpy(appConfig.appName, "game-3d-c17-raylib5-gl3-starter");
-    strcpy(appConfig.res_path, getRespath());
+    strcpy(appConfig.appName, WINDOW_TITLE);
     appConfig.glsl_version = GLSL_VERSION;
     appConfig.screen_width = ENG_GetScreenWidth(HD);
     appConfig.screen_height = ENG_GetScreenHeight(HD);
@@ -67,4 +60,16 @@ AppConfiguration initConfig()
     appConfig.postpro_texturefilter = TEXTURE_FILTER_ANISOTROPIC_4X;
     appConfig.postpro_effect_bloom = true;
     return appConfig;
+}
+
+char* GetExecutionPath()
+{
+    char res[999];
+    std::string str = _pgmptr;
+    int exepath_len = str.size();
+    std::string exebin = EXEC_FILENAME;
+    int exebin_len = exebin.size();
+    std::string str2 = str.substr(0, exepath_len - exebin_len);
+    strcpy(res, str2.c_str());
+    return res;
 }

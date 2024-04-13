@@ -20,6 +20,7 @@
 #include "eng_tick.h"
 #include "eng_console.h"
 #include "eng_lighting.h"
+#include "eng_skybox.h"
 #include "eng_render.h"
 
 //---------------------------------------------------------
@@ -167,7 +168,7 @@ void UpdatePlayerAnimation()
 
 void UpdatePlayerCamera()
 {
-    CameraFixed_Look(&camera, playerController, 4, 1);
+    CameraFixed_Look(&camera, playerController, 5.5, 1.5);
 }
 
 void UpdatePlayerPosition()
@@ -316,7 +317,7 @@ void Init_PostProcess(RenderTexture2D *target, bool postprocessing_enable)
 {
     const char *POSTPROC_DEFAULT = "resources/shaders/glsl%i/default.fs";
     const char *POSTPROC_BLOOM = "resources/shaders/glsl%i/bloom.fs";
-    char *shaderPath = (postprocessing == true) ? POSTPROC_BLOOM : POSTPROC_DEFAULT;
+    char *shaderPath = (postprocessing_enable == true) ? POSTPROC_BLOOM : POSTPROC_DEFAULT;
     char tmp[PATH_MAX];
     // TODO: move to Load_LevelTree()
     // SOURCE: https://www.raylib.com/examples/shaders/loader.html?name=shaders_postprocessing
