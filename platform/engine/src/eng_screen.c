@@ -13,10 +13,14 @@ typedef struct ScreenResolution
 } ScreenResolution;
 
 //---------------------------------------------------------
-// Module Functions Declaration
+// Local Functions Declaration
 //---------------------------------------------------------
 
 ScreenResolution getScreen(ScreenResolutionType type);
+
+//---------------------------------------------------------
+// Module specific Functions Definition
+//---------------------------------------------------------
 
 int ENG_GetScreenWidth(ScreenResolutionType type)
 {
@@ -29,7 +33,7 @@ int ENG_GetScreenHeight(ScreenResolutionType type)
 }
 
 //---------------------------------------------------------
-// Module specific Functions Definition
+// Local Functions Definition
 //---------------------------------------------------------
 
 ScreenResolution getScreen(ScreenResolutionType type)

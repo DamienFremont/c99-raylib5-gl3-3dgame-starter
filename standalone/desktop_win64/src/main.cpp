@@ -11,11 +11,23 @@ extern "C"
 #include "eng_config.h"
 }
 
+//---------------------------------------------------------
+// Types and Structures Definition
+//---------------------------------------------------------
+
 #define GLSL_VERSION 330 // PLATFORM_DESKTOP
 #define TEXTURE_FILTER_ANISOTROPIC_4X 3
 
-// const char *getRespath();
+//---------------------------------------------------------
+// Local Functions Declaration
+//---------------------------------------------------------
+
 AppConfiguration initConfig();
+const char* getRespath();
+
+//---------------------------------------------------------
+// Module specific Functions Definition
+//---------------------------------------------------------
 
 int APIENTRY WinMain(HINSTANCE hInstance,
                      HINSTANCE hPrevInstance,
@@ -25,19 +37,27 @@ int APIENTRY WinMain(HINSTANCE hInstance,
     return main(cfg);
 }
 
-AppConfiguration initConfig()
+//---------------------------------------------------------
+// Local Functions Definition
+//---------------------------------------------------------
+
+const char *getRespath()
 {
-    // getRespath
+    char res[999];
     std::string str = _pgmptr;
     int exepath_len = str.size();
     std::string exebin = "\\desktop_win64.exe";
     int exebin_len = exebin.size();
     std::string str2 = str.substr(0, exepath_len - exebin_len);
-    const char *cstr = str2.c_str();
-    // init config
-    AppConfiguration appConfig;
+    strcpy(res, str2.c_str());
+    return res;
+}
+
+AppConfiguration initConfig()
+{
+    AppConfiguration appConfig = { 0 };
     strcpy(appConfig.appName, "game-3d-c17-raylib5-gl3-starter");
-    strcpy(appConfig.res_path, cstr);
+    strcpy(appConfig.res_path, getRespath());
     appConfig.glsl_version = GLSL_VERSION;
     appConfig.screen_width = ENG_GetScreenWidth(HD);
     appConfig.screen_height = ENG_GetScreenHeight(HD);
