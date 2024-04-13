@@ -31,7 +31,7 @@ int main(AppConfiguration cfg)
 	//-------------------------------------------------------------
 	InitAssets(cfg.res_path, cfg.glsl_version);
 
-	if (cfg.postpro_msaa_enable == true)
+	if (cfg.postpro_antialias_msaa == true)
 		SetConfigFlags(FLAG_MSAA_4X_HINT); // Enable Multi Sampling Anti Aliasing 4x (if available)
 
 	InitWindow(cfg.screen_width, cfg.screen_height, cfg.appName);

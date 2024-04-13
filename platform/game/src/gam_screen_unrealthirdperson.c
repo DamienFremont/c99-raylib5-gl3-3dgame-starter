@@ -77,7 +77,7 @@ void Init_UnrealThirdPerson(AppConfiguration appConfig, RenderTexture2D *target)
     showConsole = 0;
     fps_counter_show = appConfig.fps_counter_show;
     camera = InitCamera();
-    Init_PostProcess(target, appConfig.postpro_bloom_enable);
+    Init_PostProcess(target, appConfig.postpro_effect_bloom);
     Load_LevelTree(gos);
     skybox = Load_LevelSkybox(LIGHT_COLOR, postprocessing);
     Init_Animation();
@@ -128,16 +128,15 @@ void Draw_UnrealThirdPerson(RenderTexture2D *target)
 void Unload_UnrealThirdPerson()
 {
     // skybox
-    UnloadSkybox(skybox);
+    // FIXME: UnloadSkybox(skybox);
     // animations
-    UnloadModelAnimations(playerAnimations, sizeof(playerAnimations));
+    // FIXME: UnloadModelAnimations(playerAnimations, LEVEL_PLAYER_ANIMATIONS);
     // level
-    for (int i = 1; i < sizeof(gos); i++)
+    for (int i = 0; i < LEVEL_SIZE; i++)
         UnloadModel(gos[i].model);
     // shaders
     UnloadShader(light_shader);
     UnloadShader(postproShader);
-    // TODO: UnloadShader() shaders
 }
 
 //---------------------------------------------------------
@@ -162,8 +161,8 @@ void UpdatePlayerAnimation()
     int tickInMs = TIME_1_SECOND / animationTick.rateInHz;
     int frames = tickInMs / frameInMs;
     animCurrentFrame = (animCurrentFrame + frames * HACK) % anim.frameCount;
-    UpdateModelAnimation(gos[0].model, anim, animCurrentFrame);
-    UpdateModelAnimation(gos[12].model, anim, animCurrentFrame);
+    UpdateModelAnimation(gos[LEVEL_PLAYER_MODEL].model, anim, animCurrentFrame);
+    UpdateModelAnimation(gos[LEVEL_PLAYER_SHADOW].model, anim, animCurrentFrame);
 }
 
 void UpdatePlayerCamera()
@@ -174,19 +173,19 @@ void UpdatePlayerCamera()
 void UpdatePlayerPosition()
 {
     // player
-    gos[0].transform.translation = (Vector3){
+    gos[LEVEL_PLAYER_MODEL].transform.translation = (Vector3){
         playerController.position.x,
         playerController.position.y,
         playerController.position.z};
-    gos[0].transform.rotation = (Rotation2){
+    gos[LEVEL_PLAYER_MODEL].transform.rotation = (Rotation2){
         ROTATION_YAW,
         TankControl_ModelRotationAngle(playerController.direction)};
     // shadow
-    gos[12].transform.translation = (Vector3){
+    gos[LEVEL_PLAYER_SHADOW].transform.translation = (Vector3){
         playerController.position.x,
         playerController.position.y + 0.01f,
         playerController.position.z};
-    gos[12].transform.rotation = gos[0].transform.rotation;
+    gos[LEVEL_PLAYER_SHADOW].transform.rotation = gos[0].transform.rotation;
 }
 
 void SetupPlayerInputComponent(InputActions *actions)

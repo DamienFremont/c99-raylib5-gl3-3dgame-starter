@@ -10,7 +10,10 @@
 
 typedef enum
 {
-    LEVEL_SIZE = 17
+    LEVEL_SIZE = 17,
+    LEVEL_PLAYER_MODEL = 0,
+    LEVEL_PLAYER_SHADOW = 12,
+    LEVEL_PLAYER_ANIMATIONS = 2
 } UnrealThirdPersonLevelSize;
 
 //---------------------------------------------------------

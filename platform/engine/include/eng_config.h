@@ -19,7 +19,7 @@ typedef struct AppConfiguration
     int fps_limit; // 0 = Unlimited
     bool fps_counter_show;
 
-    bool postpro_msaa_enable;
-    bool postpro_bloom_enable;
+    bool postpro_antialias_msaa;
+    bool postpro_effect_bloom;
     int postpro_texturefilter; // raylib.h:TextureFilter
 } AppConfiguration;
