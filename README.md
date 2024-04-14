@@ -48,11 +48,7 @@
       :hourglass:  Texture tiling
   - [x] Camera: ThirdPerson
   - [x] Lighting: Real Time, Player Shadows
-  - [x] Meshes: 
-      [x] Meshes
-      [x] Textures
-      [x] Shaders
-      [x] Materials
+  - [x] Meshes: Meshes, Textures, Shaders, Materials
   - [x] Sky: Color, Cubemap, Fog
 - World
   - [ ] Physics
