@@ -32,7 +32,7 @@ Launcher_State state = {0};
 // Module specific Functions Definition
 //---------------------------------------------------------
 
-void InitLauncher(AppConfiguration appConfig)
+void InitLauncher()
 {
     int clockTriggerSec = 2;
     // load

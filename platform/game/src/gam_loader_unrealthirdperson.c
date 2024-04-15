@@ -241,13 +241,13 @@ GameObject *Load_LevelTree(GameObject *tree)
     return tree;
 }
 
-Model Load_LevelSkybox(Color sunColor, bool postprocessing)
+Model Load_LevelSkybox(Color sunColor, bool postpro)
 {
     char tmp[PATH_MAX];
 
     // SOURCE: https://www.raylib.com/examples/textures/loader.html?name=textures_image_processing
     Image skyboxImg = LoadImage(GetAssetPath(tmp, "resources/images/skybox.png"));
-    if (postprocessing == true)
+    if (postpro == true)
     {
         ImageColorBrightness(&skyboxImg, -80);
     }

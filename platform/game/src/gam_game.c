@@ -43,9 +43,9 @@ int main(AppConfiguration cfg)
 
 	// Levels
 	int currentScreen = SCREEN_START;
-	InitLauncher(cfg);
-	Init_UnrealThirdPerson(cfg, &target);
-	Init_Menu(cfg);
+	InitLauncher();
+	Init_UnrealThirdPerson(&target, cfg);
+	Init_Menu();
 
 	//-------------------------------------------------------------
 

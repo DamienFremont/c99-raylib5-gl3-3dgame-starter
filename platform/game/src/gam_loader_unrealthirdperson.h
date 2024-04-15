@@ -21,4 +21,4 @@ typedef enum
 //---------------------------------------------------------
 
 GameObject *Load_LevelTree(GameObject *gos);
-Model Load_LevelSkybox(Color sunColor, bool postprocessing);
+Model Load_LevelSkybox(Color sunColor, bool postpro);

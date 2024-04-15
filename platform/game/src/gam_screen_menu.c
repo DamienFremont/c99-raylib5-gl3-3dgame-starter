@@ -27,7 +27,7 @@ static int FONT_SIZE_10 = 10;
 // Module specific Functions Definition
 //---------------------------------------------------------
 
-void Init_Menu(AppConfiguration appConfig)
+void Init_Menu()
 {
     currentProcess = -1;
     mouseHoverRec = -1;

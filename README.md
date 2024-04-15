@@ -27,9 +27,9 @@
 
 ## Screenshots
 
-![alt text](./docs/README/screenshot-unreal.jpg)
-
 ![alt text](./docs/README/screenshot-raylib.png)
+
+![alt text](./docs/README/screenshot-unreal.jpg)
 
 ![alt text](./docs/README/screenshot-raylib-2.png)
 
@@ -41,14 +41,15 @@
 
 - Targets:
   - [x] Win64 (Windows)
+  - [ ] Linux
   - [ ] WASM (WebAssembly)
 - Graphics
-  - [ ] Render: 
-      [x] PostProcessing
-      :hourglass:  Texture tiling
-  - [x] Camera: ThirdPerson
-  - [x] Lighting: Real Time, Player Shadows
-  - [x] Meshes: Meshes, Textures, Shaders, Materials
+  - [x] Render: PostProcessing Bloom, AA MSAA, Texture Filtering
+  - [ ] Camera: ThirdPerson, 
+      [ ] Follow
+  - [x] Lighting: World, Player Shadows
+  - [ ] Meshes: Meshes, Textures, Shaders, Materials, 
+      [ ] Texture tiling
   - [x] Sky: Color, Cubemap, Fog
 - World
   - [ ] Physics
@@ -61,14 +62,16 @@
   - [x] Character
 - Input
   - [x] UI: lauch screen, settings menu
-  - [x] Control: Keyboard, Tank control
+  - [x] Control: Keyboard, Arrows, Tank control
 - Other
   - [x] launching screen
+
+- Canceled:
+  - [ ] Lighting: Player
 
 Repository layout:
 ```
 ├── assets
-│   ├── i18n
 │   └── images
 │   └── ...
 ├── docs
@@ -82,8 +85,8 @@ Repository layout:
 ├── standalone
 │   ├── desktop_win64
 └── tools
-│   └── blender
-│   └── ci
+    └── blender
+    └── ci
 ```
 
 ## Install

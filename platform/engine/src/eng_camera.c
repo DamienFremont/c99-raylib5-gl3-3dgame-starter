@@ -17,19 +17,19 @@ Camera InitCamera()
     return camera;
 }
 
-void CameraFixed_Look(Camera *camera, Controller player, int cameraDistance, int cameraHeight)
+void CameraFixed_Look(Camera *camera, Controller player, Vector3 cameraTransform)
 {
     camera->position = (Vector3){
-        player.position.x - (player.direction.x * cameraDistance),
-        player.position.y + cameraHeight,
-        player.position.z - (player.direction.z * cameraDistance)};
+        player.position.x - (player.direction.x * cameraTransform.z),
+        player.position.y + cameraTransform.y,
+        player.position.z - (player.direction.z * cameraTransform.z)};
     camera->target = (Vector3){
         player.position.x,
-        player.position.y + cameraHeight,
+        player.position.y + cameraTransform.y,
         player.position.z};
 }
 
-void CameraFollow_Look(Camera *camera, Controller player, int cameraDistance, int cameraHeight)
+void CameraFollow_Look(Camera *camera, Controller player, Vector3 cameraTransform)
 {
     // TODO
 }

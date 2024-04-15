@@ -1,12 +1,8 @@
 #include "gam_screen_unrealthirdperson.h"
 
 #include <raylib.h>
-#include <time.h>
 #define RLIGHTS_IMPLEMENTATION
 #include <rlights.h>
-#include <raymath.h>
-#include <stdio.h>
-#include <string.h>
 #include "gam_screens.h"
 #include "gam_loader_unrealthirdperson.h"
 #include "eng_config.h"
@@ -30,18 +26,15 @@
 // TODO: move to Load_LevelTree()
 const Vector3 LIGHT_TRANSFORM = {0.0f, 9.0f, 39.0f};
 const Color LIGHT_COLOR = {255, 255, 230, 255}; // YELLOW
-
-bool postprocessing = false;
-Shader postproShader = {0};
-RenderTexture2D *postproTarget;
-
-// TODO: move to Load_LevelTree()
 Camera camera;
 Model skybox;
 Shader light_shader = {0};
 Light light_point = {0};
-
 GameObject gos[LEVEL_SIZE];
+
+bool postpro = false;
+Shader postproShader = {0};
+RenderTexture2D *postproTarget;
 TickState animationTick = {0};
 TickState inputTick = {0};
 TickState renderTick = {0};
@@ -51,6 +44,7 @@ ModelAnimation playerAnimations[2];
 
 bool showConsole;
 bool fps_counter_show;
+
 int animIndex;
 unsigned int animCurrentFrame;
 
@@ -73,14 +67,14 @@ void Init_Lighting();
 // Module specific Functions Definition
 //---------------------------------------------------------
 
-void Init_UnrealThirdPerson(AppConfiguration appConfig, RenderTexture2D *target)
+void Init_UnrealThirdPerson(RenderTexture2D *target, AppConfiguration appConfig)
 {
     showConsole = 0;
     fps_counter_show = appConfig.fps_counter_show;
     camera = InitCamera();
     Init_PostProcess(target, appConfig.postpro_effect_bloom);
     Load_LevelTree(gos);
-    skybox = Load_LevelSkybox(LIGHT_COLOR, postprocessing);
+    skybox = Load_LevelSkybox(LIGHT_COLOR, postpro);
     Init_Animation();
     Init_Lighting();
     // TICKS
@@ -118,7 +112,7 @@ int Update_UnrealThirdPerson()
 
 void Draw_UnrealThirdPerson(RenderTexture2D *target)
 {
-    if (postprocessing == true)
+    if (postpro == true)
     {
         Draw_Pipeline_PostProcessing(target);
         return;
@@ -168,7 +162,7 @@ void UpdatePlayerAnimation()
 
 void UpdatePlayerCamera()
 {
-    CameraFixed_Look(&camera, playerController, 5.5, 1.5);
+    CameraFixed_Look(&camera, playerController, (Vector3){0, 1.5, 5.5});
 }
 
 void UpdatePlayerPosition()
@@ -321,15 +315,15 @@ void Init_PostProcess(RenderTexture2D *target, bool postprocessing_enable)
     char tmp[PATH_MAX];
     // TODO: move to Load_LevelTree()
     // SOURCE: https://www.raylib.com/examples/shaders/loader.html?name=shaders_postprocessing
-    postprocessing = postprocessing_enable;
+    postpro = postprocessing_enable;
     postproShader = LoadShader(0, GetAssetPath(tmp, shaderPath));
     postproTarget = target;
 }
 
+// TODO: move to Load_LevelTree()
 void Init_Animation()
 {
     char tmp[PATH_MAX];
-    // TODO: move to Load_LevelTree()
     int tmpAnimCount = 0;
     playerAnimations[0] = LoadModelAnimations(GetAssetPath(tmp, "resources/animations/Idle.m3d"), &tmpAnimCount)[0];
     playerAnimations[1] = LoadModelAnimations(GetAssetPath(tmp, "resources/animations/Running.m3d"), &tmpAnimCount)[0];
@@ -339,7 +333,8 @@ void Init_Animation()
 void Init_Lighting()
 {
     light_shader = LoadLighting();
-    light_point = CreateLight(LIGHT_POINT, LIGHT_TRANSFORM, Vector3Zero(), LIGHT_COLOR, light_shader);
+    // TODO: move to Load_LevelTree()
+    light_point = CreateLight(LIGHT_POINT, LIGHT_TRANSFORM, (Vector3){0.0f, 0.0f, 0.0f}, LIGHT_COLOR, light_shader);
     for (int i = 0; i < LEVEL_SIZE; i++)
         SetModelLighting(gos[i].model, light_shader);
 }

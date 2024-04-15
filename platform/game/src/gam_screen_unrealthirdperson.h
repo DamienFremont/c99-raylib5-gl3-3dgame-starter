@@ -11,7 +11,7 @@
 // Module Functions Declaration
 //---------------------------------------------------------
 
-void Init_UnrealThirdPerson(AppConfiguration appConfig, RenderTexture2D *target);
+void Init_UnrealThirdPerson(RenderTexture2D *target, AppConfiguration appConfig);
 int Update_UnrealThirdPerson();
 void Draw_UnrealThirdPerson(RenderTexture2D *target);
 void Unload_UnrealThirdPerson();
