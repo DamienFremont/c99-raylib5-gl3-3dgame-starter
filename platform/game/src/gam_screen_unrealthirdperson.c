@@ -24,6 +24,8 @@
 //---------------------------------------------------------
 
 // TODO: move to Load_LevelTree()
+const float CAM_FOV = 60.0f;
+const Vector3 CAM_TRS = {0, 1.5, 4};
 const Vector3 LIGHT_TRANSFORM = {0.0f, 9.0f, 39.0f};
 const Color LIGHT_COLOR = {255, 255, 230, 255}; // YELLOW
 Camera camera;
@@ -71,7 +73,7 @@ void Init_UnrealThirdPerson(RenderTexture2D *target, AppConfiguration appConfig)
 {
     showConsole = 0;
     fps_counter_show = appConfig.fps_counter_show;
-    camera = InitCamera();
+    camera = InitCamera(CAM_FOV, CAM_TRS);
     Init_PostProcess(target, appConfig.postpro_effect_bloom);
     Load_LevelTree(gos);
     skybox = Load_LevelSkybox(LIGHT_COLOR, postpro);
@@ -87,7 +89,7 @@ void Init_UnrealThirdPerson(RenderTexture2D *target, AppConfiguration appConfig)
     // PLAYER
     // TODO: move to Load_LevelTree()
     playerController = (Controller){
-        (Vector3){9.0f, 0.0f, 11.0f}, // player position
+        gos[0].transform.translation, // player position
         (Vector3){1, 0, 0},           // screen forward
     };
     InitInputActions(&actions);
@@ -162,7 +164,7 @@ void UpdatePlayerAnimation()
 
 void UpdatePlayerCamera()
 {
-    CameraFixed_Look(&camera, playerController, (Vector3){0, 1.5, 5.5});
+    CameraFixed_Look(&camera, playerController);
 }
 
 void UpdatePlayerPosition()
