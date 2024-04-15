@@ -18,15 +18,7 @@ Image GetTiledImage(int tilingX, int tilingY, Color col1, Color col2);
 
 GameObject *Load_LevelTree(GameObject *tree)
 {
-    const float SCALE_1024 = 4.0f;
     char tmp[PATH_MAX];
-
-    // Texture2D
-    Image playerTextureImg = LoadImage(GetAssetPath(tmp, "resources/models/Character_diffuse.png"));
-    ImageColorBrightness(&playerTextureImg, +80);
-    ImageColorContrast(&playerTextureImg, +40);
-
-    Texture2D playerTexture = LoadTextureFromImage(playerTextureImg);
 
     char *playerModelPath = "resources/models/Character.m3d";
 
@@ -44,9 +36,9 @@ GameObject *Load_LevelTree(GameObject *tree)
         // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_lightmap
         WHITE};
 
-    tree[0].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = playerTexture;
-    tree[0].model.materials[1].maps[MATERIAL_MAP_DIFFUSE].texture = playerTexture;
-    tree[0].model.materials[2].maps[MATERIAL_MAP_DIFFUSE].texture = playerTexture;
+    // tree[0].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = playerTexture_D_0;
+    tree[0].model.materials[1].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTexture(GetAssetPath(tmp, "resources/models/Character_Character_diffuse_0-1024.png"));
+    tree[0].model.materials[2].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTexture(GetAssetPath(tmp, "resources/models/Character_Character_diffuse_1-1024.png"));
 
     // Block01
     {
