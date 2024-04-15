@@ -25,7 +25,7 @@
 
 // TODO: move to Load_LevelTree()
 const float CAM_FOV = 60.0f;
-const Vector3 CAM_TRS = {0, 1.5, 4};
+const Vector3 CAM_TRS = {0, 1, 4};
 const Vector3 LIGHT_TRANSFORM = {0.0f, 9.0f, 39.0f};
 const Color LIGHT_COLOR = {255, 255, 230, 255}; // YELLOW
 Camera camera;
