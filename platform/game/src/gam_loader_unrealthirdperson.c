@@ -37,8 +37,8 @@ GameObject *Load_LevelTree(GameObject *tree)
         WHITE};
 
     // tree[0].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = playerTexture_D_0;
-    tree[0].model.materials[1].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTexture(GetAssetPath(tmp, "resources/models/Character_Character_diffuse_0-1024.png"));
-    tree[0].model.materials[2].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTexture(GetAssetPath(tmp, "resources/models/Character_Character_diffuse_1-1024.png"));
+    tree[0].model.materials[1].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTexture(GetAssetPath(tmp, "resources/models/Character_Diffuse_0.png"));
+    tree[0].model.materials[2].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTexture(GetAssetPath(tmp, "resources/models/Character_Diffuse_1.png"));
 
     // Block01
     {

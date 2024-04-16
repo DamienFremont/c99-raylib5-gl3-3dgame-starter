@@ -318,7 +318,7 @@ void Init_PostProcess(RenderTexture2D *target, bool postprocessing_enable)
     // TODO: move to Load_LevelTree()
     // SOURCE: https://www.raylib.com/examples/shaders/loader.html?name=shaders_postprocessing
     postpro = postprocessing_enable;
-    postproShader = LoadShader(0, GetAssetPath(tmp, shaderPath));
+    postproShader = LoadShader(0, GetShaderPath(tmp, shaderPath));
     postproTarget = target;
 }
 
