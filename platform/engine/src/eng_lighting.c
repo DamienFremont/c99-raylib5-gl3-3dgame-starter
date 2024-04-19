@@ -9,14 +9,11 @@
 
 Shader LoadLighting()
 {
-    char tmp[PATH_MAX];
-    char tmp2[PATH_MAX];
-
     // SOURCE: https://www.raylib.com/examples/shaders/loader.html?name=shaders_fog
     // Load shader and set up some uniforms
-    Shader shader = LoadShader(
-        GetShaderPath(tmp, "resources/shaders/glsl%i/lighting.vs"),
-        GetShaderPath(tmp2, "resources/shaders/glsl%i/fog.fs"));
+    Shader shader = LoadShader_GetShaderPath(
+        "resources/shaders/glsl%i/lighting.vs",
+        "resources/shaders/glsl%i/fog.fs");
     shader.locs[SHADER_LOC_MATRIX_MODEL] = GetShaderLocation(shader, "matModel");
     shader.locs[SHADER_LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
     // Ambient light level

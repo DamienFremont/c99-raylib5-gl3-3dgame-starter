@@ -314,11 +314,10 @@ void Init_PostProcess(RenderTexture2D *target, bool postprocessing_enable)
     const char *POSTPROC_DEFAULT = "resources/shaders/glsl%i/default.fs";
     const char *POSTPROC_BLOOM = "resources/shaders/glsl%i/bloom.fs";
     char *shaderPath = (postprocessing_enable == true) ? POSTPROC_BLOOM : POSTPROC_DEFAULT;
-    char tmp[PATH_MAX];
     // TODO: move to Load_LevelTree()
     // SOURCE: https://www.raylib.com/examples/shaders/loader.html?name=shaders_postprocessing
     postpro = postprocessing_enable;
-    postproShader = LoadShader(0, GetShaderPath(tmp, shaderPath));
+    postproShader = LoadShader_GetShaderPath(0, shaderPath);
     postproTarget = target;
 }
 
