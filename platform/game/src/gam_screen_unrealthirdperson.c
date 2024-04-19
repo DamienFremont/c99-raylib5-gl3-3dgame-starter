@@ -324,10 +324,8 @@ void Init_PostProcess(RenderTexture2D *target, bool postprocessing_enable)
 // TODO: move to Load_LevelTree()
 void Init_Animation()
 {
-    char tmp[PATH_MAX];
-    int tmpAnimCount = 0;
-    playerAnimations[0] = LoadModelAnimations(GetAssetPath(tmp, "resources/animations/Idle.m3d"), &tmpAnimCount)[0];
-    playerAnimations[1] = LoadModelAnimations(GetAssetPath(tmp, "resources/animations/Running.m3d"), &tmpAnimCount)[0];
+    playerAnimations[0] = LoadModelAnimations_GetAssetPath("resources/animations/Idle.m3d")[0];
+    playerAnimations[1] = LoadModelAnimations_GetAssetPath("resources/animations/Running.m3d")[0];
     animCurrentFrame = 0;
 }
 

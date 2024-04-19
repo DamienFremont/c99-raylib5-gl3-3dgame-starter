@@ -64,8 +64,18 @@ Model LoadModel_GetAssetPath(const char *fileName)
         GetAssetPath(tmp, fileName));
 }
 
-Texture2D LoadTexture_GetAssetPath(const char *fileName) {
+Texture2D LoadTexture_GetAssetPath(const char *fileName)
+{
     char tmp[PATH_MAX];
     return LoadTexture(
         GetAssetPath(tmp, fileName));
+}
+
+ModelAnimation *LoadModelAnimations_GetAssetPath(const char *fileName)
+{
+    char tmp[PATH_MAX];
+    int tmpAnimCount = 0;
+    return LoadModelAnimations(
+        GetAssetPath(tmp, fileName),
+        &tmpAnimCount);
 }
