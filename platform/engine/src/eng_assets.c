@@ -21,7 +21,7 @@ void InitAssets(char *path, int glsl_ver)
 
 char *GetAssetPath(char *tmp, char *assetpath)
 {
-    JoinPath(tmp, RESOURCES_PATH, TextFormat(assetpath, GLSL_VERSION));
+    JoinPath(tmp, RESOURCES_PATH, assetpath);
     return tmp;
 }
 
@@ -39,4 +39,33 @@ char *JoinPath(char *dest, char *path1, char *path2)
     snprintf(tmp, sizeof(tmp), "%s/%s", path1, path2);
     strcpy(dest, tmp);
     return dest;
+}
+
+Shader LoadShader_GetShaderPath(const char *vsFileName, const char *fsFileName)
+{
+    char tmp[PATH_MAX];
+    char tmp2[PATH_MAX];
+    return LoadShader(
+        (vsFileName == 0) ? 0 : GetShaderPath(tmp, vsFileName),
+        GetShaderPath(tmp2, fsFileName));
+}
+
+Image LoadImage_GetAssetPath(const char *fileName)
+{
+    char tmp[PATH_MAX];
+    return LoadImage(
+        GetAssetPath(tmp, fileName));
+}
+
+Model LoadModel_GetAssetPath(const char *fileName)
+{
+    char tmp[PATH_MAX];
+    return LoadModel(
+        GetAssetPath(tmp, fileName));
+}
+
+Texture2D LoadTexture_GetAssetPath(const char *fileName) {
+    char tmp[PATH_MAX];
+    return LoadTexture(
+        GetAssetPath(tmp, fileName));
 }
