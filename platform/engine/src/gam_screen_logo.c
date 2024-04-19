@@ -36,8 +36,7 @@ void InitLauncher()
 {
     int clockTriggerSec = 2;
     // load
-    char tmp[PATH_MAX];
-    Image image = LoadImage(GetAssetPath(tmp, LOGO_URI));
+    Image image = LoadImage_GetAssetPath(LOGO_URI);
     Texture2D texture = LoadTextureFromImage(image);
     UnloadImage(image);
     // start
