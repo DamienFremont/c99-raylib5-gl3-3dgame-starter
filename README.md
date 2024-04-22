@@ -212,12 +212,11 @@ Get 3D Animations:
 
 ## FAQ
 
-### Why Player Character is unlit ?
+### Why Models are sometime unlit ?
 
-Cause: Broken Lighting shader. Can't have lighting AND model animation at the same time!
-- lighting works with `.obj` format
-- animation works with `.m3d` and `.glb` format
-- can't load `.obj` model then use `.m3d` animations because `.obj` format is mesh only (doesn't contains any bones)
+Cause: Blender export changes materials indexes (start with 0 or 1) and lighting shader needs to be applied to real material.
+- `*.obj`, `*.iqm` formats: use `material[0]`
+- `*.m3d`, `*.glb` formats: use `material[1]`
 
 ![alt text](./docs/README/faq-character-lighting.png)
 
