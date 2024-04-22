@@ -34,8 +34,10 @@ GameObject *Load_LevelTree(GameObject *tree)
         // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_lightmap
         WHITE};
 
-    // tree[0].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = playerTexture_D_0;
+    // TODO: METAL
+    // tree[0].model.materials[1].maps[MATERIAL_MAP_METALNESS].texture = LoadTexture_GetAssetPath("resources/models/Character_Metal_0.png");
     tree[0].model.materials[1].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTexture_GetAssetPath("resources/models/Character_Diffuse_0.png");
+    // tree[0].model.materials[2].maps[MATERIAL_MAP_METALNESS].texture = LoadTexture_GetAssetPath("resources/models/Character_Metal_1.png");
     tree[0].model.materials[2].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTexture_GetAssetPath("resources/models/Character_Diffuse_1.png");
 
     // Block01

@@ -331,9 +331,13 @@ void Init_Animation()
 
 void Init_Lighting()
 {
-    light_shader = LoadLighting();
     // TODO: move to Load_LevelTree()
+    light_shader = LoadLighting();
     light_point = CreateLight(LIGHT_POINT, LIGHT_TRANSFORM, (Vector3){0.0f, 0.0f, 0.0f}, LIGHT_COLOR, light_shader);
+    // world
     for (int i = 0; i < LEVEL_SIZE; i++)
         SetModelLighting(gos[i].model, light_shader);
+    // player
+    gos[0].model.materials[1].shader = light_shader;
+    gos[0].model.materials[2].shader = light_shader;
 }
