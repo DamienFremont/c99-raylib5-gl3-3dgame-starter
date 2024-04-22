@@ -1,7 +1,10 @@
-:warning: WORK IN PROGRESS
-==========================
-
 # 3D Game Starter - C 2017, RayLib 5.0, OpenGL 3
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Twitter Follow](https://img.shields.io/twitter/follow/Damien_Fremont?style=social)](https://twitter.com/Damien_Fremont)
+[!["Buy Me A Coffee"](./docs/README/buymeacoffee-20.png)](https://www.buymeacoffee.com/damienfremont)
+
+:warning: **WORK IN PROGRESS !!!**
 
 2024's small template to start your raylib game. Featuring 3D, C 2017, Raylib 5.0, OpenGL 3 and a modular architecture.
 
@@ -42,7 +45,9 @@
 - Targets:
   - [x] Win64 (Windows)
   - [ ] Linux
-  - [ ] WASM (WebAssembly)
+  - [ ] SteamDeck (Linux)
+  - [ ] HTML5 (WebAssembly)
+  - [ ] Discord (WebAssembly)
 - Graphics
   - [x] Render: PostProcessing Bloom, AA MSAA, Texture Filtering
   - [ ] Camera: ThirdPerson, 
@@ -257,9 +262,10 @@ Condition: GPU: RTX-2060, CPU: i5-9600K, RAM: 32 GB
     - [Working for Web (HTML5)](https://github.com/raysan5/raylib/wiki/Working-for-Web-(HTML5))
     - [Creating Discord Activities with raylib](https://github.com/raysan5/raylib/wiki/Creating-Discord-Activities-with-raylib)
 - Model3D Format
-  -[Welcome to Model 3D!](https://bztsrc.gitlab.io/model3d/)
-  -[Model 3D Blender Integration](https://gitlab.com/bztsrc/model3d/tree/master/blender/)
-  -[io_scene_m3d.py](https://gitlab.com/bztsrc/model3d/-/blob/master/blender/io_scene_m3d.py)
+  - [Welcome to Model 3D!](https://bztsrc.gitlab.io/model3d/)
+  - [Model 3D Blender Integration](https://gitlab.com/bztsrc/model3d/tree/master/blender/)
+  - [io_scene_m3d.py](https://gitlab.com/bztsrc/model3d/-/blob/master/blender/io_scene_m3d.py)
+  - [IQM Export](https://www.youtube.com/watch?v=x6Fw62lX5Dg)
 
 ## References
 
