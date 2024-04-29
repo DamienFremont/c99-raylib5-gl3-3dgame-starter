@@ -179,7 +179,7 @@ void UpdatePlayerPosition()
         playerController.position.z};
     gos[LEVEL_PLAYER_MODEL].transform.rotation = (Rotation2){
         ROTATION_YAW,
-        TankControl_ModelRotationAngle(playerController.direction)};
+        ControlTank_ModelRotationAngle(playerController.direction)};
     // shadow
     gos[LEVEL_PLAYER_SHADOW].transform.translation = (Vector3){
         playerController.position.x,
@@ -199,7 +199,7 @@ void SetupPlayerInputComponent(InputActions *actions)
     // TODO: Jumping
     // Moving
     if (actions->MoveAction.State.Triggered == true)
-        TankControl_Move(&playerController.position, actions->MoveAction.Value, 0.08f, 0.08f * 15);
+        ControlTank_Move(&playerController.position, actions->MoveAction.Value, 0.08f, 0.08f * 15);
     // TODO: Looking
 }
 

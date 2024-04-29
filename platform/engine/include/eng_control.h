@@ -17,5 +17,5 @@ typedef struct Controller
 // Module Functions Declaration
 //---------------------------------------------------------
 
-void TankControl_Move(Controller *player, InputActionValue value, float char_speed, float char_rot);
-float TankControl_ModelRotationAngle(Vector3 playerDirection);
+void ControlTank_Move(Controller *player, InputActionValue value, float char_speed, float char_rot);
+float ControlTank_ModelRotationAngle(Vector3 playerDirection);
