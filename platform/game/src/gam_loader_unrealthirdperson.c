@@ -23,12 +23,9 @@ GameObject *Load_LevelTree(GameObject *tree)
     tree[0] = (GameObject){
         "Player",
         (Transform2){
-            (Vector3){
-                9.0f, 0.0f, 11.0f},
-            (Rotation2){
-                ROTATION_YAW, ROTATE_P90},
-            (Vector3){
-                1.0f, 1.0f, 1.0f},
+            (Vector3){9.0f, 0.0f, 11.0f},
+            (Rotation2){ROTATION_YAW, ROTATE_P90},
+            (Vector3){1.0f, 1.0f, 1.0f},
         },
         LoadModel_GetAssetPath(playerModelPath),
         // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_lightmap

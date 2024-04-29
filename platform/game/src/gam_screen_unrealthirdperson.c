@@ -24,9 +24,10 @@
 //---------------------------------------------------------
 
 // TODO: move to Load_LevelTree()
-const float CAM_FOV = 60.0f;
+const float CAM_FOV = 60;
 const Vector3 CAM_TRS = {0, 1, 4};
-const Vector3 LIGHT_TRANSFORM = {0.0f, 9.0f, 39.0f};
+const Vector3 CAM_POS = {4, 1, 11};
+const Vector3 LIGHT_TRANSFORM = {0, 9, 39};
 const Color LIGHT_COLOR = {255, 255, 230, 255}; // YELLOW
 Camera camera;
 Model skybox;
@@ -92,6 +93,7 @@ void Init_UnrealThirdPerson(RenderTexture2D *target, AppConfiguration appConfig)
         gos[0].transform.translation, // player position
         (Vector3){1, 0, 0},           // screen forward
     };
+    camera.position = CAM_POS;
     InitInputActions(&actions);
 }
 
@@ -164,7 +166,8 @@ void UpdatePlayerAnimation()
 
 void UpdatePlayerCamera()
 {
-    CameraFixed_Look(&camera, playerController);
+    // CameraThirdPerson_Look(&camera, playerController);
+    CameraSecondPerson_Look(&camera, playerController);
 }
 
 void UpdatePlayerPosition()

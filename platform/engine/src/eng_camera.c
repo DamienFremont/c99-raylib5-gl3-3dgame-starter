@@ -20,7 +20,17 @@ Camera InitCamera(float fovy, Vector3 distance)
     return camera;
 }
 
-void CameraFixed_Look(Camera *camera, Controller player)
+void CameraSecondPerson_Look(Camera *camera, Controller player)
+{
+    const Vector3 target = player.position;
+    // camera->position = camera->position;
+    camera->target = (Vector3){
+        target.x,
+        target.y + cameraDistance.y,
+        target.z};
+}
+
+void CameraThirdPerson_Look(Camera *camera, Controller player)
 {
     const Vector3 target = player.position;
     camera->position = (Vector3){
