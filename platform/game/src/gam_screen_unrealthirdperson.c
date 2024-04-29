@@ -26,7 +26,7 @@
 // TODO: move to Load_LevelTree()
 const float CAM_FOV = 60;
 const Vector3 CAM_TRS = {0, 1, 4};
-const Vector3 CAM_POS = {4, 1, 11};
+const Vector3 CAM_POS = {5, 1, 11};
 const Vector3 LIGHT_TRANSFORM = {0, 9, 39};
 const Color LIGHT_COLOR = {255, 255, 230, 255}; // YELLOW
 Camera camera;
@@ -167,7 +167,8 @@ void UpdatePlayerAnimation()
 void UpdatePlayerCamera()
 {
     // CameraThirdPerson_Look(&camera, playerController);
-    CameraSecondPerson_Look(&camera, playerController);
+    // CameraSecondPerson_Look(&camera, playerController);
+    CameraFollow_Look(&camera, playerController);
 }
 
 void UpdatePlayerPosition()
