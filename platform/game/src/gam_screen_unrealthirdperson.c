@@ -252,7 +252,7 @@ void Draw_2D()
     else
     {
         DrawText("Press [TAB] to toggle menu", 10, 10 + 30 * 0, 20, GRAY);
-        DrawText("Use keys [W][A][S][D] or arrows to move character", 10, 10 + 30 * 1, 20, GRAY);
+        DrawText("Use keys [W][A][S][D] or Arrows or GamePad to move character", 10, 10 + 30 * 1, 20, GRAY);
         DrawText("Press [F1] to toggle console", 10, 10 + 30 * 2, 20, GRAY);
     }
     if (fps_counter_show == true)

@@ -11,12 +11,42 @@
 int gamepad = 0; // which gamepad to display
 float gamepad_left_joy_deadzone = 0.25f;
 
+typedef enum
+{
+    KEY = 0,
+    BTN,
+    AXE,
+} InputDefinitionType;
+
+typedef enum
+{
+    MINUS = -1,
+    PLUS = 1
+} InputDefinitionDirection;
+
+typedef struct
+{
+    InputDefinitionType type;
+    int name;
+    InputDefinitionDirection axeDirection; // optionnal
+} InputDefinition;
+
+#define INPUTS_MAX 4
+
+const InputDefinition INPUT_DEF_UP[INPUTS_MAX] = {{KEY, KEY_W}, {KEY, KEY_UP}, {BTN, GAMEPAD_BUTTON_LEFT_FACE_UP}, {AXE, GAMEPAD_AXIS_LEFT_Y, MINUS}};
+const InputDefinition INPUT_DEF_DOWN[INPUTS_MAX] = {{KEY, KEY_S}, {KEY, KEY_DOWN}, {BTN, GAMEPAD_BUTTON_LEFT_FACE_DOWN}, {AXE, GAMEPAD_AXIS_LEFT_Y, PLUS}};
+const InputDefinition INPUT_DEF_LEFT[INPUTS_MAX] = {{KEY, KEY_A}, {KEY, KEY_LEFT}, {BTN, GAMEPAD_BUTTON_LEFT_FACE_LEFT}, {AXE, GAMEPAD_AXIS_LEFT_X, MINUS}};
+const InputDefinition INPUT_DEF_RIGHT[INPUTS_MAX] = {{KEY, KEY_D}, {KEY, KEY_RIGHT}, {BTN, GAMEPAD_BUTTON_LEFT_FACE_RIGHT}, {AXE, GAMEPAD_AXIS_LEFT_X, PLUS}};
+
 //---------------------------------------------------------
 // Local Functions Declaration
 //---------------------------------------------------------
 
 bool MoveAction(InputActions *actions);
 bool ConsoleAction(InputActions *out);
+float GetInputValue(InputDefinition *inputs);
+
+bool IsInInterval(float value, float min, float max);
 
 //---------------------------------------------------------
 // Module specific Functions Definition
@@ -40,39 +70,6 @@ void ExecuteInputActions(InputActions *actions)
 // Local Functions Definition
 //---------------------------------------------------------
 
-bool MoveAction(InputActions *actions)
-{
-    const InputActionValue axis2D = (InputActionValue){
-        0, // NULL
-        0, // NULL
-        (Vector2){0, 0}};
-    actions->MoveAction.Value = axis2D;
-    actions->MoveAction.State.Triggered = false;
-    // input
-    bool up = IsKeyDown(KEY_W) || IsKeyDown(KEY_UP) || IsGamepadButtonDown(gamepad, GAMEPAD_BUTTON_LEFT_FACE_UP) || (GetGamepadAxisMovement(gamepad, GAMEPAD_AXIS_LEFT_Y) <= -gamepad_left_joy_deadzone);
-    bool down = IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN) || IsGamepadButtonDown(gamepad, GAMEPAD_BUTTON_LEFT_FACE_DOWN) || (GetGamepadAxisMovement(gamepad, GAMEPAD_AXIS_LEFT_Y) >= gamepad_left_joy_deadzone);
-    bool left = IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT) || IsGamepadButtonDown(gamepad, GAMEPAD_BUTTON_LEFT_FACE_LEFT) || (GetGamepadAxisMovement(gamepad, GAMEPAD_AXIS_LEFT_X) <= -gamepad_left_joy_deadzone);
-    bool right = IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT) || IsGamepadButtonDown(gamepad, GAMEPAD_BUTTON_LEFT_FACE_RIGHT) || (GetGamepadAxisMovement(gamepad, GAMEPAD_AXIS_LEFT_X) >= gamepad_left_joy_deadzone);
-    // action
-    if (left || right || up || down)
-        actions->MoveAction.State.Triggered = true;
-    // X
-    if (left)
-        actions->MoveAction.Value.Axis2D.x = -1;
-    else if (right)
-        actions->MoveAction.Value.Axis2D.x = 1;
-    // Y
-    if (up)
-        actions->MoveAction.Value.Axis2D.y = 1;
-    else if (down)
-        actions->MoveAction.Value.Axis2D.y = -1;
-    // find out which way is forward
-    // const FRotator Rotation = Controller->GetControlRotation();
-    // const FRotator YawRotation(0, Rotation.Yaw, 0);
-    // float ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-    // float RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-}
-
 bool ConsoleAction(InputActions *out)
 {
     if (IsKeyDown(KEY_F1) && !out->ConsoleAction.State.Started)
@@ -85,4 +82,70 @@ bool ConsoleAction(InputActions *out)
         out->ConsoleAction.State.Started = false;
         out->ConsoleAction.State.Completed = true;
     }
+}
+
+bool MoveAction(InputActions *actions)
+{
+    const InputActionValue axis2D = (InputActionValue){0, 0, {0, 0}};
+    actions->MoveAction.Value = axis2D;
+    actions->MoveAction.State.Triggered = false;
+    // input
+    bool up = GetInputValue(INPUT_DEF_UP);
+    bool down = GetInputValue(INPUT_DEF_DOWN);
+    bool left = GetInputValue(INPUT_DEF_LEFT);
+    bool right = GetInputValue(INPUT_DEF_RIGHT);
+    // action
+    if (left || right || up || down)
+        actions->MoveAction.State.Triggered = true;
+    // X
+    if (left)
+        actions->MoveAction.Value.Axis2D.x = -left;
+    else if (right)
+        actions->MoveAction.Value.Axis2D.x = right;
+    // Y
+    if (up)
+        actions->MoveAction.Value.Axis2D.y = up;
+    else if (down)
+        actions->MoveAction.Value.Axis2D.y = -down;
+    // find out which way is forward
+    // const FRotator Rotation = Controller->GetControlRotation();
+    // const FRotator YawRotation(0, Rotation.Yaw, 0);
+    // float ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+    // float RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+}
+
+float GetInputValue(InputDefinition *inputs)
+{
+    InputDefinition input = inputs[3];
+
+    if (input.type == KEY && IsKeyDown(input.name))
+    {
+        return 1;
+    }
+    else if (input.type == BTN && IsGamepadButtonDown(gamepad, input.name))
+    {
+        return 1;
+    }
+    else if (input.type == AXE && (GetGamepadAxisMovement(gamepad, input.name) != 0))
+    {
+        float axis = GetGamepadAxisMovement(gamepad, input.name);
+        if (IsInInterval(axis, -gamepad_left_joy_deadzone, gamepad_left_joy_deadzone))
+        {
+            return 0;
+        }
+        if (input.axeDirection == PLUS && axis > 0)
+        {
+            return axis;
+        }
+        else if (input.axeDirection == MINUS && axis < 0)
+        {
+            return -axis;
+        }
+    }
+    return 0;
+}
+
+bool IsInInterval(float value, float min, float max)
+{
+    return (value <= max && value >= min);
 }
