@@ -44,8 +44,8 @@ const InputDefinition INPUT_DEF_RIGHT[INPUTS_MAX] = {{KEY, KEY_D}, {KEY, KEY_RIG
 
 bool MoveAction(InputActions *actions);
 bool ConsoleAction(InputActions *out);
-float GetInputValue(InputDefinition *inputs);
-
+float GetFirstInputValue(InputDefinition* inputs);
+float GetInputValue(InputDefinition inputs);
 bool IsInInterval(float value, float min, float max);
 
 //---------------------------------------------------------
@@ -90,10 +90,10 @@ bool MoveAction(InputActions *actions)
     actions->MoveAction.Value = axis2D;
     actions->MoveAction.State.Triggered = false;
     // input
-    bool up = GetInputValue(INPUT_DEF_UP);
-    bool down = GetInputValue(INPUT_DEF_DOWN);
-    bool left = GetInputValue(INPUT_DEF_LEFT);
-    bool right = GetInputValue(INPUT_DEF_RIGHT);
+    bool up = GetFirstInputValue(INPUT_DEF_UP);
+    bool down = GetFirstInputValue(INPUT_DEF_DOWN);
+    bool left = GetFirstInputValue(INPUT_DEF_LEFT);
+    bool right = GetFirstInputValue(INPUT_DEF_RIGHT);
     // action
     if (left || right || up || down)
         actions->MoveAction.State.Triggered = true;
@@ -114,9 +114,20 @@ bool MoveAction(InputActions *actions)
     // float RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 }
 
-float GetInputValue(InputDefinition *inputs)
+float GetFirstInputValue(InputDefinition* inputs)
 {
-    InputDefinition input = inputs[3];
+    for (int i = 0; i < INPUTS_MAX; i++)
+    {
+        float val = GetInputValue(inputs[i]);
+        if (val != 0) {
+            return val;
+        }
+    }
+    return 0;
+}
+
+float GetInputValue(InputDefinition input)
+{
 
     if (input.type == KEY && IsKeyDown(input.name))
     {
@@ -145,6 +156,7 @@ float GetInputValue(InputDefinition *inputs)
     return 0;
 }
 
+// TODO: move to eng_math.h
 bool IsInInterval(float value, float min, float max)
 {
     return (value <= max && value >= min);
