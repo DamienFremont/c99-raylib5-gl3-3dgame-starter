@@ -2,6 +2,14 @@
 
 #include <stdbool.h>
 
+// source: https://www.raylib.com/examples/core/loader.html?name=core_input_gamepad
+
+//---------------------------------------------------------
+// Types and Structures Definition
+//---------------------------------------------------------
+
+int gamepad = 0; // which gamepad to display
+
 //---------------------------------------------------------
 // Local Functions Declaration
 //---------------------------------------------------------
@@ -40,10 +48,11 @@ bool MoveAction(InputActions *actions)
     actions->MoveAction.Value = axis2D;
     actions->MoveAction.State.Triggered = false;
     // input
-    bool up = IsKeyDown(KEY_W) || IsKeyDown(KEY_UP);
-    bool down = IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN);
-    bool left = IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT);
-    bool right = IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT);
+    bool gp0 = IsGamepadAvailable(gamepad);
+    bool up = IsKeyDown(KEY_W) || IsKeyDown(KEY_UP) || IsGamepadButtonDown(gamepad, GAMEPAD_BUTTON_LEFT_FACE_UP);
+    bool down = IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN) || IsGamepadButtonDown(gamepad, GAMEPAD_BUTTON_LEFT_FACE_DOWN);
+    bool left = IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT) || IsGamepadButtonDown(gamepad, GAMEPAD_BUTTON_LEFT_FACE_LEFT);
+    bool right = IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT) || IsGamepadButtonDown(gamepad, GAMEPAD_BUTTON_LEFT_FACE_RIGHT);
     // action
     if (left || right || up || down)
         actions->MoveAction.State.Triggered = true;

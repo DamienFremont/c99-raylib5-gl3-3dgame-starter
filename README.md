@@ -50,9 +50,8 @@
   - [ ] Discord (WebAssembly)
 - Graphics
   - [x] Render: PostProcessing Bloom, AA MSAA, Texture Filtering
-  - [ ] Camera: ThirdPerson, 
-      [ ] Follow
-  - [x] Lighting: World, Player Shadows
+  - [x] Camera: ThirdPerson, Follow
+  - [x] Lighting: World Lighting, Player Lighting, Player Shadows 
   - [ ] Meshes: Meshes, Textures, Shaders, Materials, 
       [ ] Texture tiling
   - [x] Sky: Color, Cubemap, Fog
@@ -67,12 +66,10 @@
   - [x] Character
 - Input
   - [x] UI: lauch screen, settings menu
-  - [x] Control: Keyboard, Arrows, Tank control
+  - [x] Input: Keyboard, Arrows, Gamepad
+  - [ ] Control: [x] Tank control, [ ] Third Person
 - Other
   - [x] launching screen
-
-- Canceled:
-  - [ ] Lighting: Player
 
 Repository layout:
 ```
