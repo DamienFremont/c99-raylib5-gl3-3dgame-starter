@@ -11,6 +11,7 @@
 #include "eng_assets.h"
 
 static const SCREEN_START = GAMEPLAY;
+static const WINDOWED = 1;
 
 //---------------------------------------------------------
 // Local Functions Declaration
@@ -31,15 +32,34 @@ int main(AppConfiguration cfg)
 	//-------------------------------------------------------------
 	InitAssets(cfg.res_path, cfg.glsl_version);
 
+    // Set configuration flags for window creation
 	if (cfg.postpro_antialias_msaa == true)
 		SetConfigFlags(FLAG_MSAA_4X_HINT); // Enable Multi Sampling Anti Aliasing 4x (if available)
-
 	InitWindow(cfg.screen_width, cfg.screen_height, cfg.appName);
-	SetTargetFPS(cfg.fps_limit);
+
+	// source: https://gist.github.com/JeffM2501/6e4630a0e34c0c7dddf066f7192e342d
+	if (WINDOWED)
+	{
+		// Window
+		int w = cfg.screen_width;
+		int h = cfg.screen_height;
+		SetWindowSize(w, h);
+	}
+	else
+	{
+		// Full Screen
+		int display = GetCurrentMonitor();
+		int w = GetMonitorWidth(display);
+		int h = GetMonitorHeight(display);
+		SetWindowSize(w, h);
+		ToggleFullscreen();
+	}
 
 	// Create a RenderTexture2D to be used for render to texture
 	RenderTexture2D target = LoadRenderTexture(GetScreenWidth(), GetScreenHeight());
 	SetTextureFilter(target.texture, cfg.postpro_texturefilter);
+
+	SetTargetFPS(cfg.fps_limit);
 
 	// Levels
 	int currentScreen = SCREEN_START;
