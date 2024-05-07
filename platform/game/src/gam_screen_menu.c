@@ -97,63 +97,63 @@ void Draw_Menu()
         const int CHAR_WIDTH = 10;
 
         // draw
-        DrawText("Press [TAB] to toggle menu", 10, 10 + LINE_HEIGHT_30 * 0, FONT_SIZE_20, GRAY);
+        DrawText("Press [TAB] to toggle menu", 10, 10 + LINE_HEIGHT_30 * 0, FONT_SIZE_24, GRAY);
         int line = 0;
-        DrawText("SETTINGS", CENTER - sizeof("SETTINGS") * CHAR_WIDTH, line, FONT_SIZE_40, GRAY);
+        DrawText("SETTINGS", CENTER - sizeof("SETTINGS") * CHAR_WIDTH, line, FONT_SIZE_48, GRAY);
         {
             line += LINE_HEIGHT_60;
-            DrawText("DISPLAY", COL_1_1, line, FONT_SIZE_20, GRAY);
+            DrawText("DISPLAY", COL_1_1, line, FONT_SIZE_24, GRAY);
             {
                 line += LINE_HEIGHT_60;
-                DrawText("Window Mode:", COL_1_2, line, FONT_SIZE_20, GRAY);
-                Draw_Button("<", COL_2, line, BUTTON_SMALL, FONT_SIZE_20, LIGHTGRAY);
-                DrawText("Windowed", COL_2_1, line, FONT_SIZE_20, GRAY);
-                Draw_Button(">", COL_2_2, line, BUTTON_SMALL, FONT_SIZE_20, LIGHTGRAY);
+                DrawText("Window Mode:", COL_1_2, line, FONT_SIZE_24, GRAY);
+                Draw_Button("<", COL_2, line, BUTTON_SMALL, FONT_SIZE_24, LIGHTGRAY);
+                DrawText("Windowed", COL_2_1, line, FONT_SIZE_24, GRAY);
+                Draw_Button(">", COL_2_2, line, BUTTON_SMALL, FONT_SIZE_24, LIGHTGRAY);
                 line += LINE_HEIGHT_60;
-                DrawText("Resolution:", COL_1_2, line, FONT_SIZE_20, GRAY);
-                Draw_Button("<", COL_2, line, BUTTON_SMALL, FONT_SIZE_20, LIGHTGRAY);
-                DrawText("1280 x 720", COL_2_1, line, FONT_SIZE_20, GRAY);
-                Draw_Button(">", COL_2_2, line, BUTTON_SMALL, FONT_SIZE_20, LIGHTGRAY);
+                DrawText("Resolution:", COL_1_2, line, FONT_SIZE_24, GRAY);
+                Draw_Button("<", COL_2, line, BUTTON_SMALL, FONT_SIZE_24, LIGHTGRAY);
+                DrawText("1280 x 720", COL_2_1, line, FONT_SIZE_24, GRAY);
+                Draw_Button(">", COL_2_2, line, BUTTON_SMALL, FONT_SIZE_24, LIGHTGRAY);
                 line += LINE_HEIGHT_60;
-                DrawText("Frame limit:", COL_1_2, line, FONT_SIZE_20, GRAY);
-                Draw_Button("<", COL_2, line, BUTTON_SMALL, FONT_SIZE_20, LIGHTGRAY);
-                DrawText("60", COL_2_1, line, FONT_SIZE_20, GRAY);
-                Draw_Button(">", COL_2_2, line, BUTTON_SMALL, FONT_SIZE_20, LIGHTGRAY);
+                DrawText("Frame limit:", COL_1_2, line, FONT_SIZE_24, GRAY);
+                Draw_Button("<", COL_2, line, BUTTON_SMALL, FONT_SIZE_24, LIGHTGRAY);
+                DrawText("60", COL_2_1, line, FONT_SIZE_24, GRAY);
+                Draw_Button(">", COL_2_2, line, BUTTON_SMALL, FONT_SIZE_24, LIGHTGRAY);
             }
             line += LINE_HEIGHT_60;
-            DrawText("GRAPHICS", COL_1_1, line, FONT_SIZE_20, GRAY);
+            DrawText("GRAPHICS", COL_1_1, line, FONT_SIZE_24, GRAY);
             {
                 line += LINE_HEIGHT_60;
-                DrawText("AntiAliasing:", COL_1_2, line, FONT_SIZE_20, GRAY);
-                Draw_Button("<", COL_2, line, BUTTON_SMALL, FONT_SIZE_20, LIGHTGRAY);
-                DrawText("MSAA 4X", COL_2_1, line, FONT_SIZE_20, GRAY);
-                Draw_Button(">", COL_2_2, line, BUTTON_SMALL, FONT_SIZE_20, LIGHTGRAY);
+                DrawText("AntiAliasing:", COL_1_2, line, FONT_SIZE_24, GRAY);
+                Draw_Button("<", COL_2, line, BUTTON_SMALL, FONT_SIZE_24, LIGHTGRAY);
+                DrawText("MSAA 4X", COL_2_1, line, FONT_SIZE_24, GRAY);
+                Draw_Button(">", COL_2_2, line, BUTTON_SMALL, FONT_SIZE_24, LIGHTGRAY);
                 line += LINE_HEIGHT_60;
-                DrawText("Postprocess:", COL_1_2, line, FONT_SIZE_20, GRAY);
-                Draw_Button("<", COL_2, line, BUTTON_SMALL, FONT_SIZE_20, LIGHTGRAY);
-                DrawText("Bloom", COL_2_1, line, FONT_SIZE_20, GRAY);
-                Draw_Button(">", COL_2_2, line, BUTTON_SMALL, FONT_SIZE_20, LIGHTGRAY);
-                DrawText("* Bloom breaks MSAA (no Anti-Aliasing)", COL_3, line, FONT_SIZE_20, GRAY);
+                DrawText("Postprocess:", COL_1_2, line, FONT_SIZE_24, GRAY);
+                Draw_Button("<", COL_2, line, BUTTON_SMALL, FONT_SIZE_24, LIGHTGRAY);
+                DrawText("Bloom", COL_2_1, line, FONT_SIZE_24, GRAY);
+                Draw_Button(">", COL_2_2, line, BUTTON_SMALL, FONT_SIZE_24, LIGHTGRAY);
+                DrawText("* Bloom breaks MSAA (no Anti-Aliasing)", COL_3, line, FONT_SIZE_24, GRAY);
                 line += LINE_HEIGHT_60;
-                DrawText("Lighting:", COL_1_2, line, FONT_SIZE_20, GRAY);
-                Draw_Button("<", COL_2, line, BUTTON_SMALL, FONT_SIZE_20, LIGHTGRAY);
-                DrawText("On", COL_2_1, line, FONT_SIZE_20, GRAY);
-                Draw_Button(">", COL_2_2, line, BUTTON_SMALL, FONT_SIZE_20, LIGHTGRAY);
-                DrawText("* Lighting breaks textures (darker)", COL_3, line, FONT_SIZE_20, GRAY);
+                DrawText("Lighting:", COL_1_2, line, FONT_SIZE_24, GRAY);
+                Draw_Button("<", COL_2, line, BUTTON_SMALL, FONT_SIZE_24, LIGHTGRAY);
+                DrawText("On", COL_2_1, line, FONT_SIZE_24, GRAY);
+                Draw_Button(">", COL_2_2, line, BUTTON_SMALL, FONT_SIZE_24, LIGHTGRAY);
+                DrawText("* Lighting breaks textures (darker)", COL_3, line, FONT_SIZE_24, GRAY);
             }
             line += LINE_HEIGHT_60;
-            DrawText("CONTROLS", COL_1_1, line, FONT_SIZE_20, GRAY);
+            DrawText("CONTROLS", COL_1_1, line, FONT_SIZE_24, GRAY);
             {
                 line += LINE_HEIGHT_60;
-                DrawText("Kayboard Layout:", COL_1_2, line, FONT_SIZE_20, GRAY);
-                Draw_Button("<", COL_2, line, BUTTON_SMALL, FONT_SIZE_20, LIGHTGRAY);
-                DrawText("QWERTY", COL_2_1, line, FONT_SIZE_20, GRAY);
-                Draw_Button(">", COL_2_2, line, BUTTON_SMALL, FONT_SIZE_20, LIGHTGRAY);
+                DrawText("Kayboard Layout:", COL_1_2, line, FONT_SIZE_24, GRAY);
+                Draw_Button("<", COL_2, line, BUTTON_SMALL, FONT_SIZE_24, LIGHTGRAY);
+                DrawText("QWERTY", COL_2_1, line, FONT_SIZE_24, GRAY);
+                Draw_Button(">", COL_2_2, line, BUTTON_SMALL, FONT_SIZE_24, LIGHTGRAY);
                 line += LINE_HEIGHT_60;
-                DrawText("Control Scheme:", COL_1_2, line, FONT_SIZE_20, GRAY);
-                Draw_Button("<", COL_2, line, BUTTON_SMALL, FONT_SIZE_20, LIGHTGRAY);
-                DrawText("Tank", COL_2_1, line, FONT_SIZE_20, GRAY);
-                Draw_Button(">", COL_2_2, line, BUTTON_SMALL, FONT_SIZE_20, LIGHTGRAY);
+                DrawText("Control Scheme:", COL_1_2, line, FONT_SIZE_24, GRAY);
+                Draw_Button("<", COL_2, line, BUTTON_SMALL, FONT_SIZE_24, LIGHTGRAY);
+                DrawText("Tank", COL_2_1, line, FONT_SIZE_24, GRAY);
+                Draw_Button(">", COL_2_2, line, BUTTON_SMALL, FONT_SIZE_24, LIGHTGRAY);
             }
         }
     }

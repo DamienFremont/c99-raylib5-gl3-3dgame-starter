@@ -12,8 +12,8 @@ typedef enum
 {
     FONT_SIZE_10 = 10,
     FONT_SIZE_12 = 12,
-    FONT_SIZE_20 = 20,
-    FONT_SIZE_40 = 40
+    FONT_SIZE_24 = 24,
+    FONT_SIZE_48 = 48
 } FontSize;
 
 typedef enum
