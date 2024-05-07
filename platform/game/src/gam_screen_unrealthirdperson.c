@@ -254,8 +254,8 @@ void Draw_2D()
         const int LINE_HEIGHT_30 = 30;
         DrawText("Press [TAB] to toggle menu", 10, 10 + LINE_HEIGHT_30 * 0, FONT_SIZE_24, GRAY);
         DrawText("Use keys [W][A][S][D] or Arrows or GamePad to move character", 10, 10 + LINE_HEIGHT_30 * 1, FONT_SIZE_24, GRAY);
+        DrawText("Press [ALT+ENTER] to toggle screen", 10, 10 + LINE_HEIGHT_30 * 3, FONT_SIZE_24, GRAY);
         DrawText("Press [F1] to toggle console", 10, 10 + LINE_HEIGHT_30 * 2, FONT_SIZE_24, GRAY);
-        DrawText("Press [F1] to toggle console", 10, 10 + LINE_HEIGHT_30 * 3, FONT_SIZE_24, GRAY);
     }
     if (fps_counter_show == true)
     {
