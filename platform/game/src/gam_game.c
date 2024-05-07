@@ -20,9 +20,16 @@ static const WINDOWED = 1;
 int UpdateScreen(int screen);
 void DrawScreen(int screen, RenderTexture2D *target);
 
+RenderTexture2D InitRenderTexture(int w, int h, int txt);
+void UpdateVideoMode(int w, int h);
+void SetVideoMode_Windowed(int w, int h, int txt);
+void SetVideoMode_FullScreen(int txt);
+
 //-----------------------------------------------------------
 // Program main entry point
 //-----------------------------------------------------------
+
+RenderTexture2D target;
 
 int main(AppConfiguration cfg)
 {
@@ -32,32 +39,20 @@ int main(AppConfiguration cfg)
 	//-------------------------------------------------------------
 	InitAssets(cfg.res_path, cfg.glsl_version);
 
-    // Set configuration flags for window creation
+	// Set configuration flags for window creation
 	if (cfg.postpro_antialias_msaa == true)
 		SetConfigFlags(FLAG_MSAA_4X_HINT); // Enable Multi Sampling Anti Aliasing 4x (if available)
 	InitWindow(cfg.screen_width, cfg.screen_height, cfg.appName);
 
-	// source: https://gist.github.com/JeffM2501/6e4630a0e34c0c7dddf066f7192e342d
 	if (WINDOWED)
 	{
-		// Window
-		int w = cfg.screen_width;
-		int h = cfg.screen_height;
-		SetWindowSize(w, h);
+		SetVideoMode_Windowed(cfg.screen_width, cfg.screen_height, cfg.postpro_texturefilter);
 	}
 	else
 	{
-		// Full Screen
-		int display = GetCurrentMonitor();
-		int w = GetMonitorWidth(display);
-		int h = GetMonitorHeight(display);
-		SetWindowSize(w, h);
+		SetVideoMode_FullScreen(cfg.postpro_texturefilter);
 		ToggleFullscreen();
 	}
-
-	// Create a RenderTexture2D to be used for render to texture
-	RenderTexture2D target = LoadRenderTexture(GetScreenWidth(), GetScreenHeight());
-	SetTextureFilter(target.texture, cfg.postpro_texturefilter);
 
 	SetTargetFPS(cfg.fps_limit);
 
@@ -72,6 +67,9 @@ int main(AppConfiguration cfg)
 	// Main game loop
 	while (!WindowShouldClose()) // Detect window close button or ESC key
 	{
+		// common
+		UpdateVideoMode(cfg.screen_width, cfg.screen_height);
+		// game
 		currentScreen = UpdateScreen(currentScreen);
 		DrawScreen(currentScreen, &target);
 	}
@@ -138,4 +136,43 @@ void DrawScreen(int currentScreen, RenderTexture2D *target)
 	default:
 		break;
 	}
+}
+
+RenderTexture2D InitRenderTexture(int screen_width, int screen_height, int postpro_texturefilter)
+{
+	RenderTexture2D target = LoadRenderTexture(screen_width, screen_height);
+	SetTextureFilter(target.texture, postpro_texturefilter);
+	return target;
+}
+
+// source: https://gist.github.com/JeffM2501/6e4630a0e34c0c7dddf066f7192e342d
+void UpdateVideoMode(int screen_width, int screen_height, int postpro_texturefilter)
+{
+	if (IsKeyPressed(KEY_ENTER) && (IsKeyDown(KEY_LEFT_ALT) || IsKeyDown(KEY_RIGHT_ALT)))
+	{
+		if (IsWindowFullscreen())
+			SetVideoMode_Windowed(screen_width, screen_height, postpro_texturefilter);
+		else
+			SetVideoMode_FullScreen(postpro_texturefilter);
+		ToggleFullscreen();
+	}
+}
+
+void SetVideoMode_Windowed(int screen_width, int screen_height, int postpro_texturefilter)
+{
+	SetWindowSize(screen_width, screen_height);
+
+	target = InitRenderTexture(screen_width, screen_height, postpro_texturefilter);
+}
+
+// source: https://gist.github.com/JeffM2501/6e4630a0e34c0c7dddf066f7192e342d
+void SetVideoMode_FullScreen(int postpro_texturefilter)
+{
+	int display = GetCurrentMonitor();
+	int screen_width = GetMonitorWidth(display);
+	int screen_height = GetMonitorHeight(display);
+	
+	SetWindowSize(screen_width, screen_height);
+
+	target = InitRenderTexture(screen_width, screen_height, postpro_texturefilter);
 }
