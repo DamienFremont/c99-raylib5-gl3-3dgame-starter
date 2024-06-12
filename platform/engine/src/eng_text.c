@@ -98,7 +98,6 @@ void DrawText3D(Font font, const char *text, Vector3 position, float fontSize, f
         if (codepoint == '\n')
         {
             // NOTE: Fixed line spacing of 1.5 line-height
-            // TODO: Support custom line spacing defined by user
             textOffsetY += scale + lineSpacing/(float)font.baseSize*scale;
             textOffsetX = 0.0f;
         }
