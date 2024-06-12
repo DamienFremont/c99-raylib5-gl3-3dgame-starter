@@ -12,6 +12,7 @@ typedef enum
     FHD,
     QHD,
     UHD,
+    STEAMDECK,
 } ScreenResolutionType;
 
 //---------------------------------------------------------
