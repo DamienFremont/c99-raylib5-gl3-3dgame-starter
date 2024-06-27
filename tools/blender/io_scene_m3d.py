@@ -173,6 +173,7 @@ def read_m3d(context,
                 'name':'', 'license':'', 'author':'', 'description':'',
                 'scale':1.0
             }
+            # TODO
         else:
             # Model 3D binary variant
             # skip over preview image chunk
@@ -351,6 +352,7 @@ def read_m3d(context,
                 # shapes
                 elif magic == b'SHPE':
                     chunk, s = getidx(chunk, head['si_s'])
+                    # TODO
                     print("shape ", strs[s])
 
                 # annotation labels
@@ -362,12 +364,14 @@ def read_m3d(context,
                         c = cmap[c]
                     elif ci_s == 4:
                         c = [c[0:1] / 255.0, c[1:2] / 255.0, c[2:3] / 255.0, c[3:4] / 255.0]
+                    # TODO
                     print("Labels layer:", strs[n], ", lang:", strs[l], ", color ", c)
 
                 # armature bones and vertex groups
                 elif magic == b'BONE':
                     chunk, b = getidx(chunk, head['bi_s'])
                     chunk, s = getidx(chunk, head['sk_s'])
+                    # TODO
                     print("Skeleton ", b, "bone(s),", s, "skin record(s) (unique bone/weight combos)")
 
                 # animation and timeline marker
@@ -375,11 +379,13 @@ def read_m3d(context,
                     chunk, s = getidx(chunk, head['si_s'])
                     chunk, f = getidx(chunk, 1)
                     chunk, l = getidx(chunk, 2)
+                    # TODO
                     print("Action ", strs[s], ", durationmsec", l, ", numframes ", f)
 
                 # inlined asset
                 elif magic == b'ASET':
                     chunk, s = getidx(chunk, head['si_s'])
+                    # TODO
                     print("Inlined asset ", strs[s], "(", len(chunk), " bytes)")
 
                 else:
@@ -399,6 +405,7 @@ def read_m3d(context,
         print("\nlabels ", labels)
         print("\nbones ", bones)
         print("\nskins ", skins)
+        # TODO: add to bpy
         # ----------------- End of Blender Specific Stuff ---------------------
 
         report({"ERROR"}, "Model 3D importer not fully implemented yet.")
