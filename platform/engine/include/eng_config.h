@@ -12,7 +12,11 @@ typedef struct AppConfiguration
 
     char res_path[999];
     int glsl_version; // 330 desktop
-
+    
+    // APP CFG
+    int screen_resolution;
+    bool screen_windowed;
+    // RUNTIME CFG
     int screen_width;
     int screen_height;
 

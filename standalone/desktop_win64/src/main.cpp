@@ -41,8 +41,8 @@ AppConfiguration InitConfig()
     AppConfiguration appConfig = { 0 };
     strcpy(appConfig.appName, "c99-raylib5-gl3-3dgame-starter");
     appConfig.glsl_version = 330;
-    appConfig.screen_width = ENG_GetScreenWidth(HD);
-    appConfig.screen_height = ENG_GetScreenHeight(HD);
+    appConfig.screen_resolution = HD;
+    appConfig.screen_windowed = true;
     appConfig.fps_limit = 0;
     appConfig.fps_counter_show = true;
     appConfig.postpro_antialias_msaa = true;

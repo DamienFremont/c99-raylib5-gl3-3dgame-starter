@@ -41,11 +41,11 @@ AppConfiguration InitConfig()
     AppConfiguration appConfig = { 0 };
     strcpy(appConfig.appName, "c99-raylib5-gl3-3dgame-starter");
     appConfig.glsl_version = 330;
-    appConfig.screen_width = ENG_GetScreenWidth(HD);
-    appConfig.screen_height = ENG_GetScreenHeight(HD);
-    appConfig.fps_limit = 60;
+    appConfig.screen_resolution = STEAMDECK;
+    appConfig.screen_windowed = false;
+    appConfig.fps_limit = 30;
     appConfig.fps_counter_show = true;
-    appConfig.postpro_antialias_msaa = true;
+    appConfig.postpro_antialias_msaa = false;
     appConfig.postpro_texturefilter = 1;
     appConfig.postpro_effect_bloom = true;
     return appConfig;

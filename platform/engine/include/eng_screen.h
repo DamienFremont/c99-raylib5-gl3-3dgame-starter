@@ -6,12 +6,14 @@
 typedef enum
 {
     NATIVE = 0,
+    CUSTOM = 1,
     CGA,
     SD,
     HD,
     FHD,
     QHD,
     UHD,
+    STEAMDECK,
 } ScreenResolutionType;
 
 //---------------------------------------------------------

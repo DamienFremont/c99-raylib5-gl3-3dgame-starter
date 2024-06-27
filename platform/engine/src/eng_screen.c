@@ -7,7 +7,6 @@
 
 typedef struct ScreenResolution
 {
-    char name[8];
     int width;
     int height;
 } ScreenResolution;
@@ -38,13 +37,15 @@ int ENG_GetScreenHeight(ScreenResolutionType type)
 
 ScreenResolution getScreen(ScreenResolutionType type)
 {
-    ScreenResolution reso[7] = {0};
-    reso[NATIVE] = (ScreenResolution){"Native", GetScreenWidth(), GetScreenHeight()};
-    reso[CGA] = (ScreenResolution){"CGA", 320, 200};
-    reso[SD] = (ScreenResolution){"SD", 854, 480};
-    reso[HD] = (ScreenResolution){"HD", 1280, 720};
-    reso[FHD] = (ScreenResolution){"FHD", 1920, 1080};
-    reso[QHD] = (ScreenResolution){"QHD", 2560, 1440};
-    reso[UHD] = (ScreenResolution){"UHD", 3840, 2160};
+    ScreenResolution reso[16] = {0};
+    reso[NATIVE] = (ScreenResolution){GetMonitorWidth(0), GetMonitorHeight(0)};
+    // reso[CUSTOM] = ;
+    reso[CGA] = (ScreenResolution){320, 200};
+    reso[SD] = (ScreenResolution){854, 480};
+    reso[HD] = (ScreenResolution){1280, 720};
+    reso[FHD] = (ScreenResolution){1920, 1080};
+    reso[QHD] = (ScreenResolution){2560, 1440};
+    reso[UHD] = (ScreenResolution){3840, 2160};
+    reso[STEAMDECK] = (ScreenResolution){1280, 800};
     return reso[type];
 }

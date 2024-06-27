@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "gam_screens.h"
+#include "eng_screen.h"
 #include "eng_console.h"
 #include "eng_camera.h"
 #include "eng_assets.h"
@@ -20,10 +21,10 @@ static const WINDOWED = 1;
 int UpdateScreen(int screen);
 void DrawScreen(int screen, RenderTexture2D *target);
 
-RenderTexture2D InitRenderTexture(int w, int h, int txt);
 void UpdateVideoMode(int w, int h);
-void SetVideoMode_Windowed(int w, int h, int txt);
-void SetVideoMode_FullScreen(int txt);
+
+RenderTexture2D InitRenderTarget(int w, int h, int txt);
+void InitRenderResolution(int w, int h, int txt);
 
 //-----------------------------------------------------------
 // Program main entry point
@@ -42,19 +43,14 @@ int main(AppConfiguration cfg)
 	// Set configuration flags for window creation
 	if (cfg.postpro_antialias_msaa == true)
 		SetConfigFlags(FLAG_MSAA_4X_HINT); // Enable Multi Sampling Anti Aliasing 4x (if available)
-	InitWindow(cfg.screen_width, cfg.screen_height, cfg.appName);
-
-	if (WINDOWED)
-	{
-		SetVideoMode_Windowed(cfg.screen_width, cfg.screen_height, cfg.postpro_texturefilter);
-	}
-	else
-	{
-		SetVideoMode_FullScreen(cfg.postpro_texturefilter);
-		ToggleFullscreen();
-	}
-
 	SetTargetFPS(cfg.fps_limit);
+	// window / fullscreen
+	cfg.screen_height = ENG_GetScreenHeight(cfg.screen_resolution);
+	cfg.screen_width = ENG_GetScreenWidth(cfg.screen_resolution);
+	InitWindow(cfg.screen_width, cfg.screen_height, cfg.appName);
+	InitRenderResolution(cfg.screen_width, cfg.screen_height, cfg.postpro_texturefilter);
+	if (cfg.screen_windowed == false && IsWindowFullscreen() == false)
+		ToggleFullscreen();
 
 	// Levels
 	int currentScreen = SCREEN_START;
@@ -94,20 +90,14 @@ int UpdateScreen(int currentScreen)
 	switch (currentScreen)
 	{
 	case LOGO:
-	{
 		currentScreen = UpdateLauncher();
-	}
-	break;
+		break;
 	case GAMEPLAY:
-	{
 		currentScreen = Update_UnrealThirdPerson();
-	}
-	break;
+		break;
 	case MENU:
-	{
 		currentScreen = Update_Menu();
-	}
-	break;
+		break;
 	default:
 		break;
 	}
@@ -119,26 +109,20 @@ void DrawScreen(int currentScreen, RenderTexture2D *target)
 	switch (currentScreen)
 	{
 	case LOGO:
-	{
 		DrawLauncher();
-	}
-	break;
+		break;
 	case GAMEPLAY:
-	{
 		Draw_UnrealThirdPerson(target);
-	}
-	break;
+		break;
 	case MENU:
-	{
 		Draw_Menu();
-	}
-	break;
+		break;
 	default:
 		break;
 	}
 }
 
-RenderTexture2D InitRenderTexture(int screen_width, int screen_height, int postpro_texturefilter)
+RenderTexture2D InitRenderTarget(int screen_width, int screen_height, int postpro_texturefilter)
 {
 	RenderTexture2D target = LoadRenderTexture(screen_width, screen_height);
 	SetTextureFilter(target.texture, postpro_texturefilter);
@@ -150,29 +134,13 @@ void UpdateVideoMode(int screen_width, int screen_height, int postpro_texturefil
 {
 	if (IsKeyPressed(KEY_ENTER) && (IsKeyDown(KEY_LEFT_ALT) || IsKeyDown(KEY_RIGHT_ALT)))
 	{
-		if (IsWindowFullscreen())
-			SetVideoMode_Windowed(screen_width, screen_height, postpro_texturefilter);
-		else
-			SetVideoMode_FullScreen(postpro_texturefilter);
+		InitRenderResolution(screen_width, screen_height, postpro_texturefilter);
 		ToggleFullscreen();
 	}
 }
 
-void SetVideoMode_Windowed(int screen_width, int screen_height, int postpro_texturefilter)
+void InitRenderResolution(int screen_width, int screen_height, int postpro_texturefilter)
 {
 	SetWindowSize(screen_width, screen_height);
-
-	target = InitRenderTexture(screen_width, screen_height, postpro_texturefilter);
-}
-
-// source: https://gist.github.com/JeffM2501/6e4630a0e34c0c7dddf066f7192e342d
-void SetVideoMode_FullScreen(int postpro_texturefilter)
-{
-	int display = GetCurrentMonitor();
-	int screen_width = GetMonitorWidth(display);
-	int screen_height = GetMonitorHeight(display);
-	
-	SetWindowSize(screen_width, screen_height);
-
-	target = InitRenderTexture(screen_width, screen_height, postpro_texturefilter);
+	target = InitRenderTarget(screen_width, screen_height, postpro_texturefilter);
 }
