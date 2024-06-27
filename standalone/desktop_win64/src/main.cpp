@@ -39,7 +39,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,
                      int nCmdShow)
 {
     AppConfiguration cfg = InitConfig();
-    // strcpy(cfg.res_path, GetExecutionPath());
+    strcpy(cfg.res_path, GetExecutionPath());
     return main(cfg);
 }
 
@@ -52,9 +52,9 @@ AppConfiguration InitConfig()
     AppConfiguration appConfig = { 0 };
     strcpy(appConfig.appName, WINDOW_TITLE);
     appConfig.glsl_version = GLSL_VERSION;
-    appConfig.screen_width = ENG_GetScreenWidth(STEAMDECK);
-    appConfig.screen_height = ENG_GetScreenHeight(STEAMDECK);
-    appConfig.fps_limit = 60;
+    appConfig.screen_width = ENG_GetScreenWidth(HD);
+    appConfig.screen_height = ENG_GetScreenHeight(HD);
+    appConfig.fps_limit = 0;
     appConfig.fps_counter_show = true;
     appConfig.postpro_antialias_msaa = true;
     appConfig.postpro_texturefilter = TEXTURE_FILTER_ANISOTROPIC_4X;
