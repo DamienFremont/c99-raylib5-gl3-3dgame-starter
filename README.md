@@ -259,6 +259,8 @@ Condition: GPU: RTX-2060, CPU: i5-9600K, RAM: 32 GB
     - [Creating Discord Activities with raylib](https://github.com/raysan5/raylib/wiki/Creating-Discord-Activities-with-raylib)
   - Shadow
     - [c99-raylib-shadowmap](https://github.com/WEREMSOFT/c99-raylib-shadowmap/tree/master)
+- Quality
+  - [cppcheck](https://cppcheck.sourceforge.io/)
 - Model3D Format
   - [Welcome to Model 3D!](https://bztsrc.gitlab.io/model3d/)
   - [Model 3D Blender Integration](https://gitlab.com/bztsrc/model3d/tree/master/blender/)

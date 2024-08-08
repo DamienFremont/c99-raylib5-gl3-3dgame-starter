@@ -55,7 +55,7 @@ int Update_Menu()
     return MENU;
 }
 
-void Draw_Button(char *text, int posX, int posY, Rectangle buttonRec, int fontSize, Color color)
+void Draw_Button(const char *text, int posX, int posY, Rectangle buttonRec, int fontSize, Color color)
 {
     const Color activeColor = SKYBLUE;
     // TODO: resolution scaling
@@ -82,11 +82,11 @@ void Draw_Menu()
         // style
         const int LINE_HEIGHT_30 = 30;
         const int LINE_HEIGHT_60 = 60;
-        const int SPACING = 30;
-        const int LABEL_WIDTH = 200;
-        const int BUTTON_SMALL_WIDTH = 200;
+        // UNUSED: const int SPACING = 30;
+        // UNUSED: const int LABEL_WIDTH = 200;
+        // UNUSED: const int BUTTON_SMALL_WIDTH = 200;
         const int COL_1 = 30;
-        const int COL_1_0 = COL_1;
+        // UNUSED: const int COL_1_0 = COL_1;
         const int COL_1_1 = COL_1 + 45;
         const int COL_1_2 = COL_1 + 90;
         const int COL_2 = 400;

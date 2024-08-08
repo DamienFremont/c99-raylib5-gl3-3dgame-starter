@@ -14,7 +14,7 @@ static char consoleOut[999];
 // Module specific Functions Definition
 //---------------------------------------------------------
 
-void LogConsole(char *str)
+void LogConsole(const char *str)
 {
     strcpy(consoleOut, str);
 }

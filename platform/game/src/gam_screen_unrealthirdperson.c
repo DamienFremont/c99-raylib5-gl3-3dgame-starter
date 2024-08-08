@@ -56,7 +56,7 @@ unsigned int animCurrentFrame;
 //---------------------------------------------------------
 
 void Draw_Pipeline_Default();
-void Draw_Pipeline_PostProcessing(RenderTexture2D *target);
+void Draw_Pipeline_PostProcessing(const RenderTexture2D *target);
 void UpdatePlayerAnimation();
 void UpdatePlayerCamera();
 void UpdatePlayerPosition();
@@ -114,7 +114,7 @@ int Update_UnrealThirdPerson()
     return GAMEPLAY;
 }
 
-void Draw_UnrealThirdPerson(RenderTexture2D *target)
+void Draw_UnrealThirdPerson(const RenderTexture2D *target)
 {
     if (postpro == true)
     {
@@ -204,7 +204,7 @@ void SetupPlayerInputComponent(InputActions *actions)
     // TODO: Looking
 }
 
-void SetupPlayerAnimation(InputActions *actions)
+void SetupPlayerAnimation(const InputActions *actions)
 {
     animIndex = 0;
     if (actions->MoveAction.State.Triggered == true)
@@ -294,7 +294,7 @@ void Draw_Pipeline_Default()
     EndDrawing();
 }
 
-void Draw_Pipeline_PostProcessing(RenderTexture2D *target)
+void Draw_Pipeline_PostProcessing(const RenderTexture2D *target)
 {
     BeginTextureMode(*target);
     {
@@ -319,7 +319,7 @@ void Init_PostProcess(RenderTexture2D *target, bool postprocessing_enable)
 {
     const char *POSTPROC_DEFAULT = "resources/shaders/glsl%i/default.fs";
     const char *POSTPROC_BLOOM = "resources/shaders/glsl%i/bloom.fs";
-    char *shaderPath = (postprocessing_enable == true) ? POSTPROC_BLOOM : POSTPROC_DEFAULT;
+    const char *shaderPath = (postprocessing_enable == true) ? POSTPROC_BLOOM : POSTPROC_DEFAULT;
     // TODO: move to Load_LevelTree()
     // SOURCE: https://www.raylib.com/examples/shaders/loader.html?name=shaders_postprocessing
     postpro = postprocessing_enable;

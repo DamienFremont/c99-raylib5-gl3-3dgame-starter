@@ -13,5 +13,5 @@
 
 void Init_UnrealThirdPerson(RenderTexture2D *target, AppConfiguration appConfig);
 int Update_UnrealThirdPerson();
-void Draw_UnrealThirdPerson(RenderTexture2D *target);
+void Draw_UnrealThirdPerson(const RenderTexture2D *target);
 void Unload_UnrealThirdPerson();

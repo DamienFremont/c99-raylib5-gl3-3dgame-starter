@@ -19,7 +19,7 @@ static const WINDOWED = 1;
 //---------------------------------------------------------
 
 int UpdateScreen(int screen);
-void DrawScreen(int screen, RenderTexture2D *target);
+void DrawScreen(int screen, const RenderTexture2D *target);
 
 void UpdateVideoMode(int w, int h);
 
@@ -104,7 +104,7 @@ int UpdateScreen(int currentScreen)
 	return currentScreen;
 }
 
-void DrawScreen(int currentScreen, RenderTexture2D *target)
+void DrawScreen(int currentScreen, const RenderTexture2D *target)
 {
 	switch (currentScreen)
 	{

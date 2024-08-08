@@ -6,5 +6,5 @@
 // Module Functions Declaration
 //---------------------------------------------------------
 
-void LogConsole(char* str);
+void LogConsole(const char* str);
 void DrawConsole();

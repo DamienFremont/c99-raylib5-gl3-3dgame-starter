@@ -44,7 +44,7 @@ const InputDefinition INPUT_DEF_RIGHT[INPUTS_MAX] = {{KEY, KEY_D}, {KEY, KEY_RIG
 
 void ExecuteMoveActions(InputActions *actions);
 void ExecuteConsoleActions(InputActions *out);
-float GetFirstInputValue(InputDefinition* inputs);
+float GetFirstInputValue(const InputDefinition* inputs);
 float GetInputValue(InputDefinition inputs);
 bool IsInInterval(float value, float min, float max);
 
@@ -114,7 +114,7 @@ void ExecuteMoveActions(InputActions *actions)
     // float RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 }
 
-float GetFirstInputValue(InputDefinition* inputs)
+float GetFirstInputValue(const InputDefinition* inputs)
 {
     for (int i = 0; i < INPUTS_MAX; i++)
     {

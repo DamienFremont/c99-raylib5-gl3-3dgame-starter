@@ -13,26 +13,26 @@ static int GLSL_VERSION = 330;
 // Module specific Functions Definition
 //---------------------------------------------------------
 
-void InitAssets(char *path, int glsl_ver)
+void InitAssets(const char *path, int glsl_ver)
 {
     strcpy(RESOURCES_PATH, path);
     GLSL_VERSION = glsl_ver;
 }
 
-char *GetAssetPath(char *tmp, char *assetpath)
+char *GetAssetPath(char *tmp, const char *assetpath)
 {
     JoinPath(tmp, RESOURCES_PATH, assetpath);
     return tmp;
 }
 
 // TODO
-char *GetShaderPath(char *tmp, char *assetpath)
+char *GetShaderPath(char *tmp, const char *assetpath)
 {
     JoinPath(tmp, RESOURCES_PATH, TextFormat(assetpath, GLSL_VERSION));
     return tmp;
 }
 
-char *JoinPath(char *dest, char *path1, char *path2)
+char *JoinPath(char *dest, const char *path1, const char *path2)
 {
     // TODO: end with or start with '/'
     const char tmp[PATH_MAX];
