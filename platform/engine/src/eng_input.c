@@ -42,8 +42,8 @@ const InputDefinition INPUT_DEF_RIGHT[INPUTS_MAX] = {{KEY, KEY_D}, {KEY, KEY_RIG
 // Local Functions Declaration
 //---------------------------------------------------------
 
-bool MoveAction(InputActions *actions);
-bool ConsoleAction(InputActions *out);
+void ExecuteMoveActions(InputActions *actions);
+void ExecuteConsoleActions(InputActions *out);
 float GetFirstInputValue(InputDefinition* inputs);
 float GetInputValue(InputDefinition inputs);
 bool IsInInterval(float value, float min, float max);
@@ -60,8 +60,8 @@ void InitInputActions(InputActions *actions)
 
 void ExecuteInputActions(InputActions *actions)
 {
-    ConsoleAction(actions);
-    MoveAction(actions);
+    ExecuteConsoleActions(actions);
+    ExecuteMoveActions(actions);
     // TODO: JumpAction(&out);
     // TODO: LookAction(&out);
 }
@@ -70,7 +70,7 @@ void ExecuteInputActions(InputActions *actions)
 // Local Functions Definition
 //---------------------------------------------------------
 
-bool ConsoleAction(InputActions *out)
+void ExecuteConsoleActions(InputActions *out)
 {
     if (IsKeyDown(KEY_F1) && !out->ConsoleAction.State.Started)
     {
@@ -84,7 +84,7 @@ bool ConsoleAction(InputActions *out)
     }
 }
 
-bool MoveAction(InputActions *actions)
+void ExecuteMoveActions(InputActions *actions)
 {
     const InputActionValue axis2D = (InputActionValue){0, 0, {0, 0}};
     actions->MoveAction.Value = axis2D;

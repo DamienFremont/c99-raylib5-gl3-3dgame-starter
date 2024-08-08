@@ -16,7 +16,7 @@ extern "C"
 //---------------------------------------------------------
 
 AppConfiguration InitConfig();
-char* GetExecutionPath();
+std::string GetExecutionPath();
 
 //---------------------------------------------------------
 // Module specific Functions Definition
@@ -24,11 +24,11 @@ char* GetExecutionPath();
 
 int APIENTRY WinMain(HINSTANCE hInstance,
                      HINSTANCE hPrevInstance,
-                     LPSTR lpCmdLine, 
+                     LPSTR lpCmdLine,
                      int nCmdShow)
 {
     AppConfiguration cfg = InitConfig();
-    strcpy(cfg.res_path, GetExecutionPath());
+    strcpy(cfg.res_path, GetExecutionPath().c_str());
     return main(cfg);
 }
 
@@ -38,7 +38,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 
 AppConfiguration InitConfig()
 {
-    AppConfiguration appConfig = { 0 };
+    AppConfiguration appConfig = {0};
     strcpy(appConfig.appName, "c99-raylib5-gl3-3dgame-starter");
     appConfig.glsl_version = 330;
     appConfig.screen_resolution = HD;
@@ -51,14 +51,12 @@ AppConfiguration InitConfig()
     return appConfig;
 }
 
-char* GetExecutionPath()
+std::string GetExecutionPath()
 {
-    char res[999];
     std::string str = _pgmptr;
     int exepath_len = str.size();
     std::string exebin = "\\desktop_win64.exe";
     int exebin_len = exebin.size();
     std::string str2 = str.substr(0, exepath_len - exebin_len);
-    strcpy(res, str2.c_str());
-    return res;
+    return str2;
 }

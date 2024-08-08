@@ -27,4 +27,4 @@ typedef struct TickState
 TickState InitTick(int tickRateInHz);
 void StartTick(TickState *state);
 int IsTickUpdate(TickState *state);
-int UpdateTick(TickState *state);
+void UpdateTick(TickState *state);

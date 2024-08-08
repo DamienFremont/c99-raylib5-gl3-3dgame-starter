@@ -45,7 +45,7 @@
 - Targets:
   - [x] Win64 (Windows)
   - [ ] Linux
-  - [ ] SteamDeck (Linux)
+  - [ ] SteamDeck (Windows/Linux)
   - [ ] HTML5 (WebAssembly)
   - [ ] Discord (WebAssembly)
 - Graphics
@@ -257,6 +257,8 @@ Condition: GPU: RTX-2060, CPU: i5-9600K, RAM: 32 GB
   - WASM
     - [Working for Web (HTML5)](https://github.com/raysan5/raylib/wiki/Working-for-Web-(HTML5))
     - [Creating Discord Activities with raylib](https://github.com/raysan5/raylib/wiki/Creating-Discord-Activities-with-raylib)
+  - Shadow
+    - [c99-raylib-shadowmap](https://github.com/WEREMSOFT/c99-raylib-shadowmap/tree/master)
 - Model3D Format
   - [Welcome to Model 3D!](https://bztsrc.gitlab.io/model3d/)
   - [Model 3D Blender Integration](https://gitlab.com/bztsrc/model3d/tree/master/blender/)

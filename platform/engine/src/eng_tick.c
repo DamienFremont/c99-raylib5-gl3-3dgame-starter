@@ -40,7 +40,7 @@ int IsTickUpdate(TickState *state)
     return (state->current > state->lastUpdate);
 }
 
-int UpdateTick(TickState *state)
+void UpdateTick(TickState *state)
 {
     state->lastUpdate = state->current;
 }
