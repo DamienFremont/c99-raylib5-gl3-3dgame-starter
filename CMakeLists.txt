@@ -2,7 +2,7 @@
 
 cmake_minimum_required(VERSION 3.28.3)
 
-project(cpp20-raylib-starter LANGUAGES CXX)
+project(c99-raylib5-gl3-3dgame-starter LANGUAGES CXX)
 
 # MS ONLY !
 set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT "desktop_win64" )

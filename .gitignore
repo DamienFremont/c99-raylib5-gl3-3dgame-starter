@@ -58,3 +58,12 @@ cmake_install.cmake
 
 # Blender
 **/*.blend1
+
+# Cppcheck
+# *.cppcheck
+*-cppcheck-build-dir
+
+# Node
+node_modules
+package.json
+package-lock.json
