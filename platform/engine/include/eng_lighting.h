@@ -7,4 +7,4 @@
 Shader LoadLighting();
 void UpdateLighting(Shader shader, Camera camera);
 void UnloadLighting(Shader shader);
-void SetModelLighting(Model model, Shader shader);
+Model SetModelLighting(Model model, const Shader shader);

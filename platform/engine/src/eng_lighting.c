@@ -37,7 +37,8 @@ void UnloadLighting(Shader shader)
     UnloadShader(shader);
 }
 
-void SetModelLighting(Model model, Shader shader)
+Model SetModelLighting(Model model, const Shader shader)
 {
     model.materials[0].shader = shader;
+    return model;
 }

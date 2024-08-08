@@ -21,6 +21,7 @@ Camera InitCamera(float fovy, Vector3 distance)
     return cam;
 }
 
+// TODO: USE ME !!!
 void CameraSecondPerson_Look(Camera *camera, Controller player)
 {
     const Vector3 tgt = player.position;
@@ -31,6 +32,7 @@ void CameraSecondPerson_Look(Camera *camera, Controller player)
         tgt.z};
 }
 
+// TODO: USE ME !!!
 void CameraThirdPerson_Look(Camera *camera, Controller player)
 {
     const Vector3 tgt = player.position;

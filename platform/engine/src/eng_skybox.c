@@ -44,7 +44,7 @@ void Draw_3D_Skybox(Model skybox, Camera camera)
     EndMode3D();
 }
 
-Model UnloadSkybox(Model skybox)
+void UnloadSkybox(Model skybox)
 {
     UnloadShader(skybox.materials[0].shader);
     UnloadTexture(skybox.materials[0].maps[MATERIAL_MAP_CUBEMAP].texture);

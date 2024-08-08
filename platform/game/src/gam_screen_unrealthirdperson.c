@@ -127,7 +127,7 @@ void Draw_UnrealThirdPerson(const RenderTexture2D *target)
 void Unload_UnrealThirdPerson()
 {
     // skybox
-    // FIXME: UnloadSkybox(skybox);
+    UnloadSkybox(skybox);
     // animations
     // FIXME: UnloadModelAnimations(playerAnimations, LEVEL_PLAYER_ANIMATIONS);
     // level
@@ -200,7 +200,7 @@ void SetupPlayerInputComponent(InputActions *actions)
     // TODO: Jumping
     // Moving
     if (actions->MoveAction.State.Triggered == true)
-        ControlTank_Move(&playerController.position, actions->MoveAction.Value, 0.08f, 0.08f * 15);
+        ControlTank_Move(&playerController, actions->MoveAction.Value, 0.08f, 0.08f * 15);
     // TODO: Looking
 }
 
