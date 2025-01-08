@@ -266,6 +266,8 @@ Condition: GPU: RTX-2060, CPU: i5-9600K, RAM: 32 GB
   - [Model 3D Blender Integration](https://gitlab.com/bztsrc/model3d/tree/master/blender/)
   - [io_scene_m3d.py](https://gitlab.com/bztsrc/model3d/-/blob/master/blender/io_scene_m3d.py)
   - [IQM Export](https://www.youtube.com/watch?v=x6Fw62lX5Dg)
+- C Libs
+  - [cJSON parser](https://github.com/DaveGamble/cJSON)
 
 ## References
 

@@ -6,6 +6,8 @@
 #include "eng_material.h"
 #include "eng_skybox.h"
 
+#include "cJSON.h"
+
 //---------------------------------------------------------
 // Local Functions Declaration
 //---------------------------------------------------------
@@ -18,6 +20,9 @@ Image GetTiledImage(int tilingX, int tilingY, Color col1, Color col2);
 
 GameObject *Load_LevelTree(GameObject *tree)
 {
+    // test
+    cJSON toto = (cJSON){NULL, NULL, NULL, 1};
+
     char *playerModelPath = "resources/models/Character.m3d";
 
     tree[0] = (GameObject){

@@ -7,15 +7,14 @@ set(assets     "../../assets")
 set(lib        "../../lib")
 set(platform   "../../platform")
 
-set(game      "${platform}/game")
+set(game        "${platform}/game")
 set(engine      "${platform}/engine")
 set(raylib      "${lib}/raylib-5.0_win64_msvc16")
 set(raylib_lib  "${raylib}/lib/raylib")
 set(raylib_bin  "${raylib}/lib/raylib.dll")
 set(raylibextra "${lib}/raylib-5.0-extra")
-set(winmm_lib  "${lib}/winmm-Win64-10.0.22621.0/lib/WinMM")
-
-set(demos      "${platform}/demos")
+set(winmm_lib   "${lib}/winmm-Win64-10.0.22621.0/lib/WinMM")
+set(cjson       "${lib}/cJSON")
 
 # ---- Sources ----
 include_directories(
@@ -26,9 +25,7 @@ include_directories(
   ${engine}/src
   ${raylib}/include
   ${raylibextra}/include
-
-  ${demos}/include
-  ${demos}/src
+  ${cjson}/include
 )
 
 file(GLOB EXEC_SOURCES
@@ -37,9 +34,6 @@ file(GLOB EXEC_SOURCES
   "${game}/src/*.c"
   "${engine}/include/*.h"
   "${engine}/src/*.c"
-
-  "${demos}/include/*.h"
-  "${demos}/src/*.c"
 )
 
 # ---- Create standalone executable ---- 
