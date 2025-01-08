@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="1">
+    <project-name>static-analysis</project-name>
+
     <builddir>../../build/cppcheck-build-dir</builddir>
-    <importproject>../../build/c99-raylib5-gl3-3dgame-starter.sln</importproject>
+
+    <paths>
+        <dir name="../../platform/" />
+        <dir name="../../standalone/" />
+    </paths>
+    <exclude>
+        <path name="../../lib"/>
+    </exclude>
+
     <analyze-all-vs-configs>false</analyze-all-vs-configs>
     <check-headers>true</check-headers>
     <check-unused-templates>true</check-unused-templates>
@@ -13,5 +23,5 @@
         <config>RelWithDebInfo</config>
         <config>Release</config>
     </vs-configurations>
-    <project-name>static-analysis</project-name>
+
 </project>
