@@ -4,17 +4,17 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/Damien_Fremont?style=social)](https://twitter.com/Damien_Fremont)
 [!["Buy Me A Coffee"](./docs/README/buymeacoffee-20.png)](https://www.buymeacoffee.com/damienfremont)
 
-:warning: **WORK IN PROGRESS !!!**
-
 2024's small template to start your raylib game. Featuring 3D, C 2017, Raylib 5.0, OpenGL 3 and a modular architecture.
+
+Big thanks to [Raysan5](https://github.com/raysan5) for his amazing lib. ❤️
 
 ![alt text](./docs/README/screenshot-raylib.gif)
 
 ## Content
 
+  - [Features](#features)
   - [Dependencies](#dependencies)
   - [Screenshots](#screenshots)
-  - [Features](#features)
   - [Install](#install)
   - [Usage](#usage)
   - [Assets](#assets)
@@ -22,11 +22,23 @@
 
 ---------------------------------------
 
+## Features
+
+- 📺 Render: PostProcessing Bloom, AA MSAA, Texture Filtering
+- 📺 Lighting: World Lighting, Player Lighting, Player Shadows
+- 📺 Meshes: Meshes, Textures, Shaders, Materials
+- 📺 Sky: Color, Cubemap, Fog
+- ⚙️ Simulation: Tick Systems
+- 🎥 Camera: ThirdPerson, Follow
+- 🎥 Animation: Character
+- 🎮 Input: Keyboard, Arrows, Gamepad Input, F1 Console
+- 🎮 Control: Tank control
+
 ## Dependencies
 
-- C++ 2020 / C 2017
-- [RayLib 5.0](https://www.raylib.com/)
-- OpenGL 3.30
+- 📦 C++ 2020 / C 2017
+- 📦 [RayLib 5.0](https://www.raylib.com/)
+- 📦 OpenGL 3.30
 
 ## Screenshots
 
@@ -39,37 +51,6 @@
 ![alt text](./docs/README/diagrams-1.png)
 
 ![alt text](./docs/README/diagrams-2.png)
-
-## Features
-
-- Targets:
-  - [x] Win64 (Windows)
-  - [ ] Linux
-  - [ ] SteamDeck (Windows/Linux)
-  - [ ] HTML5 (WebAssembly)
-  - [ ] Discord (WebAssembly)
-- Graphics
-  - [x] Render: PostProcessing Bloom, AA MSAA, Texture Filtering
-  - [x] Camera: ThirdPerson, Follow
-  - [x] Lighting: World Lighting, Player Lighting, Player Shadows 
-  - [ ] Meshes: Meshes, Textures, Shaders, Materials, 
-      [ ] Texture tiling
-  - [x] Sky: Color, Cubemap, Fog
-- World
-  - [ ] Physics
-      [ ] hitbox
-      [ ] gravity
-  - [x] Simulation: Tick Systems
-- Scripting
-  - [x] Console
-- Animation
-  - [x] Character
-- Input
-  - [x] UI: lauch screen, settings menu
-  - [x] Input: Keyboard, Arrows, Gamepad
-  - [ ] Control: [x] Tank control, [ ] Third Person
-- Other
-  - [x] launching screen
 
 Repository layout:
 ```
