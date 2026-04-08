@@ -141,6 +141,17 @@ Debug (press F5, or Menu > "Run" > "Start Debugging")
 
 ![alt text](./docs/README/thumb-vsc-debug.png)
 
+## Update
+
+1. download latest Raylib release https://github.com/raysan5/raylib/releases
+2. extract raylib-5.5_win64_msvc16 to /lib folder
+3. download latest Raylib release https://github.com/raysan5/raylib/tree/master/examples/shaders/resources/shaders/glsl330
+4. copy files \assets\resources\shaders\glsl330
+5. download latest rlights from https://github.com/Bigfoot71/rlights
+6. copy rlights.h to /lib folder
+7. run `.\tools\ci\install.bat`
+8. run `.\tools\ci\dev.bat`
+
 ## Assets
 
 ### Pipeline
