@@ -201,7 +201,7 @@ GameObject *Load_LevelTree(GameObject *tree)
     tree[10] = (GameObject){
         "SM_ChamferCube",
         (Transform2){
-            (Vector3){11.5f, 0.0f, 20.5f},
+            (Vector3){11.0f, 0.0f, 20.5f},
             (Rotation2){Vector3Zero(), ROTATE_ZERO},
             (Vector3){1.0f, 1.0f, 1.0f}},
         LoadModel_GetAssetPath("resources/models/SM_Cube.obj"),
