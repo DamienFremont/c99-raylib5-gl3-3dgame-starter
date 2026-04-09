@@ -1,0 +1,37 @@
+{
+    "nodes": [
+        {
+            "id": 1,
+            "name": "SM_Cube4_BIG",
+            "model": "resources/models/SM_Cube.obj",
+            "transform": {
+                "translation": {
+                    "x": 12,
+                    "y": 0,
+                    "z": 17
+                },
+                "scale": {
+                    "x": 6,
+                    "y": 2,
+                    "z": 5
+                }
+            },
+            "texture": {
+                "tilingX": 2,
+                "tilingY": 5,
+                "col1": {
+                    "r": 80,
+                    "g": 80,
+                    "b": 80,
+                    "a": 255
+                },
+                "col2": {
+                    "r": 130,
+                    "g": 130,
+                    "b": 130,
+                    "a": 255
+                }
+            }
+        }
+    ]
+}

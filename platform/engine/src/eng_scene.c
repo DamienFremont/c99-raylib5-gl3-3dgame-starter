@@ -1,5 +1,7 @@
 #include "eng_scene.h"
+#include "eng_assets.h"
 
+#include <stdio.h>
 //---------------------------------------------------------
 // Module specific Functions Definition
 //---------------------------------------------------------
@@ -65,7 +67,7 @@ cJSON* CreateNode3DJsonFile() {
         cJSON_AddNumberToObject(json, "id", 1);
         cJSON_AddStringToObject(json, "name", "SM_Cube4");
         cJSON_AddStringToObject(json, "model", "resources/models/SM_Cube.obj");
-        cJSON_AddStringToObject(json, "color", "DARKGRAY");
+        // cJSON_AddStringToObject(json, "color", "DARKGRAY"); // TODO: FIXME
 
         cJSON* json_transform = cJSON_CreateObject();
 
@@ -76,9 +78,9 @@ cJSON* CreateNode3DJsonFile() {
             cJSON_AddItemToObject(json_transform, "translation", json_tra2_trans);
 
             cJSON* json_tra2_scale = cJSON_CreateObject(); 
-                cJSON_AddNumberToObject(json_tra2_scale, "x", 6);
-                cJSON_AddNumberToObject(json_tra2_scale, "y", 2);
-                cJSON_AddNumberToObject(json_tra2_scale, "z", 5);
+                cJSON_AddNumberToObject(json_tra2_scale, "x", 60);
+                cJSON_AddNumberToObject(json_tra2_scale, "y", 20);
+                cJSON_AddNumberToObject(json_tra2_scale, "z", 50);
             cJSON_AddItemToObject(json_transform, "scale", json_tra2_scale);
 
         cJSON_AddItemToObject(json, "transform", json_transform);
@@ -114,11 +116,39 @@ cJSON* CreateNode3DJsonFile() {
 }
 
 cJSON* Read_SceneJsonFile(const char *fileName) {
-    return CreateNode3DJsonFile(); // test
+    char tmp[PATH_MAX];
+    char* path = GetAssetPath(tmp, fileName);
+    // open the file
+    FILE *fp = fopen(path, "r");
+    if (fp == NULL) {
+        printf("Error: Unable to open the file.\n");
+        return 1;
+    }
+    // read the file contents into a string
+    char buffer[1024];
+    int len = fread(buffer, 1, sizeof(buffer), fp);
+    fclose(fp);
+    // parse the JSON data
+    cJSON *json = cJSON_Parse(buffer);
+    if (json == NULL) {
+        const char *error_ptr = cJSON_GetErrorPtr();
+        if (error_ptr != NULL) {
+            printf("Error: %s\n", error_ptr);
+        }
+        cJSON_Delete(json);
+        return 1;
+    }
+    return json;
+    // return CreateNode3DJsonFile(); // test
 }
 
 Node3D* Parse_SceneJson(const cJSON *json) {
     Node3D nodes[1] = {0};
-    nodes[0] = Parse_Node3dJson(json);
+    cJSON* json_nodes = cJSON_GetObjectItemCaseSensitive(json, "nodes");
+    cJSON* json_i = NULL;
+    cJSON_ArrayForEach(json_i, json_nodes)
+    {
+        nodes[0] = Parse_Node3dJson(json_i);
+    }
     return nodes;
 }

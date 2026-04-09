@@ -51,17 +51,17 @@ GameObject *Load_LevelTree(GameObject *tree)
         // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_lightmap
         DARKGRAY};
 
-    // Block01
-    {
-        // parse the JSON data
-        cJSON* json = Read_SceneJsonFile("resources/scenes/unrealthirdperson.json");
-        // access the JSON data
-        Node3D* nodes = Parse_SceneJson(json);
-        // free memory
-        cJSON_Delete(json);
+    // parse the JSON data
+    cJSON* json = Read_SceneJsonFile("resources/scenes/unrealthirdperson.json");
+    // access the JSON data
+    Node3D* nodes = Parse_SceneJson(json);
+    // free memory
+    cJSON_Delete(json);
+
+    for (int i = 0; i < 1; i++) {
 
         // create GameObject
-        Node3D node_1 = nodes[0];
+        Node3D node_1 = nodes[i];
         Texture2D texture = LoadTextureFromImage(GetTiledImage(
             node_1.texture.tilingX,
             node_1.texture.tilingY,
@@ -79,6 +79,10 @@ GameObject *Load_LevelTree(GameObject *tree)
         // load GameObject
         tree[12] = go_1;
 
+    }
+
+    // Block01
+    {
         // "SM_Cube7"
         tree[2] = (GameObject){
             "SM_Cube9",
