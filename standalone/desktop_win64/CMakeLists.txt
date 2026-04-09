@@ -34,6 +34,7 @@ file(GLOB EXEC_SOURCES
   "${game}/src/*.c"
   "${engine}/include/*.h"
   "${engine}/src/*.c"
+  "${cjson}/src/*.c"
 )
 
 # ---- Create standalone executable ---- 

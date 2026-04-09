@@ -21,7 +21,7 @@ typedef struct Transform2
 
 typedef struct GameObject
 {
-    char name[256];
+    char* name;
     Transform2 transform;
     Model model;
     Color color;

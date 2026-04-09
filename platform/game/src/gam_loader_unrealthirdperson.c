@@ -20,9 +20,6 @@ Image GetTiledImage(int tilingX, int tilingY, Color col1, Color col2);
 
 GameObject *Load_LevelTree(GameObject *tree)
 {
-    // test
-    cJSON toto = (cJSON){NULL, NULL, NULL, 1};
-
     char *playerModelPath = "resources/models/Character.m3d";
 
     tree[0] = (GameObject){
@@ -44,13 +41,24 @@ GameObject *Load_LevelTree(GameObject *tree)
 
     // Block01
     {
+        // TODO: parse the JSON data
+        cJSON *json = cJSON_CreateObject();
+        cJSON_AddStringToObject(json, "name", "SM_Cube4");
+        cJSON_AddStringToObject(json, "model", "resources/models/SM_Cube.obj");
+        // access the JSON data
+        Node3D node_1 = (Node3D) {0};
+        strcpy(node_1.name, cJSON_GetObjectItemCaseSensitive(json, "name")->valuestring);
+        strcpy(node_1.model, cJSON_GetObjectItemCaseSensitive(json, "model")->valuestring);
+        // free memory
+        cJSON_Delete(json);
+
         tree[1] = (GameObject){
-            "SM_Cube4",
+            node_1.name,
             (Transform2){
                 (Vector3){12.0f, 0.0f, 17.0f},
                 (Rotation2){Vector3Zero(), ROTATE_ZERO},
                 (Vector3){6.0f, 2.0f, 5.0f}},
-            LoadModel_GetAssetPath("resources/models/SM_Cube.obj"),
+            LoadModel_GetAssetPath(node_1.model),
             DARKGRAY};
 
         tree[1].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(2, 5, GRAY, DARKGRAY));

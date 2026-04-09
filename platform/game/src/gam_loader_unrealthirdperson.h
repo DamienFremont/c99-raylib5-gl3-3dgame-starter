@@ -16,6 +16,21 @@ typedef enum
     LEVEL_PLAYER_ANIMATIONS = 2
 } UnrealThirdPersonLevelSize;
 
+// TODO
+// typedef struct Node
+// {
+//     int id;
+//     char name[256];
+// } Node;
+
+typedef struct Node3D
+{
+    int id;
+    char name[256];
+
+    char model[1024];
+} Node3D;
+
 //---------------------------------------------------------
 // Module Functions Declaration
 //---------------------------------------------------------
