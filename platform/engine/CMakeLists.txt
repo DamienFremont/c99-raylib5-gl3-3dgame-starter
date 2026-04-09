@@ -7,7 +7,8 @@ set(assets   "../../assets")
 set(lib      "../../lib")
 set(platform "../../platform")
 
-set(raylib   "${lib}/raylib-5.0_win64_msvc16")
+set(raylib      "${lib}/raylib-5.0_win64_msvc16")
+set(cjson       "${lib}/cJSON")
 
 # ---- Sources ----
 include_directories(
@@ -24,3 +25,4 @@ add_library(${PROJECT_NAME} ${EXEC_SOURCES})
 
 # ---- Dependencies ----
 include_directories(${raylib}/include)
+include_directories(${cjson}/include)
