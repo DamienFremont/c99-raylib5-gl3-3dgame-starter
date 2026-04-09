@@ -6,4 +6,7 @@
 // Module Functions Declaration
 //---------------------------------------------------------
 
-Shader TileTexture2D(Vector2 tiling);
+Shader TileShader(Vector2 tiling); // TODO: REMOVEME
+
+bool IsCheckboard(const char *str);
+Texture2D CheckboardTexture2D(float x, float y, float z);

@@ -62,18 +62,19 @@ GameObject *Load_LevelTree(GameObject *tree)
     {
         // create GameObject
         Node3D node_1 = scene.nodes[i];
-        Texture2D texture = LoadTextureFromImage(GetTiledImage(
-            node_1.texture.tilingX,
-            node_1.texture.tilingY,
-            node_1.texture.col1,
-            node_1.texture.col2));
         Model model = LoadModel_GetAssetPath(node_1.model);
-        model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
         GameObject go_1 = (GameObject){0};
         strcpy(go_1.name, node_1.name);
         go_1.transform = node_1.transform;
         go_1.model = model;
         go_1.color = node_1.color;
+
+        if( IsCheckboard(node_1.material.albedo)) {
+            go_1.model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = CheckboardTexture2D(
+                node_1.transform.scale.x,
+                node_1.transform.scale.y,
+                node_1.transform.scale.z);
+        }
 
         // load GameObject
         tree[11 + i] = go_1;
@@ -94,7 +95,7 @@ GameObject *Load_LevelTree(GameObject *tree)
             LoadModel_GetAssetPath("resources/models/SM_Ramp.obj"),
             DARKGRAY};
 
-        tree[3].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 2, GRAY, DARKGRAY));
+        // tree[3].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 2, GRAY, DARKGRAY));
 
         tree[4] = (GameObject){
             "SM_Ramp3",

@@ -14,13 +14,10 @@ typedef enum
     SCENE_JSON_FILE_BUFFER_SIZE = SCENE_NODES_SIZE * 1024
 } SceneConst;
 
-typedef struct NodeTexture
+typedef struct NodeMaterial
 {
-    int tilingX;
-    int tilingY;
-    Color col1;
-    Color col2;
-} NodeTexture;
+    char albedo[256];
+} NodeMaterial;
 
 typedef struct Node3D
 {
@@ -29,7 +26,7 @@ typedef struct Node3D
     Transform2 transform;
     char model[1024];
     Color color;
-    NodeTexture texture;
+    NodeMaterial material;
 } Node3D;
 
 typedef struct Scene

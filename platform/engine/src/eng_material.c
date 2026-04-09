@@ -8,7 +8,7 @@
 //---------------------------------------------------------
 
 // FIXME:
-Shader TileTexture2D(Vector2 tiling)
+Shader TileShader(Vector2 tiling) // TODO: REMOVEME
 {
     // Set the texture tiling using a shader
     const float tilingArr[2] = {tiling.x, tiling.y};
@@ -18,3 +18,26 @@ Shader TileTexture2D(Vector2 tiling)
     SetShaderValue(shader, GetShaderLocation(shader, "tiling"), tilingArr, SHADER_UNIFORM_VEC2);
     return shader;
 }
+
+bool IsCheckboard(const char *str) {
+    return strcmp(str, "CHECKBOARD") == 0;
+}
+
+Texture2D CheckboardTexture2D(float x, float y, float z) 
+{
+    int checkByMeter = 1;
+    int textureResolutionByMeter = 64;
+    int checksX= y * 32;
+    int checksY= x * 1;
+
+    int width = x * checkByMeter * textureResolutionByMeter;
+    int height = y * checkByMeter * textureResolutionByMeter;
+
+    Texture2D texture = LoadTextureFromImage(GenImageChecked(
+        width, height,
+        checksX, checksY,
+        GRAY, DARKGRAY));
+
+    return texture;
+}
+

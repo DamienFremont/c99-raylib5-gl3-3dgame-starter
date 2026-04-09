@@ -17,14 +17,9 @@ Color Parse_ColorJson(const cJSON* src) {
     };
 }
 
-NodeTexture Parse_TextureJson(const cJSON* src) {
-    cJSON* col1 = cJSON_GetObjectItemCaseSensitive(src, "col1");
-    cJSON* col2 = cJSON_GetObjectItemCaseSensitive(src, "col2");
-    NodeTexture tgt = (NodeTexture){ 0 };
-    tgt.tilingX = cJSON_GetObjectItemCaseSensitive(src, "tilingX")->valueint;
-    tgt.tilingY = cJSON_GetObjectItemCaseSensitive(src, "tilingY")->valueint;
-    tgt.col1 = Parse_ColorJson(col1);
-    tgt.col2 = Parse_ColorJson(col2);
+NodeMaterial Parse_MaterialJson(const cJSON* src) {
+    NodeMaterial tgt = (NodeMaterial){ 0 };
+    strcpy(tgt.albedo, cJSON_GetObjectItem(src, "albedo")->valuestring);
     return tgt;
 }
 
@@ -57,7 +52,7 @@ Node3D Parse_Node3dJson(const cJSON *json) {
         node3d.transform = Parse_Transform2Json(cJSON_GetObjectItemCaseSensitive(json, "transform"));
         //node3d.color = Parse_ColorJson(cJSON_GetObjectItemCaseSensitive(json, "color")); // TODO: FIXME
         node3d.color = DARKGRAY;
-        node3d.texture = Parse_TextureJson(cJSON_GetObjectItemCaseSensitive(json, "texture"));
+        node3d.material = Parse_MaterialJson(cJSON_GetObjectItemCaseSensitive(json, "material"));
         return node3d;
 }
 
@@ -80,7 +75,7 @@ cJSON* Read_SceneJsonFile(const char *fileName) {
     }
     fclose(fp);
     // parse the JSON data
-    cJSON *json = cJSON_Parse(buffer);
+    cJSON* json = cJSON_Parse(buffer);
     if (json == NULL) {
         const char *error_ptr = cJSON_GetErrorPtr();
         if (error_ptr != NULL) {
