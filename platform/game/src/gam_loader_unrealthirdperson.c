@@ -51,17 +51,19 @@ GameObject *Load_LevelTree(GameObject *tree)
         strcpy(node_1.model, cJSON_GetObjectItemCaseSensitive(json, "model")->valuestring);
         // free memory
         cJSON_Delete(json);
-
-        tree[1] = (GameObject){
-            node_1.name,
-            (Transform2){
+        // create GameObject
+        Model model = LoadModel_GetAssetPath(node_1.model);
+        model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(2, 5, GRAY, DARKGRAY));
+        GameObject go_1 = (GameObject){0};
+        strcpy(go_1.name, node_1.name);
+        go_1.transform = (Transform2){
                 (Vector3){12.0f, 0.0f, 17.0f},
                 (Rotation2){Vector3Zero(), ROTATE_ZERO},
-                (Vector3){6.0f, 2.0f, 5.0f}},
-            LoadModel_GetAssetPath(node_1.model),
-            DARKGRAY};
-
-        tree[1].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(2, 5, GRAY, DARKGRAY));
+                (Vector3){6.0f, 2.0f, 5.0f}};
+        go_1.model = model;
+        go_1.color = DARKGRAY;
+        // load GameObject
+        tree[1] = go_1;
 
         // "SM_Cube7"
         tree[2] = (GameObject){
