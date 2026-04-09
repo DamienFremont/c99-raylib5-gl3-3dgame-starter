@@ -2,6 +2,7 @@
 #include "eng_assets.h"
 
 #include <stdio.h>
+
 //---------------------------------------------------------
 // Module specific Functions Definition
 //---------------------------------------------------------
@@ -60,61 +61,6 @@ Node3D Parse_Node3dJson(const cJSON *json) {
         return node3d;
 }
 
-// test
-cJSON* CreateNode3DJsonFile() {
-    cJSON *json = cJSON_CreateObject();
-
-        cJSON_AddNumberToObject(json, "id", 1);
-        cJSON_AddStringToObject(json, "name", "SM_Cube4");
-        cJSON_AddStringToObject(json, "model", "resources/models/SM_Cube.obj");
-        // cJSON_AddStringToObject(json, "color", "DARKGRAY"); // TODO: FIXME
-
-        cJSON* json_transform = cJSON_CreateObject();
-
-            cJSON* json_tra2_trans = cJSON_CreateObject();
-                cJSON_AddNumberToObject(json_tra2_trans, "x", 12);
-                cJSON_AddNumberToObject(json_tra2_trans, "y", 0);
-                cJSON_AddNumberToObject(json_tra2_trans, "z", 17);
-            cJSON_AddItemToObject(json_transform, "translation", json_tra2_trans);
-
-            cJSON* json_tra2_scale = cJSON_CreateObject(); 
-                cJSON_AddNumberToObject(json_tra2_scale, "x", 60);
-                cJSON_AddNumberToObject(json_tra2_scale, "y", 20);
-                cJSON_AddNumberToObject(json_tra2_scale, "z", 50);
-            cJSON_AddItemToObject(json_transform, "scale", json_tra2_scale);
-
-        cJSON_AddItemToObject(json, "transform", json_transform);
-
-        cJSON* json_color = cJSON_CreateObject(); 
-            cJSON_AddNumberToObject(json_color, "r", 80);
-            cJSON_AddNumberToObject(json_color, "g", 80);
-            cJSON_AddNumberToObject(json_color, "b", 80);
-            cJSON_AddNumberToObject(json_color, "a", 255);
-        cJSON_AddItemToObject(json, "color", json_color);
-
-        cJSON* json_texture = cJSON_CreateObject(); 
-            cJSON_AddNumberToObject(json_texture, "tilingX", 2);
-            cJSON_AddNumberToObject(json_texture, "tilingY", 5);
-
-            cJSON* json_texture_col1 = cJSON_CreateObject(); 
-                cJSON_AddNumberToObject(json_texture_col1, "r", 80);
-                cJSON_AddNumberToObject(json_texture_col1, "g", 80);
-                cJSON_AddNumberToObject(json_texture_col1, "b", 80);
-                cJSON_AddNumberToObject(json_texture_col1, "a", 255);
-             cJSON_AddItemToObject(json_texture, "col1", json_texture_col1);
-
-            cJSON* json_texture_col2 = cJSON_CreateObject(); 
-                cJSON_AddNumberToObject(json_texture_col2, "r", 130);
-                cJSON_AddNumberToObject(json_texture_col2, "g", 130);
-                cJSON_AddNumberToObject(json_texture_col2, "b", 130);
-                cJSON_AddNumberToObject(json_texture_col2, "a", 255);
-            cJSON_AddItemToObject(json_texture, "col2", json_texture_col2);
-
-        cJSON_AddItemToObject(json, "texture", json_texture);
-
-        return json;
-}
-
 cJSON* Read_SceneJsonFile(const char *fileName) {
     char tmp[PATH_MAX];
     char* path = GetAssetPath(tmp, fileName);
@@ -125,8 +71,13 @@ cJSON* Read_SceneJsonFile(const char *fileName) {
         return 1;
     }
     // read the file contents into a string
-    char buffer[1024];
+    char buffer[SCENE_JSON_FILE_BUFFER_SIZE];
     int len = fread(buffer, 1, sizeof(buffer), fp);
+    // check buffer size
+    if (len >= sizeof(buffer)) {
+        printf("Error: Buffer overflow.\n");
+        return 1;
+    }
     fclose(fp);
     // parse the JSON data
     cJSON *json = cJSON_Parse(buffer);
@@ -139,16 +90,20 @@ cJSON* Read_SceneJsonFile(const char *fileName) {
         return 1;
     }
     return json;
-    // return CreateNode3DJsonFile(); // test
 }
 
-Node3D* Parse_SceneJson(const cJSON *json) {
-    Node3D nodes[1] = {0};
-    cJSON* json_nodes = cJSON_GetObjectItemCaseSensitive(json, "nodes");
-    cJSON* json_i = NULL;
-    cJSON_ArrayForEach(json_i, json_nodes)
+Scene Parse_SceneJson(const cJSON * json) {
+    Node3D nodes[SCENE_NODES_SIZE] = { 0 };
+    cJSON* array = cJSON_GetObjectItemCaseSensitive(json,"nodes");
+    int size = cJSON_GetArraySize(array);
+    cJSON* item = NULL;
+    for (int i = 0; i < size; i++)
     {
-        nodes[0] = Parse_Node3dJson(json_i);
-    }
-    return nodes;
+        item = cJSON_GetArrayItem(array, i);
+        nodes[i] = Parse_Node3dJson(item);
+     }
+    Scene scene = (Scene){0};
+    scene.nodes = nodes;
+    scene.nodesSize = size;
+    return scene;
 }

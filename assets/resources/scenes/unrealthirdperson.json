@@ -2,35 +2,32 @@
     "nodes": [
         {
             "id": 1,
-            "name": "SM_Cube4_BIG",
+            "name": "SM_Cube4",
             "model": "resources/models/SM_Cube.obj",
             "transform": {
-                "translation": {
-                    "x": 12,
-                    "y": 0,
-                    "z": 17
-                },
-                "scale": {
-                    "x": 6,
-                    "y": 2,
-                    "z": 5
-                }
+                "translation": { "x": 12, "y": 0, "z": 17 },
+                "rotation": { "x": 0, "y": 0, "z": 0 },
+                "scale": { "x": 6, "y": 2, "z": 5 }
             },
             "texture": {
-                "tilingX": 2,
-                "tilingY": 5,
-                "col1": {
-                    "r": 80,
-                    "g": 80,
-                    "b": 80,
-                    "a": 255
-                },
-                "col2": {
-                    "r": 130,
-                    "g": 130,
-                    "b": 130,
-                    "a": 255
-                }
+                "tilingX": 2, "tilingY": 5,
+                "col1": { "r": 80, "g": 80, "b": 80, "a": 255 },
+                "col2": { "r": 130, "g": 130, "b": 130, "a": 255 }
+            }
+        },
+                {
+            "id": 2,
+            "name": "SM_Cube9",
+            "model": "resources/models/SM_Cube.obj",
+            "transform": {
+                "translation": { "x": 18, "y": 0, "z": 15 },
+                "rotation": { "x": 0, "y": 0, "z": 0 },
+                "scale": { "x": 2, "y": 1, "z": 7 }
+            },
+            "texture": {
+                "tilingX": 7, "tilingY": 2,
+                "col1": { "r": 80, "g": 80, "b": 80, "a": 255 },
+                "col2": { "r": 130, "g": 130, "b": 130, "a": 255 }
             }
         }
     ]

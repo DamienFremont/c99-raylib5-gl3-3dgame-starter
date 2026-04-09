@@ -8,6 +8,12 @@
 // Types and Structures Definition
 //---------------------------------------------------------
 
+typedef enum
+{
+    SCENE_NODES_SIZE = 128,
+    SCENE_JSON_FILE_BUFFER_SIZE = SCENE_NODES_SIZE * 1024
+} SceneConst;
+
 typedef struct NodeTexture
 {
     int tilingX;
@@ -26,9 +32,16 @@ typedef struct Node3D
     NodeTexture texture;
 } Node3D;
 
+typedef struct Scene
+{
+    int name;
+    Node3D* nodes;
+    int nodesSize;
+} Scene;
+
 //---------------------------------------------------------
 // Module Functions Declaration
 //---------------------------------------------------------
 
 cJSON* Read_SceneJsonFile(const char *fileName);
-Node3D* Parse_SceneJson(const cJSON *json);
+Scene Parse_SceneJson(const cJSON *json);

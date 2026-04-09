@@ -54,20 +54,19 @@ GameObject *Load_LevelTree(GameObject *tree)
     // parse the JSON data
     cJSON* json = Read_SceneJsonFile("resources/scenes/unrealthirdperson.json");
     // access the JSON data
-    Node3D* nodes = Parse_SceneJson(json);
+    Scene scene = Parse_SceneJson(json);
     // free memory
     cJSON_Delete(json);
 
-    for (int i = 0; i < 1; i++) {
-
+    for (int i = 0; i < scene.nodesSize; i++) 
+    {
         // create GameObject
-        Node3D node_1 = nodes[i];
+        Node3D node_1 = scene.nodes[i];
         Texture2D texture = LoadTextureFromImage(GetTiledImage(
             node_1.texture.tilingX,
             node_1.texture.tilingY,
             node_1.texture.col1,
-            node_1.texture.col2
-        ));
+            node_1.texture.col2));
         Model model = LoadModel_GetAssetPath(node_1.model);
         model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
         GameObject go_1 = (GameObject){0};
@@ -77,23 +76,11 @@ GameObject *Load_LevelTree(GameObject *tree)
         go_1.color = node_1.color;
 
         // load GameObject
-        tree[12] = go_1;
-
+        tree[11 + i] = go_1;
     }
 
     // Block01
     {
-        // "SM_Cube7"
-        tree[2] = (GameObject){
-            "SM_Cube9",
-            (Transform2){
-                (Vector3){18.0f, 0.0f, 15.0f},
-                (Rotation2){Vector3Zero(), ROTATE_ZERO},
-                (Vector3){2.0f, 1.0f, 7.0f}},
-            LoadModel_GetAssetPath("resources/models/SM_Cube.obj"),
-            DARKGRAY};
-
-        tree[2].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(7, 2, GRAY, DARKGRAY));
 
         // "SM_Cube10"
         // "SM_QuarterCylinder3"
@@ -235,7 +222,7 @@ GameObject *Load_LevelTree(GameObject *tree)
         LoadModel_GetAssetPath("resources/models/SM_Cube.obj"),
         BLUE};
 
-    tree[11] = (GameObject){
+    tree[2] = (GameObject){
         "SM_Ramp",
         (Transform2){
             (Vector3){17.0f, 0.0f, 6.0f},
@@ -244,7 +231,7 @@ GameObject *Load_LevelTree(GameObject *tree)
         LoadModel_GetAssetPath("resources/models/SM_Ramp.obj"),
         GRAY};
 
-    tree[11].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 2, GRAY, DARKGRAY));
+    tree[2].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 2, GRAY, DARKGRAY));
 
     return tree;
 }
