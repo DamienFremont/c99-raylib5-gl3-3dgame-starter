@@ -1,7 +1,6 @@
+#pragma once
 #include <raylib.h>
 #include "eng_gameobject.h"
-
-#pragma once
 
 //---------------------------------------------------------
 // Types and Structures Definition

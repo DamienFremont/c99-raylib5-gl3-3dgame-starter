@@ -1,6 +1,5 @@
-#include <raylib.h>
-
 #pragma once
+#include <raylib.h>
 
 //---------------------------------------------------------
 // Module Functions Declaration

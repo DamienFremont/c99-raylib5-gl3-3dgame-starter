@@ -1,8 +1,7 @@
+#pragma once
 #include <raylib.h>
 #include <rlgl.h>
 #include <stdbool.h>
-
-#pragma once
 
 //---------------------------------------------------------
 // Types and Structures Definition

@@ -1,7 +1,6 @@
+#pragma once
 #include <cjson.h>
 #include "eng_scene.h"
-
-#pragma once
 
 //---------------------------------------------------------
 // Types and Structures Definition

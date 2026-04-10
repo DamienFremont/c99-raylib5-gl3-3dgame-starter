@@ -1,6 +1,5 @@
-#include <cjson.h>
-
 #pragma once
+#include <cjson.h>
 
 //---------------------------------------------------------
 // Types and Structures Definition

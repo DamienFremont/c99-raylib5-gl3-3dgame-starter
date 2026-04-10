@@ -1,7 +1,6 @@
+#pragma once
 #include "eng_input.h"
 #include "eng_gameobject.h"
-
-#pragma once
 
 //---------------------------------------------------------
 // Types and Structures Definition

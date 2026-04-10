@@ -1,3 +1,4 @@
+#pragma once
 
 //---------------------------------------------------------
 // Types and Structures Definition

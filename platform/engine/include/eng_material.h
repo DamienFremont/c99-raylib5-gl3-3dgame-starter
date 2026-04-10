@@ -1,5 +1,5 @@
+#pragma once
 #include <raylib.h>
-
 #include "eng_config.h"
 
 //---------------------------------------------------------

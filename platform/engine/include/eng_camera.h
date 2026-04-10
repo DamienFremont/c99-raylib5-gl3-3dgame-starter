@@ -1,7 +1,6 @@
+#pragma once
 #include <raylib.h>
 #include "eng_control.h"
-
-#pragma once
 
 //---------------------------------------------------------
 // Module Functions Declaration

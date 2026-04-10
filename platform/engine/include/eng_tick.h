@@ -1,12 +1,11 @@
-#include <time.h>
-
 #pragma once
-
-static int TIME_1_SECOND = 1 * 1000;
+#include <time.h>
 
 //---------------------------------------------------------
 // Types and Structures Definition
 //---------------------------------------------------------
+
+static int TIME_1_SECOND = 1 * 1000;
 
 typedef struct TickState
 {

@@ -1,6 +1,5 @@
-#include <stdbool.h>
-
 #pragma once
+#include <stdbool.h>
 
 //---------------------------------------------------------
 // Types and Structures Definition
