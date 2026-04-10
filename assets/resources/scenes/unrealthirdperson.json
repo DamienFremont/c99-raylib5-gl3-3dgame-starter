@@ -2,11 +2,11 @@
     "nodes": [
         {
             "id": 1,
-            "name": "SM_Cube4_BIG",
+            "name": "SM_Cube4",
             "model": "resources/models/SM_Cube.obj",
             "transform": {
                 "translation": { "x": 12, "y": 0, "z": 17 },
-                "rotation": { "x": 0, "y": 0, "z": 0 },
+                "rotation": { "axisCode": "YAW", "angle": 0 },
                 "scale": { "x": 6, "y": 2, "z": 5 }
             },
             "material": {
@@ -19,7 +19,7 @@
             "model": "resources/models/SM_Cube.obj",
             "transform": {
                 "translation": { "x": 18, "y": 0, "z": 15 },
-                "rotation": { "x": 0, "y": 0, "z": 0 },
+                "rotation": { "axisCode": "YAW", "angle": 0 },
                 "scale": { "x": 2, "y": 1, "z": 7 }
             },
             "material": {

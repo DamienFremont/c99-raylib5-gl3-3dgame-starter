@@ -6,6 +6,10 @@
 // Module specific Functions Definition
 //---------------------------------------------------------
 
+static bool IsStringEquals(const char* str1, const char* str2) {
+    return strcmp(str1, str2) == 0;
+}
+
 Color Parse_ColorJson(const cJSON* src) {
     int r = cJSON_GetObjectItemCaseSensitive(src, "r")->valueint;
     return (Color) {
@@ -22,6 +26,22 @@ NodeMaterial Parse_MaterialJson(const cJSON* src) {
     return tgt;
 }
 
+Vector3 Transform_Axis(const char* axisCode)
+{
+    if (IsStringEquals("YAW", axisCode)) {
+           return ROTATION_YAW;
+    }
+    return (Vector3){ 0.0f, 0.0f, 0.0f };
+}
+
+Rotation2 Parse_Rotation2Json(const cJSON *src) 
+{
+    return (Rotation2){
+        Transform_Axis(cJSON_GetObjectItem(src, "axisCode")->valuestring),
+        cJSON_GetObjectItem(src, "angle")->valueint
+    };
+}
+
 Transform2 Parse_Transform2Json(const cJSON *src) {
         cJSON* translation = cJSON_GetObjectItemCaseSensitive(src, "translation");
         cJSON* rotation = cJSON_GetObjectItemCaseSensitive(src, "rotation");
@@ -32,9 +52,7 @@ Transform2 Parse_Transform2Json(const cJSON *src) {
                     cJSON_GetObjectItemCaseSensitive(translation, "y")->valueint,
                     cJSON_GetObjectItemCaseSensitive(translation, "z")->valueint
                 },
-                (Rotation2){
-                    { 0.0f, 0.0f, 0.0f }, // TODO
-                    ROTATE_ZERO}, // TODO
+                Parse_Rotation2Json(rotation),
                 (Vector3){
                     cJSON_GetObjectItemCaseSensitive(scale, "x")->valueint,
                     cJSON_GetObjectItemCaseSensitive(scale, "y")->valueint,
