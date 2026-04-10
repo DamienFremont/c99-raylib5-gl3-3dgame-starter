@@ -7,17 +7,25 @@
 // Types and Structures Definition
 //---------------------------------------------------------
 
+typedef enum
+{
+    SCENE_NODES_SIZE = 128,
+    ALBEDO_STR_LENGTH = 256,
+    NAME_STR_LENGTH = 256,
+    MODEL_STR_LENGTH = 1024, // TODO: CHANGE TO PATH_STR_LENGTH
+} SceneConst;
+
 typedef struct NodeMaterial
 {
-    char albedo[256];
+    char albedo[ALBEDO_STR_LENGTH];
 } NodeMaterial;
 
 typedef struct Node3D
 {
     int id;
-    char name[256];
+    char name[NAME_STR_LENGTH];
     Transform2 transform;
-    char model[1024];
+    char model[MODEL_STR_LENGTH];
     Color color;
     NodeMaterial material;
 } Node3D;
