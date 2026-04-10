@@ -1,6 +1,7 @@
 #include "eng_assets.h"
 
 #include <raylib.h>
+#include <stdio.h>
 #include <string.h>
 
 //---------------------------------------------------------
@@ -16,7 +17,7 @@ static int GLSL_VERSION = 330;
 
 void InitAssets(const char *path, int glsl_ver)
 {
-    strcpy_s(RESOURCES_PATH, PATH_MAX, path);
+    strcpy_s(RESOURCES_PATH, sizeof(RESOURCES_PATH), path);
     GLSL_VERSION = glsl_ver;
 }
 

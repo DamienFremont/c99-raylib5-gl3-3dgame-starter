@@ -2,6 +2,7 @@
 
 #include <stdbool.h>
 #include <raylib.h>
+#include <stdio.h>
 #include <string.h>
 #include "eng_text.h"
 
@@ -17,7 +18,7 @@ static char consoleOut[CONSOLE_STR_LENGTH];
 
 void LogConsole(const char *str)
 {
-    strcpy_s(consoleOut, CONSOLE_STR_LENGTH, str);
+    strcpy_s(consoleOut, sizeof(consoleOut), str);
 }
 
 void DrawConsole()
