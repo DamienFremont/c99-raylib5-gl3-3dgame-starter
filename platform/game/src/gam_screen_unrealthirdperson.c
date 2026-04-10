@@ -24,6 +24,7 @@
 //---------------------------------------------------------
 
 // TODO: move to Load_LevelTree()
+const float PLAYER_SPEED = 0.12f;
 const float CAM_FOV = 60;
 const Vector3 CAM_TRS = {0, 1, 4};
 const Vector3 CAM_POS = {5, 1, 11};
@@ -41,6 +42,7 @@ RenderTexture2D *postproTarget;
 TickState animationTick = {0};
 TickState inputTick = {0};
 TickState renderTick = {0};
+TickState worldTick = {0};
 InputActions actions;
 Controller playerController;
 ModelAnimation playerAnimations[2];
@@ -59,7 +61,7 @@ void Draw_Pipeline_Default();
 void Draw_Pipeline_PostProcessing(const RenderTexture2D *target);
 void UpdatePlayerAnimation();
 void UpdatePlayerCamera();
-void UpdatePlayerPosition();
+void UpdatePlayerPosition(InputActions *actions);
 void UpdatePlayerInput();
 void UpdateRender();
 void Init_PostProcess(RenderTexture2D *target, bool postprocessing_enable);
@@ -84,9 +86,11 @@ void Init_UnrealThirdPerson(RenderTexture2D *target, AppConfiguration appConfig)
     animationTick = InitTick(25);
     inputTick = InitTick(120);
     renderTick = InitTick(30);
+    worldTick = InitTick(60);
     StartTick(&animationTick);
     StartTick(&inputTick);
     StartTick(&renderTick);
+    StartTick(&worldTick);
     // PLAYER
     // TODO: move to Load_LevelTree()
     playerController = (Controller){
@@ -101,7 +105,7 @@ int Update_UnrealThirdPerson()
 {
     // tick
     UpdatePlayerInput();
-    UpdatePlayerPosition();
+    UpdatePlayerPosition(&actions);
     UpdatePlayerAnimation();
     UpdatePlayerCamera();
     // TODO: UpdatePhysics();
@@ -171,8 +175,17 @@ void UpdatePlayerCamera()
     CameraFollow_Look(&camera, playerController);
 }
 
-void UpdatePlayerPosition()
+void UpdatePlayerPosition(InputActions *actions)
 {
+    if (!IsTickUpdate(&worldTick))
+        return;
+    else
+        UpdateTick(&worldTick);
+    // Moving
+    if (actions->MoveAction.State.Triggered == true)
+        ControlTank_Move(&playerController, actions->MoveAction.Value, PLAYER_SPEED, PLAYER_SPEED * 15);
+    // TODO: Jumping
+    // TODO: Looking
     // player
     gos[LEVEL_PLAYER_MODEL].transform.translation = (Vector3){
         playerController.position.x,
@@ -197,11 +210,6 @@ void SetupPlayerInputComponent(InputActions *actions)
         showConsole = !showConsole;
         actions->ConsoleAction.State.Completed = false;
     }
-    // TODO: Jumping
-    // Moving
-    if (actions->MoveAction.State.Triggered == true)
-        ControlTank_Move(&playerController, actions->MoveAction.Value, 0.08f, 0.08f * 15);
-    // TODO: Looking
 }
 
 void SetupPlayerAnimation(const InputActions *actions)
