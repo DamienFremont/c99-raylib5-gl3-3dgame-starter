@@ -2,6 +2,7 @@
 
 #include <raymath.h>
 #include <raylib.h>
+#include <string.h>
 #include "eng_assets.h"
 #include "eng_material.h"
 #include "eng_skybox.h"
@@ -59,7 +60,7 @@ GameObject *Load_LevelTree(GameObject *tree)
         Node3D node_1 = scene.nodes[i];
         Model model = LoadModel_GetAssetPath(node_1.model);
         GameObject go_1 = (GameObject){0};
-        strcpy(go_1.name, node_1.name);
+        strcpy_s(go_1.name, NAME_STR_LENGTH, node_1.name);
         go_1.transform = node_1.transform;
         go_1.model = model;
         go_1.color = node_1.color;

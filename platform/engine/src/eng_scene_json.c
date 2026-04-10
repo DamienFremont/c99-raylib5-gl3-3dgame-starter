@@ -1,6 +1,7 @@
 #include "eng_scene_json.h"
 
 #include <stdio.h>
+#include <string.h>
 
 //---------------------------------------------------------
 // Module specific Functions Definition
@@ -23,7 +24,7 @@ Color Parse_ColorJson(const cJSON *src)
 NodeMaterial Parse_MaterialJson(const cJSON *src)
 {
     NodeMaterial tgt = (NodeMaterial){0};
-    strcpy(tgt.albedo, cJSON_GetObjectItem(src, "albedo")->valuestring);
+    strcpy_s(tgt.albedo, ALBEDO_STR_LENGTH, cJSON_GetObjectItem(src, "albedo")->valuestring);
     return tgt;
 }
 
@@ -60,8 +61,8 @@ Transform2 Parse_Transform2Json(const cJSON *src)
 Node3D Parse_Node3dJson(const cJSON *json)
 {
     Node3D node3d = (Node3D){0};
-    strcpy(node3d.name, cJSON_GetObjectItem(json, "name")->valuestring);
-    strcpy(node3d.model, cJSON_GetObjectItem(json, "model")->valuestring);
+    strcpy_s(node3d.name, NAME_STR_LENGTH, cJSON_GetObjectItem(json, "name")->valuestring);
+    strcpy_s(node3d.model, MODEL_STR_LENGTH, cJSON_GetObjectItem(json, "model")->valuestring);
     node3d.transform = Parse_Transform2Json(cJSON_GetObjectItem(json, "transform"));
     // node3d.color = Parse_ColorJson(cJSON_GetObjectItem(json, "color")); // TODO: FIXME
     node3d.color = DARKGRAY;

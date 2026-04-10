@@ -2,6 +2,7 @@
 
 #include "eng_config.h"
 #include "eng_assets.h"
+#include <string.h>
 
 //---------------------------------------------------------
 // Module specific Functions Definition

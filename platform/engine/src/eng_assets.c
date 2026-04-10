@@ -1,6 +1,7 @@
 #include "eng_assets.h"
 
 #include <raylib.h>
+#include <string.h>
 
 //---------------------------------------------------------
 // Types and Structures Definition
@@ -15,7 +16,7 @@ static int GLSL_VERSION = 330;
 
 void InitAssets(const char *path, int glsl_ver)
 {
-    strcpy(RESOURCES_PATH, path);
+    strcpy_s(RESOURCES_PATH, PATH_MAX, path);
     GLSL_VERSION = glsl_ver;
 }
 
@@ -37,7 +38,7 @@ char *JoinPath(char *dest, const char *path1, const char *path2)
     // TODO: end with or start with '/'
     const char tmp[PATH_MAX];
     snprintf(tmp, sizeof(tmp), "%s/%s", path1, path2);
-    strcpy(dest, tmp);
+    strcpy_s(dest, PATH_MAX, tmp);
     return dest;
 }
 

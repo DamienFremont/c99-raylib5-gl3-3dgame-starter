@@ -28,7 +28,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,
                      int nCmdShow)
 {
     AppConfiguration cfg = InitConfig();
-    strcpy(cfg.res_path, GetExecutionPath().c_str());
+    strcpy_s(cfg.res_path, PATH_STR_LENGTH, GetExecutionPath().c_str());
     return main(cfg);
 }
 
@@ -39,7 +39,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 AppConfiguration InitConfig()
 {
     AppConfiguration appConfig = {0};
-    strcpy(appConfig.appName, "c99-raylib5-gl3-3dgame-starter");
+    strcpy_s(appConfig.appName, APPNAME_STR_LENGTH,"c99-raylib5-gl3-3dgame-starter");
     appConfig.glsl_version = 330;
     appConfig.screen_resolution = HD;
     appConfig.screen_windowed = true;

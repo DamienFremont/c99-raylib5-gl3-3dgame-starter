@@ -2,13 +2,14 @@
 
 #include <stdbool.h>
 #include <raylib.h>
+#include <string.h>
 #include "eng_text.h"
 
 //---------------------------------------------------------
 // Types and Structures Definition
 //---------------------------------------------------------
 
-static char consoleOut[999];
+static char consoleOut[CONSOLE_STR_LENGTH];
 
 //---------------------------------------------------------
 // Module specific Functions Definition
@@ -16,14 +17,14 @@ static char consoleOut[999];
 
 void LogConsole(const char *str)
 {
-    strcpy(consoleOut, str);
+    strcpy_s(consoleOut, CONSOLE_STR_LENGTH, str);
 }
 
 void DrawConsole()
 {
     // Init
-    const char line1[999] = "Console:";
-    const char line2[999];
+    const char line1[CONSOLE_STR_LENGTH] = "Console:";
+    const char line2[CONSOLE_STR_LENGTH];
     snprintf(line2, sizeof(line2), "> %s", consoleOut);
     // Draw 3D
     DrawGrid(50, 1.0f);
