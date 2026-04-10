@@ -1,4 +1,3 @@
-#include <cjson.h>
 #include <raylib.h>
 #include "eng_gameobject.h"
 
@@ -7,12 +6,6 @@
 //---------------------------------------------------------
 // Types and Structures Definition
 //---------------------------------------------------------
-
-typedef enum
-{
-    SCENE_NODES_SIZE = 128,
-    SCENE_JSON_FILE_BUFFER_SIZE = SCENE_NODES_SIZE * 1024
-} SceneConst;
 
 typedef struct NodeMaterial
 {
@@ -40,5 +33,4 @@ typedef struct Scene
 // Module Functions Declaration
 //---------------------------------------------------------
 
-cJSON* Read_SceneJsonFile(const char *fileName);
-Scene Parse_SceneJson(const cJSON *json);
+Scene LoadSceneFile(const char *fileName);

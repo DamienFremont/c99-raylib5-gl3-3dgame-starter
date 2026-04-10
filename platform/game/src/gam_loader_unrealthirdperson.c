@@ -50,13 +50,8 @@ GameObject *Load_LevelTree(GameObject *tree)
         LoadModel_GetAssetPath(playerModelPath),
         // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_lightmap
         DARKGRAY};
-
-    // parse the JSON data
-    cJSON* json = Read_SceneJsonFile("resources/scenes/unrealthirdperson.json");
-    // access the JSON data
-    Scene scene = Parse_SceneJson(json);
-    // free memory
-    cJSON_Delete(json);
+        
+    Scene scene = LoadSceneFile("resources/scenes/unrealthirdperson.json");
 
     for (int i = 0; i < scene.nodesSize; i++) 
     {
