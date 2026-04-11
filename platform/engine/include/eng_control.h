@@ -1,6 +1,5 @@
 #pragma once
 #include "eng_input.h"
-#include "eng_gameobject.h"
 
 //---------------------------------------------------------
 // Types and Structures Definition
@@ -16,5 +15,5 @@ typedef struct Controller
 // Module Functions Declaration
 //---------------------------------------------------------
 
-void ControlTank_Move(Controller *player, InputActionValue value, float char_speed, float char_rot);
-float ControlTank_ModelRotationAngle(Vector3 playerDirection);
+void ControlTankMove(Controller *player, InputActionValue value, float char_speed, float char_rot);
+float ControlTankGetRotationAngle(Vector3 playerDirection);

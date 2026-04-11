@@ -14,11 +14,11 @@ typedef enum
 // Module Functions Declaration
 //---------------------------------------------------------
 
-Shader LoadShader_GetShaderPath(const char *vsFileName, const char *fsFileName);
-Image LoadImage_GetAssetPath(const char *fileName);
-Model LoadModel_GetAssetPath();
-Texture2D LoadTexture_GetAssetPath(const char *fileName);
-ModelAnimation *LoadModelAnimations_GetAssetPath(const char *fileName);
+Shader LoadShaderFile(const char *vsFileName, const char *fsFileName);
+Image LoadImageFile(const char *fileName);
+Model LoadModelFile();
+Texture2D LoadTextureFile(const char *fileName);
+ModelAnimation *LoadAnimationFile(const char *fileName);
 
 void InitAssets(const char *path, int glsl_ver);
 char *GetAssetPath(char *tmp, const char *assetPath);

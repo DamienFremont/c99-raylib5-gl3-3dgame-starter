@@ -13,14 +13,14 @@ Model LoadSkyboxFromImage(Image img)
     Model skybox = LoadModelFromMesh(cube);
     // Load skybox shader and set required locations
     // NOTE: Some locations are automatically set at shader loading
-    skybox.materials[0].shader = LoadShader_GetShaderPath(
+    skybox.materials[0].shader = LoadShaderFile(
         "resources/shaders/glsl%i/skybox.vs",
         "resources/shaders/glsl%i/skybox.fs");
     SetShaderValue(skybox.materials[0].shader, GetShaderLocation(skybox.materials[0].shader, "environmentMap"), (int[1]){MATERIAL_MAP_CUBEMAP}, SHADER_UNIFORM_INT);
     SetShaderValue(skybox.materials[0].shader, GetShaderLocation(skybox.materials[0].shader, "doGamma"), (int[1]){0}, SHADER_UNIFORM_INT);
     SetShaderValue(skybox.materials[0].shader, GetShaderLocation(skybox.materials[0].shader, "vflipped"), (int[1]){0}, SHADER_UNIFORM_INT);
     // Load cubemap shader and setup required shader locations
-    Shader shdrCubemap = LoadShader_GetShaderPath(
+    Shader shdrCubemap = LoadShaderFile(
         "resources/shaders/glsl%i/cubemap.vs",
         "resources/shaders/glsl%i/cubemap.fs");
     SetShaderValue(shdrCubemap, GetShaderLocation(shdrCubemap, "equirectangularMap"), (int[1]){0}, SHADER_UNIFORM_INT);
@@ -29,7 +29,7 @@ Model LoadSkyboxFromImage(Image img)
     return skybox;
 }
 
-void Draw_3D_Skybox(Model skybox, Camera camera)
+void DrawSkybox(Model skybox, Camera camera)
 {
     BeginMode3D(camera);
     {

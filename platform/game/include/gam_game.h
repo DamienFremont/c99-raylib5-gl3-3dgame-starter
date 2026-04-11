@@ -1,6 +1,5 @@
-#include "eng_config.h"
-
 #pragma once
+#include "eng_config.h"
 
 //---------------------------------------------------------
 // Module Functions Declaration

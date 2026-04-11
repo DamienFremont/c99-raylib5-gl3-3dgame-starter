@@ -10,4 +10,4 @@
 // Module Functions Declaration
 //---------------------------------------------------------
 
-Scene Parse_SceneJson(const cJSON* json);
+Scene ParseSceneJson(const cJSON* json);

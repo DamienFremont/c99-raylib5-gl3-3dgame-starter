@@ -85,7 +85,7 @@ Node3D Parse_Node3dJson(const cJSON *json)
     return node3d;
 }
 
-Scene Parse_SceneJson(const cJSON *json)
+Scene ParseSceneJson(const cJSON *json)
 {
     Scene scene = (Scene){0};
     // read

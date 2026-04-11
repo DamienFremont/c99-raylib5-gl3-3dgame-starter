@@ -45,8 +45,8 @@ int main(AppConfiguration cfg)
 		SetConfigFlags(FLAG_MSAA_4X_HINT); // Enable Multi Sampling Anti Aliasing 4x (if available)
 	SetTargetFPS(cfg.fps_limit);
 	// window / fullscreen
-	cfg.screen_height = ENG_GetScreenHeight(cfg.screen_resolution);
-	cfg.screen_width = ENG_GetScreenWidth(cfg.screen_resolution);
+	cfg.screen_height = GetScreenHeightByResolutionType(cfg.screen_resolution);
+	cfg.screen_width = GetScreenWidthByResolutionTYpe(cfg.screen_resolution);
 	InitWindow(cfg.screen_width, cfg.screen_height, cfg.appName);
 	InitRenderResolution(cfg.screen_width, cfg.screen_height, cfg.postpro_texturefilter);
 	if (cfg.screen_windowed == false && IsWindowFullscreen() == false)

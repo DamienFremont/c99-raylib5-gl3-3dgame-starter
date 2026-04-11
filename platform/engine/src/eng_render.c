@@ -6,7 +6,7 @@
 // Module specific Functions Definition
 //---------------------------------------------------------
 
-void Draw_PostProcessing(Shader postproShader, const RenderTexture2D *target)
+void DrawPostProcessing(Shader postproShader, const RenderTexture2D *target)
 {
     BeginShaderMode(postproShader);
     {

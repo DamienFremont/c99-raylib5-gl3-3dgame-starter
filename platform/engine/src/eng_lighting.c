@@ -11,7 +11,7 @@ Shader LoadLighting()
 {
     // SOURCE: https://www.raylib.com/examples/shaders/loader.html?name=shaders_fog
     // Load shader and set up some uniforms
-    Shader shader = LoadShader_GetShaderPath(
+    Shader shader = LoadShaderFile(
         "resources/shaders/glsl%i/lighting.vs",
         "resources/shaders/glsl%i/fog.fs");
     shader.locs[SHADER_LOC_MATRIX_MODEL] = GetShaderLocation(shader, "matModel");

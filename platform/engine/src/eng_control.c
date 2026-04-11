@@ -1,12 +1,13 @@
 #include "eng_control.h"
 
 #include <raymath.h>
+#include "eng_gameobject.h"
 
 //---------------------------------------------------------
 // Module specific Functions Definition
 //---------------------------------------------------------
 
-void ControlTank_Move(Controller *player, InputActionValue value, float char_speed, float char_rot)
+void ControlTankMove(Controller *player, InputActionValue value, float char_speed, float char_rot)
 {
     float new_step = (char_speed) * (value.Axis2D.y);
 
@@ -22,7 +23,7 @@ void ControlTank_Move(Controller *player, InputActionValue value, float char_spe
     player->position = new_pos;
 }
 
-float ControlTank_ModelRotationAngle(Vector3 modelDirection)
+float ControlTankGetRotationAngle(Vector3 modelDirection)
 {
     const Vector2 LEVEL_DIRECTION_2D = {0, 1};
     Vector2 dir2D = {

@@ -13,7 +13,7 @@ const Vector3 PLAYER_HITBOX_BOUNDARY = {1.0f, 2.0f, 1.0f};
 // Module specific Functions Definition
 //---------------------------------------------------------
 
-void Draw_GameObject(GameObject go)
+void DrawGameObject(GameObject go)
 {
     DrawModelEx(go.model,
                 go.transform.translation,
@@ -23,7 +23,7 @@ void Draw_GameObject(GameObject go)
                 go.color);
 }
 
-void Draw_GameObject_Console(GameObject go)
+void DrawConsoleGameObject(GameObject go)
 {
     Vector3 trans = go.transform.translation;
     Vector3 scale = go.transform.scale;
@@ -41,7 +41,7 @@ void Draw_GameObject_Console(GameObject go)
                    (Vector3){scale.x, scale.y, scale.z}, GREEN);
 }
 
-void Draw_GameObject_PlayerHitBox(GameObject go)
+void DrawConsolePlayerHitBox(GameObject go)
 {
     Vector3 trans = go.transform.translation;
     // player hitbox

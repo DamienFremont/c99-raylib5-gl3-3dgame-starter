@@ -36,7 +36,7 @@ void InitLauncher()
 {
     int clockTriggerSec = 2;
     // load
-    Image image = LoadImage_GetAssetPath(LOGO_URI);
+    Image image = LoadImageFile(LOGO_URI);
     Texture2D texture = LoadTextureFromImage(image);
     UnloadImage(image);
     // start

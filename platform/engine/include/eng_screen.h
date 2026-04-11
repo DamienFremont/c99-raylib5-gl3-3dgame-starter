@@ -21,5 +21,5 @@ typedef enum
 // Module Functions Declaration
 //---------------------------------------------------------
 
-int ENG_GetScreenWidth(ScreenResolutionType type);
-int ENG_GetScreenHeight(ScreenResolutionType type);
+int GetScreenWidthByResolutionTYpe(ScreenResolutionType type);
+int GetScreenHeightByResolutionType(ScreenResolutionType type);

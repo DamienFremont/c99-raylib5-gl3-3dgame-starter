@@ -10,7 +10,7 @@
 Scene LoadSceneFile(const char *fileName)
 {
     cJSON* json = ReadJsonFile("resources/scenes/unrealthirdperson.json");
-    Scene scene = Parse_SceneJson(json);
+    Scene scene = ParseSceneJson(json);
     cJSON_Delete(json);
     return scene;
 }

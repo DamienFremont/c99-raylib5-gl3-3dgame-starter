@@ -43,7 +43,7 @@ char *JoinPath(char *dest, const char *path1, const char *path2)
     return dest;
 }
 
-Shader LoadShader_GetShaderPath(const char *vsFileName, const char *fsFileName)
+Shader LoadShaderFile(const char *vsFileName, const char *fsFileName)
 {
     char tmp[PATH_MAX];
     char tmp2[PATH_MAX];
@@ -52,28 +52,28 @@ Shader LoadShader_GetShaderPath(const char *vsFileName, const char *fsFileName)
         GetShaderPath(tmp2, fsFileName));
 }
 
-Image LoadImage_GetAssetPath(const char *fileName)
+Image LoadImageFile(const char *fileName)
 {
     char tmp[PATH_MAX];
     return LoadImage(
         GetAssetPath(tmp, fileName));
 }
 
-Model LoadModel_GetAssetPath(const char *fileName)
+Model LoadModelFile(const char *fileName)
 {
     char tmp[PATH_MAX];
     return LoadModel(
         GetAssetPath(tmp, fileName));
 }
 
-Texture2D LoadTexture_GetAssetPath(const char *fileName)
+Texture2D LoadTextureFile(const char *fileName)
 {
     char tmp[PATH_MAX];
     return LoadTexture(
         GetAssetPath(tmp, fileName));
 }
 
-ModelAnimation *LoadModelAnimations_GetAssetPath(const char *fileName)
+ModelAnimation *LoadAnimationFile(const char *fileName)
 {
     char tmp[PATH_MAX];
     int tmpAnimCount = 0;

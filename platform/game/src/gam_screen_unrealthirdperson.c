@@ -183,7 +183,7 @@ void UpdatePlayerPosition(InputActions *actions)
         UpdateTick(&worldTick);
     // Moving
     if (actions->MoveAction.State.Triggered == true)
-        ControlTank_Move(&playerController, actions->MoveAction.Value, PLAYER_SPEED, PLAYER_SPEED * 15);
+        ControlTankMove(&playerController, actions->MoveAction.Value, PLAYER_SPEED, PLAYER_SPEED * 15);
     // TODO: Jumping
     // TODO: Looking
     // player
@@ -193,7 +193,7 @@ void UpdatePlayerPosition(InputActions *actions)
         playerController.position.z};
     gos[LEVEL_PLAYER_MODEL].transform.rotation = (Rotation2){
         ROTATION_YAW,
-        ControlTank_ModelRotationAngle(playerController.direction)};
+        ControlTankGetRotationAngle(playerController.direction)};
     // shadow
     gos[LEVEL_PLAYER_SHADOW].transform.translation = (Vector3){
         playerController.position.x,
@@ -239,11 +239,11 @@ void Draw_3D_Console()
 {
     for (size_t i = 0; i < LEVEL_SIZE; i++)
     {
-        Draw_GameObject(gos[i]);
-        Draw_GameObject_Console(gos[i]);
+        DrawGameObject(gos[i]);
+        DrawConsoleGameObject(gos[i]);
     }
     DrawGrid(50, 1.0f);
-    Draw_GameObject_PlayerHitBox(gos[0]);
+    DrawConsolePlayerHitBox(gos[0]);
     // TODO: move to Load_LevelTree()
     // light spot
     DrawCubeWiresV(LIGHT_TRANSFORM, (Vector3){1.0f, 1.0f, 1.0f}, YELLOW);
@@ -278,12 +278,12 @@ void Draw_3D_Models()
         if (showConsole == 1)
         {
             for (size_t i = 0; i < LEVEL_SIZE; i++)
-                Draw_GameObject(gos[i]);
+                DrawGameObject(gos[i]);
             Draw_3D_Console();
         }
         else
             for (size_t i = 0; i < LEVEL_SIZE; i++)
-                Draw_GameObject(gos[i]);
+                DrawGameObject(gos[i]);
     }
     EndMode3D();
 }
@@ -294,7 +294,7 @@ void Draw_Pipeline_Default()
     {
         ClearBackground(RAYWHITE);
         // Stage 1/2 Geometry
-        Draw_3D_Skybox(skybox, camera);
+        DrawSkybox(skybox, camera);
         Draw_3D_Models();
         // Stage 2/2 2D
         Draw_2D();
@@ -308,7 +308,7 @@ void Draw_Pipeline_PostProcessing(const RenderTexture2D *target)
     {
         ClearBackground(RAYWHITE);
         // Stage 1/3 Geometry
-        Draw_3D_Skybox(skybox, camera);
+        DrawSkybox(skybox, camera);
         Draw_3D_Models();
     }
     EndTextureMode();
@@ -316,7 +316,7 @@ void Draw_Pipeline_PostProcessing(const RenderTexture2D *target)
     {
         ClearBackground(RAYWHITE);
         // Stage 2/3 PostProcessing
-        Draw_PostProcessing(postproShader, target);
+        DrawPostProcessing(postproShader, target);
         // Stage 3/3 2D
         Draw_2D();
     }
@@ -331,15 +331,15 @@ void Init_PostProcess(RenderTexture2D *target, bool postprocessing_enable)
     // TODO: move to Load_LevelTree()
     // SOURCE: https://www.raylib.com/examples/shaders/loader.html?name=shaders_postprocessing
     postpro = postprocessing_enable;
-    postproShader = LoadShader_GetShaderPath(0, shaderPath);
+    postproShader = LoadShaderFile(0, shaderPath);
     postproTarget = target;
 }
 
 // TODO: move to Load_LevelTree()
 void Init_Animation()
 {
-    playerAnimations[0] = LoadModelAnimations_GetAssetPath("resources/animations/Idle.m3d")[0];
-    playerAnimations[1] = LoadModelAnimations_GetAssetPath("resources/animations/Running.m3d")[0];
+    playerAnimations[0] = LoadAnimationFile("resources/animations/Idle.m3d")[0];
+    playerAnimations[1] = LoadAnimationFile("resources/animations/Running.m3d")[0];
     animCurrentFrame = 0;
 }
 

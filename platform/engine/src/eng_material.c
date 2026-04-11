@@ -13,7 +13,7 @@ Shader TileShader(Vector2 tiling) // TODO: REMOVEME
 {
     // Set the texture tiling using a shader
     const float tilingArr[2] = {tiling.x, tiling.y};
-    Shader shader = LoadShader_GetShaderPath(
+    Shader shader = LoadShaderFile(
         0,
         "resources/shaders/glsl%i/tiling.fs");
     SetShaderValue(shader, GetShaderLocation(shader, "tiling"), tilingArr, SHADER_UNIFORM_VEC2);

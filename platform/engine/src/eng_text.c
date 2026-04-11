@@ -1,4 +1,5 @@
 #include "eng_text.h"
+#include <rlgl.h>
 
 //---------------------------------------------------------
 // Module specific Functions Definition

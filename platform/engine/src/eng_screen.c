@@ -21,12 +21,12 @@ ScreenResolution getScreen(ScreenResolutionType type);
 // Module specific Functions Definition
 //---------------------------------------------------------
 
-int ENG_GetScreenWidth(ScreenResolutionType type)
+int GetScreenWidthByResolutionTYpe(ScreenResolutionType type)
 {
     return getScreen(type).width;
 }
 
-int ENG_GetScreenHeight(ScreenResolutionType type)
+int GetScreenHeightByResolutionType(ScreenResolutionType type)
 {
     return getScreen(type).height;
 }
