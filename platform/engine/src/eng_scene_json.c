@@ -94,12 +94,8 @@ Scene ParseSceneJson(const cJSON *json)
     }
     // parse
     Node3D nodes[SCENE_NODES_SIZE] = {0};
-    cJSON *node = NULL;
     for (int i = 0; i < size; i++)
-    {
-        node = cJSON_GetArrayItem(array, i);
-        nodes[i] = Parse_Node3dJson(node);
-    }
+        nodes[i] = Parse_Node3dJson(cJSON_GetArrayItem(array, i));
     scene.nodes = nodes;
     scene.nodesSize = size;
     return scene;
