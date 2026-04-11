@@ -53,7 +53,6 @@ GameObject *Load_LevelTree(GameObject *tree)
         DARKGRAY};
         
     Scene scene = LoadSceneFile("resources/scenes/unrealthirdperson.json");
-
     for (int i = 0; i < scene.nodesSize; i++) 
     {
         // create GameObject
@@ -64,14 +63,7 @@ GameObject *Load_LevelTree(GameObject *tree)
         go_1.transform = node_1.transform;
         go_1.model = model;
         go_1.color = node_1.color;
-
-        if( IsCheckboard(node_1.material.albedo)) {
-            go_1.model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = CheckboardTexture2D(
-                node_1.transform.scale.x,
-                node_1.transform.scale.y,
-                node_1.transform.scale.z);
-        }
-
+        go_1.model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = node_1.texture;
         // load GameObject
         tree[11 + i] = go_1;
     }

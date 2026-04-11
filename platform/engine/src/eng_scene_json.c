@@ -1,7 +1,7 @@
 #include "eng_scene_json.h"
-
 #include <stdio.h>
 #include <string.h>
+#include "eng_material.h"
 
 //---------------------------------------------------------
 // Module specific Functions Definition
@@ -12,25 +12,41 @@ static bool IsStringEquals(const char *str1, const char *str2)
     return strcmp(str1, str2) == 0;
 }
 
-Color Parse_ColorJson(const cJSON *src)
+// DEPRECATED TODO: REMOVE ME
+ Color Parse_ColorJson(const cJSON *src)
+ {
+     return (Color){
+         cJSON_GetObjectItem(src, "r")->valueint,
+         cJSON_GetObjectItem(src, "g")->valueint,
+         cJSON_GetObjectItem(src, "b")->valueint,
+         cJSON_GetObjectItem(src, "a")->valueint};
+ }
+
+Color Transform_Color(const char *src)
 {
-    return (Color){
-        cJSON_GetObjectItem(src, "r")->valueint,
-        cJSON_GetObjectItem(src, "g")->valueint,
-        cJSON_GetObjectItem(src, "b")->valueint,
-        cJSON_GetObjectItem(src, "a")->valueint};
+    if (IsStringEquals("BLUE", src))
+        return BLUE;
+    if (IsStringEquals("GRAY", src))
+        return GRAY;
+    if (IsStringEquals("DARKGRAY", src))
+        return DARKGRAY;
+    return GRAY;
 }
 
-NodeMaterial Parse_MaterialJson(const cJSON *src)
+Texture2D Transform_Material(const char *src, Vector3 scale)
 {
-    NodeMaterial tgt = (NodeMaterial){0};
-    strcpy_s(tgt.albedo, sizeof(tgt.albedo), cJSON_GetObjectItem(src, "albedo")->valuestring);
-    return tgt;
+    if( IsCheckboard(src)) {
+        return CheckboardTexture2D(
+            scale.x,
+            scale.y,
+            scale.z);
+    }
+    return LoadTextureFromImage(GenImageColor(16,16,GRAY));
 }
 
-Vector3 Transform_Axis(const char *axisCode)
+Vector3 Transform_Axis(const char *axis)
 {
-    if (IsStringEquals("YAW", axisCode))
+    if (IsStringEquals("YAW", axis))
         return ROTATION_YAW;
     return (Vector3){0.0f, 0.0f, 0.0f};
 }
@@ -38,7 +54,7 @@ Vector3 Transform_Axis(const char *axisCode)
 Rotation2 Parse_Rotation2Json(const cJSON *src)
 {
     return (Rotation2){
-        Transform_Axis(cJSON_GetObjectItem(src, "axisCode")->valuestring),
+        Transform_Axis(cJSON_GetObjectItem(src, "axis")->valuestring),
         cJSON_GetObjectItem(src, "angle")->valueint};
 }
 
@@ -64,9 +80,8 @@ Node3D Parse_Node3dJson(const cJSON *json)
     strcpy_s(node3d.name, sizeof(node3d.name), cJSON_GetObjectItem(json, "name")->valuestring);
     strcpy_s(node3d.model, sizeof(node3d.model), cJSON_GetObjectItem(json, "model")->valuestring);
     node3d.transform = Parse_Transform2Json(cJSON_GetObjectItem(json, "transform"));
-    // node3d.color = Parse_ColorJson(cJSON_GetObjectItem(json, "color")); // TODO: FIXME
-    node3d.color = DARKGRAY;
-    node3d.material = Parse_MaterialJson(cJSON_GetObjectItem(json, "material"));
+    node3d.color = Transform_Color(cJSON_GetObjectItem(json, "color")->valuestring);
+    node3d.texture = Transform_Material(cJSON_GetObjectItem(json, "texture")->valuestring, node3d.transform.scale);
     return node3d;
 }
 

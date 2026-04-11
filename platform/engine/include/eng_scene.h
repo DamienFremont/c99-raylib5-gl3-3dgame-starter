@@ -9,15 +9,9 @@
 typedef enum
 {
     SCENE_NODES_SIZE = 128,
-    ALBEDO_STR_LENGTH = 256,
     NAME_STR_LENGTH = 256,
     MODEL_STR_LENGTH = 1024, // TODO: CHANGE TO PATH_STR_LENGTH
 } SceneConst;
-
-typedef struct NodeMaterial
-{
-    char albedo[ALBEDO_STR_LENGTH];
-} NodeMaterial;
 
 typedef struct Node3D
 {
@@ -26,7 +20,7 @@ typedef struct Node3D
     Transform2 transform;
     char model[MODEL_STR_LENGTH];
     Color color;
-    NodeMaterial material;
+    Texture2D texture;
 } Node3D;
 
 typedef struct Scene

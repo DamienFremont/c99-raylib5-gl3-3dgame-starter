@@ -1,4 +1,9 @@
 {
+    "extResources": [
+        { "type": "color", "id": "GRAY" },
+        { "type": "texture", "id": "CHECKBOARD" },
+        { "type": "axis", "id": "YAW" }
+    ],
     "nodes": [
         {
             "id": 1,
@@ -6,12 +11,11 @@
             "model": "resources/models/SM_Cube.obj",
             "transform": {
                 "translation": { "x": 12, "y": 0, "z": 17 },
-                "rotation": { "axisCode": "YAW", "angle": 0 },
+                "rotation": { "axis": "YAW", "angle": 0 },
                 "scale": { "x": 6, "y": 2, "z": 5 }
             },
-            "material": {
-                "albedo": "CHECKBOARD"
-            }
+            "color": "GRAY",
+            "texture": "CHECKBOARD"
         },
         {
             "id": 2,
@@ -19,12 +23,11 @@
             "model": "resources/models/SM_Cube.obj",
             "transform": {
                 "translation": { "x": 18, "y": 0, "z": 15 },
-                "rotation": { "axisCode": "YAW", "angle": 0 },
+                "rotation": { "axis": "YAW", "angle": 0 },
                 "scale": { "x": 2, "y": 1, "z": 7 }
             },
-            "material": {
-                "albedo": "CHECKBOARD"
-            }
+            "color": "GRAY",
+            "texture": "CHECKBOARD"
         }
     ]
 }
