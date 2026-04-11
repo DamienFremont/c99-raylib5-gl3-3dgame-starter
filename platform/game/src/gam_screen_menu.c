@@ -25,13 +25,13 @@ static Rectangle BUTTON_SMALL = {
 // Module specific Functions Definition
 //---------------------------------------------------------
 
-void Init_Menu()
+void Init_Menu(void)
 {
     currentProcess = -1;
     mouseHoverRec = -1;
 }
 
-int Update_Menu()
+int Update_Menu(void)
 {
     // Mouse toggle group logic
     if (CheckCollisionPointRec(GetMousePosition(), BUTTON_MEDIUM))
@@ -73,7 +73,7 @@ void Draw_Button(const char *text, int posX, int posY, Rectangle buttonRec, int 
     DrawText(text, textX, textY, fontSize, textColor);
 }
 
-void Draw_Menu()
+void Draw_Menu(void)
 {
     BeginDrawing();
     {
@@ -160,6 +160,6 @@ void Draw_Menu()
     EndDrawing();
 }
 
-void Unload_Menu()
+void Unload_Menu(void)
 {
 }

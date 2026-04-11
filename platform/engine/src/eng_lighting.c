@@ -7,7 +7,7 @@
 // Module specific Functions Definition
 //---------------------------------------------------------
 
-Shader LoadLighting()
+Shader LoadLighting(void)
 {
     // SOURCE: https://www.raylib.com/examples/shaders/loader.html?name=shaders_fog
     // Load shader and set up some uniforms

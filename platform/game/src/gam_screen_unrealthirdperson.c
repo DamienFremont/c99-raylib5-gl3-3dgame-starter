@@ -14,7 +14,6 @@
 #include "eng_gameobject.h"
 #include "eng_text.h"
 #include "eng_tick.h"
-#include "eng_console.h"
 #include "eng_lighting.h"
 #include "eng_skybox.h"
 #include "eng_render.h"
@@ -57,16 +56,16 @@ unsigned int animCurrentFrame;
 // Local Functions Declaration
 //---------------------------------------------------------
 
-void Draw_Pipeline_Default();
+void Draw_Pipeline_Default(void);
 void Draw_Pipeline_PostProcessing(const RenderTexture2D *target);
-void UpdatePlayerAnimation();
-void UpdatePlayerCamera();
+void UpdatePlayerAnimation(void);
+void UpdatePlayerCamera(void);
 void UpdatePlayerPosition(InputActions *actions);
-void UpdatePlayerInput();
-void UpdateRender();
+void UpdatePlayerInput(void);
+void UpdateRender(void);
 void Init_PostProcess(RenderTexture2D *target, bool postprocessing_enable);
-void Init_Animation();
-void Init_Lighting();
+void Init_Animation(void);
+void Init_Lighting(void);
 
 //---------------------------------------------------------
 // Module specific Functions Definition
@@ -101,7 +100,7 @@ void Init_UnrealThirdPerson(RenderTexture2D *target, AppConfiguration appConfig)
     InitInputActions(&actions);
 }
 
-int Update_UnrealThirdPerson()
+int Update_UnrealThirdPerson(void)
 {
     // tick
     UpdatePlayerInput();
@@ -128,7 +127,7 @@ void Draw_UnrealThirdPerson(const RenderTexture2D *target)
     Draw_Pipeline_Default();
 }
 
-void Unload_UnrealThirdPerson()
+void Unload_UnrealThirdPerson(void)
 {
     // skybox
     UnloadSkybox(skybox);
@@ -146,12 +145,12 @@ void Unload_UnrealThirdPerson()
 // Local Functions Definition
 //---------------------------------------------------------
 
-void UpdateRender()
+void UpdateRender(void)
 {
     UpdateLighting(light_shader, camera);
 }
 
-void UpdatePlayerAnimation()
+void UpdatePlayerAnimation(void)
 {
     if (!IsTickUpdate(&animationTick))
         return;
@@ -168,7 +167,7 @@ void UpdatePlayerAnimation()
     UpdateModelAnimation(gos[LEVEL_PLAYER_SHADOW].model, anim, animCurrentFrame);
 }
 
-void UpdatePlayerCamera()
+void UpdatePlayerCamera(void)
 {
     // CameraThirdPerson_Look(&camera, playerController);
     // CameraSecondPerson_Look(&camera, playerController);
@@ -219,7 +218,7 @@ void SetupPlayerAnimation(const InputActions *actions)
         animIndex = 1;
 }
 
-void UpdatePlayerInput()
+void UpdatePlayerInput(void)
 {
     if (!IsTickUpdate(&inputTick))
         return;
@@ -230,12 +229,12 @@ void UpdatePlayerInput()
     SetupPlayerAnimation(&actions);
 }
 
-void UpdatePhysics()
+void UpdatePhysics(void)
 {
     // TODO: https://www.raylib.com/examples/models/loader.html?name=models_box_collisions
 }
 
-void Draw_3D_Console()
+void Draw_3D_Console(void)
 {
     for (size_t i = 0; i < LEVEL_SIZE; i++)
     {
@@ -249,7 +248,7 @@ void Draw_3D_Console()
     DrawCubeWiresV(LIGHT_TRANSFORM, (Vector3){1.0f, 1.0f, 1.0f}, YELLOW);
 }
 
-void Draw_2D()
+void Draw_2D(void)
 {
     if (showConsole == 1)
     {
@@ -271,7 +270,7 @@ void Draw_2D()
     }
 }
 
-void Draw_3D_Models()
+void Draw_3D_Models(void)
 {
     BeginMode3D(camera);
     {
@@ -288,7 +287,7 @@ void Draw_3D_Models()
     EndMode3D();
 }
 
-void Draw_Pipeline_Default()
+void Draw_Pipeline_Default(void)
 {
     BeginDrawing();
     {
@@ -336,14 +335,14 @@ void Init_PostProcess(RenderTexture2D *target, bool postprocessing_enable)
 }
 
 // TODO: move to Load_LevelTree()
-void Init_Animation()
+void Init_Animation(void)
 {
     playerAnimations[0] = LoadAnimationFile("resources/animations/Idle.m3d")[0];
     playerAnimations[1] = LoadAnimationFile("resources/animations/Running.m3d")[0];
     animCurrentFrame = 0;
 }
 
-void Init_Lighting()
+void Init_Lighting(void)
 {
     // TODO: move to Load_LevelTree()
     light_shader = LoadLighting();

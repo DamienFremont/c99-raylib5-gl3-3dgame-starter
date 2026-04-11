@@ -4,7 +4,7 @@
 // Module Functions Declaration
 //---------------------------------------------------------
 
-void InitLauncher();
-int UpdateLauncher();
-void DrawLauncher();
-void UnloadLauncher();
+void InitLauncher(void);
+int UpdateLauncher(void);
+void DrawLauncher(void);
+void UnloadLauncher(void);

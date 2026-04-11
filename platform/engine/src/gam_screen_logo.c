@@ -32,7 +32,7 @@ Launcher_State state = {0};
 // Module specific Functions Definition
 //---------------------------------------------------------
 
-void InitLauncher()
+void InitLauncher(void)
 {
     int clockTriggerSec = 2;
     // load
@@ -47,7 +47,7 @@ void InitLauncher()
     state.startClock = clock();
 }
 
-int UpdateLauncher()
+int UpdateLauncher(void)
 {
     // compute
     clock_t difference = clock() - state.startClock;
@@ -60,7 +60,7 @@ int UpdateLauncher()
     return SCREEN_CURR;
 }
 
-void DrawLauncher()
+void DrawLauncher(void)
 {
     BeginDrawing();
     {
@@ -79,7 +79,7 @@ void DrawLauncher()
     EndDrawing();
 }
 
-void UnloadLauncher()
+void UnloadLauncher(void)
 {
     UnloadTexture(state.screenTexture);
 }

@@ -14,4 +14,4 @@ typedef enum
 //---------------------------------------------------------
 
 void LogConsole(const char* str);
-void DrawConsole();
+void DrawConsole(void);
