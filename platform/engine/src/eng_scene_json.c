@@ -7,11 +7,6 @@
 // Module specific Functions Definition
 //---------------------------------------------------------
 
-static bool IsStringEquals(const char *str1, const char *str2)
-{
-    return strcmp(str1, str2) == 0;
-}
-
 // DEPRECATED TODO: REMOVE ME
  Color Parse_ColorJson(const cJSON *src)
  {
@@ -24,18 +19,18 @@ static bool IsStringEquals(const char *str1, const char *str2)
 
 Color Transform_Color(const char *src)
 {
-    if (IsStringEquals("BLUE", src))
+    if (strcmp("BLUE", src) == 0)
         return BLUE;
-    if (IsStringEquals("GRAY", src))
+    if (strcmp("GRAY", src) == 0)
         return GRAY;
-    if (IsStringEquals("DARKGRAY", src))
+    if (strcmp("DARKGRAY", src) == 0)
         return DARKGRAY;
     return GRAY;
 }
 
 Texture2D Transform_Texture(const char *src, Vector3 scale)
 {
-    if (IsStringEquals("CHECKBOARD", src)) {
+    if (strcmp("CHECKBOARD", src) == 0) {
         return CheckboardTexture2D(
             scale.x,
             scale.y,
@@ -46,7 +41,7 @@ Texture2D Transform_Texture(const char *src, Vector3 scale)
 
 Vector3 Transform_Axis(const char *axis)
 {
-    if (IsStringEquals("YAW", axis))
+    if (strcmp("YAW", axis) == 0)
         return ROTATION_YAW;
     return (Vector3){0.0f, 0.0f, 0.0f};
 }
