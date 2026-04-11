@@ -9,10 +9,10 @@ Vector3 cameraDistance;
 // Module specific Functions Definition
 //---------------------------------------------------------
 
-Camera InitCamera(float fovy, Vector3 distance)
+Camera3D InitCamera(float fovy, Vector3 distance)
 {
     cameraDistance = distance;
-    Camera cam = {0};
+    Camera3D cam = {0};
     cam.position = (Vector3){0.0f, 0.0f, 0.0f}; // Camera position
     cam.target = (Vector3){0.0f, 0.0f, 0.0f};   // Camera looking at point
     cam.up = (Vector3){0.0f, 1.0f, 0.0f};       // Camera up vector (rotation towards target)
@@ -22,7 +22,7 @@ Camera InitCamera(float fovy, Vector3 distance)
 }
 
 // TODO: USE ME !!!
-void CameraSecondPerson_Look(Camera *camera, Controller player)
+void CameraSecondPerson_Look(Camera3D *camera, Controller player)
 {
     const Vector3 tgt = player.position;
     // camera->position // DO NOTHING
@@ -33,7 +33,7 @@ void CameraSecondPerson_Look(Camera *camera, Controller player)
 }
 
 // TODO: USE ME !!!
-void CameraThirdPerson_Look(Camera *camera, Controller player)
+void CameraThirdPerson_Look(Camera3D *camera, Controller player)
 {
     const Vector3 tgt = player.position;
     camera->position = (Vector3){
@@ -46,7 +46,7 @@ void CameraThirdPerson_Look(Camera *camera, Controller player)
         tgt.z};
 }
 
-void CameraFollow_Look(Camera *camera, Controller player)
+void CameraFollow_Look(Camera3D *camera, Controller player)
 {
     Vector3 tgt = player.position;
     Vector3 pos = camera->position;

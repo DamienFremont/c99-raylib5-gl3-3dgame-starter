@@ -6,6 +6,6 @@
 //---------------------------------------------------------
 
 Shader LoadLighting();
-void UpdateLighting(Shader shader, Camera camera);
+void UpdateLighting(Shader shader, Camera3D camera);
 void UnloadLighting(Shader shader);
 Model SetModelLighting(Model model, const Shader shader);

@@ -30,7 +30,7 @@ const Vector3 CAM_TRS = {0, 1, 4};
 const Vector3 CAM_POS = {5, 1, 11};
 const Vector3 LIGHT_TRANSFORM = {0, 9, 39};
 const Color LIGHT_COLOR = {255, 255, 230, 255}; // YELLOW
-Camera camera;
+Camera3D camera;
 Model skybox;
 Shader light_shader = {0};
 Light light_point = {0};

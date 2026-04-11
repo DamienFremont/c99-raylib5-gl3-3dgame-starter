@@ -29,7 +29,7 @@ Model LoadSkyboxFromImage(Image img)
     return skybox;
 }
 
-void DrawSkybox(Model skybox, Camera camera)
+void DrawSkybox(Model skybox, Camera3D camera)
 {
     BeginMode3D(camera);
     {

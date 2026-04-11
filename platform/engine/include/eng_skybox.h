@@ -6,5 +6,5 @@
 //---------------------------------------------------------
 
 Model LoadSkyboxFromImage(Image img);
-void DrawSkybox(Model skybox, Camera camera);
+void DrawSkybox(Model skybox, Camera3D camera);
 void UnloadSkybox(Model skybox);
