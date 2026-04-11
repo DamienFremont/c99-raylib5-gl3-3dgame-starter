@@ -20,10 +20,6 @@ Shader TileShader(Vector2 tiling) // TODO: REMOVEME
     return shader;
 }
 
-bool IsCheckboard(const char *str) {
-    return strcmp(str, "CHECKBOARD") == 0;
-}
-
 Texture2D CheckboardTexture2D(float x, float y, float z) 
 {
     int checkByMeter = 1;
