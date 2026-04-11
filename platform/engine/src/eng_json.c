@@ -1,16 +1,12 @@
 #include "eng_json.h"
 #include <stdio.h>
+#include "eng_assets.h"
 
 //---------------------------------------------------------
 // Module specific Functions Definition
 //---------------------------------------------------------
 
-typedef enum
-{
-    PATH_MAX = 260, // TODO: MOVEME
-} ResourceUtils;
-
-cJSON* Read_JsonFile(const char *fileName) {
+cJSON* ReadJsonFile(const char *fileName) {
     char path[PATH_MAX];
     GetAssetPath(path, fileName);
     // open the file

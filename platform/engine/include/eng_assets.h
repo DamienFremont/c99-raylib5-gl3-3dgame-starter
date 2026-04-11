@@ -7,7 +7,7 @@
 
 typedef enum
 {
-    PATH_MAX = 260,
+    PATH_MAX = 1024,
 } ResourceUtils;
 
 //---------------------------------------------------------
@@ -21,8 +21,8 @@ Texture2D LoadTexture_GetAssetPath(const char *fileName);
 ModelAnimation *LoadModelAnimations_GetAssetPath(const char *fileName);
 
 void InitAssets(const char *path, int glsl_ver);
-char *GetAssetPath(char *tmp, const char *assetpath);
-char *GetShaderPath(char *tmp, const char *assetpath);
+char *GetAssetPath(char *tmp, const char *assetPath);
+char *GetShaderPath(char *tmp, const char *assetPath);
 char *JoinPath(char *dest, const char *path_1, const char *path_2);
 
 

@@ -14,4 +14,4 @@ typedef enum
 // Module Functions Declaration
 //---------------------------------------------------------
 
-cJSON* Read_JsonFile(const char *fileName);
+cJSON* ReadJsonFile(const char *fileName);

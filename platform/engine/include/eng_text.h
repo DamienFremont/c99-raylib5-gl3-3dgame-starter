@@ -1,6 +1,5 @@
 #pragma once
 #include <raylib.h>
-#include <rlgl.h>
 #include <stdbool.h>
 
 //---------------------------------------------------------
@@ -23,7 +22,7 @@ typedef enum
 typedef enum
 {
     FONT_LINE_SPACING_1 = 0
-} FontSpacing;
+} FontLineSpacing;
 
 typedef enum
 {

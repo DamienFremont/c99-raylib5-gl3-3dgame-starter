@@ -21,16 +21,16 @@ void InitAssets(const char *path, int glsl_ver)
     GLSL_VERSION = glsl_ver;
 }
 
-char *GetAssetPath(char *tmp, const char *assetpath)
+char *GetAssetPath(char *tmp, const char *assetPath)
 {
-    JoinPath(tmp, RESOURCES_PATH, assetpath);
+    JoinPath(tmp, RESOURCES_PATH, assetPath);
     return tmp;
 }
 
 // TODO
-char *GetShaderPath(char *tmp, const char *assetpath)
+char *GetShaderPath(char *tmp, const char *assetPath)
 {
-    JoinPath(tmp, RESOURCES_PATH, TextFormat(assetpath, GLSL_VERSION));
+    JoinPath(tmp, RESOURCES_PATH, TextFormat(assetPath, GLSL_VERSION));
     return tmp;
 }
 
