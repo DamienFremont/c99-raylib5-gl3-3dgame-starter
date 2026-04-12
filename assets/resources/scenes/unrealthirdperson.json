@@ -28,6 +28,17 @@
             },
             "color": "GRAY",
             "texture": "CHECKBOARD"
+        },
+        {
+            "id": 5,
+            "name": "SM_ChamferCube",
+            "model": "resources/models/SM_Cube.obj",
+            "transform": {
+                "translation": { "x": 11, "y": 0, "z": 20 },
+                "rotation": { "axis": "YAW", "angle": 0 },
+                "scale": { "x": 1, "y": 1, "z": 1 }
+            },
+            "color": "BLUE"
         }
     ]
 }

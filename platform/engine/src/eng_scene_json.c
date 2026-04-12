@@ -28,17 +28,6 @@ Color Transform_Color(const char *src)
     return GRAY;
 }
 
-Texture2D Transform_Texture(const char *src, Vector3 scale)
-{
-    if (strcmp("CHECKBOARD", src) == 0) {
-        return CheckboardTexture2D(
-            scale.x,
-            scale.y,
-            scale.z);
-    }
-    return LoadTextureFromImage(GenImageColor(16,16,GRAY));
-}
-
 Vector3 Transform_Axis(const char *axis)
 {
     if (strcmp("YAW", axis) == 0)
@@ -76,7 +65,8 @@ Node3D Parse_Node3dJson(const cJSON *json)
     strcpy_s(node3d.model, sizeof(node3d.model), cJSON_GetObjectItem(json, "model")->valuestring);
     node3d.transform = Parse_Transform2Json(cJSON_GetObjectItem(json, "transform"));
     node3d.color = Transform_Color(cJSON_GetObjectItem(json, "color")->valuestring);
-    node3d.texture = Transform_Texture(cJSON_GetObjectItem(json, "texture")->valuestring, node3d.transform.scale);
+    if(cJSON_HasObjectItem(json, "texture"))
+        strcpy_s(node3d.texture, sizeof(node3d.texture), cJSON_GetObjectItem(json, "texture")->valuestring);
     return node3d;
 }
 

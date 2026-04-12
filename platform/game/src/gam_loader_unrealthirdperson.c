@@ -63,14 +63,17 @@ GameObject *Load_LevelTree(GameObject *tree)
         go_1.transform = node_1.transform;
         go_1.model = model;
         go_1.color = node_1.color;
-        go_1.model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = node_1.texture;
+        if (strcmp("CHECKBOARD", node_1.texture) == 0)
+            go_1.model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = CheckboardTexture2D(
+                node_1.transform.scale.x, 
+                node_1.transform.scale.y, 
+                node_1.transform.scale.z);
         // load GameObject
-        tree[11 + i] = go_1;
+        tree[10 + i] = go_1;
     }
 
     // Block01
     {
-
         // "SM_Cube10"
         // "SM_QuarterCylinder3"
         // "SM_QuarterCylinder6"
@@ -82,8 +85,7 @@ GameObject *Load_LevelTree(GameObject *tree)
                 (Vector3){2.0f, 1.0f, 4.0f}},
             LoadModelFile("resources/models/SM_Ramp.obj"),
             DARKGRAY};
-
-        // tree[3].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 2, GRAY, DARKGRAY));
+        tree[3].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 2, GRAY, DARKGRAY));
 
         tree[4] = (GameObject){
             "SM_Ramp3",
@@ -93,7 +95,6 @@ GameObject *Load_LevelTree(GameObject *tree)
                 (Vector3){2.0f, 1.0f, 4.0f}},
             LoadModelFile("resources/models/SM_Ramp.obj"),
             DARKGRAY};
-
         tree[4].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 2, GRAY, DARKGRAY));
     }
 
@@ -107,7 +108,6 @@ GameObject *Load_LevelTree(GameObject *tree)
                 (Vector3){4.0f, 1.0f, 4.0f}},
             LoadModelFile("resources/models/SM_QuarterCylinder.obj"),
             GRAY};
-
         tree[13].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 2, GRAY, DARKGRAY));
 
         tree[14] = (GameObject){
@@ -118,7 +118,6 @@ GameObject *Load_LevelTree(GameObject *tree)
                 (Vector3){4.0f, 1.0f, 4.0f}},
             LoadModelFile("resources/models/SM_QuarterCylinder.obj"),
             GRAY};
-
         tree[14].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 1, GRAY, DARKGRAY));
 
         tree[15] = (GameObject){
@@ -129,7 +128,6 @@ GameObject *Load_LevelTree(GameObject *tree)
                 (Vector3){4.0f, 1.0f, 4.0f}},
             LoadModelFile("resources/models/SM_QuarterCylinder.obj"),
             GRAY};
-
         tree[15].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 1, GRAY, DARKGRAY));
 
         tree[16] = (GameObject){
@@ -140,7 +138,6 @@ GameObject *Load_LevelTree(GameObject *tree)
                 (Vector3){4.0f, 1.0f, 4.0f}},
             LoadModelFile("resources/models/SM_QuarterCylinder.obj"),
             GRAY};
-
         tree[16].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 1, GRAY, DARKGRAY));
     }
 
@@ -155,7 +152,6 @@ GameObject *Load_LevelTree(GameObject *tree)
             },
             LoadModelFile("resources/models/SM_Cube.obj"),
             WHITE};
-
         tree[5].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(30, 30, WHITE, LIGHTGRAY));
 
         tree[6] = (GameObject){
@@ -166,7 +162,6 @@ GameObject *Load_LevelTree(GameObject *tree)
                 (Vector3){30.0f, 4.0f, 1.0f}},
             LoadModelFile("resources/models/SM_Cube.obj"),
             DARKGRAY};
-
         tree[6].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 30, GRAY, DARKGRAY));
 
         tree[7] = (GameObject){
@@ -177,7 +172,6 @@ GameObject *Load_LevelTree(GameObject *tree)
                 (Vector3){30.0f, 4.0f, 1.0f}},
             LoadModelFile("resources/models/SM_Cube.obj"),
             DARKGRAY};
-
         tree[7].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 30, GRAY, DARKGRAY));
 
         tree[8] = (GameObject){
@@ -188,7 +182,6 @@ GameObject *Load_LevelTree(GameObject *tree)
                 (Vector3){33.0f, 4.0f, 1.0f}},
             LoadModelFile("resources/models/SM_Cube.obj"),
             DARKGRAY};
-
         tree[8].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 33, GRAY, DARKGRAY));
 
         tree[9] = (GameObject){
@@ -199,17 +192,8 @@ GameObject *Load_LevelTree(GameObject *tree)
                 (Vector3){33.0f, 4.0f, 1.0f}},
             LoadModelFile("resources/models/SM_Cube.obj"),
             DARKGRAY};
-
         tree[9].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 33, GRAY, DARKGRAY));
     }
-    tree[10] = (GameObject){
-        "SM_ChamferCube",
-        (Transform2){
-            (Vector3){11.0f, 0.0f, 20.5f},
-            (Rotation2){Vector3Zero(), ROTATE_ZERO},
-            (Vector3){1.0f, 1.0f, 1.0f}},
-        LoadModelFile("resources/models/SM_Cube.obj"),
-        BLUE};
 
     tree[2] = (GameObject){
         "SM_Ramp",
@@ -219,7 +203,6 @@ GameObject *Load_LevelTree(GameObject *tree)
             (Vector3){2.0f, 0.3f, 4.0f}},
         LoadModelFile("resources/models/SM_Ramp.obj"),
         GRAY};
-
     tree[2].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 2, GRAY, DARKGRAY));
 
     return tree;
@@ -243,6 +226,7 @@ Model Load_LevelSkybox(Color sunColor, bool postpro)
 // Local Functions Definition
 //---------------------------------------------------------
 
+// TODO: REMOVE ME
 Image GetTiledImage(int tilingX, int tilingY, Color col1, Color col2)
 {
     const int res = 1024;

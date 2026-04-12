@@ -20,7 +20,7 @@ typedef struct Node3D
     Transform2 transform;
     char model[MODEL_STR_LENGTH];
     Color color;
-    Texture2D texture;
+    char texture[NAME_STR_LENGTH];
 } Node3D;
 
 typedef struct Scene
