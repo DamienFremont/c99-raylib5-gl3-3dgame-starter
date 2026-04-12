@@ -65,11 +65,18 @@ GameObject *Load_LevelTree(GameObject *tree)
         go_1.color = node_1.color;
         if (strcmp("CHECKBOARD", node_1.texture) == 0)
             go_1.model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = CheckboardTexture2D(
+                GRAY, DARKGRAY,
                 node_1.transform.scale.x, 
                 node_1.transform.scale.y, 
                 node_1.transform.scale.z);
+        else if (strcmp("CHECKBOARD_LIGHT", node_1.texture) == 0)
+            go_1.model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = CheckboardTexture2D(
+                WHITE, LIGHTGRAY,
+                node_1.transform.scale.x, 
+                node_1.transform.scale.y, 
+                node_1.transform.scale.z);    
         // load GameObject
-        tree[10 + i] = go_1;
+        tree[9 + i] = go_1;
     }
 
     // Block01
@@ -143,17 +150,6 @@ GameObject *Load_LevelTree(GameObject *tree)
 
     // Playground
     {
-        tree[5] = (GameObject){
-            "SM_Cube",
-            (Transform2){
-                (Vector3){0.0f, -0.5f, 0.1f},
-                (Rotation2){Vector3Zero(), ROTATE_ZERO},
-                (Vector3){30.0f, 0.5f, 35.0f},
-            },
-            LoadModelFile("resources/models/SM_Cube.obj"),
-            WHITE};
-        tree[5].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(30, 30, WHITE, LIGHTGRAY));
-
         tree[6] = (GameObject){
             "SM_Cube2",
             (Transform2){
@@ -184,7 +180,7 @@ GameObject *Load_LevelTree(GameObject *tree)
             DARKGRAY};
         tree[8].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 33, GRAY, DARKGRAY));
 
-        tree[9] = (GameObject){
+        tree[5] = (GameObject){
             "SM_Cube6",
             (Transform2){
                 (Vector3){30.0f, 0.0f, 1.0f},
@@ -192,7 +188,7 @@ GameObject *Load_LevelTree(GameObject *tree)
                 (Vector3){33.0f, 4.0f, 1.0f}},
             LoadModelFile("resources/models/SM_Cube.obj"),
             DARKGRAY};
-        tree[9].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 33, GRAY, DARKGRAY));
+        tree[5].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 33, GRAY, DARKGRAY));
     }
 
     tree[2] = (GameObject){

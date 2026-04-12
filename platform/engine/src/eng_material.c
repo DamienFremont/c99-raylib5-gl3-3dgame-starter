@@ -19,7 +19,7 @@ Shader TileShader(Vector2 tiling) // TODO: REMOVEME
     return shader;
 }
 
-Texture2D CheckboardTexture2D(float x, float y, float z) 
+Texture2D CheckboardTexture2D(Color col1, Color col2, float x, float y, float z) 
 {
     int checkByMeter = 1;
     int textureResolutionByMeter = 64;
@@ -32,7 +32,7 @@ Texture2D CheckboardTexture2D(float x, float y, float z)
     Texture2D texture = LoadTextureFromImage(GenImageChecked(
         width, height,
         checksX, checksY,
-        GRAY, DARKGRAY));
+        col1, col2));
 
     return texture;
 }

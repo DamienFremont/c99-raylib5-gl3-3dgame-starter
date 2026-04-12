@@ -2,16 +2,28 @@
     "extResources": [
         { "type": "color", "id": "GRAY" },
         { "type": "texture", "id": "CHECKBOARD" },
+        { "type": "texture", "id": "CHECKBOARD_LIGHT" },
         { "type": "axis", "id": "YAW" }
     ],
     "nodes": [
+        {
+            "id": 1,
+            "name": "SM_Cube",
+            "model": "resources/models/SM_Cube.obj",
+            "transform": {
+                "translation": { "x": 0, "y": -1, "z": 0 },
+                "rotation": { "axis": "YAW", "angle": 0 },
+                "scale": { "x": 30, "y": 1, "z": 35 }
+            },
+            "color": "GRAY",
+            "texture": "CHECKBOARD_LIGHT"
+        },
         {
             "id": 1,
             "name": "SM_Cube4",
             "model": "resources/models/SM_Cube.obj",
             "transform": {
                 "translation": { "x": 12, "y": 0, "z": 17 },
-                "rotation": { "axis": "YAW", "angle": 0 },
                 "scale": { "x": 6, "y": 2, "z": 5 }
             },
             "color": "GRAY",
