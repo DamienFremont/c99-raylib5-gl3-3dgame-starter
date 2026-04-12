@@ -28,11 +28,12 @@ Big thanks to [Raysan5](https://github.com/raysan5) for his amazing lib. ❤️
 - 📺 Lighting: World Lighting, Player Lighting, Player Shadows
 - 📺 Meshes: Meshes, Textures, Shaders, Materials
 - 📺 Sky: Color, Cubemap, Fog
-- ⚙️ Simulation: Tick Systems
 - 🎥 Camera: ThirdPerson, Follow
 - 🎥 Animation: Character
 - 🎮 Input: Keyboard, Arrows, Gamepad Input, F1 Console
 - 🎮 Control: Tank control
+- ⚙️ Simulation: Tick Systems
+- ⚙️ File: Scene JSON format
 
 ## Dependencies
 
@@ -55,8 +56,11 @@ Big thanks to [Raysan5](https://github.com/raysan5) for his amazing lib. ❤️
 Repository layout:
 ```
 ├── assets
-│   └── images
-│   └── ...
+│   ├── resources
+│   │   ├── images
+│   │   └── scene.json
+│   └── src
+│       └── player.blend
 ├── docs
 ├── infra
 ├── lib
@@ -219,6 +223,13 @@ Condition: GPU: RTX-2060, CPU: i5-9600K, RAM: 32 GB
 ![alt text](./docs/README/faq-performance-fps.png)
 
 ![alt text](./docs/README/faq-performance-fps-2.png)
+
+### What about scene format ?
+
+It's JSON, with structure similar to Godot YAML *.tscn files.
+
+![alt text](./docs/README/faq-scene-json-format.png)
+
 
 ## Resources
 
