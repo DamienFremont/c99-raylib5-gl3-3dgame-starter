@@ -23,7 +23,6 @@
             "model": "resources/models/SM_Cube.obj",
             "transform": {
                 "translation": { "x": 18, "y": 0, "z": 15 },
-                "rotation": { "axis": "YAW", "angle": 0 },
                 "scale": { "x": 2, "y": 1, "z": 7 }
             },
             "color": "GRAY",
@@ -35,7 +34,6 @@
             "model": "resources/models/SM_Cube.obj",
             "transform": {
                 "translation": { "x": 11, "y": 0, "z": 20 },
-                "rotation": { "axis": "YAW", "angle": 0 },
                 "scale": { "x": 1, "y": 1, "z": 1 }
             },
             "color": "BLUE"

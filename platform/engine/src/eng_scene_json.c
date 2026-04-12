@@ -37,9 +37,12 @@ Vector3 Transform_Axis(const char *axis)
 
 Rotation2 Parse_Rotation2Json(const cJSON *src)
 {
+    if(!cJSON_HasObjectItem(src, "rotation"))
+        return (Rotation2){ ROTATION_YAW, 0 };
+    cJSON *json = cJSON_GetObjectItem(src, "rotation");
     return (Rotation2){
-        Transform_Axis(cJSON_GetObjectItem(src, "axis")->valuestring),
-        cJSON_GetObjectItem(src, "angle")->valueint};
+        Transform_Axis(cJSON_GetObjectItem(json, "axis")->valuestring),
+        cJSON_GetObjectItem(json, "angle")->valueint};
 }
 
 Vector3 Parse_Vector3Json(const cJSON *src)
@@ -54,13 +57,14 @@ Transform2 Parse_Transform2Json(const cJSON *src)
 {
     return (Transform2){
         Parse_Vector3Json(cJSON_GetObjectItem(src, "translation")),
-        Parse_Rotation2Json(cJSON_GetObjectItem(src, "rotation")),
+        Parse_Rotation2Json(src),
         Parse_Vector3Json(cJSON_GetObjectItem(src, "scale"))};
 }
 
 Node3D Parse_Node3dJson(const cJSON *json)
 {
     Node3D node3d = (Node3D){0};
+    node3d.id = cJSON_GetObjectItem(json, "id")->valueint;
     strcpy_s(node3d.name, sizeof(node3d.name), cJSON_GetObjectItem(json, "name")->valuestring);
     strcpy_s(node3d.model, sizeof(node3d.model), cJSON_GetObjectItem(json, "model")->valuestring);
     node3d.transform = Parse_Transform2Json(cJSON_GetObjectItem(json, "transform"));
