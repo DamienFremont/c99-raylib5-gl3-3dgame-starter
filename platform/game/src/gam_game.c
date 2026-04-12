@@ -3,16 +3,13 @@
 // SOURCE: https://github.com/raysan5/raylib-game-template
 
 #include <raylib.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include "gam_screens.h"
 #include "eng_screen.h"
 #include "eng_console.h"
-#include "eng_camera.h"
 #include "eng_assets.h"
 
-static const SCREEN_START = GAMEPLAY;
-static const WINDOWED = 1;
+static const int SCREEN_START = GAMEPLAY;
+static const int WINDOWED = 1;
 
 //---------------------------------------------------------
 // Local Functions Declaration

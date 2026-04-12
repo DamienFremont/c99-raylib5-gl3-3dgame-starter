@@ -1,6 +1,7 @@
 #include "eng_skybox.h"
 
 #include <raylib.h>
+#include <rlgl.h>
 #include "eng_assets.h"
 
 //---------------------------------------------------------
