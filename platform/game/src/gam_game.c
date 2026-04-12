@@ -18,7 +18,7 @@ static const int WINDOWED = 1;
 int UpdateScreen(int screen);
 void DrawScreen(int screen, const RenderTexture2D *target);
 
-void UpdateVideoMode(int w, int h);
+void UpdateVideoMode(int w, int h, int tex);
 
 RenderTexture2D InitRenderTarget(int w, int h, int txt);
 void InitRenderResolution(int w, int h, int txt);
@@ -61,7 +61,7 @@ int main(AppConfiguration cfg)
 	while (!WindowShouldClose()) // Detect window close button or ESC key
 	{
 		// common
-		UpdateVideoMode(cfg.screen_width, cfg.screen_height);
+		UpdateVideoMode(cfg.screen_width, cfg.screen_height, cfg.postpro_texturefilter);
 		// game
 		currentScreen = UpdateScreen(currentScreen);
 		DrawScreen(currentScreen, &target);
