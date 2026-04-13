@@ -53,6 +53,30 @@
         },
         {
             "id": 6,
+            "name": "SM_Cube5",
+            "model": "resources/models/SM_Cube.obj",
+            "transform": {
+                "translation": { "x": 1, "y": 0, "z": 1 },
+                "rotation": { "axis": "YAW", "angle": -90 },
+                "scale": { "x": 33, "y": 4, "z": 1 }
+            },
+            "color": "GRAY",
+            "texture": "CHECKBOARD"
+        },
+        {
+            "id": 7,
+            "name": "SM_Cube6",
+            "model": "resources/models/SM_Cube.obj",
+            "transform": {
+                "translation": { "x": 30, "y": 0, "z": 1 },
+                "rotation": { "axis": "YAW", "angle": -90 },
+                "scale": { "x": 33, "y": 4, "z": 1 }
+            },
+            "color": "GRAY",
+            "texture": "CHECKBOARD"
+        },
+        {
+            "id": 8,
             "name": "SM_Cube9",
             "model": "resources/models/SM_Cube.obj",
             "transform": {
@@ -63,7 +87,7 @@
             "texture": "CHECKBOARD"
         },
         {
-            "id": 7,
+            "id": 9,
             "name": "SM_ChamferCube",
             "model": "resources/models/SM_Cube.obj",
             "transform": {
