@@ -26,7 +26,7 @@ GameObject *Load_LevelTree(GameObject *tree)
         "Player",
         (Transform2){
             (Vector3){9.0f, 0.0f, 11.0f},
-            (Rotation2){ROTATION_YAW, ROTATE_P90},
+            (Rotation2){AXIS_YAW, ANGLE_P90},
             (Vector3){1.0f, 1.0f, 1.0f},
         },
         LoadModelFile(playerModelPath),
@@ -44,7 +44,7 @@ GameObject *Load_LevelTree(GameObject *tree)
             (Vector3){
                 9.0f, 0.1f, 11.0f},
             (Rotation2){
-                ROTATION_YAW, ROTATE_P90},
+                AXIS_YAW, ANGLE_P90},
             (Vector3){
                 1.0f, 0.0f, 1.0f},
         },
@@ -88,7 +88,7 @@ GameObject *Load_LevelTree(GameObject *tree)
             "SM_Ramp2",
             (Transform2){
                 (Vector3){18.0f, 0.0f, 15.0f},
-                (Rotation2){ROTATION_YAW, ROTATE_M90},
+                (Rotation2){AXIS_YAW, ANGLE_M90},
                 (Vector3){2.0f, 1.0f, 4.0f}},
             LoadModelFile("resources/models/SM_Ramp.obj"),
             DARKGRAY};
@@ -98,7 +98,7 @@ GameObject *Load_LevelTree(GameObject *tree)
             "SM_Ramp3",
             (Transform2){
                 (Vector3){20.0f, 1.0f, 21.0f},
-                (Rotation2){ROTATION_YAW, ROTATE_M180},
+                (Rotation2){AXIS_YAW, ANGLE_M180},
                 (Vector3){2.0f, 1.0f, 4.0f}},
             LoadModelFile("resources/models/SM_Ramp.obj"),
             DARKGRAY};
@@ -111,7 +111,7 @@ GameObject *Load_LevelTree(GameObject *tree)
             "SM_QuarterCylinder11",
             (Transform2){
                 (Vector3){22.0f, 0.0f, 7.0f},
-                (Rotation2){Vector3Zero(), ROTATE_ZERO},
+                (Rotation2){Vector3Zero(), ANGLE_ZERO},
                 (Vector3){4.0f, 1.0f, 4.0f}},
             LoadModelFile("resources/models/SM_QuarterCylinder.obj"),
             GRAY};
@@ -121,7 +121,7 @@ GameObject *Load_LevelTree(GameObject *tree)
             "SM_QuarterCylinder12",
             (Transform2){
                 (Vector3){22.0f, 0.0f, 7.0f},
-                (Rotation2){ROTATION_YAW, ROTATE_M90},
+                (Rotation2){AXIS_YAW, ANGLE_M90},
                 (Vector3){4.0f, 1.0f, 4.0f}},
             LoadModelFile("resources/models/SM_QuarterCylinder.obj"),
             GRAY};
@@ -131,7 +131,7 @@ GameObject *Load_LevelTree(GameObject *tree)
             "SM_QuarterCylinder13",
             (Transform2){
                 (Vector3){22.0f, 0.0f, 7.0f},
-                (Rotation2){ROTATION_YAW, ROTATE_M180},
+                (Rotation2){AXIS_YAW, ANGLE_M180},
                 (Vector3){4.0f, 1.0f, 4.0f}},
             LoadModelFile("resources/models/SM_QuarterCylinder.obj"),
             GRAY};
@@ -141,7 +141,7 @@ GameObject *Load_LevelTree(GameObject *tree)
             "SM_QuarterCylinder14",
             (Transform2){
                 (Vector3){22.0f, 0.0f, 7.0f},
-                (Rotation2){ROTATION_YAW, ROTATE_M270},
+                (Rotation2){AXIS_YAW, ANGLE_M270},
                 (Vector3){4.0f, 1.0f, 4.0f}},
             LoadModelFile("resources/models/SM_QuarterCylinder.obj"),
             GRAY};
@@ -154,7 +154,7 @@ GameObject *Load_LevelTree(GameObject *tree)
             "SM_Cube2",
             (Transform2){
                 (Vector3){0.0f, 0.0f, 0.0f},
-                (Rotation2){Vector3Zero(), ROTATE_ZERO},
+                (Rotation2){Vector3Zero(), ANGLE_ZERO},
                 (Vector3){30.0f, 4.0f, 1.0f}},
             LoadModelFile("resources/models/SM_Cube.obj"),
             DARKGRAY};
@@ -164,7 +164,7 @@ GameObject *Load_LevelTree(GameObject *tree)
             "SM_Cube3",
             (Transform2){
                 (Vector3){0.0f, 0.0f, 34.0f},
-                (Rotation2){Vector3Zero(), ROTATE_ZERO},
+                (Rotation2){Vector3Zero(), ANGLE_ZERO},
                 (Vector3){30.0f, 4.0f, 1.0f}},
             LoadModelFile("resources/models/SM_Cube.obj"),
             DARKGRAY};
@@ -174,7 +174,7 @@ GameObject *Load_LevelTree(GameObject *tree)
             "SM_Cube5",
             (Transform2){
                 (Vector3){1.0f, 0.0f, 1.0f},
-                (Rotation2){ROTATION_YAW, ROTATE_M90},
+                (Rotation2){AXIS_YAW, ANGLE_M90},
                 (Vector3){33.0f, 4.0f, 1.0f}},
             LoadModelFile("resources/models/SM_Cube.obj"),
             DARKGRAY};
@@ -184,7 +184,7 @@ GameObject *Load_LevelTree(GameObject *tree)
             "SM_Cube6",
             (Transform2){
                 (Vector3){30.0f, 0.0f, 1.0f},
-                (Rotation2){ROTATION_YAW, ROTATE_M90},
+                (Rotation2){AXIS_YAW, ANGLE_M90},
                 (Vector3){33.0f, 4.0f, 1.0f}},
             LoadModelFile("resources/models/SM_Cube.obj"),
             DARKGRAY};
@@ -195,7 +195,7 @@ GameObject *Load_LevelTree(GameObject *tree)
         "SM_Ramp",
         (Transform2){
             (Vector3){17.0f, 0.0f, 6.0f},
-            (Rotation2){ROTATION_YAW, ROTATE_M90},
+            (Rotation2){AXIS_YAW, ANGLE_M90},
             (Vector3){2.0f, 0.3f, 4.0f}},
         LoadModelFile("resources/models/SM_Ramp.obj"),
         GRAY};

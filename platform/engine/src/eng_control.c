@@ -15,7 +15,7 @@ void ControlTankMove(Controller *player, InputActionValue value, float char_spee
     if (value.Axis2D.y < 0) // backward
         new_angle = -new_angle;
 
-    Vector3 new_dir = Vector3RotateByAxisAngle(player->direction, ROTATION_YAW, DEG2RAD * new_angle);
+    Vector3 new_dir = Vector3RotateByAxisAngle(player->direction, AXIS_YAW, DEG2RAD * new_angle);
     Vector3 new_dis = Vector3Scale(new_dir, new_step);
 
     Vector3 new_pos = Vector3Add(player->position, new_dis);

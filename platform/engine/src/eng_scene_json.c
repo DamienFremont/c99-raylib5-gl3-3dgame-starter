@@ -31,14 +31,14 @@ Color Transform_Color(const char *src)
 Vector3 Transform_Axis(const char *axis)
 {
     if (strcmp("YAW", axis) == 0)
-        return ROTATION_YAW;
+        return AXIS_YAW;
     return (Vector3){0.0f, 0.0f, 0.0f};
 }
 
 Rotation2 Parse_Rotation2Json(const cJSON *src)
 {
     if(!cJSON_HasObjectItem(src, "rotation"))
-        return (Rotation2){ ROTATION_YAW, 0 };
+        return (Rotation2){ AXIS_YAW, 0 };
     cJSON *json = cJSON_GetObjectItem(src, "rotation");
     return (Rotation2){
         Transform_Axis(cJSON_GetObjectItem(json, "axis")->valuestring),

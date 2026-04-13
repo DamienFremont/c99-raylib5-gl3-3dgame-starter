@@ -31,14 +31,14 @@ typedef struct GameObject
 
 typedef enum
 {
-    ROTATE_ZERO = 0,
-    ROTATE_P90 = 90,
-    ROTATE_M90 = -90,
-    ROTATE_M180 = -180,
-    ROTATE_M270 = -270,
-} Rotate;
+    ANGLE_ZERO = 0,
+    ANGLE_P90 = 90,
+    ANGLE_M90 = -90,
+    ANGLE_M180 = -180,
+    ANGLE_M270 = -270,
+} Angle;
 
-static const Vector3 ROTATION_YAW = {0, 1, 0};
+static const Vector3 AXIS_YAW = {0, 1, 0};
 
 //---------------------------------------------------------
 // Module Functions Declaration

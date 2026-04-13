@@ -191,7 +191,7 @@ void UpdatePlayerPosition(InputActions *actions)
         playerController.position.y,
         playerController.position.z};
     gos[LEVEL_PLAYER_MODEL].transform.rotation = (Rotation2){
-        ROTATION_YAW,
+        AXIS_YAW,
         ControlTankGetRotationAngle(playerController.direction)};
     // shadow
     gos[LEVEL_PLAYER_SHADOW].transform.translation = (Vector3){
