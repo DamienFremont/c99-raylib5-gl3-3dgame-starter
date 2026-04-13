@@ -7,7 +7,7 @@
     ],
     "nodes": [
         {
-            "id": 1,
+            "id": 2,
             "name": "SM_Cube",
             "model": "resources/models/SM_Cube.obj",
             "transform": {
@@ -19,7 +19,29 @@
             "texture": "CHECKBOARD_LIGHT"
         },
         {
-            "id": 1,
+            "id": 3,
+            "name": "SM_Cube2",
+            "model": "resources/models/SM_Cube.obj",
+            "transform": {
+                "translation": { "x": 0, "y": 0, "z": 0 },
+                "scale": { "x": 30, "y": 4, "z": 1 }
+            },
+            "color": "GRAY",
+            "texture": "CHECKBOARD"
+        },
+        {
+            "id": 4,
+            "name": "SM_Cube3",
+            "model": "resources/models/SM_Cube.obj",
+            "transform": {
+                "translation": { "x": 0, "y": 0, "z": 34 },
+                "scale": { "x": 30, "y": 4, "z": 1 }
+            },
+            "color": "GRAY",
+            "texture": "CHECKBOARD"
+        },
+        {
+            "id": 5,
             "name": "SM_Cube4",
             "model": "resources/models/SM_Cube.obj",
             "transform": {
@@ -30,7 +52,7 @@
             "texture": "CHECKBOARD"
         },
         {
-            "id": 2,
+            "id": 6,
             "name": "SM_Cube9",
             "model": "resources/models/SM_Cube.obj",
             "transform": {
@@ -41,7 +63,7 @@
             "texture": "CHECKBOARD"
         },
         {
-            "id": 5,
+            "id": 7,
             "name": "SM_ChamferCube",
             "model": "resources/models/SM_Cube.obj",
             "transform": {
