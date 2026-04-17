@@ -22,6 +22,7 @@
 // Local Variables Definition (local to this module)
 //---------------------------------------------------------
 
+
 // TODO: move to Load_LevelTree()
 const float PLAYER_SPEED = 0.12f;
 const float CAM_FOV = 60;
@@ -29,7 +30,9 @@ const Vector3 CAM_TRS = {0, 1, 4};
 const Vector3 CAM_POS = {5, 1, 11};
 const Vector3 LIGHT_TRANSFORM = {0, 9, 39};
 const Color LIGHT_COLOR = {255, 255, 230, 255}; // YELLOW
-Camera3D camera;
+
+UnrealThirdPersonGameState gameState;
+
 Model skybox;
 Shader light_shader = {0};
 Light light_point = {0};
@@ -42,7 +45,6 @@ TickState animationTick = {0};
 TickState inputTick = {0};
 TickState renderTick = {0};
 TickState worldTick = {0};
-InputActions actionsGLOBAL; // move to global "state" struct 
 Controller playerController;
 ModelAnimation playerAnimations[2];
 
@@ -75,7 +77,6 @@ void Init_UnrealThirdPerson(RenderTexture2D *target, AppConfiguration appConfig)
 {
     showConsole = 0;
     fps_counter_show = appConfig.fps_counter_show;
-    camera = InitCamera(CAM_FOV, CAM_TRS);
     Init_PostProcess(target, appConfig.postpro_effect_bloom);
     Load_LevelTree(gos);
     skybox = Load_LevelSkybox(LIGHT_COLOR, postpro);
@@ -96,15 +97,18 @@ void Init_UnrealThirdPerson(RenderTexture2D *target, AppConfiguration appConfig)
         gos[0].transform.translation, // player position
         (Vector3){1, 0, 0},           // screen forward
     };
-    camera.position = CAM_POS;
-    InitInputActions(&actionsGLOBAL);
+
+    gameState = (UnrealThirdPersonGameState){0};
+    gameState.camera = InitCamera(CAM_FOV, CAM_TRS);
+    gameState.camera.position = CAM_POS;    
+    InitInputActions(&gameState.actions);
 }
 
 int Update_UnrealThirdPerson(void)
 {
     // tick
     UpdatePlayerInput();
-    UpdatePlayerPosition(&actionsGLOBAL);
+    UpdatePlayerPosition(&gameState.actions);
     UpdatePlayerAnimation();
     UpdatePlayerCamera();
     // TODO: UpdatePhysics();
@@ -147,7 +151,7 @@ void Unload_UnrealThirdPerson(void)
 
 void UpdateRender(void)
 {
-    UpdateLighting(light_shader, camera);
+    UpdateLighting(light_shader, gameState.camera);
 }
 
 void UpdatePlayerAnimation(void)
@@ -171,7 +175,7 @@ void UpdatePlayerCamera(void)
 {
     // CameraThirdPerson_Look(&camera, playerController);
     // CameraSecondPerson_Look(&camera, playerController);
-    CameraFollow_Look(&camera, playerController);
+    CameraFollow_Look(&gameState.camera, playerController);
 }
 
 void UpdatePlayerPosition(InputActions *actions)
@@ -224,9 +228,9 @@ void UpdatePlayerInput(void)
         return;
     else
         UpdateTick(&inputTick);
-    ExecuteInputActions(&actionsGLOBAL);
-    SetupPlayerInputComponent(&actionsGLOBAL);
-    SetupPlayerAnimation(&actionsGLOBAL);
+    ExecuteInputActions(&gameState.actions);
+    SetupPlayerInputComponent(&gameState.actions);
+    SetupPlayerAnimation(&gameState.actions);
 }
 
 void UpdatePhysics(void)
@@ -272,7 +276,7 @@ void Draw_2D(void)
 
 void Draw_3D_Models(void)
 {
-    BeginMode3D(camera);
+    BeginMode3D(gameState.camera);
     {
         if (showConsole == 1)
         {
@@ -293,7 +297,7 @@ void Draw_Pipeline_Default(void)
     {
         ClearBackground(RAYWHITE);
         // Stage 1/2 Geometry
-        DrawSkybox(skybox, camera);
+        DrawSkybox(skybox, gameState.camera);
         Draw_3D_Models();
         // Stage 2/2 2D
         Draw_2D();
@@ -307,7 +311,7 @@ void Draw_Pipeline_PostProcessing(const RenderTexture2D *target)
     {
         ClearBackground(RAYWHITE);
         // Stage 1/3 Geometry
-        DrawSkybox(skybox, camera);
+        DrawSkybox(skybox, gameState.camera);
         Draw_3D_Models();
     }
     EndTextureMode();
