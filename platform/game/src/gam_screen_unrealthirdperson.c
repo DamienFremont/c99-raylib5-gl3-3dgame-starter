@@ -42,7 +42,7 @@ TickState animationTick = {0};
 TickState inputTick = {0};
 TickState renderTick = {0};
 TickState worldTick = {0};
-InputActions actions;
+InputActions actionsGLOBAL; // move to global "state" struct 
 Controller playerController;
 ModelAnimation playerAnimations[2];
 
@@ -50,7 +50,7 @@ bool showConsole;
 bool fps_counter_show;
 
 int animIndex;
-unsigned int animCurrentFrame;
+int animCurrentFrame;
 
 //---------------------------------------------------------
 // Local Functions Declaration
@@ -97,14 +97,14 @@ void Init_UnrealThirdPerson(RenderTexture2D *target, AppConfiguration appConfig)
         (Vector3){1, 0, 0},           // screen forward
     };
     camera.position = CAM_POS;
-    InitInputActions(&actions);
+    InitInputActions(&actionsGLOBAL);
 }
 
 int Update_UnrealThirdPerson(void)
 {
     // tick
     UpdatePlayerInput();
-    UpdatePlayerPosition(&actions);
+    UpdatePlayerPosition(&actionsGLOBAL);
     UpdatePlayerAnimation();
     UpdatePlayerCamera();
     // TODO: UpdatePhysics();
@@ -224,9 +224,9 @@ void UpdatePlayerInput(void)
         return;
     else
         UpdateTick(&inputTick);
-    ExecuteInputActions(&actions);
-    SetupPlayerInputComponent(&actions);
-    SetupPlayerAnimation(&actions);
+    ExecuteInputActions(&actionsGLOBAL);
+    SetupPlayerInputComponent(&actionsGLOBAL);
+    SetupPlayerAnimation(&actionsGLOBAL);
 }
 
 void UpdatePhysics(void)
