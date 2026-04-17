@@ -60,15 +60,15 @@ void Draw_Button(const char *text, int posX, int posY, Rectangle buttonRec, int 
     const Color activeColor = SKYBLUE;
     // TODO: resolution scaling
     Rectangle rec = {
-        posX,
-        posY,
+        (float) posX,
+        (float) posY,
         buttonRec.width,
         buttonRec.height};
     Color backColor = ((1 == currentProcess) || (1 == mouseHoverRec)) ? activeColor : color;
     DrawRectangleRec(rec, backColor);
     // center text
-    int textX = (int)(posX + rec.width / 2 - MeasureText(text, 10) / 2);
-    int textY = (int)posY + 11;
+    int textX = (posX + (int)(rec.width / 2)) - ((MeasureText(text, 10) / 2));
+    int textY = posY + 11;
     Color textColor = ((1 == currentProcess) || (1 == mouseHoverRec)) ? WHITE : BLACK;
     DrawText(text, textX, textY, fontSize, textColor);
 }
@@ -93,13 +93,13 @@ void Draw_Menu(void)
         const int COL_2_1 = COL_2 + 70;
         const int COL_2_2 = COL_2 + 230;
         const int COL_3 = 700;
-        const int CENTER = GetScreenWidth() / 2;
+        const int CENTER = (GetScreenWidth() / 2);
         const int CHAR_WIDTH = 10;
 
         // draw
         DrawText("Press [TAB] to toggle menu", 10, 10 + LINE_HEIGHT_30 * 0, FONT_SIZE_24, GRAY);
         int line = 0;
-        DrawText("SETTINGS", CENTER - sizeof("SETTINGS") * CHAR_WIDTH, line, FONT_SIZE_48, GRAY);
+        DrawText("SETTINGS", CENTER - (int)(sizeof("SETTINGS")) * CHAR_WIDTH, line, FONT_SIZE_48, GRAY);
         {
             line += LINE_HEIGHT_60;
             DrawText("DISPLAY", COL_1_1, line, FONT_SIZE_24, GRAY);
