@@ -26,6 +26,8 @@ typedef struct
 {
     Camera3D camera;
     InputActions actions;
+    bool showConsole;
+    bool fps_counter_show;
 } UnrealThirdPersonGameState;
 
 typedef struct
@@ -60,10 +62,6 @@ TickState renderTick = {0};
 TickState worldTick = {0};
 Controller playerController;
 ModelAnimation playerAnimations[2];
-
-bool showConsole;
-bool fps_counter_show;
-
 int animIndex;
 int animCurrentFrame;
 
@@ -95,10 +93,11 @@ void Init_UnrealThirdPerson(RenderTexture2D *target, AppConfiguration appConfig)
     // Init states
     gameState = (UnrealThirdPersonGameState){0};
     InitCamera(&gameState.camera, CAM_FOV, CAM_TRS);
+    gameState.camera.position = CAM_POS;
     InitInputActions(&gameState.actions);
-
-    showConsole = 0;
-    fps_counter_show = appConfig.fps_counter_show;
+    gameState.showConsole = 0;
+    gameState.fps_counter_show = appConfig.fps_counter_show;
+    
     Init_PostProcess(target, appConfig.postpro_effect_bloom);
     skybox = Load_LevelSkybox(LIGHT_COLOR, postpro);
     Init_Animation();
@@ -117,7 +116,6 @@ void Init_UnrealThirdPerson(RenderTexture2D *target, AppConfiguration appConfig)
         gameEntity.entities[0].transform.translation, // player position
         (Vector3){1, 0, 0},           // screen forward
     };
-    gameState.camera.position = CAM_POS;
 }
 
 int Update_UnrealThirdPerson(void)
@@ -177,8 +175,7 @@ void UpdatePlayerAnimation(GameObject* entities)
 {
     if (!IsTickUpdate(&animationTick))
         return;
-    else
-        UpdateTick(&animationTick);
+    UpdateTick(&animationTick);
     ModelAnimation anim = animIndex == 0 ? playerAnimations[0] : playerAnimations[1];
     int animationFPS = 25; // Blender export
     int HACK = 3;          // FIXME
@@ -201,8 +198,7 @@ void UpdatePlayerPosition(InputActions *actions, GameObject* entities)
 {
     if (!IsTickUpdate(&worldTick))
         return;
-    else
-        UpdateTick(&worldTick);
+    UpdateTick(&worldTick);
     // Moving
     if (actions->MoveAction.State.Triggered == true)
         ControlTankMove(&playerController, actions->MoveAction.Value, PLAYER_SPEED, PLAYER_SPEED * 15);
@@ -229,7 +225,7 @@ void SetupPlayerInputComponent(InputActions *actions)
     // console
     if (actions->ConsoleAction.State.Completed == true)
     {
-        showConsole = !showConsole;
+        gameState.showConsole = !gameState.showConsole;
         actions->ConsoleAction.State.Completed = false;
     }
 }
@@ -245,8 +241,7 @@ void UpdatePlayerInput(void)
 {
     if (!IsTickUpdate(&inputTick))
         return;
-    else
-        UpdateTick(&inputTick);
+    UpdateTick(&inputTick);
     ExecuteInputActions(&gameState.actions);
     SetupPlayerInputComponent(&gameState.actions);
     SetupPlayerAnimation(&gameState.actions);
@@ -272,9 +267,9 @@ void Draw_3D_Console(void)
     DrawCubeWiresV(LIGHT_TRANSFORM, (Vector3){1.0f, 1.0f, 1.0f}, YELLOW);
 }
 
-void Draw_2D(void)
+void Draw_2D()
 {
-    if (showConsole == 1)
+    if (gameState.showConsole == 1)
     {
         // LogConsole(TextFormat("animationTick.current/lastUpdate: %i %i", animationTick.current, animationTick.lastUpdate));
         LogConsole(TextFormat("playerController.direction.x,y,z: %f %f %f", playerController.direction.x, playerController.direction.y, playerController.direction.z));
@@ -288,7 +283,7 @@ void Draw_2D(void)
         DrawText("Press [ALT+ENTER] to toggle screen", 10, 10 + LINE_HEIGHT_30 * 3, FONT_SIZE_24, GRAY);
         DrawText("Press [F1] to toggle console", 10, 10 + LINE_HEIGHT_30 * 2, FONT_SIZE_24, GRAY);
     }
-    if (fps_counter_show == true)
+    if (gameState.fps_counter_show == true)
     {
         DrawFPS(GetScreenWidth() - 100, 15);
     }
@@ -298,7 +293,7 @@ void Draw_3D_Models(GameObject* entities)
 {
     BeginMode3D(gameState.camera);
     {
-        if (showConsole == 1)
+        if (gameState.showConsole == 1)
         {
             for (size_t i = 0; i < LEVEL_SIZE; i++)
                 DrawGameObject(entities[i]);
