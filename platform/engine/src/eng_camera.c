@@ -9,16 +9,14 @@ Vector3 cameraDistance;
 // Module specific Functions Definition
 //---------------------------------------------------------
 
-Camera3D InitCamera(float fovy, Vector3 distance)
+void InitCamera(Camera3D *cam, float fovy, Vector3 distance)
 {
     cameraDistance = distance;
-    Camera3D cam;
-    cam.position = (Vector3){0.0f, 0.0f, 0.0f}; // Camera position
-    cam.target = (Vector3){0.0f, 0.0f, 0.0f};   // Camera looking at point
-    cam.up = (Vector3){0.0f, 1.0f, 0.0f};       // Camera up vector (rotation towards target)
-    cam.fovy = fovy;                            // Camera field-of-view Y
-    cam.projection = CAMERA_PERSPECTIVE;        // Camera projection type
-    return cam;
+    cam->position = (Vector3){0.0f, 0.0f, 0.0f}; // Camera position
+    cam->target = (Vector3){0.0f, 0.0f, 0.0f};   // Camera looking at point
+    cam->up = (Vector3){0.0f, 1.0f, 0.0f};       // Camera up vector (rotation towards target)
+    cam->fovy = fovy;                            // Camera field-of-view Y
+    cam->projection = CAMERA_PERSPECTIVE;        // Camera projection type
 }
 
 // TODO: USE ME !!!

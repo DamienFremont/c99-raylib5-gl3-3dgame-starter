@@ -22,7 +22,6 @@
 // Local Variables Definition (local to this module)
 //---------------------------------------------------------
 
-
 // TODO: move to Load_LevelTree()
 const float PLAYER_SPEED = 0.12f;
 const float CAM_FOV = 60;
@@ -99,9 +98,11 @@ void Init_UnrealThirdPerson(RenderTexture2D *target, AppConfiguration appConfig)
     };
 
     gameState = (UnrealThirdPersonGameState){0};
-    gameState.camera = InitCamera(CAM_FOV, CAM_TRS);
-    gameState.camera.position = CAM_POS;    
+    
+    InitCamera(&gameState.camera, CAM_FOV, CAM_TRS);
     InitInputActions(&gameState.actions);
+
+    gameState.camera.position = CAM_POS;
 }
 
 int Update_UnrealThirdPerson(void)
