@@ -30,7 +30,7 @@ typedef struct
 
 typedef struct
 {
-    GameObject gos[LEVEL_SIZE];
+    GameObject entities[LEVEL_SIZE];
 } UnrealThirdPersonGameEntity;
 
 //---------------------------------------------------------
@@ -93,7 +93,7 @@ void Init_UnrealThirdPerson(RenderTexture2D *target, AppConfiguration appConfig)
     showConsole = 0;
     fps_counter_show = appConfig.fps_counter_show;
     Init_PostProcess(target, appConfig.postpro_effect_bloom);
-    Load_LevelTree(gameEntity.gos);
+    Load_LevelTree(gameEntity.entities);
     skybox = Load_LevelSkybox(LIGHT_COLOR, postpro);
     Init_Animation();
     Init_Lighting();
@@ -109,7 +109,7 @@ void Init_UnrealThirdPerson(RenderTexture2D *target, AppConfiguration appConfig)
     // PLAYER
     // TODO: move to Load_LevelTree()
     playerController = (Controller){
-        gameEntity.gos[0].transform.translation, // player position
+        gameEntity.entities[0].transform.translation, // player position
         (Vector3){1, 0, 0},           // screen forward
     };
 
@@ -156,7 +156,7 @@ void Unload_UnrealThirdPerson(void)
     // FIXME: UnloadModelAnimations(playerAnimations, LEVEL_PLAYER_ANIMATIONS);
     // level
     for (int i = 0; i < LEVEL_SIZE; i++)
-        UnloadModel(gameEntity.gos[i].model);
+        UnloadModel(gameEntity.entities[i].model);
     // shaders
     UnloadShader(light_shader);
     UnloadShader(postproShader);
@@ -184,8 +184,8 @@ void UpdatePlayerAnimation(void)
     int tickInMs = TIME_1_SECOND / animationTick.rateInHz;
     int frames = tickInMs / frameInMs;
     animCurrentFrame = (animCurrentFrame + frames * HACK) % anim.frameCount;
-    UpdateModelAnimation(gameEntity.gos[LEVEL_PLAYER_MODEL].model, anim, animCurrentFrame);
-    UpdateModelAnimation(gameEntity.gos[LEVEL_PLAYER_SHADOW].model, anim, animCurrentFrame);
+    UpdateModelAnimation(gameEntity.entities[LEVEL_PLAYER_MODEL].model, anim, animCurrentFrame);
+    UpdateModelAnimation(gameEntity.entities[LEVEL_PLAYER_SHADOW].model, anim, animCurrentFrame);
 }
 
 void UpdatePlayerCamera(void)
@@ -207,19 +207,19 @@ void UpdatePlayerPosition(InputActions *actions)
     // TODO: Jumping
     // TODO: Looking
     // player
-    gameEntity.gos[LEVEL_PLAYER_MODEL].transform.translation = (Vector3){
+    gameEntity.entities[LEVEL_PLAYER_MODEL].transform.translation = (Vector3){
         playerController.position.x,
         playerController.position.y,
         playerController.position.z};
-    gameEntity.gos[LEVEL_PLAYER_MODEL].transform.rotation = (Rotation2){
+    gameEntity.entities[LEVEL_PLAYER_MODEL].transform.rotation = (Rotation2){
         AXIS_YAW,
         ControlTankGetRotationAngle(playerController.direction)};
     // shadow
-    gameEntity.gos[LEVEL_PLAYER_SHADOW].transform.translation = (Vector3){
+    gameEntity.entities[LEVEL_PLAYER_SHADOW].transform.translation = (Vector3){
         playerController.position.x,
         playerController.position.y + 0.01f,
         playerController.position.z};
-    gameEntity.gos[LEVEL_PLAYER_SHADOW].transform.rotation = gameEntity.gos[0].transform.rotation;
+    gameEntity.entities[LEVEL_PLAYER_SHADOW].transform.rotation = gameEntity.entities[0].transform.rotation;
 }
 
 void SetupPlayerInputComponent(InputActions *actions)
@@ -259,11 +259,11 @@ void Draw_3D_Console(void)
 {
     for (size_t i = 0; i < LEVEL_SIZE; i++)
     {
-        DrawGameObject(gameEntity.gos[i]);
-        DrawConsoleGameObject(gameEntity.gos[i]);
+        DrawGameObject(gameEntity.entities[i]);
+        DrawConsoleGameObject(gameEntity.entities[i]);
     }
     DrawGrid(50, 1.0f);
-    DrawConsolePlayerHitBox(gameEntity.gos[0]);
+    DrawConsolePlayerHitBox(gameEntity.entities[0]);
     // TODO: move to Load_LevelTree()
     // light spot
     DrawCubeWiresV(LIGHT_TRANSFORM, (Vector3){1.0f, 1.0f, 1.0f}, YELLOW);
@@ -298,12 +298,12 @@ void Draw_3D_Models(void)
         if (showConsole == 1)
         {
             for (size_t i = 0; i < LEVEL_SIZE; i++)
-                DrawGameObject(gameEntity.gos[i]);
+                DrawGameObject(gameEntity.entities[i]);
             Draw_3D_Console();
         }
         else
             for (size_t i = 0; i < LEVEL_SIZE; i++)
-                DrawGameObject(gameEntity.gos[i]);
+                DrawGameObject(gameEntity.entities[i]);
     }
     EndMode3D();
 }
@@ -370,8 +370,8 @@ void Init_Lighting(void)
     /* light_point = */ CreateLight(LIGHT_POINT, LIGHT_TRANSFORM, (Vector3){0.0f, 0.0f, 0.0f}, LIGHT_COLOR, light_shader);
     // world
     for (int i = 0; i < LEVEL_SIZE; i++)
-        SetModelLighting(gameEntity.gos[i].model, light_shader);
+        SetModelLighting(gameEntity.entities[i].model, light_shader);
     // player
-    gameEntity.gos[0].model.materials[1].shader = light_shader;
-    gameEntity.gos[0].model.materials[2].shader = light_shader;
+    gameEntity.entities[0].model.materials[1].shader = light_shader;
+    gameEntity.entities[0].model.materials[2].shader = light_shader;
 }
