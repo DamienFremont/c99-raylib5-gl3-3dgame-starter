@@ -34,7 +34,7 @@ UnrealThirdPersonGameState gameState;
 
 Model skybox;
 Shader light_shader = {0};
-Light light_point = {0};
+
 GameObject gos[LEVEL_SIZE];
 
 bool postpro = false;
@@ -351,7 +351,7 @@ void Init_Lighting(void)
 {
     // TODO: move to Load_LevelTree()
     light_shader = LoadLighting();
-    light_point = CreateLight(LIGHT_POINT, LIGHT_TRANSFORM, (Vector3){0.0f, 0.0f, 0.0f}, LIGHT_COLOR, light_shader);
+    /* light_point = */ CreateLight(LIGHT_POINT, LIGHT_TRANSFORM, (Vector3){0.0f, 0.0f, 0.0f}, LIGHT_COLOR, light_shader);
     // world
     for (int i = 0; i < LEVEL_SIZE; i++)
         SetModelLighting(gos[i].model, light_shader);
