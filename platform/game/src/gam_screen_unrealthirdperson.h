@@ -8,16 +8,6 @@
 #pragma once
 
 //---------------------------------------------------------
-// Types and Structures Definition
-//---------------------------------------------------------
-
-typedef struct
-{
-    Camera3D camera;
-    InputActions actions;
-} UnrealThirdPersonGameState;
-
-//---------------------------------------------------------
 // Module Functions Declaration
 //---------------------------------------------------------
 
