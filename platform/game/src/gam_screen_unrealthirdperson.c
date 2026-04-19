@@ -71,16 +71,16 @@ int animCurrentFrame;
 // Local Functions Declaration
 //---------------------------------------------------------
 
-void Draw_Pipeline_Default(void);
-void Draw_Pipeline_PostProcessing(const RenderTexture2D *target);
-void UpdatePlayerAnimation(void);
+void Draw_Pipeline_Default(GameObject* entities);
+void Draw_Pipeline_PostProcessing(const RenderTexture2D *target, GameObject* entities);
+void UpdatePlayerAnimation(GameObject* entities);
 void UpdatePlayerCamera(void);
-void UpdatePlayerPosition(InputActions *actions);
+void UpdatePlayerPosition(InputActions *actions, GameObject* entities);
 void UpdatePlayerInput(void);
 void UpdateRender(void);
 void Init_PostProcess(RenderTexture2D *target, bool postprocessing_enable);
 void Init_Animation(void);
-void Init_Lighting(void);
+void Init_Lighting(GameObject* entities);
 
 //---------------------------------------------------------
 // Module specific Functions Definition
@@ -91,6 +91,7 @@ void Init_UnrealThirdPerson(RenderTexture2D *target, AppConfiguration appConfig)
     // Init entities
     gameEntity = (UnrealThirdPersonGameEntity){0};
     Load_LevelTree(gameEntity.entities);
+    Init_Lighting(gameEntity.entities);
     // Init states
     gameState = (UnrealThirdPersonGameState){0};
     InitCamera(&gameState.camera, CAM_FOV, CAM_TRS);
@@ -101,7 +102,6 @@ void Init_UnrealThirdPerson(RenderTexture2D *target, AppConfiguration appConfig)
     Init_PostProcess(target, appConfig.postpro_effect_bloom);
     skybox = Load_LevelSkybox(LIGHT_COLOR, postpro);
     Init_Animation();
-    Init_Lighting();
     // TICKS
     animationTick = InitTick(25);
     inputTick = InitTick(120);
@@ -124,8 +124,8 @@ int Update_UnrealThirdPerson(void)
 {
     // tick
     UpdatePlayerInput();
-    UpdatePlayerPosition(&gameState.actions);
-    UpdatePlayerAnimation();
+    UpdatePlayerPosition(&gameState.actions, gameEntity.entities);
+    UpdatePlayerAnimation(gameEntity.entities);
     UpdatePlayerCamera();
     // TODO: UpdatePhysics();
     // no tick
@@ -141,20 +141,20 @@ void Draw_UnrealThirdPerson(const RenderTexture2D *target)
 {
     if (postpro == true)
     {
-        Draw_Pipeline_PostProcessing(target);
+        Draw_Pipeline_PostProcessing(target, gameEntity.entities);
         return;
     }
-    Draw_Pipeline_Default();
+    Draw_Pipeline_Default(gameEntity.entities);
 }
 
 void Unload_UnrealThirdPerson(void)
 {
-    GameObject* entities = gameEntity.entities;
     // skybox
     UnloadSkybox(skybox);
     // animations
     // FIXME: UnloadModelAnimations(playerAnimations, LEVEL_PLAYER_ANIMATIONS);
     // level
+    GameObject* entities = gameEntity.entities;
     for (int i = 0; i < LEVEL_SIZE; i++)
     {
         UnloadModel(entities[i].model);
@@ -173,9 +173,8 @@ void UpdateRender(void)
     UpdateLighting(light_shader, gameState.camera);
 }
 
-void UpdatePlayerAnimation(void)
+void UpdatePlayerAnimation(GameObject* entities)
 {
-    GameObject* entities = gameEntity.entities;
     if (!IsTickUpdate(&animationTick))
         return;
     else
@@ -198,9 +197,8 @@ void UpdatePlayerCamera(void)
     CameraFollow_Look(&gameState.camera, playerController);
 }
 
-void UpdatePlayerPosition(InputActions *actions)
+void UpdatePlayerPosition(InputActions *actions, GameObject* entities)
 {
-    GameObject* entities = gameEntity.entities;
     if (!IsTickUpdate(&worldTick))
         return;
     else
@@ -223,7 +221,7 @@ void UpdatePlayerPosition(InputActions *actions)
         playerController.position.x,
         playerController.position.y + 0.01f,
         playerController.position.z};
-    entities[LEVEL_PLAYER_SHADOW].transform.rotation = entities[0].transform.rotation;
+    entities[LEVEL_PLAYER_SHADOW].transform.rotation = entities[LEVEL_PLAYER_MODEL].transform.rotation;
 }
 
 void SetupPlayerInputComponent(InputActions *actions)
@@ -296,9 +294,8 @@ void Draw_2D(void)
     }
 }
 
-void Draw_3D_Models(void)
+void Draw_3D_Models(GameObject* entities)
 {
-    GameObject* entities = gameEntity.entities;
     BeginMode3D(gameState.camera);
     {
         if (showConsole == 1)
@@ -314,28 +311,28 @@ void Draw_3D_Models(void)
     EndMode3D();
 }
 
-void Draw_Pipeline_Default(void)
+void Draw_Pipeline_Default(GameObject* entities)
 {
     BeginDrawing();
     {
         ClearBackground(RAYWHITE);
         // Stage 1/2 Geometry
         DrawSkybox(skybox, gameState.camera);
-        Draw_3D_Models();
+        Draw_3D_Models(entities);
         // Stage 2/2 2D
         Draw_2D();
     }
     EndDrawing();
 }
 
-void Draw_Pipeline_PostProcessing(const RenderTexture2D *target)
+void Draw_Pipeline_PostProcessing(const RenderTexture2D *target, GameObject* entities)
 {
     BeginTextureMode(*target);
     {
         ClearBackground(RAYWHITE);
         // Stage 1/3 Geometry
         DrawSkybox(skybox, gameState.camera);
-        Draw_3D_Models();
+        Draw_3D_Models(entities);
     }
     EndTextureMode();
     BeginDrawing();
@@ -369,9 +366,8 @@ void Init_Animation(void)
     animCurrentFrame = 0;
 }
 
-void Init_Lighting(void)
+void Init_Lighting(GameObject* entities)
 {
-    GameObject* entities = gameEntity.entities;
     // TODO: move to Load_LevelTree()
     light_shader = LoadLighting();
     /* light_point = */ CreateLight(LIGHT_POINT, LIGHT_TRANSFORM, (Vector3){0.0f, 0.0f, 0.0f}, LIGHT_COLOR, light_shader);
