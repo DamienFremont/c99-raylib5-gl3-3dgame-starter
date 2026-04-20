@@ -95,6 +95,18 @@
                 "scale": { "x": 1, "y": 1, "z": 1 }
             },
             "color": "BLUE"
+        },
+        {
+            "id": 10,
+            "name": "SM_Ramp2",
+            "model": "resources/models/SM_Ramp.obj",
+            "transform": {
+                "translation": { "x": 18, "y": 0, "z": 15 },
+                "rotation": { "axis": "YAW", "angle": -90 },
+                "scale": { "x": 2, "y": 1, "z": 4 }
+            },
+            "color": "DARKGRAY",
+            "texture": "CHECKBOARD"
         }
     ]
 }
