@@ -107,6 +107,18 @@
             },
             "color": "DARKGRAY",
             "texture": "CHECKBOARD"
+        },
+        {
+            "id": 11,
+            "name": "SM_Ramp3",
+            "model": "resources/models/SM_Ramp.obj",
+            "transform": {
+                "translation": { "x": 20, "y": 1, "z": 21 },
+                "rotation": { "axis": "YAW", "angle": -180 },
+                "scale": { "x": 2, "y": 1, "z": 4 }
+            },
+            "color": "DARKGRAY",
+            "texture": "CHECKBOARD"
         }
     ]
 }

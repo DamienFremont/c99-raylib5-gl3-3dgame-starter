@@ -79,19 +79,6 @@ GameObject *Load_LevelTree(GameObject *tree)
         tree[2 + i] = go_1;
     }
 
-    // Block01
-    {
-        tree[11] = (GameObject){
-            "SM_Ramp3",
-            (Transform2){
-                (Vector3){20.0f, 1.0f, 21.0f},
-                (Rotation2){AXIS_YAW, ANGLE_M180},
-                (Vector3){2.0f, 1.0f, 4.0f}},
-            LoadModelFile("resources/models/SM_Ramp.obj"),
-            DARKGRAY};
-        tree[11].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 2, GRAY, DARKGRAY));
-    }
-
     // Cylinder
     {
         tree[12] = (GameObject){
