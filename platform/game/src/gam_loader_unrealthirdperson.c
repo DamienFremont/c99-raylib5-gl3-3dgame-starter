@@ -18,6 +18,21 @@ Image GetTiledImage(int tilingX, int tilingY, Color col1, Color col2);
 // Module specific Functions Definition
 //---------------------------------------------------------
 
+bool strstartsWith(const char *str, const char *prefix) {
+    // Handle NULL inputs to avoid undefined behavior
+    if (str == NULL || prefix == NULL) {
+        return false;
+    }
+    size_t str_len = strlen(str);
+    size_t prefix_len = strlen(prefix);
+    // If prefix is longer than str, it can't be a prefix
+    if (prefix_len > str_len) {
+        return false;
+    }
+    // Compare first 'prefix_len' characters
+    return (strncmp(str, prefix, prefix_len) == 0);
+}
+
 GameObject *Load_LevelTree(GameObject *tree)
 {
     // Player
@@ -62,7 +77,7 @@ GameObject *Load_LevelTree(GameObject *tree)
         strcpy_s(go_1.name, sizeof(go_1.name), node_1.name);
         go_1.transform = node_1.transform;
         go_1.model = model;
-        go_1.color = node_1.color;
+        go_1.color = WHITE;
         if (strcmp("CHECKBOARD", node_1.texture) == 0)
             go_1.model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = CheckboardTexture2D(
                 GRAY, DARKGRAY,
@@ -74,7 +89,12 @@ GameObject *Load_LevelTree(GameObject *tree)
                 WHITE, LIGHTGRAY,
                 node_1.transform.scale.x, 
                 node_1.transform.scale.y, 
-                node_1.transform.scale.z);    
+                node_1.transform.scale.z);
+        else if(strstartsWith(node_1.texture, "resources")) {
+            go_1.model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFile(node_1.texture);
+            // go_1.model.materials[1].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFile(node_1.texture);
+            // go_1.model.materials[2].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFile(node_1.texture);
+        }
         // load GameObject
         tree[2 + i] = go_1;
     }
