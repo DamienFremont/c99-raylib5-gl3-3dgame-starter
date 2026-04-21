@@ -143,6 +143,42 @@
             },
             "color": "GRAY",
             "texture": "CHECKBOARD"
+        },
+        {
+            "id": 14,
+            "name": "SM_QuarterCylinder12",
+            "model": "resources/models/SM_QuarterCylinder.obj",
+            "transform": {
+                "translation": { "x": 22, "y": 0, "z": 7 },
+                "rotation": { "axis": "YAW", "angle": -90 },
+                "scale": { "x": 4, "y": 1, "z": 4 }
+            },
+            "color": "GRAY",
+            "texture": "CHECKBOARD"
+        },
+        {
+            "id": 15,
+            "name": "SM_QuarterCylinder13",
+            "model": "resources/models/SM_QuarterCylinder.obj",
+            "transform": {
+                "translation": { "x": 22, "y": 0, "z": 7 },
+                "rotation": { "axis": "YAW", "angle": -180 },
+                "scale": { "x": 4, "y": 1, "z": 4 }
+            },
+            "color": "GRAY",
+            "texture": "CHECKBOARD"
+        },
+        {
+            "id": 16,
+            "name": "SM_QuarterCylinder14",
+            "model": "resources/models/SM_QuarterCylinder.obj",
+            "transform": {
+                "translation": { "x": 22, "y": 0, "z": 7 },
+                "rotation": { "axis": "YAW", "angle": -270 },
+                "scale": { "x": 4, "y": 1, "z": 4 }
+            },
+            "color": "GRAY",
+            "texture": "CHECKBOARD"
         }
     ]
 }

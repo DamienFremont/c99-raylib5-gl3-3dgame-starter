@@ -78,50 +78,6 @@ GameObject *Load_LevelTree(GameObject *tree)
         // load GameObject
         tree[2 + i] = go_1;
     }
-
-    // Cylinder
-    {
-        tree[13] = (GameObject){
-            "SM_QuarterCylinder11",
-            (Transform2){
-                (Vector3){22.0f, 0.0f, 7.0f},
-                (Rotation2){Vector3Zero(), ANGLE_ZERO},
-                (Vector3){4.0f, 1.0f, 4.0f}},
-            LoadModelFile("resources/models/SM_QuarterCylinder.obj"),
-            GRAY};
-        tree[13].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 2, GRAY, DARKGRAY));
-
-        tree[14] = (GameObject){
-            "SM_QuarterCylinder12",
-            (Transform2){
-                (Vector3){22.0f, 0.0f, 7.0f},
-                (Rotation2){AXIS_YAW, ANGLE_M90},
-                (Vector3){4.0f, 1.0f, 4.0f}},
-            LoadModelFile("resources/models/SM_QuarterCylinder.obj"),
-            GRAY};
-        tree[14].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 1, GRAY, DARKGRAY));
-
-        tree[15] = (GameObject){
-            "SM_QuarterCylinder13",
-            (Transform2){
-                (Vector3){22.0f, 0.0f, 7.0f},
-                (Rotation2){AXIS_YAW, ANGLE_M180},
-                (Vector3){4.0f, 1.0f, 4.0f}},
-            LoadModelFile("resources/models/SM_QuarterCylinder.obj"),
-            GRAY};
-        tree[15].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 1, GRAY, DARKGRAY));
-
-        tree[16] = (GameObject){
-            "SM_QuarterCylinder14",
-            (Transform2){
-                (Vector3){22.0f, 0.0f, 7.0f},
-                (Rotation2){AXIS_YAW, ANGLE_M270},
-                (Vector3){4.0f, 1.0f, 4.0f}},
-            LoadModelFile("resources/models/SM_QuarterCylinder.obj"),
-            GRAY};
-        tree[16].model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFromImage(GetTiledImage(4, 1, GRAY, DARKGRAY));
-    }
-
     return tree;
 }
 
