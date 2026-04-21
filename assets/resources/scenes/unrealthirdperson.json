@@ -135,7 +135,7 @@
         {
             "id": 13,
             "name": "SM_QuarterCylinder11",
-            "model": "resources/models/SM_QuarterCylinder.obj",
+            "model": "resources/models/SM_QuarterCylinder.glb",
             "transform": {
                 "translation": { "x": 22, "y": 0, "z": 7 },
                 "rotation": { "axis": "YAW", "angle": 0 },
@@ -147,7 +147,7 @@
         {
             "id": 14,
             "name": "SM_QuarterCylinder12",
-            "model": "resources/models/SM_QuarterCylinder.obj",
+            "model": "resources/models/SM_QuarterCylinder.glb",
             "transform": {
                 "translation": { "x": 22, "y": 0, "z": 7 },
                 "rotation": { "axis": "YAW", "angle": -90 },
@@ -159,7 +159,7 @@
         {
             "id": 15,
             "name": "SM_QuarterCylinder13",
-            "model": "resources/models/SM_QuarterCylinder.obj",
+            "model": "resources/models/SM_QuarterCylinder.glb",
             "transform": {
                 "translation": { "x": 22, "y": 0, "z": 7 },
                 "rotation": { "axis": "YAW", "angle": -180 },
@@ -171,7 +171,7 @@
         {
             "id": 16,
             "name": "SM_QuarterCylinder14",
-            "model": "resources/models/SM_QuarterCylinder.obj",
+            "model": "resources/models/SM_QuarterCylinder.glb",
             "transform": {
                 "translation": { "x": 22, "y": 0, "z": 7 },
                 "rotation": { "axis": "YAW", "angle": -270 },
