@@ -67,3 +67,6 @@ cmake_install.cmake
 node_modules
 package.json
 package-lock.json
+
+# Windows
+Thumbs.db
