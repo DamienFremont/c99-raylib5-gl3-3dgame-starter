@@ -77,7 +77,7 @@ GameObject *Load_LevelTree(GameObject *tree)
         strcpy_s(go_1.name, sizeof(go_1.name), node_1.name);
         go_1.transform = node_1.transform;
         go_1.model = model;
-        go_1.color = WHITE;
+        go_1.color = node_1.color;
         if (strcmp("CHECKBOARD", node_1.texture) == 0)
             go_1.model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = CheckboardTexture2D(
                 GRAY, DARKGRAY,
