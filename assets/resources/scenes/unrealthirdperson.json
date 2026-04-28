@@ -27,7 +27,7 @@
                 "scale": { "x": 30, "y": 4, "z": 1 }
             },
             "color": "DARKGRAY",
-            "texture": "CHECKBOARD"
+            "texture": "resources/models/SM_Cube2_diffuse.png"
         },
         {
             "id": 4,
