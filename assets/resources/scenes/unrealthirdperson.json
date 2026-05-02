@@ -154,7 +154,7 @@
                 "scale": { "x": 4, "y": 1, "z": 4 }
             },
             "color": "DARKGRAY",
-            "texture": "CHECKBOARD"
+            "texture": "resources/models/SM_QuarterCylinder11.png"
         },
         {
             "id": 15,
