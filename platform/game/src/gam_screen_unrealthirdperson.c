@@ -322,17 +322,12 @@ void Draw_Pipeline_Default(GameObject* entities)
 
 void Draw_Pipeline_PostProcessing(const RenderTexture2D *target, GameObject* entities)
 {
-    BeginTextureMode(*target);
-    {
-        ClearBackground(RAYWHITE);
-        // Stage 1/3 Geometry
-        DrawSkybox(skybox, gameState.camera);
-        Draw_3D_Models(entities);
-    }
-    EndTextureMode();
     BeginDrawing();
     {
         ClearBackground(RAYWHITE);
+        // Stage 1/2 Geometry
+        DrawSkybox(skybox, gameState.camera);
+        Draw_3D_Models(entities);
         // Stage 2/3 PostProcessing
         DrawPostProcessing(postproShader, target);
         // Stage 3/3 2D
