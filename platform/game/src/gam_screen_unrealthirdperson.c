@@ -69,8 +69,8 @@ int animCurrentFrame;
 // Local Functions Declaration
 //---------------------------------------------------------
 
-void Draw_Pipeline_Default(GameObject* entities);
-void Draw_Pipeline_PostProcessing(const RenderTexture2D *target, GameObject* entities);
+void Draw_3D_Models(GameObject* entities);
+void Draw_2D(void);
 void UpdatePlayerAnimation(GameObject* entities);
 void UpdatePlayerCamera(void);
 void UpdatePlayerPosition(InputActions *actions, GameObject* entities);
@@ -137,12 +137,19 @@ int Update_UnrealThirdPerson(void)
 
 void Draw_UnrealThirdPerson(const RenderTexture2D *target)
 {
-    if (postpro == true)
+    BeginDrawing();
     {
-        Draw_Pipeline_PostProcessing(target, gameEntity.entities);
-        return;
+        ClearBackground(RAYWHITE);
+        // Stage 1/2 Geometry
+        DrawSkybox(skybox, gameState.camera);
+        Draw_3D_Models(gameEntity.entities);
+        // Stage 2/3 PostProcessing
+        if (postpro == true)
+            DrawPostProcessing(postproShader, target);
+        // Stage 3/3 2D
+        Draw_2D();
     }
-    Draw_Pipeline_Default(gameEntity.entities);
+    EndDrawing();
 }
 
 void Unload_UnrealThirdPerson(void)
@@ -267,7 +274,7 @@ void Draw_3D_Console(void)
     DrawCubeWiresV(LIGHT_TRANSFORM, (Vector3){1.0f, 1.0f, 1.0f}, YELLOW);
 }
 
-void Draw_2D()
+void Draw_2D(void)
 {
     if (gameState.showConsole == 1)
     {
@@ -304,36 +311,6 @@ void Draw_3D_Models(GameObject* entities)
                 DrawGameObject(entities[i]);
     }
     EndMode3D();
-}
-
-void Draw_Pipeline_Default(GameObject* entities)
-{
-    BeginDrawing();
-    {
-        ClearBackground(RAYWHITE);
-        // Stage 1/2 Geometry
-        DrawSkybox(skybox, gameState.camera);
-        Draw_3D_Models(entities);
-        // Stage 2/2 2D
-        Draw_2D();
-    }
-    EndDrawing();
-}
-
-void Draw_Pipeline_PostProcessing(const RenderTexture2D *target, GameObject* entities)
-{
-    BeginDrawing();
-    {
-        ClearBackground(RAYWHITE);
-        // Stage 1/2 Geometry
-        DrawSkybox(skybox, gameState.camera);
-        Draw_3D_Models(entities);
-        // Stage 2/3 PostProcessing
-        DrawPostProcessing(postproShader, target);
-        // Stage 3/3 2D
-        Draw_2D();
-    }
-    EndDrawing();
 }
 
 void Init_PostProcess(RenderTexture2D *target, bool postprocessing_enable)
