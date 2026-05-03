@@ -142,7 +142,10 @@ void Draw_UnrealThirdPerson(const RenderTexture2D *target)
         ClearBackground(RAYWHITE);
         // Stage 1/2 Geometry
         DrawSkybox(skybox, gameState.camera);
-        Draw_3D_Models(gameEntity.entities);
+        // Stage 1/2 Geometry + Lighting
+        BeginShaderMode(light_shader);
+            Draw_3D_Models(gameEntity.entities);
+        EndShaderMode();
         // Stage 2/3 PostProcessing
         if (postpro == true)
             DrawPostProcessing(postproShader, target);
