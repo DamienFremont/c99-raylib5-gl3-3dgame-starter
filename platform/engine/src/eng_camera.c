@@ -19,7 +19,6 @@ void InitCamera(Camera3D *cam, float fovy, Vector3 distance)
     cam->projection = CAMERA_PERSPECTIVE;        // Camera projection type
 }
 
-// TODO: USE ME !!!
 void CameraSecondPerson_Look(Camera3D *camera, Controller player)
 {
     const Vector3 tgt = player.position;
@@ -30,7 +29,6 @@ void CameraSecondPerson_Look(Camera3D *camera, Controller player)
         tgt.z};
 }
 
-// TODO: USE ME !!!
 void CameraThirdPerson_Look(Camera3D *camera, Controller player)
 {
     const Vector3 tgt = player.position;
