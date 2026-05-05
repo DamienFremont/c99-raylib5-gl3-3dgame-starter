@@ -33,7 +33,6 @@ void DrawConsoleGameObject(GameObject go)
                                                     trans.y + 0.01f, //
                                                     trans.z + 0.5f},
                FONT_SIZE_12, FONT_SPACING_1, FONT_LINE_SPACING_1, BACKFACE_FALSE, WHITE);
-    // TODO: physics
     DrawCubeWiresV((Vector3){
                        trans.x + scale.x / 2,
                        trans.y + scale.y / 2,
