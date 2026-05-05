@@ -27,7 +27,6 @@ char *GetAssetPath(char *tmp, const char *assetPath)
     return tmp;
 }
 
-// TODO
 char *GetShaderPath(char *tmp, const char *assetPath)
 {
     JoinPath(tmp, RESOURCES_PATH, TextFormat(assetPath, GLSL_VERSION));
@@ -36,7 +35,6 @@ char *GetShaderPath(char *tmp, const char *assetPath)
 
 char *JoinPath(char *dest, const char *path1, const char *path2)
 {
-    // TODO: end with or start with '/'
     const char tmp[PATH_MAX];
     snprintf(tmp, sizeof(tmp), "%s/%s", path1, path2);
     strcpy_s(dest, PATH_MAX, tmp);
