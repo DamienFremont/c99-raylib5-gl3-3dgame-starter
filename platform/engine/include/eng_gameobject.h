@@ -24,9 +24,6 @@ typedef struct GameObject
     Transform2 transform;
     Model model;
     Color color;
-    //Material2 material;
-    // TODO: Resources
-    // TODO: Instances
 } GameObject;
 
 typedef enum
