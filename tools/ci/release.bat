@@ -1,5 +1,3 @@
-@REM TODO: FIXME!!!
-
 @REM Clean
 RMDIR /S /Q ".\build\"
 
