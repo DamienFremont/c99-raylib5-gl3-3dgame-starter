@@ -7,16 +7,6 @@
 // Module specific Functions Definition
 //---------------------------------------------------------
 
-// DEPRECATED TODO: REMOVE ME
- Color Parse_ColorJson(const cJSON *src)
- {
-     return (Color){
-         cJSON_GetObjectItem(src, "r")->valueint,
-         cJSON_GetObjectItem(src, "g")->valueint,
-         cJSON_GetObjectItem(src, "b")->valueint,
-         cJSON_GetObjectItem(src, "a")->valueint};
- }
-
 Color Transform_Color(const char *src)
 {
     if (strcmp("BLUE", src) == 0)
