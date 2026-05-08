@@ -272,7 +272,6 @@ void Draw_3D_Console(void)
     }
     DrawGrid(50, 1.0f);
     DrawConsolePlayerHitBox(entities[0]);
-    // TODO: move to Load_LevelTree()
     // light spot
     DrawCubeWiresV(LIGHT_TRANSFORM, (Vector3){1.0f, 1.0f, 1.0f}, YELLOW);
 }
