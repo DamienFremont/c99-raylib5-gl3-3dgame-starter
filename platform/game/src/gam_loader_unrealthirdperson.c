@@ -84,8 +84,6 @@ GameObject *Load_LevelTree(GameObject *tree)
                 node_1.transform.scale.z);
         else if(strstartsWith(node_1.texture, "resources")) {
             go_1.model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFile(node_1.texture);
-            // go_1.model.materials[1].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFile(node_1.texture);
-            // go_1.model.materials[2].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFile(node_1.texture);
         }
         // load GameObject
         tree[2 + i] = go_1;
