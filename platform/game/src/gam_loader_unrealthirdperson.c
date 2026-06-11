@@ -39,7 +39,6 @@ GameObject *Load_LevelTree(GameObject *tree)
             (Vector3){1.0f, 1.0f, 1.0f},
         },
         LoadModelFile(playerModelPath),
-        // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_lightmap
         WHITE};
     // TODO: METAL
     tree[LEVEL_PLAYER_MODEL].model.materials[1].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTextureFile("resources/models/Character_Diffuse_0.png");
@@ -56,7 +55,6 @@ GameObject *Load_LevelTree(GameObject *tree)
                 1.0f, 0.0f, 1.0f},
         },
         LoadModelFile(playerModelPath),
-        // TODO: https://www.raylib.com/examples/shaders/loader.html?name=shaders_lightmap
         DARKGRAY};
         
     Scene scene = LoadSceneFile("resources/scenes/unrealthirdperson.json");
