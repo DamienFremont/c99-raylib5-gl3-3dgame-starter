@@ -1,6 +1,5 @@
 #include "eng_input.h"
-
-#include <stdbool.h>
+#include "eng_math.h"
 
 // source: https://www.raylib.com/examples/core/loader.html?name=core_input_gamepad
 
@@ -46,7 +45,6 @@ void ExecuteMoveActions(InputActions *actions);
 void ExecuteConsoleActions(InputActions *out);
 float GetFirstInputValue(const InputDefinition* inputs);
 float GetInputValue(InputDefinition inputs);
-bool IsInInterval(float value, float min, float max);
 
 //---------------------------------------------------------
 // Module specific Functions Definition
@@ -154,10 +152,4 @@ float GetInputValue(InputDefinition input)
         }
     }
     return 0;
-}
-
-// TODO: move to eng_math.h
-bool IsInInterval(float value, float min, float max)
-{
-    return (value <= max && value >= min);
 }
