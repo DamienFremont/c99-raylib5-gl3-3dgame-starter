@@ -1,7 +1,5 @@
 #include "eng_math.h"
 
-#include <stdbool.h>
-
 //---------------------------------------------------------
 // Module specific Functions Definition
 //---------------------------------------------------------
