@@ -1,6 +1,7 @@
 #pragma once
 #include <raylib.h>
 #include "eng_gameobject.h"
+#include "eng_config.h"
 
 //---------------------------------------------------------
 // Types and Structures Definition
@@ -9,8 +10,7 @@
 typedef enum
 {
     SCENE_NODES_SIZE = 128,
-    NAME_STR_LENGTH = 256,
-    MODEL_STR_LENGTH = 1024, // TODO: CHANGE TO PATH_STR_LENGTH
+    NAME_STR_LENGTH = 256
 } SceneConst;
 
 typedef struct Node3D
@@ -18,7 +18,7 @@ typedef struct Node3D
     int id;
     char name[NAME_STR_LENGTH];
     Transform2 transform;
-    char model[MODEL_STR_LENGTH];
+    char model[PATH_STR_LENGTH];
     Color color;
     char texture[NAME_STR_LENGTH];
 } Node3D;
