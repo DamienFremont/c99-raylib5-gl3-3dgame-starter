@@ -125,7 +125,7 @@ int Update_UnrealThirdPerson(void)
     UpdatePlayerPosition(&gameState.actions, gameEntity.entities);
     UpdatePlayerAnimation(gameEntity.entities);
     UpdatePlayerCamera();
-    // TODO: UpdatePhysics();
+    UpdatePhysics();
     // no tick
     UpdateRender();
     if (IsKeyPressed(KEY_TAB))
