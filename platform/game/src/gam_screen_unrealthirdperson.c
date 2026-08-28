@@ -75,6 +75,7 @@ void UpdatePlayerAnimation(GameObject* entities);
 void UpdatePlayerCamera(void);
 void UpdatePlayerPosition(InputActions *actions, GameObject* entities);
 void UpdatePlayerInput(void);
+void UpdatePhysics(void);
 void UpdateRender(void);
 void Init_PostProcess(RenderTexture2D *target, bool postprocessing_enable);
 void Init_Animation(void);
